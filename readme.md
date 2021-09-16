@@ -1,17 +1,17 @@
 # Discordjs-pagination
 This is a fork of <a href="https://github.com/ryzyx/discordjs-button-pagination/">ryzyx/discordjs-button-pagination</a>
 <br><br>
-To use this you need node version 16.0^ and discord.js version 13.0.1^
+To use this you need node version 16.0^ and discord.js version 13.0.1^ this is not a final version and things can be subject to change
 <br>
 ```js
-// To instll use
+// To install use
 npm i @acegoal07/discordjs-pagination
 ```
 
 # Example bot using message pages
 ```js
 // Import the @acegoal07/discordjs-pagination package
-const { messageEmbed } = require('@acegoal07/discordjs-pagination');
+const paginationEmbed = require('@acegoal07/discordjs-pagination');
 
 // Use MessageEmbed to make pages
 // Keep in mind that Embeds should't have their footers set since the pagination method sets page info there
@@ -51,13 +51,13 @@ const timeout = 3000;
 // Timeout is how long the collector will listen to buttons till turing off if you do not include the timeout it defaults to 120000
 
 // Call the paginationEmbed method, first three arguments are required
-messageEmbed(message, pages, buttonList, timeout);
+paginationEmbed.messageEmbed(message, pages, buttonList, timeout);
 ```
 
 # Example bot using interaction pages
 ```js
 // Import the @acegoal07/discordjs-pagination package
-const { interactionEmbed } = require('@acegoal07/discordjs-pagination');
+const paginationEmbed = require('@acegoal07/discordjs-pagination');
 
 // Use MessageEmbed to make pages
 // Keep in mind that Embeds should't have their footers set since the pagination method sets page info there
@@ -97,5 +97,5 @@ const timeout = 3000;
 // Timeout is how long the collector will listen to buttons till turing off if you do not include the timeout it defaults to 120000
 
 // Call the paginationEmbed method, first three arguments are required
-interactionEmbed(interaction, pages, buttonList, timeout);
+paginationEmbed.interactionEmbed(interaction, pages, buttonList, timeout);
 ```

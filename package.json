@@ -1,16 +1,14 @@
 {
     "name": "@acegoal07/discordjs-pagination",
     "version": "1.0.0",
-    "description": "A pagination for Discord.js V13",
+    "description": "A simple pagination for Discord.js",
     "main": "index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
     "repository": {
       "type": "git",
       "url": "git+https://github.com/ryzyx/discordjs-button-pagination.git"
     },
     "keywords": [
+      "acegoal07",
       "Discord",
       "Buttons",
       "Pagination",
