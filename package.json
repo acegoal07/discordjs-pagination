@@ -5,7 +5,7 @@
     "main": "index.js",
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/ryzyx/discordjs-button-pagination.git"
+      "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
     },
     "keywords": [
       "acegoal07",
