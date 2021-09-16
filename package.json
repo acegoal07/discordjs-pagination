@@ -1,29 +1,35 @@
 {
-    "name": "@acegoal07/discordjs-pagination",
-    "version": "1.0.0",
-    "description": "A simple pagination for Discord.js",
-    "main": "index.js",
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
-    },
-    "keywords": [
-      "acegoal07",
-      "Discord",
-      "Buttons",
-      "Pagination",
-      "discord-buttons",
-      "paginator",
-      "discordjs",
-      "discord.js"
-    ],
-    "author": "acegoal07",
-    "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/acegoal07/discordjs-pagination/issues"
-    },
-    "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
-    "dependencies": {
-      "discord.js": "^13.0.1"
-    }
+  "name": "@acegoal07/discordjs-pagination",
+  "version": "1.0.0",
+  "description": "A simple pagination for Discord.js",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
+  },
+  "keywords": [
+    "acegoal07",
+    "Discord",
+    "Buttons",
+    "Pagination",
+    "discord-buttons",
+    "paginator",
+    "discordjs",
+    "discord.js"
+  ],
+  "author": "acegoal07",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/acegoal07/discordjs-pagination/issues"
+  },
+  "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
+  "dependencies": {
+    "discord.js": "^13.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
+}
