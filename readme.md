@@ -1,5 +1,15 @@
-# Example bot using message pages
+# Discordjs-pagination
+This is a fork of <a href="https://github.com/ryzyx/discordjs-button-pagination/">ryzyx/discordjs-button-pagination</a>
+<br><br>
+To use this you need node version 16.0^ and discord.js version 13.0.1^
+<br>
+```js
+// To instll use
+npm i @acegoal07/discordjs-pagination
+```
 
+# Example bot using message pages
+```js
 // Import the @acegoal07/discordjs-pagination package
 const { messageEmbed } = require('@acegoal07/discordjs-pagination');
 
@@ -42,9 +52,10 @@ const timeout = 3000;
 
 // Call the paginationEmbed method, first three arguments are required
 messageEmbed(message, pages, buttonList, timeout);
+```
 
 # Example bot using interaction pages
-
+```js
 // Import the @acegoal07/discordjs-pagination package
 const { interactionEmbed } = require('@acegoal07/discordjs-pagination');
 
@@ -87,3 +98,4 @@ const timeout = 3000;
 
 // Call the paginationEmbed method, first three arguments are required
 interactionEmbed(interaction, pages, buttonList, timeout);
+```
