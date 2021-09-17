@@ -6,6 +6,21 @@ const {
   MessageButton,
 } = require("discord.js");
 
+// Disabled buttons
+const disabledRow = new MessageActionRow()
+  .addComponents(
+    new MessageButton()
+      .setLabel('Disabled')
+      .setStyle('SECONDARY')
+      .setDisabled(true)
+      .setCustomId('0'),
+    new MessageButton()
+      .setLabel('Disabled')
+      .setStyle('SECONDARY')
+      .setDisabled(true)
+      .setCustomId('1'),
+);
+
 /**
  * Creates a pagination embed
  * @param {Interaction} interaction
@@ -66,7 +81,7 @@ const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000
     if (!curPage.deleted) {
       curPage.edit({
         embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-        components: [],
+        components: [disabledRow],
       });
     }
   });
@@ -125,7 +140,7 @@ const messageEmbed = async (message, pages, buttonList, timeout = 120000) => {
       await message.channel.messages.fetch(curPage.id)
       curPage.edit({
         embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-        components: [],
+        components: [disabledRow],
       });
     } catch (error) {
       return;
