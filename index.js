@@ -83,6 +83,7 @@ const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000
         embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
         components: [disabledRow],
       });
+      return;
     }
   });
   return curPage;
@@ -142,6 +143,7 @@ const messageEmbed = async (message, pages, buttonList, timeout = 120000) => {
         embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
         components: [disabledRow],
       });
+      return;
     } catch (error) {
       return;
     }
