@@ -7,20 +7,27 @@ const {
 } = require("discord.js");
 
 // Disabled buttons
-const disabledRow = new MessageActionRow()
-  .addComponents(
-    new MessageButton()
-      .setLabel('Disabled')
-      .setStyle('SECONDARY')
-      .setDisabled(true)
-      .setCustomId('0'),
-    new MessageButton()
-      .setLabel('Disabled')
-      .setStyle('SECONDARY')
-      .setDisabled(true)
-      .setCustomId('1'),
-);
+const d1 = new MessageButton()
+  .setLabel('Disabled')
+  .setStyle('SECONDARY')
+  .setDisabled(true)
+  .setCustomId('0');
+const d2 = new MessageButton()
+  .setLabel('Disabled')
+  .setStyle('SECONDARY')
+  .setDisabled(true)
+  .setCustomId('1');
+const d3 = new MessageButton()
+  .setLabel('Disabled')
+  .setStyle('SECONDARY')
+  .setDisabled(true)
+  .setCustomId('2');
 
+// Disabled button rows
+const disabledRow1 = new MessageActionRow()
+  .addComponents(d1, d2);
+const disabledRow2 = new MessageActionRow()
+  .addComponents(d1, d2, d3);
 /**
  * Creates a pagination embed
  * @param {Interaction} interaction
@@ -35,11 +42,18 @@ const disabledRow = new MessageActionRow()
 const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000) => {
   if (!pages) throw new Error("Pages are not given.");
   if (!buttonList) throw new Error("Buttons are not given.");
-  if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
-    throw new Error(
-      "Link buttons are not supported with @acegoal07/discordjs-pagination"
-    );
-  if (buttonList.length !== 2) throw new Error("Need two buttons.");
+  if (buttonList[2] === undefined) {
+    if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
+      throw new Error(
+        "Link buttons are not supported with @acegoal07/discordjs-pagination"
+      );
+  } else {
+    if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK" || buttonList[2].style === "LINK")
+      throw new Error(
+        "Link buttons are not supported with @acegoal07/discordjs-pagination"
+      );
+  }
+  if (buttonList.length < 2) throw new Error("Need two buttons.");
 
   let page = 0;
 
@@ -49,10 +63,18 @@ const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000
     components: [row],fetchReply: true,
   });
 
-  const filter = (i) =>
-    i.customId === buttonList[0].customId ||
-    i.customId === buttonList[1].customId;
-
+  let filter 
+  if (buttonList[2] === undefined) {
+    filter = (i) =>
+      i.customId === buttonList[0].customId ||
+      i.customId === buttonList[1].customId;
+  } else {
+    filter = (i) =>
+      i.customId === buttonList[0].customId ||
+      i.customId === buttonList[1].customId ||
+      i.customId === buttonList[2].customId;
+  }
+  
   const collector = await curPage.createMessageComponentCollector({
     filter,
     time: timeout,
@@ -66,6 +88,9 @@ const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000
       case buttonList[1].customId:
         page = page + 1 < pages.length ? ++page : 0;
         break;
+      case buttonList[2].customId:
+        curPage.delete();
+        return;
       default:
         break;
     }
@@ -79,10 +104,17 @@ const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000
 
   collector.on("end", () => {
     if (!curPage.deleted) {
-      curPage.edit({
-        embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-        components: [disabledRow],
-      });
+      if (buttonList[2] === undefined) {
+        curPage.edit({
+          embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+          components: [disabledRow1],
+        });
+      } else {
+        curPage.edit({
+          embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+          components: [disabledRow2],
+        });
+      }
       return;
     }
   });
@@ -94,11 +126,18 @@ const messageEmbed = async (message, pages, buttonList, timeout = 120000) => {
   if (!message && !message.channel) throw new Error("Channel is inaccessible.");
   if (!pages) throw new Error("Pages are not given.");
   if (!buttonList) throw new Error("Buttons are not given.");
-  if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
-    throw new Error(
-      "Link buttons are not supported with @acegoal07/discordjs-pagination"
-    );
-  if (buttonList.length !== 2) throw new Error("Need two buttons.");
+  if (buttonList[2] === undefined) {
+    if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
+      throw new Error(
+        "Link buttons are not supported with @acegoal07/discordjs-pagination"
+      );
+  } else {
+    if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK" || buttonList[2].style === "LINK")
+      throw new Error(
+        "Link buttons are not supported with @acegoal07/discordjs-pagination"
+      );
+  }
+  if (buttonList.length < 2) throw new Error("Need two buttons.");
 
   let page = 0;
 
@@ -108,9 +147,17 @@ const messageEmbed = async (message, pages, buttonList, timeout = 120000) => {
     components: [row],
   });
 
-  const filter = (i) =>
-    i.customId === buttonList[0].customId ||
-    i.customId === buttonList[1].customId;
+  let filter 
+  if (buttonList[2] === undefined) {
+    filter = (i) =>
+      i.customId === buttonList[0].customId ||
+      i.customId === buttonList[1].customId;
+  } else {
+    filter = (i) =>
+      i.customId === buttonList[0].customId ||
+      i.customId === buttonList[1].customId ||
+      i.customId === buttonList[2].customId;
+  }
 
   const collector = await curPage.createMessageComponentCollector({
     filter,
@@ -125,6 +172,9 @@ const messageEmbed = async (message, pages, buttonList, timeout = 120000) => {
       case buttonList[1].customId:
         page = page + 1 < pages.length ? ++page : 0;
         break;
+      case buttonList[2].customId:
+        curPage.delete();
+        return;
       default:
         break;
     }
@@ -139,11 +189,18 @@ const messageEmbed = async (message, pages, buttonList, timeout = 120000) => {
   collector.on("end", async() => {
     try {
       await message.channel.messages.fetch(curPage.id)
-      curPage.edit({
-        embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-        components: [disabledRow],
-      });
-      return;
+      if (buttonList[2] === undefined) {
+        curPage.edit({
+          embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+          components: [disabledRow1],
+        });
+      } else {
+        curPage.edit({
+          embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+          components: [disabledRow2],
+        });
+      }
+      return; 
     } catch (error) {
       return;
     }
