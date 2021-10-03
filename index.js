@@ -1,44 +1,23 @@
-// Dependencies
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const {
   MessageActionRow,
   Message,
   MessageEmbed,
   MessageButton,
 } = require("discord.js");
-
-// Disabled buttons
-const d1 = new MessageButton()
-  .setLabel('Disabled')
-  .setStyle('SECONDARY')
-  .setDisabled(true)
-  .setCustomId('0');
-const d2 = new MessageButton()
-  .setLabel('Disabled')
-  .setStyle('SECONDARY')
-  .setDisabled(true)
-  .setCustomId('1');
-const d3 = new MessageButton()
-  .setLabel('Disabled')
-  .setStyle('SECONDARY')
-  .setDisabled(true)
-  .setCustomId('2');
-
-// Disabled button rows
-const disabledRow1 = new MessageActionRow()
-  .addComponents(d1, d2);
-const disabledRow2 = new MessageActionRow()
-  .addComponents(d1, d2, d3);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * Creates a pagination embed
  * @param {Interaction} interaction
  * @param {Message} message
  * @param {MessageEmbed[]} pages
  * @param {MessageButton[]} buttonList
  * @param {number} timeout
  * @returns
- */
-
-// Interaction pagination
+*/
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Interaction pagination ////////////////////////////////////////////////////////////////////////////////////////////////
 const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000) => {
   if (!pages) throw new Error("Pages are not given.");
   if (!buttonList) throw new Error("Buttons are not given.");
@@ -53,7 +32,7 @@ const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000
         "Link buttons are not supported with @acegoal07/discordjs-pagination"
       );
   }
-  if (buttonList.length < 2) throw new Error("Need two buttons.");
+  if (buttonList.length < 2) throw new Error("Need two buttons");
 
   let page = 0;
 
@@ -102,26 +81,59 @@ const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000
     collector.resetTimer();
   });
 
-  collector.on("end", () => {
-    if (!curPage.deleted) {
-      if (buttonList[2] === undefined) {
-        curPage.edit({
-          embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-          components: [disabledRow1],
-        });
-      } else {
-        curPage.edit({
-          embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-          components: [disabledRow2],
-        });
+  collector.on("end", async() => {
+    try {
+      if (!curPage.deleted) {
+        try {
+          if (buttonList[2] === undefined) {
+            const btn0 = new MessageButton()
+              .setLabel(buttonList[0].label)
+              .setStyle(buttonList[0].style)
+              .setDisabled(true)
+              .setCustomId('0');
+            const btn1 = new MessageButton()
+              .setLabel(buttonList[1].label)
+              .setStyle(buttonList[1].style)
+              .setDisabled(true)
+              .setCustomId('1');
+            const disabledButtons = new MessageActionRow()
+              .addComponents(btn0, btn1);
+            curPage.edit({
+              embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+              components: [disabledButtons],
+            });
+          } 
+          if (buttonList[2]) {
+            const btn0 = new MessageButton()
+              .setLabel(buttonList[0].label)
+              .setStyle(buttonList[0].style)
+              .setDisabled(true)
+              .setCustomId('0');
+            const btn1 = new MessageButton()
+              .setLabel(buttonList[1].label)
+              .setStyle(buttonList[1].style)
+              .setDisabled(true)
+              .setCustomId('1');
+            const btn2 = new MessageButton()
+              .setLabel(buttonList[2].label)
+              .setStyle(buttonList[2].style)
+              .setDisabled(true)
+              .setCustomId('2');
+            const disabledButtons = new MessageActionRow()
+              .addComponents(btn0, btn1, btn2);
+            curPage.edit({
+              embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+              components: [disabledButtons],
+            });
+          } 
+        } catch(error) {return}
       }
-      return;
-    }
+    } catch(error) {return}
   });
   return curPage;
 };
-
-// Message pagination
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Message pagination ////////////////////////////////////////////////////////////////////////////////////////////////////
 const messageEmbed = async (message, pages, buttonList, timeout = 120000) => {
   if (!message && !message.channel) throw new Error("Channel is inaccessible.");
   if (!pages) throw new Error("Pages are not given.");
@@ -188,24 +200,54 @@ const messageEmbed = async (message, pages, buttonList, timeout = 120000) => {
 
   collector.on("end", async() => {
     try {
-      await message.channel.messages.fetch(curPage.id)
-      if (buttonList[2] === undefined) {
-        curPage.edit({
-          embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-          components: [disabledRow1],
-        });
-      } else {
-        curPage.edit({
-          embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-          components: [disabledRow2],
-        });
-      }
-      return; 
-    } catch (error) {
-      return;
-    }
+      await message.channel.messages.fetch(curPage.id);
+      try {
+        if (buttonList[2] === undefined) {
+          const btn0 = new MessageButton()
+            .setLabel(buttonList[0].label)
+            .setStyle(buttonList[0].style)
+            .setDisabled(true)
+            .setCustomId('0');
+          const btn1 = new MessageButton()
+            .setLabel(buttonList[1].label)
+            .setStyle(buttonList[1].style)
+            .setDisabled(true)
+            .setCustomId('1');
+          const disabledButtons2 = new MessageActionRow()
+            .addComponents(btn0, btn1);
+          curPage.edit({
+            embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+            components: [disabledButtons2],
+          });
+        } 
+        if (buttonList[2]) {
+          const btn0 = new MessageButton()
+            .setLabel(buttonList[0].label)
+            .setStyle(buttonList[0].style)
+            .setDisabled(true)
+            .setCustomId('0');
+          const btn1 = new MessageButton()
+            .setLabel(buttonList[1].label)
+            .setStyle(buttonList[1].style)
+            .setDisabled(true)
+            .setCustomId('1');
+          const btn2 = new MessageButton()
+            .setLabel(buttonList[2].label)
+            .setStyle(buttonList[2].style)
+            .setDisabled(true)
+            .setCustomId('2');
+          const disabledButtons = new MessageActionRow()
+            .addComponents(btn0, btn1, btn2);
+          curPage.edit({
+            embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+            components: [disabledButtons],
+          });
+        }
+      } catch (error) {return}
+    } catch (error) {return}
   });
   return curPage;
 };
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Exporter //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = { interactionEmbed, messageEmbed };
