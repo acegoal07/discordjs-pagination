@@ -1,6 +1,4 @@
 # Discordjs-pagination
-This is a fork of <a href="https://github.com/ryzyx/discordjs-button-pagination/">ryzyx/discordjs-button-pagination</a>
-<br><br>
 To use this you need node version 16.0^ and discord.js version 13.0.1^ this is not a final version and things can be subject to change
 <br><br>
 Report any issues you experience using the <a href="https://github.com/acegoal07/discordjs-pagination/issues">issues tab</a>  on the github or by using one of the contact methods on <a href="https://acegoal07.dev">my website</a>
