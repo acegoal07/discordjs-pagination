@@ -4,7 +4,7 @@ To use this you need node version 16.0^ and discord.js version 13.0.1^ this is n
 Report any issues you experience using the <a href="https://github.com/acegoal07/discordjs-pagination/issues">issues tab</a>  on the github or by using one of the contact methods on <a href="https://acegoal07.dev">my website</a>
 <br><br>
 To install use:
-```
+```js
 npm i @acegoal07/discordjs-pagination
 ```
 
