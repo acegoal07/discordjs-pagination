@@ -37,10 +37,18 @@ const interactionEmbed = async (interaction, pages, buttonList, timeout = 120000
   let page = 0;
 
   const row = new MessageActionRow().addComponents(buttonList);
-  const curPage = await interaction.reply({
-    embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
-    components: [row],fetchReply: true,
-  });
+  let curPage
+  if (interaction.deferred === true) {
+    curPage = await interaction.editReply({
+      embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+      components: [row],fetchReply: true,
+    });
+  } else {
+    curPage = await interaction.reply({
+      embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}`)],
+      components: [row],fetchReply: true,
+    });
+  }
 
   let filter 
   if (buttonList[2] === undefined) {
