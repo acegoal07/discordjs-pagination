@@ -11,7 +11,7 @@
     <a href="#about">About</a> &#xa0; | &#xa0; 
     <a href="#message">Message usage</a> &#xa0; | &#xa0; 
     <a href="#interaction">Interaction usage</a> &#xa0; | &#xa0; 
-    <a href="https://github.com/acegoal07" target="_blank">About</a>
+    <a href="https://github.com/acegoal07" target="_blank">Author</a>
 </p>
 
 ---
