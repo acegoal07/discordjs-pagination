@@ -1,14 +1,33 @@
-# Discordjs-pagination
-To use this you need node version 16.0^ and discord.js version 13.0.1^ this is not a final version and things can be subject to change
-<br><br>
+<h1 align="center">discordjs-pagination</h1>
+<div align="center">
+    <img alt="Repository size" src="https://img.shields.io/github/repo-size/acegoal07/discordjs-pagination">
+    <img alt="npm" src="https://img.shields.io/npm/v/@acegoal07/discordjs-pagination">
+    <img alt="NPM" src="https://img.shields.io/npm/l/@acegoal07/discordjs-pagination">
+    <img alt="npm (prod) dependency version" src="https://img.shields.io/npm/dependency-version/@acegoal07/discordjs-pagination/discord.js">
+    <img alt="Libraries.io dependency status for latest release" src="https://img.shields.io/librariesio/release/npm/@acegoal07/discordjs-pagination">
+    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/acegoal07/discordjs-pagination">
+</div><br>
+<p align="center">
+    <a href="#about">About</a> &#xa0; | &#xa0; 
+    <a href="#message">Message usage</a> &#xa0; | &#xa0; 
+    <a href="#interaction">Interaction usage</a> &#xa0; | &#xa0; 
+    <a href="https://github.com/acegoal07" target="_blank">About</a>
+</p>
+
+---
+
+<h1 id="about">About</h1>
+To use this you need discord.js version 13.0.1^ this is not a final version and things can be subject to change
+
 Report any issues you experience using the <a href="https://github.com/acegoal07/discordjs-pagination/issues">issues tab</a>  on the github or by using one of the contact methods on <a href="https://acegoal07.dev">my website</a>
-<br><br>
+
 To install use:
 ```js
 npm i @acegoal07/discordjs-pagination
 ```
 
-# Example bot using message pages
+<h1 id="message">Example bot using message pages</h1>
+
 ```js
 // Import the @acegoal07/discordjs-pagination package
 const paginationEmbed = require('@acegoal07/discordjs-pagination');
@@ -67,7 +86,8 @@ const timeout = 3000;
 paginationEmbed.messageEmbed(message, pages, buttonList, timeout);
 ```
 
-# Example bot using interaction pages
+<h1 id="interaction">Example bot using interaction pages</h1>
+
 ```js
 // Import the @acegoal07/discordjs-pagination package
 const paginationEmbed = require('@acegoal07/discordjs-pagination');
