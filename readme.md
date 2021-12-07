@@ -26,7 +26,7 @@ To install use:
 npm i @acegoal07/discordjs-pagination
 ```
 
-<h1 id="message">Example bot using message pages</h1>
+<h1 id="message">Message Usage</h1>
 
 ```js
 // Import the @acegoal07/discordjs-pagination package
@@ -86,7 +86,7 @@ const timeout = 3000;
 paginationEmbed.messageEmbed(message, pages, buttonList, timeout);
 ```
 
-<h1 id="interaction">Example bot using interaction pages</h1>
+<h1 id="interaction">Interaction usage</h1>
 
 ```js
 // Import the @acegoal07/discordjs-pagination package
