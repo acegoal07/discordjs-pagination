@@ -3,18 +3,8 @@
 const InteractionPagination = require('@acegoal07/discordjs-pagination/lib/interaction');
 const MessagePagination = require('@acegoal07/discordjs-pagination/lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
- * @param {Interaction} interaction
- * @param {Message} message
- * @param {MessageEmbed[]} pages
- * @param {MessageButton[]} buttonList
- * @param {number} timeout
- * @returns
-*/
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-const pagination = async ({interaction, message, pages, buttonList, timeout = 2000}) => {
+const pagination = async ({interaction, message, pages, buttonList, timeout = 12000}) => {
   if (message === undefined) {return InteractionPagination({interaction, pages, buttonList, timeout})}
   else {return MessagePagination({message, pages, buttonList, timeout})}
 }
