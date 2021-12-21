@@ -10,6 +10,7 @@
 <p align="center">
     <a href="#about">About</a> &#xa0; | &#xa0;
     <a href="#example">Example</a> &#xa0; | &#xa0;
+    <a href="https://www.npmjs.com/package/@acegoal07/discordjs-pagination">NPM</a> &#xa0; | &#xa0;
     <a href="https://github.com/acegoal07" target="_blank">Author</a>
 </p>
 
