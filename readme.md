@@ -82,8 +82,8 @@ buttonList = [
 
 // Create timeout amount 
 const timeout = 3000;
-// Timeout is how long the collector will listen to the buttons till 
-// turing off if you do not include the timeout it defaults to 120000
+// Timeout is how long the collector will listen to the buttons till
+// turing off if you do not include the timeout it defaults to 12000
 
 // Call the pagination, first three arguments are required. make sure that the arguments are 
 // within brackets like so ({}) otherwise you'll get an error and it won't work
