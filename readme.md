@@ -77,7 +77,7 @@ pages = [
 buttonList = [
     button1,
     button2,
-    button3 // just add the optional delete button here
+    button3 // just add the optional delete after the 2 main buttons
 ]
 
 // Create timeout amount 
