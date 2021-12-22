@@ -18,7 +18,7 @@
 
 <h1 id="about">About</h1>
 
-**1.0.9 contains changes that requires you to update your code to support the new version find the universal example <a href="#example">here</a> the change is very same but makes using the dependency easier**
+**1.0.9 contains changes that requires you to update your code to support the new version find the universal example <a href="#example">here</a> the change is very simple but makes using the dependency easier**
 
 Required dependencies: 
 - discord.js version 13.0.1^
