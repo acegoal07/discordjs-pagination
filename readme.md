@@ -18,7 +18,7 @@
 
 <h1 id="about">About</h1>
 
-**1.0.9 contains changes that requires you to update your code to support the new version find the universal example <a href="#example">here</a> the change is very simple but makes using the dependency easier**
+**1.0.9 contained changes that requires you to update your code to support the new version find the universal example <a href="#example">here</a> the change is very simple but makes using the dependency easier**
 
 Required dependencies: 
 - discord.js version 13.0.1^
@@ -53,17 +53,23 @@ const button1 = new MessageButton()
     .setCustomId('previousbtn')
     .setLabel('Previous')
     .setStyle('DANGER');
-
 const button2 = new MessageButton()
     .setCustomId('nextbtn')
     .setLabel('Next')
     .setStyle('SUCCESS');
-
 // The delete button is optional and is not required for
 // pagination to work
 const button3 = new MessageButton()
     .serCustomId('delbtn')
     .setLabel('Delete')
+    .setStyle('DANGER');
+const button4 = new MessageButton()
+    .serCustomId('lastbtn')
+    .setLabel('Last Page')
+    .setStyle('Success');
+const button5 = new MessageButton()
+    .serCustomId('firstbtn')
+    .setLabel('First page')
     .setStyle('DANGER');
 
 // Create an array of embeds
@@ -73,11 +79,19 @@ pages = [
     // ... Can add as many embeds as you want
 ];
 
-//create an array of buttons
+// Create an array of buttons
 buttonList = [
-    button1,
-    button2,
-    button3 // just add the optional delete after the 2 main buttons
+    button1, // Next page button
+    button2, // Previous page button
+    button3 // Optional delete button (do not include if you do not want it)
+]
+// To use the first and last buttons use
+buttonList = [
+    button5, // First page button
+    button1, // Next page button
+    button2, // Previous page button
+    button4, // Last page button
+    button3 // Optional delete button (do not include if you do not want it)
 ]
 
 // Create timeout amount 
