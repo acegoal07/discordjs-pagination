@@ -20,7 +20,7 @@
 
 **1.0.9 contained changes that requires you to update your code to support the new version find the universal example <a href="#example">here</a> the change is very simple but makes using the dependency easier**
 
-Required dependencies: 
+Required dependency: 
 - discord.js version 13.5.0^
 
 To install use:
