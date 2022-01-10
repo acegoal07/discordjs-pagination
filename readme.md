@@ -18,7 +18,7 @@
 
 <h1 id="about">About</h1>
 
-Required dependencies: 
+Required dependency: 
 - discord.js version 13.5.0^
 
 To install use:
