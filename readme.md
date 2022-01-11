@@ -26,6 +26,10 @@ To install use:
 npm i @acegoal07/discordjs-pagination
 ```
 
+When using the interaction pagination you are able to defer the reply before calling pagination as it supports both deferred and non deferred interaction
+
+If you supply the pagination with less than 2 embeds it will automaticity send the embed without the buttons as a normal embed
+
 When calling the pagination make sure it is pagination({ }) without the brackets it won't work
 <h1 id="example">Example</h1>
 
@@ -96,6 +100,7 @@ buttonList = [
 const timeout = 3000;
 // Timeout is how long the collector will listen to the buttons till
 // turing off if you do not include the timeout it defaults to 12000
+// and the minimum time that can be set is 3000 any lower will result in error
 
 // Call the pagination, first three arguments are required. make sure that the arguments are 
 // within brackets like so ({}) otherwise you'll get an error and it won't work
