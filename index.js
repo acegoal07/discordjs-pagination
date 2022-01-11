@@ -16,8 +16,26 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
       new Error("More than 5 buttons have been provided the extras will be removed");
       buttonList = buttonList.slice(1, 5);
    }
-   // Pass on
-   if (message === undefined) {return InteractionPagination(interaction, pages, buttonList, timeout)}
-   else if (interaction === undefined) {return MessagePagination(message, pages, buttonList, timeout)}
+   // Interaction
+   if (message === undefined) {
+      // Checks
+      if (pages.length < 2) {
+         if (interaction.deferred === true) {
+            return interaction.editReply({embeds: [pages[0]]});
+         } else {
+            return interaction.reply({embeds: [pages[0]]});
+         }
+      }
+      // Run
+      return InteractionPagination(interaction, pages, buttonList, timeout)
+   } 
+   // Message
+   else if (interaction === undefined) {
+      // Checks
+      if (!message && !message.channel) throw new Error("Channel is inaccessible");
+      if (pages.length < 2) return message.channel.send({embeds: [pages[0]]});
+      // Run
+      return MessagePagination(message, pages, buttonList, timeout)
+   }
    else {throw new Error("The pagination was unable to run")}
 }
