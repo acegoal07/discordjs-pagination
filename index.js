@@ -27,7 +27,7 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
          }
       }
       // Run
-      return InteractionPagination(interaction, pages, buttonList, timeout)
+      return InteractionPagination(interaction, pages, buttonList, timeout);
    } 
    // Message
    else if (interaction === undefined) {
@@ -35,7 +35,7 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
       if (!message && !message.channel) throw new Error("Channel is inaccessible");
       if (pages.length < 2) return message.channel.send({embeds: [pages[0]]});
       // Run
-      return MessagePagination(message, pages, buttonList, timeout)
+      return MessagePagination(message, pages, buttonList, timeout);
    }
    else {throw new Error("The pagination was unable to run")}
 }

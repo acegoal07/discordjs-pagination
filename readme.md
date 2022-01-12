@@ -30,6 +30,8 @@ When using the interaction pagination you are able to defer the reply before cal
 
 If you supply the pagination with less than 2 embeds it will automaticity send the embed without the buttons as a normal embed
 
+If you would are not interested in having custom buttons i would recommend using <a href="https://github.com/acegoal07/djs-pagination-portal">@acegoal07/djs-pagination-portal</a> which automatically adjusts which buttons to use depending on how many pages you want
+
 When calling the pagination make sure it is pagination({ }) without the brackets it won't work
 <h1 id="example">Example</h1>
 
