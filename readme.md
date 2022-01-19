@@ -1,18 +1,18 @@
 <h1 align="center">discordjs-pagination</h1>
 <div align="center">
-    <img alt="Repository size" src="https://img.shields.io/github/repo-size/acegoal07/discordjs-pagination">
-    <img alt="npm" src="https://img.shields.io/npm/v/@acegoal07/discordjs-pagination/latest">
-    <img alt="NPM" src="https://img.shields.io/npm/l/@acegoal07/discordjs-pagination">
-    <img alt="npm (prod) dependency version" src="https://img.shields.io/npm/dependency-version/@acegoal07/discordjs-pagination/discord.js">
-    <img alt="Libraries.io dependency status for latest release" src="https://img.shields.io/github/issues-raw/acegoal07/discordjs-pagination">
-    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/acegoal07/discordjs-pagination">
-    <img alt="Monthly Downloads" src="https://img.shields.io/npm/dm/@acegoal07/discordjs-pagination">
+   <img alt="Repository size" src="https://img.shields.io/github/repo-size/acegoal07/discordjs-pagination">
+   <img alt="npm" src="https://img.shields.io/npm/v/@acegoal07/discordjs-pagination/latest">
+   <img alt="NPM" src="https://img.shields.io/npm/l/@acegoal07/discordjs-pagination">
+   <img alt="npm (prod) dependency version" src="https://img.shields.io/npm/dependency-version/@acegoal07/discordjs-pagination/discord.js">
+   <img alt="Libraries.io dependency status for latest release" src="https://img.shields.io/github/issues-raw/acegoal07/discordjs-pagination">
+   <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/acegoal07/discordjs-pagination">
+   <img alt="Monthly Downloads" src="https://img.shields.io/npm/dm/@acegoal07/discordjs-pagination">
 </div><br>
 <p align="center">
-    <a href="#about">About</a> &#xa0; | &#xa0;
-    <a href="#example">Example</a> &#xa0; | &#xa0;
-    <a href="https://www.npmjs.com/package/@acegoal07/discordjs-pagination">NPM</a> &#xa0; | &#xa0;
-    <a href="https://github.com/acegoal07" target="_blank">Author</a>
+   <a href="#about">About</a> &#xa0; | &#xa0;
+   <a href="#example">Example</a> &#xa0; | &#xa0;
+   <a href="https://www.npmjs.com/package/@acegoal07/discordjs-pagination">NPM</a> &#xa0; | &#xa0;
+   <a href="https://github.com/acegoal07" target="_blank">Author</a>
 </p>
 
 ---
@@ -45,58 +45,58 @@ const { MessageEmbed , MessageButton } = require('discord.js');
 // Keep in mind that Embeds should't have their footers set since 
 // the pagination method sets page info there
 const embed1 = new MessageEmbed()
-    .setTitle('First Page')
-    .setDescription('This is the first page');
+   .setTitle('First Page')
+   .setDescription('This is the first page');
 
 const embed2 = new MessageEmbed()
-    .setTitle('Second Page')
-    .setDescription('This is the second page');
+   .setTitle('Second Page')
+   .setDescription('This is the second page');
 
 // Use MessageButton to create the buttons
 // Do not used link buttons as they don't give an output
 const button1 = new MessageButton()
-    .setCustomId('previousbtn')
-    .setLabel('Previous')
-    .setStyle('DANGER');
+   .setCustomId('previousbtn')
+   .setLabel('Previous')
+   .setStyle('DANGER');
 const button2 = new MessageButton()
-    .setCustomId('nextbtn')
-    .setLabel('Next')
-    .setStyle('SUCCESS');
+   .setCustomId('nextbtn')
+   .setLabel('Next')
+   .setStyle('SUCCESS');
 // The delete button is optional and is not required for
 // pagination to work
 const button3 = new MessageButton()
-    .serCustomId('delbtn')
-    .setLabel('Delete')
-    .setStyle('DANGER');
+   .serCustomId('delbtn')
+   .setLabel('Delete')
+   .setStyle('DANGER');
 const button4 = new MessageButton()
-    .serCustomId('lastbtn')
-    .setLabel('Last Page')
-    .setStyle('Success');
+   .serCustomId('lastbtn')
+   .setLabel('Last Page')
+   .setStyle('Success');
 const button5 = new MessageButton()
-    .serCustomId('firstbtn')
-    .setLabel('First page')
-    .setStyle('DANGER');
+   .serCustomId('firstbtn')
+   .setLabel('First page')
+   .setStyle('DANGER');
 
 // Create an array of embeds
 pages = [
 	embed1,
 	embed2
-    // ... Can add as many embeds as you want
+   // ... Can add as many embeds as you want
 ];
 
 // Create an array of buttons
 buttonList = [
-    button1, // Next page button
-    button2, // Previous page button
-    button3 // Optional delete button (do not include if you do not want it)
+   button1, // Next page button
+   button2, // Previous page button
+   button3 // Optional delete button (do not include if you do not want it)
 ]
 // To use the first and last buttons use
 buttonList = [
-    button5, // First page button
-    button1, // Next page button
-    button2, // Previous page button
-    button4, // Last page button
-    button3 // Optional delete button (do not include if you do not want it)
+   button5, // First page button
+   button1, // Next page button
+   button2, // Previous page button
+   button4, // Last page button
+   button3 // Optional delete button (do not include if you do not want it)
 ]
 
 // Create timeout amount 
