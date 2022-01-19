@@ -23,7 +23,7 @@ module.exports = disabledButtons = async (buttonList) => {
             .setLabel(`${button.label}`)
             .setStyle(`${button.style}`)
             .setDisabled(true)
-            .setCustomId(`${count}`)
+            .setCustomId(`disabledbtn${count}`)
       );
    }
    return new MessageActionRow().addComponents(disabledButtonList);
