@@ -13,7 +13,7 @@ module.exports = pagination = async ({interaction, message, replyMessage = false
    if (buttonList.length < 2) throw new Error("Need provide at least 2 buttons");
    if (buttonList.length > 5) {
       process.emitWarning("More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
-      buttonList = buttonList.slice(0, 5);
+      buttonList = buttonList.slice(0, 4);
    }
    for (const button of buttonList) {if (button.style === "LINK") throw new Error("Link buttons are not supported please check what type of buttons you are using")}
    // Message
