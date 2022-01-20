@@ -4,7 +4,7 @@ const InteractionPagination = require('@acegoal07/discordjs-pagination/lib/inter
 const MessagePagination = require('@acegoal07/discordjs-pagination/lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false, privateInteraction = false}) => {
+module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false}) => {
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
    if (!pages) throw new Error("Missing pages");
@@ -28,12 +28,14 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
    // Checks
    if (pages.length < 2) {
       if (interaction.deferred === true) {
-         return privateInteraction ? interaction.editReply({embeds: [pages[0]], ephemeral: true}) : interaction.editReply({embeds: [pages[0]]});
+         return interaction.editReply({embeds: [pages[0]]});
       } else {
-         return privateInteraction ? interaction.reply({embeds: [pages[0]], ephemeral: true}) : interaction.reply({embeds: [pages[0]]});
+         return interaction.reply({embeds: [pages[0]]});
       }
    }
    if (interaction === undefined) throw new Error("Please provide either interaction of message for pagination to use");
+   if (interaction.ephemeral === true && buttonList.length === 3 || interaction.ephemeral === true && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
+   if (interaction.ephemeral === true && autoDelete === true) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
    // Run
-   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, privateInteraction);
+   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete);
 }

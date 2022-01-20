@@ -34,6 +34,8 @@ If you supply the pagination with less than 2 embeds it will automaticity send t
 If you would are not interested in having custom buttons i would recommend using <a href="https://github.com/acegoal07/djs-pagination-portal">@acegoal07/djs-pagination-portal</a> which automatically adjusts which buttons to use depending on how many pages you want
 
 When calling the pagination make sure it is pagination({ }) without the brackets it won't work
+
+If you want to use either autoDelete or the delete buttons with the pagination the interaction can't have ephemeral enabled
 <h1 id="example">Example</h1>
 
 ```js
@@ -104,17 +106,25 @@ const timeout = 3000;
 // turing off if you do not include the timeout it defaults to 12000
 // and the minimum time that can be set is 3000 any lower will result in error
 
-// Call the pagination, first three arguments are required. make sure that the arguments are 
-// within brackets like so ({}) otherwise you'll get an error and it won't work
-
-// autoDelete is an option to have the pagination delete it's self when the timeout ends
-// if you do not want this option remove it from the function call
-
 // For messages use
-// replyMessage is an option to reply to the target message if you do not want this option remove
-// it from the function call
-pagination({message, pages, buttonList, timeout, replyMessage: true, autoDelete: true});
+pagination({
+   message, // Required
+   pages, // Required
+   buttonList, // Required
+   timeout, // Optional - if not provided it will default to 12000ms
+   replyMessage: true, // Optional - An option to reply to the target message if you do not want 
+                       // this option remove it from the function call
+   autoDelete: true // Optional - An option to have the pagination delete it's self when the timeout ends
+                    // if you do not want this option remove it from the function call
+});
 
 // For interaction use
-pagination({interaction, pages, buttonList, timeout, autoDelete: true});
+pagination({
+   interaction, // Required 
+   pages, // Required
+   buttonList, // Required
+   timeout, // Optional - if not provided it will default to 12000ms
+   autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
+                     // if you do not want this option remove it from the function call
+});
 ```
