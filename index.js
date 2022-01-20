@@ -4,7 +4,7 @@ const InteractionPagination = require('@acegoal07/discordjs-pagination/lib/inter
 const MessagePagination = require('@acegoal07/discordjs-pagination/lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false}) => {
+module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false}) => {
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
    if (!pages) throw new Error("Missing pages");
@@ -13,7 +13,7 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
    if (buttonList.length < 2) throw new Error("Need provide at least 2 buttons");
    if (buttonList.length > 5) {
       process.emitWarning("More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
-      buttonList = buttonList.slice(0, 4);
+      buttonList = buttonList.slice(0, 5);
    }
    for (const button of buttonList) {if (button.style === "LINK") throw new Error("Link buttons are not supported please check what type of buttons you are using")}
    // Message
@@ -22,7 +22,7 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
       if (!message && !message.channel) throw new Error("Channel is inaccessible");
       if (pages.length < 2) return replyMessage ? message.reply({embeds: [pages[0]]}) : message.channel.send({embeds: [pages[0]]});
       // Run
-      return MessagePagination(message, replyMessage, pages, buttonList, timeout);
+      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete);
    }
    // Interaction
    // Checks
@@ -35,5 +35,5 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
    }
    if (interaction === undefined) throw new Error("Please provide either interaction of message for pagination to use");
    // Run
-   return InteractionPagination(interaction, pages, buttonList, timeout);
+   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete);
 }

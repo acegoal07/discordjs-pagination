@@ -42,12 +42,11 @@ const pagination = require('@acegoal07/discordjs-pagination');
 const { MessageEmbed , MessageButton } = require('discord.js');
 
 // Use MessageEmbed to make pages
-// Keep in mind that Embeds should't have their footers set since 
-// the pagination method sets page info there
+// Keep in mind that Embeds should't have their footers set since
+// the pagination will overwrite the set footer
 const embed1 = new MessageEmbed()
    .setTitle('First Page')
    .setDescription('This is the first page');
-
 const embed2 = new MessageEmbed()
    .setTitle('Second Page')
    .setDescription('This is the second page');
@@ -108,10 +107,14 @@ const timeout = 3000;
 // Call the pagination, first three arguments are required. make sure that the arguments are 
 // within brackets like so ({}) otherwise you'll get an error and it won't work
 
+// autoDelete is an option to have the pagination delete it's self when the timeout ends
+// if you do not want this option remove it from the function call
+
 // For messages use
-// replyMessage is an option to reply to the target message
-pagination({message, pages, buttonList, timeout, replyMessage});
+// replyMessage is an option to reply to the target message if you do not want this option remove
+// it from the function call
+pagination({message, pages, buttonList, timeout, replyMessage: true, autoDelete: true});
 
 // For interaction use
-pagination({interaction, pages, buttonList, timeout});
+pagination({interaction, pages, buttonList, timeout, autoDelete: true});
 ```
