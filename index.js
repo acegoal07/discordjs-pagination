@@ -12,7 +12,7 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
    if (timeout < 1000) throw new Error("You have set timeout less then 1000ms which is not allowed");
    if (buttonList.length < 2) throw new Error("Need provide at least 2 buttons");
    if (buttonList.length > 5) {
-      console.log(new Error("More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this error"));
+      process.emitWarning("More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
       buttonList = buttonList.slice(1, 5);
    }
    for (const button of buttonList) {if (button.style === "LINK") throw new Error("Link buttons are not supported please check what type of buttons you are using")}
