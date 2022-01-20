@@ -110,7 +110,7 @@ const timeout = 3000;
 
 // For messages use
 // replyMessage is an option to reply to the target message
-pagination({message, replyMessage, pages, buttonList, timeout});
+pagination({message, pages, buttonList, timeout, replyMessage});
 
 // For interaction use
 pagination({interaction, pages, buttonList, timeout});
