@@ -109,7 +109,8 @@ const timeout = 3000;
 // within brackets like so ({}) otherwise you'll get an error and it won't work
 
 // For messages use
-pagination({message, pages, buttonList, timeout});
+// replyMessage is an option to reply to the target message
+pagination({message, replyMessage, pages, buttonList, timeout});
 
 // For interaction use
 pagination({interaction, pages, buttonList, timeout});
