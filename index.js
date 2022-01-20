@@ -4,7 +4,7 @@ const InteractionPagination = require('@acegoal07/discordjs-pagination/lib/inter
 const MessagePagination = require('@acegoal07/discordjs-pagination/lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false}) => {
+module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false, privateInteraction = false}) => {
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
    if (!pages) throw new Error("Missing pages");
@@ -28,12 +28,12 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
    // Checks
    if (pages.length < 2) {
       if (interaction.deferred === true) {
-         return interaction.editReply({embeds: [pages[0]]});
+         return privateInteraction ? interaction.editReply({embeds: [pages[0]], ephemeral: true}) : interaction.editReply({embeds: [pages[0]]});
       } else {
-         return interaction.reply({embeds: [pages[0]]});
+         return privateInteraction ? interaction.reply({embeds: [pages[0]], ephemeral: true}) : interaction.reply({embeds: [pages[0]]});
       }
    }
    if (interaction === undefined) throw new Error("Please provide either interaction of message for pagination to use");
    // Run
-   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete);
+   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, privateInteraction);
 }
