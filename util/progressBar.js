@@ -11,8 +11,8 @@ module.exports = progressBar = async(pages, page) => {
    const slider = "▣";
    const line = "▢";
    // Progress maths#
-   const progress = page;
-   const emptyProgress = pages - page
+   const progress = page + 1;
+   const emptyProgress = pages - (page + 1);
    // Progress text
    const progressText = slider.repeat(progress);
    const emptyProgressText = line.repeat(emptyProgress);
