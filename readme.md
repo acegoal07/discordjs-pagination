@@ -114,7 +114,9 @@ pagination({
    timeout, // Optional - if not provided it will default to 12000ms
    replyMessage: true, // Optional - An option to reply to the target message if you do not want 
                        // this option remove it from the function call
-   autoDelete: true // Optional - An option to have the pagination delete it's self when the timeout ends
+   autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
+                    // if you do not want this option remove it from the function call
+   progressBar: true // Optional - An option to have the footer replaced by a progress bar
                     // if you do not want this option remove it from the function call
 });
 
@@ -126,5 +128,7 @@ pagination({
    timeout, // Optional - if not provided it will default to 12000ms
    autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
                      // if you do not want this option remove it from the function call
+   progressBar: true // Optional - An option to have the footer replaced by a progress bar
+                    // if you do not want this option remove it from the function call                     
 });
 ```

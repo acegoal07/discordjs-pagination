@@ -9,7 +9,7 @@
 // Progress bar maker ////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = progressBar = async(pages, page) => {
    const slider = "▣";
-   const line = "□";
+   const line = "▢";
    // Progress maths
    const percentage = ((page + 1) / pages)
    const progress = Math.round((pages * percentage));
@@ -18,7 +18,5 @@ module.exports = progressBar = async(pages, page) => {
    const progressText = slider.repeat(progress);
    const emptyProgressText = line.repeat(emptyProgress);
    // Create bar
-   let bar
-   bar = `[${progressText+emptyProgressText}] : Page ${page + 1}`
-   return bar;
+   return `[${progressText+emptyProgressText}] : Page ${page + 1}`;
 }
