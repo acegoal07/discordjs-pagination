@@ -4,7 +4,7 @@ const InteractionPagination = require('@acegoal07/discordjs-pagination/lib/inter
 const MessagePagination = require('@acegoal07/discordjs-pagination/lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false}) => {
+module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false, progressBar = false}) => {
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
    if (!pages) throw new Error("Missing pages");
@@ -22,7 +22,7 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
       if (!message && !message.channel) throw new Error("Channel is inaccessible");
       if (pages.length < 2) return replyMessage ? message.reply({embeds: [pages[0]]}) : message.channel.send({embeds: [pages[0]]});
       // Run
-      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete);
+      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete, progressBar);
    }
    // Interaction
    // Checks
@@ -37,5 +37,5 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
    if (interaction.ephemeral === true && buttonList.length === 3 || interaction.ephemeral === true && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
    if (interaction.ephemeral === true && autoDelete === true) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
    // Run
-   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete);
+   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, progressBar);
 }
