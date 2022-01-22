@@ -3,8 +3,8 @@
 /**
  * @param {Number} pages
  * @param {Number} page
- * @param {String} progressSlider
- * @param {String} emptySlide
+ * @param {String} progressSlider // Makes it so it can be customized if wanted (future idea maybe)
+ * @param {String} emptySlide // Makes it so it can be customized if wanted (future idea maybe)
  * @returns {String} Progress bar
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
