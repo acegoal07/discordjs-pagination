@@ -11,6 +11,7 @@
 <p align="center">
    <a href="#about">About</a> &#xa0; | &#xa0;
    <a href="#example">Example</a> &#xa0; | &#xa0;
+   <a href="#makeSure">Make Sure</a> &#xa0; | &#xa0;
    <a href="https://www.npmjs.com/package/@acegoal07/discordjs-pagination">NPM</a> &#xa0; | &#xa0;
    <a href="https://github.com/acegoal07" target="_blank">Author</a>
 </p>
@@ -32,10 +33,11 @@ When using the interaction pagination you are able to defer the reply before cal
 If you supply the pagination with less than 2 embeds it will automaticity send the embed without the buttons as a normal embed
 
 If you would are not interested in having custom buttons i would recommend using <a href="https://github.com/acegoal07/djs-pagination-portal">@acegoal07/djs-pagination-portal</a> which automatically adjusts which buttons to use depending on how many pages you want
+<h1 id="makeSure">Make sure</h1>
 
 When calling the pagination make sure it is pagination({ }) without the brackets it won't work
 
-If you want to use either autoDelete or the delete buttons with the pagination the interaction can't have ephemeral enabled
+If you want to use either autoDelete or the delete buttons with a interaction pagination if you have already deferred the reply you can't have ephemeral enabled
 <h1 id="example">Example</h1>
 
 ```js
