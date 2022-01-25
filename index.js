@@ -4,7 +4,7 @@ const InteractionPagination = require('@acegoal07/discordjs-pagination/lib/inter
 const MessagePagination = require('@acegoal07/discordjs-pagination/lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false, progressBar = false}) => {
+module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false, progressBar = false, privateReply = false}) => {
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
    if (!pages) throw new Error("Missing pages");
@@ -21,21 +21,22 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
       // Checks
       if (!message && !message.channel) throw new Error("Channel is inaccessible");
       if (pages.length < 2) return replyMessage ? message.reply({embeds: [pages[0]]}) : message.channel.send({embeds: [pages[0]]});
+      if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting");
       // Run
-      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete, progressBar);
+      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete, progressBar, privateReply);
    }
    // Interaction
    // Checks
    if (pages.length < 2) {
-      if (interaction.deferred === true) {
+      if (interaction.deferred) {
          return interaction.editReply({embeds: [pages[0]]});
       } else {
          return interaction.reply({embeds: [pages[0]]});
       }
    }
    if (interaction === undefined) throw new Error("Please provide either interaction of message for pagination to use");
-   if (interaction.ephemeral === true && buttonList.length === 3 || interaction.ephemeral === true && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
-   if (interaction.ephemeral === true && autoDelete === true) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
+   if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
+   if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
    // Run
-   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, progressBar);
+   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, progressBar, privateReply);
 }

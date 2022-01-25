@@ -94,7 +94,7 @@ buttonList = [
    button1, // Next page button
    button2, // Previous page button
    button3 // Optional delete button (do not include if you do not want it)
-]
+];
 // To use the first and last buttons use
 buttonList = [
    button5, // First page button
@@ -102,9 +102,9 @@ buttonList = [
    button2, // Previous page button
    button4, // Last page button
    button3 // Optional delete button (do not include if you do not want it)
-]
+];
 
-// Create timeout amount 
+// Create timeout amount
 const timeout = 3000;
 // Timeout is how long the collector will listen to the buttons till
 // turing off if you do not include the timeout it defaults to 12000
@@ -116,23 +116,31 @@ pagination({
    pages, // Required
    buttonList, // Required
    timeout, // Optional - if not provided it will default to 12000ms
-   replyMessage: true, // Optional - An option to reply to the target message if you do not want 
+   replyMessage: true, // Optional - An option to reply to the target message if you do not want
                        // this option remove it from the function call
    autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
                      // if you do not want this option remove it from the function call
-   progressBar: true // Optional - An option to have the footer replaced by a progress bar
-                     // if you do not want this option remove it from the function call
+   progressBar: true, // Optional - An option to have the footer replaced by a progress bar
+                      // if you do not want this option remove it from the function call
+   privateReply: true // Optional - An option to have the pagination sent in a dm
+                      // if you do not want this option remove it from the function call
+
+                      // The progressBar setting might become an array to allow for custom progressBar emojis
 });
 
 // For interaction use
 pagination({
-   interaction, // Required 
+   interaction, // Required
    pages, // Required
    buttonList, // Required
    timeout, // Optional - if not provided it will default to 12000ms
    autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
                      // if you do not want this option remove it from the function call
    progressBar: true // Optional - An option to have the footer replaced by a progress bar
-                     // if you do not want this option remove it from the function call                     
+                     // if you do not want this option remove it from the function call
+   privateReply: true // Optional - An option to have the pagination sent in a dm
+                      // if you do not want this option remove it from the function call
+                     
+                     // The progressBar setting might become an array to allow for custom progressBar emojis
 });
 ```
