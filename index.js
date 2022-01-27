@@ -5,14 +5,14 @@ const MessagePagination = require('./lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = pagination = async ({
-   interaction, message, pages, buttonList, 
-   timeout = 12000, 
-   replyMessage = false, 
-   autoDelete = false, 
+   interaction, message, pages, buttonList,
+   timeout = 12000,
+   replyMessage = false,
+   autoDelete = false,
    privateReply = false,
    progressBar = {
-      toggle = false, 
-      slider = "▣", 
+      toggle = false,
+      slider = "▣",
       bar = "▢"
    }
 }) => {

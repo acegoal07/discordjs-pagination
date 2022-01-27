@@ -123,9 +123,9 @@ pagination({
    privateReply: true, // Optional - An option to have the pagination sent in a dm
                       // if you do not want this option remove it from the function call
    progressBar: {
-      toggle: true, // Required sub-setting
-      slider: "▣", // Optional sub-setting
-      bar: "▢" // Optional sub-setting
+      toggle: true, // Required sub-setting to enable the progressbar
+      slider: "▣", // Optional sub-setting remove if you want default
+      bar: "▢" // Optional sub-setting remove if you want default
    }
    // Optional - An option to have the footer replaced by a progress bar
    // if you do not want this option remove it from the function call
@@ -142,9 +142,9 @@ pagination({
    privateReply: true, // Optional - An option to have the pagination sent in a dm
                       // if you do not want this option remove it from the function call
    progressBar: {
-      toggle: true, // Required sub-setting
-      slider: "▣", // Optional sub-setting
-      bar: "▢" // Optional sub-setting
+      toggle: true, // Required sub-setting to enable the progressbar
+      slider: "▣", // Optional sub-setting remove if you want default
+      bar: "▢" // Optional sub-setting remove if you want default
    }
    // Optional - An option to have the footer replaced by a progress bar
    // if you do not want this option remove it from the function call
