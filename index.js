@@ -1,10 +1,21 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const InteractionPagination = require('@acegoal07/discordjs-pagination/lib/interaction');
-const MessagePagination = require('@acegoal07/discordjs-pagination/lib/message');
+const InteractionPagination = require('./lib/interaction');
+const MessagePagination = require('./lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = pagination = async ({interaction, message, pages, buttonList, timeout = 12000, replyMessage = false, autoDelete = false, progressBar = false, privateReply = false}) => {
+module.exports = pagination = async ({
+   interaction, message, pages, buttonList, 
+   timeout = 12000, 
+   replyMessage = false, 
+   autoDelete = false, 
+   privateReply = false,
+   progressBar = {
+      toggle = false, 
+      slider = "▣", 
+      bar = "▢"
+   }
+}) => {
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
    if (!pages) throw new Error("Missing pages");
@@ -23,7 +34,7 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
       if (pages.length < 2) return replyMessage ? message.reply({embeds: [pages[0]]}) : message.channel.send({embeds: [pages[0]]});
       if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting");
       // Run
-      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete, progressBar, privateReply);
+      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar);
    }
    // Interaction
    // Checks
@@ -38,5 +49,5 @@ module.exports = pagination = async ({interaction, message, pages, buttonList, t
    if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
    if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
    // Run
-   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, progressBar, privateReply);
+   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, privateReply, progressBar);
 }
