@@ -10,11 +10,9 @@ module.exports = pagination = async ({
    replyMessage = false,
    autoDelete = false,
    privateReply = false,
-   progressBar = {
-      toggle = false,
-      slider = "▣",
-      bar = "▢"
-   }
+   progressBar = false,
+   proSlider = "▣",
+   proBar = "▢"
 }) => {
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
@@ -34,7 +32,7 @@ module.exports = pagination = async ({
       if (pages.length < 2) return replyMessage ? message.reply({embeds: [pages[0]]}) : message.channel.send({embeds: [pages[0]]});
       if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting");
       // Run
-      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar);
+      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar);
    }
    // Interaction
    // Checks
@@ -49,5 +47,5 @@ module.exports = pagination = async ({
    if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
    if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
    // Run
-   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, privateReply, progressBar);
+   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, privateReply, progressBar, proSlider, proBar);
 }

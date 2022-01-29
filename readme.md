@@ -115,18 +115,20 @@ pagination({
    message, // Required
    pages, // Required
    buttonList, // Required
+
    timeout, // Optional - if not provided it will default to 12000ms
    replyMessage: true, // Optional - An option to reply to the target message if you do not want
                        // this option remove it from the function call
+
    autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
                      // if you do not want this option remove it from the function call
+
    privateReply: true, // Optional - An option to have the pagination sent in a dm
                       // if you do not want this option remove it from the function call
-   progressBar: {
-      toggle: true, // Required sub-setting to enable the progressbar
-      slider: "▣", // Optional sub-setting remove if you want default
-      bar: "▢" // Optional sub-setting remove if you want default
-   }
+
+   progressBar: true, // Required if you want to use the progressBar
+   proSlider = "▣", // Optional if you want a custom progressBar
+   proBar = "▢" // Optional if you want a custom progressBar
    // Optional - An option to have the footer replaced by a progress bar
    // if you do not want this option remove it from the function call
 });
@@ -136,16 +138,17 @@ pagination({
    interaction, // Required
    pages, // Required
    buttonList, // Required
+
    timeout, // Optional - if not provided it will default to 12000ms
    autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
-                     // if you do not want this option remove it from the function call   
+                     // if you do not want this option remove it from the function call  
+
    privateReply: true, // Optional - An option to have the pagination sent in a dm
                       // if you do not want this option remove it from the function call
-   progressBar: {
-      toggle: true, // Required sub-setting to enable the progressbar
-      slider: "▣", // Optional sub-setting remove if you want default
-      bar: "▢" // Optional sub-setting remove if you want default
-   }
+
+   progressBar: true, // Required if you want to use the progressBar
+   proSlider = "▣", // Optional if you want a custom progressBar
+   proBar = "▢" // Optional if you want a custom progressBar
    // Optional - An option to have the footer replaced by a progress bar
    // if you do not want this option remove it from the function call
 });
