@@ -19,6 +19,8 @@ module.exports = pagination = async ({
    if (!pages) throw new Error("Missing pages");
    if (!buttonList) throw new Error("Missing buttons");
    if (timeout < 1000) throw new Error("You have set timeout less then 1000ms which is not allowed");
+   if (proSlider.length > 1) throw new Error("You can only use 1 character to represent the progressBar slider");
+   if (proBar.length > 1) throw new Error("You can only use 1 character to the progressBar");
    if (buttonList.length < 2) throw new Error("Need provide at least 2 buttons");
    if (buttonList.length > 5) {
       process.emitWarning("More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
