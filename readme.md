@@ -83,7 +83,7 @@ const button5 = new MessageButton()
    .setStyle('DANGER');
 
 // Create an array of embeds
-pages = [
+pageList = [
 	embed1,
 	embed2
    // ... Can add as many embeds as you want
@@ -113,7 +113,7 @@ const timeout = 3000;
 // For messages use
 pagination({
    message, // Required
-   pages, // Required
+   pageList, // Required
    buttonList, // Required
 
    timeout, // Optional - if not provided it will default to 12000ms
@@ -136,7 +136,7 @@ pagination({
 // For interaction use
 pagination({
    interaction, // Required
-   pages, // Required
+   pageList, // Required
    buttonList, // Required
 
    timeout, // Optional - if not provided it will default to 12000ms

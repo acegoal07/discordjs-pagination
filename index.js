@@ -5,7 +5,7 @@ const MessagePagination = require('./lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = pagination = async ({
-   interaction, message, pages, buttonList,
+   interaction, message, pages, pageList, buttonList,
    timeout = 12000,
    replyMessage = false,
    autoDelete = false,
@@ -14,9 +14,14 @@ module.exports = pagination = async ({
    proSlider = "▣",
    proBar = "▢"
 }) => {
+   // deprecated pages
+   if (!pageList && typeof pages === "object") {
+      process.emitWarning(`pages reference deprecated, replace pages with pageList`);
+      pageList = pages;
+   }
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
-   if (!pages) throw new Error("Missing pages");
+   if (!pageList) throw new Error("Missing pages");
    if (!buttonList) throw new Error("Missing buttons");
    if (timeout < 1000) throw new Error("You have set timeout less then 1000ms which is not allowed");
    if (proSlider.length > 1) throw new Error("You can only use 1 character to represent the progressBar slider");
@@ -31,23 +36,23 @@ module.exports = pagination = async ({
    if (typeof message?.author === "object") {
       // Checks
       if (!message && !message.channel) throw new Error("Channel is inaccessible");
-      if (pages.length < 2) return replyMessage ? message.reply({embeds: [pages[0]]}) : message.channel.send({embeds: [pages[0]]});
+      if (pageList.length < 2) return replyMessage ? message.reply({embeds: [pageList[0]]}) : message.channel.send({embeds: [pageList[0]]});
       if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting");
       // Run
-      return MessagePagination(message, pages, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar);
+      return MessagePagination(message, pageList, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar);
    }
    // Interaction
    // Checks
-   if (pages.length < 2) {
+   if (pageList.length < 2) {
       if (interaction.deferred) {
-         return interaction.editReply({embeds: [pages[0]]});
+         return interaction.editReply({embeds: [pageList[0]]});
       } else {
-         return interaction.reply({embeds: [pages[0]]});
+         return interaction.reply({embeds: [pageList[0]]});
       }
    }
    if (interaction === undefined) throw new Error("Please provide either interaction of message for pagination to use");
    if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
    if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
    // Run
-   return InteractionPagination(interaction, pages, buttonList, timeout, autoDelete, privateReply, progressBar, proSlider, proBar);
+   return InteractionPagination(interaction, pageList, buttonList, timeout, autoDelete, privateReply, progressBar, proSlider, proBar);
 }
