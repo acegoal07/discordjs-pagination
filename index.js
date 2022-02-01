@@ -1,10 +1,32 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
+const {
+   Interaction,
+   Message,
+   MessageEmbed,
+   MessageButton
+ } = require("discord.js");
 const InteractionPagination = require('./lib/interaction');
 const MessagePagination = require('./lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @param {Message} message - Discord.js interface
+ * @param {Interaction} interaction - Discord.js interface
+ * @param {MessageEmbed[]} pageList - An array of the embeds
+ * @param {MessageButton[]} buttonList - An array of the buttons
+ * @param {Number} timeout - How long the timeout lasts
+ * @param {Boolean} replyMessage - If replyMessage is enabled
+ * @param {Boolean} autoDelete - If autoDelete is enabled
+ * @param {Boolean} privateReply - If privateReply is enabled
+ * @param {Boolean} progressBar - ProgressBar settings
+ * @param {String} proSlider - The symbol used to symbolise position on the progressBar
+ * @param {String} proBar - The symbol used to symbolise pages to go on the progressBar
+ * @returns {MessageEmbed[]} The pagination
+*/
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = pagination = async ({
+module.exports = pagination = async({
    interaction, message, pages, pageList, buttonList,
    timeout = 12000,
    replyMessage = false,
@@ -13,7 +35,7 @@ module.exports = pagination = async ({
    progressBar = false,
    proSlider = "▣",
    proBar = "▢"
-}) => {
+}) => {   
    // deprecated pages
    if (!pageList && typeof pages === "object") {
       process.emitWarning(`pages reference deprecated, replace pages with pageList`);
