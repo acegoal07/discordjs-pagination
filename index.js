@@ -36,7 +36,7 @@ module.exports = pagination = async({
    progressBar = false,
    proSlider = "▣",
    proBar = "▢",
-   authorIndependent = true
+   authorIndependent = false
 }) => {   
    // deprecated pages
    if (!pageList && typeof pages === "object") {
