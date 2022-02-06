@@ -36,13 +36,13 @@ module.exports = pagination = async({
    // Message
    if (typeof message?.author === "object") {
       // Checks
-      if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting").then(replyMessage = false);
+      if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting");
       if (!message && !message.channel) throw new Error("Channel is inaccessible");
       if (pageList.length < 2) {
-         if (replyMessage) {
-            message.reply({embeds: [pageList[0]]});
+         if (privateReply) {
+            message.author.send({embeds: [pageList[0]]});
          } else {
-            return privateReply ? message.author.send({embeds: [pageList[0]]}) : message.channel.send({embeds: [pageList[0]]});
+            return replyMessage ? message.reply({embeds: [pageList[0]]}) : message.channel.send({embeds: [pageList[0]]});
          }
       }
       // Run
