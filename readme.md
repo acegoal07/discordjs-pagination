@@ -127,8 +127,11 @@ pagination({
                       // if you do not want this option remove it from the function call
 
    progressBar: true, // Required if you want to use the progressBar
-   proSlider = "▣", // Optional if you want a custom progressBar
-   proBar = "▢" // Optional if you want a custom progressBar
+   proSlider: "▣", // Optional if you want a custom progressBar
+   proBar: "▢", // Optional if you want a custom progressBar
+
+   authorIndependent: true // Optional - An option to set pagination buttons only usable by the author
+                           // if you do not want this option remove it from the function call
    // Optional - An option to have the footer replaced by a progress bar
    // if you do not want this option remove it from the function call
 });
@@ -147,8 +150,10 @@ pagination({
                       // if you do not want this option remove it from the function call
 
    progressBar: true, // Required if you want to use the progressBar
-   proSlider = "▣", // Optional if you want a custom progressBar
-   proBar = "▢" // Optional if you want a custom progressBar
+   proSlider: "▣", // Optional if you want a custom progressBar
+   proBar: "▢", // Optional if you want a custom progressBar
+   authorIndependent: true // Optional - An option to set pagination buttons only usable by the author
+                           // if you do not want this option remove it from the function call
    // Optional - An option to have the footer replaced by a progress bar
    // if you do not want this option remove it from the function call
 });
