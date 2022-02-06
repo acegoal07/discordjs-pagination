@@ -22,6 +22,7 @@ const MessagePagination = require('./lib/message');
  * @param {Boolean} progressBar - ProgressBar settings
  * @param {String} proSlider - The symbol used to symbolise position on the progressBar
  * @param {String} proBar - The symbol used to symbolise pages to go on the progressBar
+ * @param {Boolean} authorIndependent - Only the author can use pagination
  * @returns {MessageEmbed[]} The pagination
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +35,8 @@ module.exports = pagination = async({
    privateReply = false,
    progressBar = false,
    proSlider = "▣",
-   proBar = "▢"
+   proBar = "▢",
+   authorIndependent = true
 }) => {   
    // deprecated pages
    if (!pageList && typeof pages === "object") {
@@ -61,7 +63,7 @@ module.exports = pagination = async({
       if (pageList.length < 2) return replyMessage ? message.reply({embeds: [pageList[0]]}) : message.channel.send({embeds: [pageList[0]]});
       if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting");
       // Run
-      return MessagePagination(message, pageList, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar);
+      return MessagePagination(message, pageList, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent);
    }
    // Interaction
    // Checks
@@ -76,5 +78,5 @@ module.exports = pagination = async({
    if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
    if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
    // Run
-   return InteractionPagination(interaction, pageList, buttonList, timeout, autoDelete, privateReply, progressBar, proSlider, proBar);
+   return InteractionPagination(interaction, pageList, buttonList, timeout, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent);
 }
