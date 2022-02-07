@@ -1,35 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const {
-   Interaction,
-   Message,
-   MessageEmbed,
-   MessageButton
- } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const InteractionPagination = require('./lib/interaction');
 const MessagePagination = require('./lib/message');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @param {Message} message - Discord.js interface
- * @param {Interaction} interaction - Discord.js interface
- * @param {MessageEmbed[]} pageList - An array of the embeds
- * @param {MessageButton[]} buttonList - An array of the buttons
- * @param {Number} timeout - How long the timeout lasts
- * @param {Boolean} replyMessage - If replyMessage is enabled
- * @param {Boolean} autoDelete - If autoDelete is enabled
- * @param {Boolean} privateReply - If privateReply is enabled
- * @param {Boolean} progressBar - ProgressBar settings
- * @param {String} proSlider - The symbol used to symbolise position on the progressBar
- * @param {String} proBar - The symbol used to symbolise pages to go on the progressBar
- * @param {Boolean} authorIndependent - Only the author can use pagination
  * @returns {MessageEmbed[]} The pagination
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // pagination ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = pagination = async({
-   interaction, message, pages, pageList, buttonList,
-   timeout = 12000,
+   interaction, message, pageList, buttonList, timeout = 12000,
    replyMessage = false,
    autoDelete = false,
    privateReply = false,
@@ -37,12 +19,7 @@ module.exports = pagination = async({
    proSlider = "▣",
    proBar = "▢",
    authorIndependent = false
-}) => {   
-   // deprecated pages
-   if (!pageList && typeof pages === "object") {
-      process.emitWarning(`pages reference deprecated, replace pages with pageList`);
-      pageList = pages;
-   }
+}) => {
    // Checks
    if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
    if (!pageList) throw new Error("Missing pages");
@@ -59,16 +36,25 @@ module.exports = pagination = async({
    // Message
    if (typeof message?.author === "object") {
       // Checks
-      if (!message && !message.channel) throw new Error("Channel is inaccessible");
-      if (pageList.length < 2) return replyMessage ? message.reply({embeds: [pageList[0]]}) : message.channel.send({embeds: [pageList[0]]});
       if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting");
+      if (!message && !message.channel) throw new Error("Channel is inaccessible");
+      if (pageList.length < 2) {
+         if (privateReply) {
+            message.author.send({embeds: [pageList[0]]});
+         } else {
+            return replyMessage ? message.reply({embeds: [pageList[0]]}) : message.channel.send({embeds: [pageList[0]]});
+         }
+      }
       // Run
       return MessagePagination(message, pageList, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent);
    }
    // Interaction
    // Checks
    if (pageList.length < 2) {
-      if (interaction.deferred) {
+      if (privateReply) {
+         interaction.deferred !== true ? await interaction.reply("The reply has been sent privately") : await interaction.editReply("The reply has been sent privately");
+         curPage = await interaction.client.users.cache.get(interaction.member.user.id).send({embeds: [pageList[0]]});
+      } else if (interaction.deferred) {
          return interaction.editReply({embeds: [pageList[0]]});
       } else {
          return interaction.reply({embeds: [pageList[0]]});
