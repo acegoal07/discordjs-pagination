@@ -1,0 +1,38 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
+const {
+   Message,
+   Interaction,
+   MessageButton
+} = require("discord.js");
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @param {Message} message
+ * @param {Interaction} interaction
+ * @param {MessageButton[]} buttonList
+ * @returns {Function}
+*/
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Filter Builder ////////////////////////////////////////////////////////////////////////////////////////////////////////
+module.exports = {
+   filterBuilder({message, interaction, buttonList, authorIndependent}) {
+      // Get author
+      let authorID;
+      if (typeof message === "object") {
+         authorID = message.author.id;
+      } else {
+         authorID = interaction.user.id || interaction.member.user.id;
+      }
+      // Create filter
+      let filter = (i) =>
+            (i.customId === buttonList[0].customId ||
+            i.customId === buttonList[1].customId ||
+            i.customId === buttonList[2].customId ||
+            i.customId === buttonList[3].customId ||
+            i.customId === buttonList[4].customId) &&
+            (authorIndependent && i.user.id === authorID) ||
+            !authorIndependent;
+      return filter;
+   }   
+}
