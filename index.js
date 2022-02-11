@@ -58,7 +58,7 @@ module.exports = pagination = async({
          return interaction.deferred ? await interaction.editReply({embeds: [pageList[0]]}) : await interaction.reply({embeds: [pageList[0]]});
       }
    }
-   if (interaction === undefined) throw new Error("Please provide either interaction of message for pagination to use");
+   if (interaction === undefined) throw new Error("Please provide either interaction or message for pagination to use");
    if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
    if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
    // Run
