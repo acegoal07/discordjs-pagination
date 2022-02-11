@@ -40,7 +40,7 @@ module.exports = pagination = async({
       if (!message && !message.channel) throw new Error("Channel is inaccessible");
       if (pageList.length < 2) {
          if (privateReply) {
-            message.author.send({embeds: [pageList[0]]});
+            return message.author.send({embeds: [pageList[0]]});
          } else {
             return replyMessage ? message.reply({embeds: [pageList[0]]}) : message.channel.send({embeds: [pageList[0]]});
          }
@@ -52,12 +52,10 @@ module.exports = pagination = async({
    // Checks
    if (pageList.length < 2) {
       if (privateReply) {
-         interaction.deferred !== true ? await interaction.reply("The reply has been sent privately") : await interaction.editReply("The reply has been sent privately");
-         curPage = await interaction.client.users.cache.get(interaction.member.user.id).send({embeds: [pageList[0]]});
-      } else if (interaction.deferred) {
-         return interaction.editReply({embeds: [pageList[0]]});
+         interaction.deferred ? await interaction.editReply("The reply has been sent privately") : await interaction.reply("The reply has been sent privately");
+         return interaction.client.users.cache.get(interaction.member.user.id).send({embeds: [pageList[0]]});
       } else {
-         return interaction.reply({embeds: [pageList[0]]});
+         return interaction.deferred ? await interaction.editReply({embeds: [pageList[0]]}) : await interaction.reply({embeds: [pageList[0]]});
       }
    }
    if (interaction === undefined) throw new Error("Please provide either interaction of message for pagination to use");
