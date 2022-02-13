@@ -54,7 +54,6 @@ module.exports = pagination = async({
    if (pageList.length < 2) {
       if (privateReply) {
          await interaction.deferred ? await interaction.editReply("The reply has been sent privately") : await interaction.reply("The reply has been sent privately");
-         await interaction.deleteReply();
          return interaction.client.users.cache.get(interaction.member.user.id).send({embeds: [pageList[0]]});
       } else {
          return interaction.deferred ? await interaction.editReply({embeds: [pageList[0]]}) : await interaction.reply({embeds: [pageList[0]]});
