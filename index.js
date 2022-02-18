@@ -21,7 +21,6 @@ module.exports = pagination = async({
    authorIndependent = false
 }) => {
    // Checks
-   if (message === undefined && interaction === undefined) throw new Error("Please provide either interaction or message for the pagination to use");
    if (!pageList) throw new Error("Missing pages");
    if (!buttonList) throw new Error("Missing buttons");
    if (timeout < 1000) throw new Error("You have set timeout less then 1000ms which is not allowed");
@@ -50,18 +49,24 @@ module.exports = pagination = async({
       return MessagePagination(message, pageList, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent);
    }
    // Interaction
-   // Checks
-   if (pageList.length < 2) {
-      if (privateReply) {
-         await interaction.deferred ? await interaction.editReply("The reply has been sent privately") : await interaction.reply("The reply has been sent privately");
-         return interaction.client.users.cache.get(interaction.member.user.id).send({embeds: [pageList[0]]});
-      } else {
-         return interaction.deferred ? await interaction.editReply({embeds: [pageList[0]]}) : await interaction.reply({embeds: [pageList[0]]});
+   else if (typeof interaction?.user === "object" || typeof interaction?.member.user === "object") {
+      // Checks
+      if (pageList.length < 2) {
+         if (privateReply) {
+            await interaction.deferred ? await interaction.editReply("The reply has been sent privately") : await interaction.reply("The reply has been sent privately");
+            return interaction.client.users.cache.get(interaction.member.user.id).send({embeds: [pageList[0]]});
+         } else {
+            return interaction.deferred ? await interaction.editReply({embeds: [pageList[0]]}) : await interaction.reply({embeds: [pageList[0]]});
+         }
       }
+      if (interaction === undefined) throw new Error("Please provide either interaction or message for pagination to use");
+      if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
+      if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
+      // Run
+      return InteractionPagination(interaction, pageList, buttonList, timeout, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent);
    }
-   if (interaction === undefined) throw new Error("Please provide either interaction or message for pagination to use");
-   if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
-   if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
-   // Run
-   return InteractionPagination(interaction, pageList, buttonList, timeout, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent);
+   // Missing interaction and message
+   else {
+      throw new Error("Please provide either interaction or message for the pagination to use");
+   }
 }
