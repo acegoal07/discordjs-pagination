@@ -7,7 +7,6 @@ const paginationBase = require('../index');
 module.exports = class paginationWrapper {
    // Constructor
    constructor() {
-      this.pagination = null
       this.message = null,
       this.interaction = null,
       this.pageList = null,
@@ -19,7 +18,8 @@ module.exports = class paginationWrapper {
       this.progressBar = false,
       this.proSlider = "▣",
       this.proBar = "▢",
-      this.authorIndependent = false
+      this.authorIndependent = false,
+      this.pagination = null
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,7 +30,8 @@ module.exports = class paginationWrapper {
     * @returns {paginationWrapper}
     */
    setMessage(message) {
-      // Checks TO ADD
+      // Checks
+      if (!message?.author) throw new Error("The message you have provided is incorrect");
       // Set and return
       this.message = message;
       return this;
@@ -42,7 +43,8 @@ module.exports = class paginationWrapper {
     * @returns {paginationWrapper}
     */
    setInteraction(interaction) {
-      // Checks TO ADD
+      // Checks
+      if (!interaction?.applicationID) throw new Error("The interaction you have provided is incorrect");
       // Set and return
       this.interaction = interaction;
       return this;
@@ -54,7 +56,10 @@ module.exports = class paginationWrapper {
     * @returns {paginationWrapper}
     */
    setButtonList(buttonList) {
-      // Checks TO ADD
+      // Checks
+      if (!buttonList) throw new Error("The buttonList you have provided is empty");
+      if (!typeof buttonList === "object") throw new Error("The buttonList you have provided is not an object");
+      if (buttonList.length < 2) throw new Error("You need to provided a minimum of 2 buttons");
       // Set and return
       this.buttonList = buttonList;
       return this;
@@ -66,7 +71,9 @@ module.exports = class paginationWrapper {
     * @returns {paginationWrapper}
     */
    setPageList(pageList) {
-      // Checks TO ADD
+      // Checks
+      if (!pageList) throw new Error("The pageList you have provided is empty");
+      if (!typeof pageList === "object") throw new Error("The pageList you have provided is not an object");
       // Set and return
       this.pageList = pageList;
       return this;
@@ -76,8 +83,12 @@ module.exports = class paginationWrapper {
     * Run the pagination
     * @returns {paginationWrapper}
     */
-   async run() {
-      // Checks TO ADD
+   async paginate() {
+      // Checks
+      if (!this.message && !this.interaction) throw new Error("You have not provided an interface to use");
+      if (!this.buttonList) throw new Error("You have not provided a buttonList to use");
+      if (!this.pageList) throw new Error("You have not provided a pageList to use");
+      if (this.interaction && this.replyMessage) process.emitWarning("replyMessage can't be used by an interaction pagination");
       // Set and return
       this.pagination = await paginationBase(this);
       return this;
@@ -91,49 +102,15 @@ module.exports = class paginationWrapper {
     * @returns {paginationWrapper}
     */
    setTimeout(timeout) {
-      // Checks and set
+      // Checks
+      if (timeout <= 3000) throw new Error("The time set can't be less than 3000ms");
+      if (!typeof timeout === "number") throw new Error("The time provided is not a number");
+      // Set and return
       if (!timeout) {
          process.emitWarning("You did not provide a timeout to set so it has defaulted to 12000ms");
       } else {
          this.timeout = timeout;
       }
-      // return
-      return this;
-   }
-   // Set replyMessage
-   /**
-    * Allows you to enable replyMessage on the pagination
-    * @param {Boolean} replyMessage 
-    * @returns {paginationWrapper}
-    */
-   setReplyMessage(replyMessage) {
-      // Checks TO ADD
-      // Set and return
-      this.replyMessage = replyMessage;
-      return this;
-   }
-   // Set autoDelete
-   /**
-    * Allows you to enable autoDelete on the pagination
-    * @param {Boolean} autoDelete 
-    * @returns {paginationWrapper}
-    */
-   setAutoDelete(autoDelete) {
-      // Checks TO ADD
-      // Set and return
-      this.autoDelete = autoDelete;
-      return this;
-   }
-   // Set privateReply
-   /**
-    * Allows you to enable privateReply on the pagination
-    * @param {Boolean} privateReply
-    * @returns {paginationWrapper}
-    */
-   setPrivateReply(privateReply) {
-      // Checks TO ADD
-      // Set and return
-      this.privateReply = privateReply;
       return this;
    }
    // Set progressBar
@@ -144,24 +121,56 @@ module.exports = class paginationWrapper {
     * @param {String} proBar 
     * @returns {paginationWrapper}
     */
-   setProgressBar(progressBar, proSlider, proBar) {
-      // Checks TO ADD
+    setProgressBar(proSlider = "▣", proBar = "▢") {
+      // Checks
+      if (!typeof proSlider === "string") throw new Error("The proSlider you have provided is not a string");
+      if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
+      if (!typeof proBar === "string") throw new Error("The proBar you have provided is not a string");
+      if (proBar.length > 1 || proBar.length < 1) throw new Error("The proBar must be 1 character");
       // Set and return
-      this.progressBar = progressBar;
+      this.progressBar = true;
       this.proSlider = proSlider;
       this.proBar = proBar;
       return this;
    }
-   // Set authorIndependent
+   // Set replyMessage
    /**
-    * Allows you to enable authorIndependent for your pagination
-    * @param {Boolean} authorIndependent 
+    * Enables replyMessage on the pagination
     * @returns {paginationWrapper}
     */
-   setAuthorIndependent(authorIndependent) {
-      // Checks TO ADD
+   setReplyMessage() {
       // Set and return
-      this.authorIndependent = authorIndependent;
+      this.replyMessage = true;
+      return this;
+   }
+   // Set autoDelete
+   /**
+    * Enables autoDelete on the pagination
+    * @returns {paginationWrapper}
+    */
+   setAutoDelete() {
+      // Set and return
+      this.autoDelete = true;
+      return this;
+   }
+   // Set privateReply
+   /**
+    * Enables privateReply on the pagination
+    * @returns {paginationWrapper}
+    */
+   setPrivateReply() {
+      // Set and return
+      this.privateReply = true;
+      return this;
+   }
+   // Set authorIndependent
+   /**
+    * Enables authorIndependent for your pagination
+    * @returns {paginationWrapper}
+    */
+   setAuthorIndependent() {
+      // Set and return
+      this.authorIndependent = true;
       return this;
    }
 }
