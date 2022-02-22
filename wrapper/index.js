@@ -117,7 +117,7 @@ module.exports = class paginationWrapper {
    }
    // Set progressBar
    /**
-    * Allows you to enable and edit a progressBar for the pagination
+    * Allows you to enable and edit a progressBar for your pagination
     * @param {Boolean} progressBar 
     * @param {String} proSlider 
     * @param {String} proBar 
@@ -137,7 +137,7 @@ module.exports = class paginationWrapper {
    }
    // Set replyMessage
    /**
-    * Enables replyMessage on the pagination
+    * Enables replyMessage for your pagination
     * @returns {paginationWrapper}
     */
    setReplyMessage() {
@@ -147,7 +147,7 @@ module.exports = class paginationWrapper {
    }
    // Set autoDelete
    /**
-    * Enables autoDelete on the pagination
+    * Enables autoDelete for your pagination
     * @returns {paginationWrapper}
     */
    setAutoDelete() {
@@ -157,7 +157,7 @@ module.exports = class paginationWrapper {
    }
    // Set privateReply
    /**
-    * Enables privateReply on the pagination
+    * Enables privateReply for your pagination
     * @returns {paginationWrapper}
     */
    setPrivateReply() {
@@ -174,5 +174,15 @@ module.exports = class paginationWrapper {
       // Set and return
       this.authorIndependent = true;
       return this;
+   }
+   // Set autoButton
+   /**
+    * Enables autoButton for your pagination
+    * @returns {paginationWrapper}
+    */
+   setAutoButton() {
+      // Set and return
+      this.autoButton = true;
+      return this
    }
 }

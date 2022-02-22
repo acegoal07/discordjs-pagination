@@ -32,7 +32,7 @@ When using the interaction pagination you are able to defer the reply before cal
 
 If you supply the pagination with less than 2 embeds it will automaticity send the embed without the buttons as a normal embed
 
-If you would are not interested in having custom buttons i would recommend using <a href="https://www.npmjs.com/package/@acegoal07/djs-pagination-portal">@acegoal07/djs-pagination-portal</a> which automatically adjusts which buttons to use depending on how many pages you want
+If you do not want custom buttons you can use the autoButton option this replaces the buttonList option and creates the buttons for you
 
 A wrapper for this pagination can be found <a href="https://github.com/acegoal07/discordjs-pagination/tree/main/wrapper">here</a> but as of the moment is not included in the most recent version of the pagination
 
@@ -118,6 +118,10 @@ pagination({
    pageList, // Required
    buttonList, // Required
 
+   autoButtons: true // optional - if you do not want custom buttons remove the buttonList parameter
+                     // and replace it will autoButtons: true which will create buttons depending on
+                     // how many pages there are
+
    timeout, // Optional - if not provided it will default to 12000ms
    replyMessage: true, // Optional - An option to reply to the target message if you do not want
                        // this option remove it from the function call
@@ -143,6 +147,10 @@ pagination({
    interaction, // Required
    pageList, // Required
    buttonList, // Required
+
+   autoButtons: true // optional - if you do not want custom buttons remove the buttonList parameter
+                  // and replace it will autoButtons: true which will create buttons depending on
+                  // how many pages there are
 
    timeout, // Optional - if not provided it will default to 12000ms
    autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends

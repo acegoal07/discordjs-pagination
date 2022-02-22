@@ -3,6 +3,7 @@
 const { MessageEmbed } = require("discord.js");
 const InteractionPagination = require('./lib/interaction');
 const MessagePagination = require('./lib/message');
+const ButtonBuilder = require('./util/buttonBuilder');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -18,9 +19,11 @@ module.exports = pagination = async({
    progressBar = false,
    proSlider = "▣",
    proBar = "▢",
-   authorIndependent = false
+   authorIndependent = false,
+   autoButtons = false
 }) => {
    // Checks
+   if (autoButtons && !pageList) buttonList = await ButtonBuilder(pageList.length);
    if (!pageList) throw new Error("Missing pages");
    if (!buttonList) throw new Error("Missing buttons");
    if (timeout < 1000) throw new Error("You have set timeout less then 1000ms which is not allowed");

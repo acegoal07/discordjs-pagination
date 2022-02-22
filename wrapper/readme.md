@@ -13,6 +13,7 @@ At the moment if this wrapper is it will stay apart of the original package and 
 .setAutoDelete()
 .setPrivateReply()
 .setAuthorIndependent()
+.setAutoButton()
 .paginate()
 ```
 ## Example
@@ -73,4 +74,5 @@ Just add these settings before the paginate function to enable the addons
 .setPrivateReply()
 .setReplyMessage()
 .setProgressBar(new slider, new bar)
+.setAutoButton()
 ```
