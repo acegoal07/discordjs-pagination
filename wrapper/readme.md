@@ -21,7 +21,7 @@ const { MessageEmbed, MessageButton } = require('discord.js');
 const paginationWrapper = require('@acegoal07/discordjs-pagination/wrapper');
 
 // Message example
-new paginationWrapper.setMessage(message)
+new paginationWrapper().setMessage(message)
    .setPageList(
       new MessageEmbed()
          .setTitle("Embed 1")
@@ -43,7 +43,7 @@ new paginationWrapper.setMessage(message)
    .paginate()
 
 // Interaction example
-new paginationWrapper.setInteraction(interaction)
+new paginationWrapper().setInteraction(interaction)
    .setPageList(
       new MessageEmbed()
          .setTitle("Embed 1")
@@ -66,10 +66,11 @@ new paginationWrapper.setInteraction(interaction)
 ```
 ## How to use addons
 Just add these settings before the paginate function to enable the addons
-Addons:
-- .setTimeout([set time])
-- .setAuthorIndependent()
-- .setAutoDelete()
-- .setPrivateReply()
-- .setReplyMessage()
-- .setProgressBar([new slider], [new bar])
+```js
+.setTimeout(set time)
+.setAuthorIndependent()
+.setAutoDelete()
+.setPrivateReply()
+.setReplyMessage()
+.setProgressBar(new slider, new bar)
+```
