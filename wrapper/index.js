@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const { Message, Interaction } = require('discord.js');
-const paginationBase = require('../index');
+const paginationBase = require('../');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = class paginationWrapper {
@@ -58,7 +58,7 @@ module.exports = class paginationWrapper {
    setButtonList(buttonList) {
       // Checks
       if (!buttonList) throw new Error("The buttonList you have provided is empty");
-      if (!typeof buttonList === "object") throw new Error("The buttonList you have provided is not an object");
+      if (typeof buttonList !== "object") throw new Error("The buttonList you have provided is not an object");
       if (buttonList.length < 2) throw new Error("You need to provided a minimum of 2 buttons");
       // Set and return
       this.buttonList = buttonList;
@@ -73,7 +73,7 @@ module.exports = class paginationWrapper {
    setPageList(pageList) {
       // Checks
       if (!pageList) throw new Error("The pageList you have provided is empty");
-      if (!typeof pageList === "object") throw new Error("The pageList you have provided is not an object");
+      if (typeof pageList !== "object") throw new Error("The pageList you have provided is not an object");
       // Set and return
       this.pageList = pageList;
       return this;
@@ -123,9 +123,9 @@ module.exports = class paginationWrapper {
     */
     setProgressBar(proSlider = "▣", proBar = "▢") {
       // Checks
-      if (!typeof proSlider === "string") throw new Error("The proSlider you have provided is not a string");
+      if (typeof proSlider !== "string") throw new Error("The proSlider you have provided is not a string");
       if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
-      if (!typeof proBar === "string") throw new Error("The proBar you have provided is not a string");
+      if (typeof proBar !== "string") throw new Error("The proBar you have provided is not a string");
       if (proBar.length > 1 || proBar.length < 1) throw new Error("The proBar must be 1 character");
       // Set and return
       this.progressBar = true;
