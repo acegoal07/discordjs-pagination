@@ -34,6 +34,8 @@ If you supply the pagination with less than 2 embeds it will automaticity send t
 
 If you would are not interested in having custom buttons i would recommend using <a href="https://www.npmjs.com/package/@acegoal07/djs-pagination-portal">@acegoal07/djs-pagination-portal</a> which automatically adjusts which buttons to use depending on how many pages you want
 
+A wrapper for this pagination can be found <a href="https://github.com/acegoal07/discordjs-pagination/tree/main/wrapper">here</a> but as of the moment is not included in the most recent version of the pagination
+
 <h1 id="makeSure">Make sure</h1>
 
 When calling the pagination make sure it is pagination({ }) without the brackets it won't work
