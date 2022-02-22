@@ -31,6 +31,7 @@ module.exports = class paginationWrapper {
     */
    setMessage(message) {
       // Checks
+      if (typeof message !== "object") throw new Error("The message you have provided is not an object");
       if (!message?.author) throw new Error("The message you have provided is incorrect");
       // Set and return
       this.message = message;
@@ -44,6 +45,7 @@ module.exports = class paginationWrapper {
     */
    setInteraction(interaction) {
       // Checks
+      if (typeof interaction !== "object") throw new Error("The interaction you have provided is not an object");
       if (!interaction?.applicationID) throw new Error("The interaction you have provided is incorrect");
       // Set and return
       this.interaction = interaction;
@@ -104,7 +106,7 @@ module.exports = class paginationWrapper {
    setTimeout(timeout) {
       // Checks
       if (timeout <= 3000) throw new Error("The time set can't be less than 3000ms");
-      if (!typeof timeout === "number") throw new Error("The time provided is not a number");
+      if (typeof timeout !== "number") throw new Error("The time provided is not a number");
       // Set and return
       if (!timeout) {
          process.emitWarning("You did not provide a timeout to set so it has defaulted to 12000ms");
