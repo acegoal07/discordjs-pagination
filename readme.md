@@ -121,8 +121,11 @@ pagination({
    autoButtons: true // optional - if you do not want custom buttons remove the buttonList parameter
                      // and replace it will autoButtons: true which will create buttons depending on
                      // how many pages there are
+   autoButtonsDel: true // Optional - if you are using autoButtons and would like delete buttons this 
+                        // parameter adds delete buttons to the buttonList
 
    timeout, // Optional - if not provided it will default to 12000ms
+
    replyMessage: true, // Optional - An option to reply to the target message if you do not want
                        // this option remove it from the function call
 
@@ -132,14 +135,14 @@ pagination({
    privateReply: true, // Optional - An option to have the pagination sent in a dm
                       // if you do not want this option remove it from the function call
 
+   // Optional - An option to have the footer replaced by a progress bar
+   // if you do not want this option remove it from the function call
    progressBar: true, // Required if you want to use the progressBar
    proSlider: "▣", // Optional if you want a custom progressBar
    proBar: "▢", // Optional if you want a custom progressBar
 
    authorIndependent: true // Optional - An option to set pagination buttons only usable by the author
                            // if you do not want this option remove it from the function call
-   // Optional - An option to have the footer replaced by a progress bar
-   // if you do not want this option remove it from the function call
 });
 
 // For interaction use
@@ -148,24 +151,27 @@ pagination({
    pageList, // Required
    buttonList, // Required
 
-   autoButtons: true // optional - if you do not want custom buttons remove the buttonList parameter
-                  // and replace it will autoButtons: true which will create buttons depending on
-                  // how many pages there are
+   autoButtons: true // Optional - if you do not want custom buttons remove the buttonList parameter
+                     // and replace it will autoButtons: true which will create buttons depending on
+                     // how many pages there are
+   autoButtonsDel: true // Optional - if you are using autoButtons and would like delete buttons this 
+                        // parameter adds delete buttons to the buttonList
 
    timeout, // Optional - if not provided it will default to 12000ms
+
    autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
                      // if you do not want this option remove it from the function call  
 
    privateReply: true, // Optional - An option to have the pagination sent in a dm
                       // if you do not want this option remove it from the function call
 
+   // Optional - An option to have the footer replaced by a progress bar
+   // if you do not want this option remove it from the function call
    progressBar: true, // Required if you want to use the progressBar
    proSlider: "▣", // Optional if you want a custom progressBar
    proBar: "▢", // Optional if you want a custom progressBar
    
    authorIndependent: true // Optional - An option to set pagination buttons only usable by the author
                            // if you do not want this option remove it from the function call
-   // Optional - An option to have the footer replaced by a progress bar
-   // if you do not want this option remove it from the function call
 });
 ```

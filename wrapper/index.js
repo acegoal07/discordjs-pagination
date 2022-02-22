@@ -19,6 +19,8 @@ module.exports = class paginationWrapper {
       this.proSlider = "▣",
       this.proBar = "▢",
       this.authorIndependent = false,
+      this.autoButton = false,
+      this.autoButtonDel = false,
       this.pagination = null
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,6 +185,16 @@ module.exports = class paginationWrapper {
    setAutoButton() {
       // Set and return
       this.autoButton = true;
-      return this
+      return this;
+   }
+   // Set autoButtonDel
+   /**
+    * Enables autoButtonDel for you pagination
+    * @returns {paginationWrapper}
+    */
+   setAutoButtonDel() {
+      // Set and return
+      this.autoButtonDel = true
+      return this;
    }
 }
