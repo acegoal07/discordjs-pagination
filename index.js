@@ -20,11 +20,11 @@ module.exports = pagination = async({
    proSlider = "▣",
    proBar = "▢",
    authorIndependent = false,
-   autoButtons = false,
-   autoButtonsDel = false
+   autoButton = false,
+   autoButtonDel = false
 }) => {
    // Checks
-   if (autoButtons && !pageList) buttonList = await ButtonBuilder(pageList.length, autoButtonsDel);
+   if (autoButton && !pageList) buttonList = await ButtonBuilder(pageList.length, autoButtonDel);
    if (!pageList) throw new Error("Missing pages");
    if (!buttonList) throw new Error("Missing buttons");
    if (timeout < 1000) throw new Error("You have set timeout less then 1000ms which is not allowed");

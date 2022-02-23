@@ -35,18 +35,18 @@ const del = new MessageButton()
 /**
  * Sends back a list of buttons to be used
  * @param {Number} size
- * @param {Boolean} autoButtonsDel
+ * @param {Boolean} autoButtonDel
  * @returns {MessageButton[]} 
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Portal ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = buttonBuilder = async(size, autoButtonsDel) => {
+module.exports = buttonBuilder = async(size, autoButtonDel) => {
    let buttonList
    if (size <= 3) {
       buttonList = [previous, next];
    } else {
       buttonList = [first, previous, next, last];
    }
-   if (autoButtonsDel) buttonList.push(del)
+   if (autoButtonDel) buttonList.push(del)
    return buttonList;
 }
