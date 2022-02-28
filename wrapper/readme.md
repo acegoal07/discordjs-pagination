@@ -1,6 +1,3 @@
-This is just me learning as i have not made something like this before and it may not be added to a released version of the pagination
-
-At the moment if this wrapper is it will stay apart of the original package and not become a separate one but that could change
 ## The current functions
 ```js
 .setMessage()
