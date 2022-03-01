@@ -125,7 +125,7 @@ module.exports = class PaginationWrapper {
     * @param {String} proBar 
     * @returns {PaginationWrapper}
     */
-    setProgressBar(proSlider = "▣", proBar = "▢") {
+   setProgressBar(proSlider = "▣", proBar = "▢") {
       // Checks
       if (typeof proSlider !== "string") throw new Error("The proSlider you have provided is not a string");
       if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
@@ -142,7 +142,7 @@ module.exports = class PaginationWrapper {
     * Enables replyMessage for your pagination
     * @returns {PaginationWrapper}
     */
-   replyToMessage() {
+   enableReplyMessage() {
       // Set and return
       this.replyMessage = true;
       return this;
@@ -162,7 +162,7 @@ module.exports = class PaginationWrapper {
     * Enables privateReply for your pagination
     * @returns {PaginationWrapper}
     */
-   privateReply() {
+   enablePrivateReply() {
       // Set and return
       this.privateReply = true;
       return this;
@@ -172,7 +172,7 @@ module.exports = class PaginationWrapper {
     * Enables authorIndependent for your pagination
     * @returns {PaginationWrapper}
     */
-   authorIndependent() {
+   enableAuthorIndependent() {
       // Set and return
       this.authorIndependent = true;
       return this;
@@ -182,7 +182,7 @@ module.exports = class PaginationWrapper {
     * Enables autoButton for your pagination
     * @returns {PaginationWrapper}
     */
-   autoButton() {
+   enableAutoButton() {
       // Set and return
       this.autoButton = true;
       return this;
@@ -192,7 +192,7 @@ module.exports = class PaginationWrapper {
     * Enables autoButtonDel for you pagination
     * @returns {PaginationWrapper}
     */
-   autoButtonDel() {
+   enableAutoButtonDel() {
       // Set and return
       this.autoButtonDel = true
       return this;
