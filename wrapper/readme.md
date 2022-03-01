@@ -6,12 +6,12 @@
 .setButtonList()
 .setTimeout()
 .setProgressBar()
-.setReplyMessage()
-.setAutoDelete()
-.setPrivateReply()
-.setAuthorIndependent()
-.setAutoButton()
-.setAutoDelButtons()
+.enableReplyMessage()
+.enableAutoDelete()
+.enablePrivateReply()
+.enableAuthorIndependent()
+.enableAutoButton()
+.enableAutoDelButtons()
 .paginate()
 ```
 ## Example
@@ -67,11 +67,11 @@ new paginationWrapper().setInteraction(interaction)
 Just add these methods before the paginate function to enable the addons
 ```js
 .setTimeout(timeInMilliseconds) // Allows you to set a custom timeOut for your pagination
-.setAuthorIndependent() // Enables authorIndependent for your pagination
-.setAutoDelete() // Enables autoDelete for your pagination
-.setPrivateReply() // Enables privateReply for your pagination
-.setReplyMessage() // Enables replyMessage for your pagination
-.setProgressBar(newSliderIcon, newBarIcon) // Enables pagination for your pagination and allows you to edit the characters
-.setAutoButton() // Enables autoButton for your pagination
-.setAutoDelButton() // Enables autoButtonDel for your pagination
+.enableAuthorIndependent() // Enables authorIndependent for your pagination
+.enableAutoDelete() // Enables autoDelete for your pagination
+.enablePrivateReply() // Enables privateReply for your pagination
+.enableReplyMessage() // Enables replyMessage for your pagination
+.setProgressBar({newSliderIcon, newBarIcon}) // Enables pagination for your pagination and allows you to edit the characters
+.enableAutoButton() // Enables autoButton for your pagination
+.enableAutoDelButton() // Enables autoDelButton for your pagination
 ```
