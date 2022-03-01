@@ -1,4 +1,4 @@
-## The current functions
+## The current methods
 ```js
 .setMessage()
 .setInteraction()
@@ -64,7 +64,7 @@ new paginationWrapper().setInteraction(interaction)
    .paginate()
 ```
 ## How to use addons
-Just add these settings before the paginate function to enable the addons
+Just add these methods before the paginate method to enable the addons
 ```js
 .setTimeout(set time)
 .setAuthorIndependent()
