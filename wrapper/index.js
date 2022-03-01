@@ -4,7 +4,7 @@ const { Message, Interaction, MessageButton, MessageEmbed } = require('discord.j
 const paginationBase = require('../');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = class paginationWrapper {
+module.exports = class PaginationWrapper {
    // Constructor
    constructor() {
       this.message = null,
@@ -29,7 +29,7 @@ module.exports = class paginationWrapper {
    /**
     * Set the message interface for the pagination
     * @param {Message} message
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setMessage(message) {
       // Checks
@@ -43,7 +43,7 @@ module.exports = class paginationWrapper {
    /**
     * Set the interaction interface for the pagination
     * @param {Interaction} interaction 
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setInteraction(interaction) {
       // Checks
@@ -57,7 +57,7 @@ module.exports = class paginationWrapper {
    /**
     * Set the buttonList for the pagination
     * @param {MessageButton[]} buttonList 
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setButtonList(buttonList) {
       // Checks
@@ -72,7 +72,7 @@ module.exports = class paginationWrapper {
    /**
     * Set the pageList for the pagination
     * @param {MessageEmbed[]} pageList 
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setPageList(pageList) {
       // Checks
@@ -85,7 +85,7 @@ module.exports = class paginationWrapper {
    // Run pagination
    /**
     * Run the pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    async paginate() {
       // Checks
@@ -103,7 +103,7 @@ module.exports = class paginationWrapper {
    /**
     * How many milliseconds the pagination should run for
     * @param {Number} timeout
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setTimeout(timeout) {
       // Checks
@@ -123,7 +123,7 @@ module.exports = class paginationWrapper {
     * @param {Boolean} progressBar 
     * @param {String} proSlider 
     * @param {String} proBar 
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
     setProgressBar(proSlider = "▣", proBar = "▢") {
       // Checks
@@ -140,7 +140,7 @@ module.exports = class paginationWrapper {
    // Set replyMessage
    /**
     * Enables replyMessage for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    replyToMessage() {
       // Set and return
@@ -150,7 +150,7 @@ module.exports = class paginationWrapper {
    // Set autoDelete
    /**
     * Enables autoDelete for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    autoDelete() {
       // Set and return
@@ -160,7 +160,7 @@ module.exports = class paginationWrapper {
    // Set privateReply
    /**
     * Enables privateReply for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    privateReply() {
       // Set and return
@@ -170,7 +170,7 @@ module.exports = class paginationWrapper {
    // Set authorIndependent
    /**
     * Enables authorIndependent for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    authorIndependent() {
       // Set and return
@@ -180,7 +180,7 @@ module.exports = class paginationWrapper {
    // Set autoButton
    /**
     * Enables autoButton for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    autoButton() {
       // Set and return
@@ -190,7 +190,7 @@ module.exports = class paginationWrapper {
    // Set autoButtonDel
    /**
     * Enables autoButtonDel for you pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    autoButtonDel() {
       // Set and return
