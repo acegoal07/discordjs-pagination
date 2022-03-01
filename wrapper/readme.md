@@ -11,7 +11,7 @@
 .setPrivateReply()
 .setAuthorIndependent()
 .setAutoButton()
-.setAutoButtonDel()
+.setAutoDelButtons()
 .paginate()
 ```
 ## Example
@@ -73,5 +73,5 @@ Just add these methods before the paginate function to enable the addons
 .setReplyMessage() // Enables replyMessage for your pagination
 .setProgressBar(newSliderIcon, newBarIcon) // Enables pagination for your pagination and allows you to edit the characters
 .setAutoButton() // Enables autoButton for your pagination
-.setAutoButtonDel() // Enables autoButtonDel for your pagination
+.setAutoDelButton() // Enables autoButtonDel for your pagination
 ```

@@ -20,7 +20,7 @@ module.exports = class PaginationWrapper {
       this.proBar = "▢",
       this.authorIndependent = false,
       this.autoButton = false,
-      this.autoButtonDel = false,
+      this.autoDelButton = false,
       this.pagination = null
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ module.exports = class PaginationWrapper {
    setInteraction(interaction) {
       // Checks
       if (typeof interaction !== "object") throw new Error("The interaction you have provided is not an object");
-      if (!interaction?.applicationID) throw new Error("The interaction you have provided is incorrect");
+      if (!interaction?.applicationId) throw new Error("The interaction you have provided is incorrect");
       // Set and return
       this.interaction = interaction;
       return this;
@@ -124,7 +124,7 @@ module.exports = class PaginationWrapper {
     * @param {String} proBar 
     * @returns {PaginationWrapper}
     */
-    setProgressBar({proSlider = "▣", proBar = "▢"}) {
+   setProgressBar({proSlider = "▣", proBar = "▢"}) {
       // Checks
       if (typeof proSlider !== "string") throw new Error("The proSlider you have provided is not a string");
       if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
@@ -141,7 +141,7 @@ module.exports = class PaginationWrapper {
     * Enables replyMessage for your pagination
     * @returns {PaginationWrapper}
     */
-   setReplyMessage() {
+   enableReplyMessage() {
       // Set and return
       this.replyMessage = true;
       return this;
@@ -151,7 +151,7 @@ module.exports = class PaginationWrapper {
     * Enables autoDelete for your pagination
     * @returns {PaginationWrapper}
     */
-   setAutoDelete() {
+   enableAutoDelete() {
       // Set and return
       this.autoDelete = true;
       return this;
@@ -161,7 +161,7 @@ module.exports = class PaginationWrapper {
     * Enables privateReply for your pagination
     * @returns {PaginationWrapper}
     */
-   setPrivateReply() {
+   enablePrivateReply() {
       // Set and return
       this.privateReply = true;
       return this;
@@ -171,7 +171,7 @@ module.exports = class PaginationWrapper {
     * Enables authorIndependent for your pagination
     * @returns {PaginationWrapper}
     */
-   setAuthorIndependent() {
+   enableAuthorIndependent() {
       // Set and return
       this.authorIndependent = true;
       return this;
@@ -181,19 +181,19 @@ module.exports = class PaginationWrapper {
     * Enables autoButton for your pagination
     * @returns {PaginationWrapper}
     */
-   setAutoButton() {
+   enableAutoButton() {
       // Set and return
       this.autoButton = true;
       return this;
    }
    // Set autoButtonDel
    /**
-    * Enables autoButtonDel for your pagination
+    * Enables autoDelButton for your pagination
     * @returns {PaginationWrapper}
     */
-   setAutoButtonDel() {
+   enableAutoDelButton() {
       // Set and return
-      this.autoButtonDel = true
+      this.autoDelButton = true
       return this;
    }
 }
