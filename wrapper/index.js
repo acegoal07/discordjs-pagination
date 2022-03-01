@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { Message, Interaction } = require('discord.js');
+const { Message, Interaction, MessageEmbed, MessageButton } = require('discord.js');
 const paginationBase = require('../');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = class paginationWrapper {
+module.exports = class PaginationWrapper {
    // Constructor
    constructor() {
       this.message = null,
@@ -29,7 +29,7 @@ module.exports = class paginationWrapper {
    /**
     * Set the message interface for the pagination
     * @param {Message} message
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setMessage(message) {
       // Checks
@@ -43,7 +43,7 @@ module.exports = class paginationWrapper {
    /**
     * Set the interaction interface for the pagination
     * @param {Interaction} interaction 
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setInteraction(interaction) {
       // Checks
@@ -56,8 +56,8 @@ module.exports = class paginationWrapper {
    // Set ButtonList
    /**
     * Set the buttonList for the pagination
-    * @param {Object[]} buttonList 
-    * @returns {paginationWrapper}
+    * @param {MessageButton[]} buttonList 
+    * @returns {PaginationWrapper}
     */
    setButtonList(buttonList) {
       // Checks
@@ -71,8 +71,8 @@ module.exports = class paginationWrapper {
    // Set pageList
    /**
     * Set the pageList for the pagination
-    * @param {Object[]} pageList 
-    * @returns {paginationWrapper}
+    * @param {MessageEmbed[]} pageList 
+    * @returns {PaginationWrapper}
     */
    setPageList(pageList) {
       // Checks
@@ -85,7 +85,7 @@ module.exports = class paginationWrapper {
    // Run pagination
    /**
     * Run the pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    async paginate() {
       // Checks
@@ -101,9 +101,9 @@ module.exports = class paginationWrapper {
 // Optional ////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
    // Set timeout time
    /**
-    * How many milliseconds the pagination should run for
+    * How many milliseconds your pagination will run for
     * @param {Number} timeout
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setTimeout(timeout) {
       // Checks
@@ -120,12 +120,11 @@ module.exports = class paginationWrapper {
    // Set progressBar
    /**
     * Allows you to enable and edit a progressBar for your pagination
-    * @param {Boolean} progressBar 
     * @param {String} proSlider 
     * @param {String} proBar 
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
-    setProgressBar(proSlider = "▣", proBar = "▢") {
+    setProgressBar({proSlider = "▣", proBar = "▢"}) {
       // Checks
       if (typeof proSlider !== "string") throw new Error("The proSlider you have provided is not a string");
       if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
@@ -140,7 +139,7 @@ module.exports = class paginationWrapper {
    // Set replyMessage
    /**
     * Enables replyMessage for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setReplyMessage() {
       // Set and return
@@ -150,7 +149,7 @@ module.exports = class paginationWrapper {
    // Set autoDelete
    /**
     * Enables autoDelete for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setAutoDelete() {
       // Set and return
@@ -160,7 +159,7 @@ module.exports = class paginationWrapper {
    // Set privateReply
    /**
     * Enables privateReply for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setPrivateReply() {
       // Set and return
@@ -170,7 +169,7 @@ module.exports = class paginationWrapper {
    // Set authorIndependent
    /**
     * Enables authorIndependent for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setAuthorIndependent() {
       // Set and return
@@ -180,7 +179,7 @@ module.exports = class paginationWrapper {
    // Set autoButton
    /**
     * Enables autoButton for your pagination
-    * @returns {paginationWrapper}
+    * @returns {PaginationWrapper}
     */
    setAutoButton() {
       // Set and return
@@ -189,8 +188,8 @@ module.exports = class paginationWrapper {
    }
    // Set autoButtonDel
    /**
-    * Enables autoButtonDel for you pagination
-    * @returns {paginationWrapper}
+    * Enables autoButtonDel for your pagination
+    * @returns {PaginationWrapper}
     */
    setAutoButtonDel() {
       // Set and return

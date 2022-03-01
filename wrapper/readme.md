@@ -1,4 +1,4 @@
-## The current functions
+## The current methods
 ```js
 .setMessage()
 .setInteraction()
@@ -64,14 +64,14 @@ new paginationWrapper().setInteraction(interaction)
    .paginate()
 ```
 ## How to use addons
-Just add these settings before the paginate function to enable the addons
+Just add these methods before the paginate function to enable the addons
 ```js
-.setTimeout(set time)
-.setAuthorIndependent()
-.setAutoDelete()
-.setPrivateReply()
-.setReplyMessage()
-.setProgressBar(new slider, new bar)
-.setAutoButton()
-.setAutoButtonDel()
+.setTimeout(timeInMilliseconds) // Allows you to set a custom timeOut for your pagination
+.setAuthorIndependent() // Enables authorIndependent for your pagination
+.setAutoDelete() // Enables autoDelete for your pagination
+.setPrivateReply() // Enables privateReply for your pagination
+.setReplyMessage() // Enables replyMessage for your pagination
+.setProgressBar(newSliderIcon, newBarIcon) // Enables pagination for your pagination and allows you to edit the characters
+.setAutoButton() // Enables autoButton for your pagination
+.setAutoButtonDel() // Enables autoButtonDel for your pagination
 ```
