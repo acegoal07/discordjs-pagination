@@ -46,9 +46,8 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setInteraction(interaction) {
-      // Checks
       if (typeof interaction !== "object") throw new Error("The interaction you have provided is not an object");
-      if (!interaction?.applicationID) throw new Error("The interaction you have provided is incorrect");
+      if (!interaction?.applicationId) throw new Error("The interaction you have provided is incorrect");
       // Set and return
       this.interaction = interaction;
       return this;
