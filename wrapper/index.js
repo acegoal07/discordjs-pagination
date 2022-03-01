@@ -142,7 +142,7 @@ module.exports = class paginationWrapper {
     * Enables replyMessage for your pagination
     * @returns {paginationWrapper}
     */
-   setReplyMessage() {
+   replyToMessage() {
       // Set and return
       this.replyMessage = true;
       return this;
@@ -152,7 +152,7 @@ module.exports = class paginationWrapper {
     * Enables autoDelete for your pagination
     * @returns {paginationWrapper}
     */
-   setAutoDelete() {
+   autoDelete() {
       // Set and return
       this.autoDelete = true;
       return this;
@@ -162,7 +162,7 @@ module.exports = class paginationWrapper {
     * Enables privateReply for your pagination
     * @returns {paginationWrapper}
     */
-   setPrivateReply() {
+   privateReply() {
       // Set and return
       this.privateReply = true;
       return this;
@@ -172,7 +172,7 @@ module.exports = class paginationWrapper {
     * Enables authorIndependent for your pagination
     * @returns {paginationWrapper}
     */
-   setAuthorIndependent() {
+   authorIndependent() {
       // Set and return
       this.authorIndependent = true;
       return this;
@@ -182,7 +182,7 @@ module.exports = class paginationWrapper {
     * Enables autoButton for your pagination
     * @returns {paginationWrapper}
     */
-   setAutoButton() {
+   autoButton() {
       // Set and return
       this.autoButton = true;
       return this;
@@ -192,7 +192,7 @@ module.exports = class paginationWrapper {
     * Enables autoButtonDel for you pagination
     * @returns {paginationWrapper}
     */
-   setAutoButtonDel() {
+   autoButtonDel() {
       // Set and return
       this.autoButtonDel = true
       return this;
