@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { Message, Interaction } = require('discord.js');
+const { Message, Interaction, MessageButton, MessageEmbed } = require('discord.js');
 const paginationBase = require('../');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ module.exports = class paginationWrapper {
    // Set ButtonList
    /**
     * Set the buttonList for the pagination
-    * @param {Object[]} buttonList 
+    * @param {MessageButton[]} buttonList 
     * @returns {paginationWrapper}
     */
    setButtonList(buttonList) {
@@ -71,7 +71,7 @@ module.exports = class paginationWrapper {
    // Set pageList
    /**
     * Set the pageList for the pagination
-    * @param {Object[]} pageList 
+    * @param {MessageEmbed[]} pageList 
     * @returns {paginationWrapper}
     */
    setPageList(pageList) {
