@@ -1,6 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { Message, Interaction, MessageButton, MessageEmbed } = require('discord.js');
+const { 
+   Message, 
+   Interaction, 
+   MessageEmbed, 
+   MessageButton 
+} = require('discord.js');
 const paginationBase = require('../');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +25,7 @@ module.exports = class PaginationWrapper {
       this.proBar = "▢",
       this.authorIndependent = false,
       this.autoButton = false,
-      this.autoButtonDel = false,
+      this.autoDelButton = false,
       this.pagination = null
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +94,7 @@ module.exports = class PaginationWrapper {
    async paginate() {
       // Checks
       if (!this.message && !this.interaction) throw new Error("You have not provided an interface to use");
-      if (!this.buttonList) throw new Error("You have not provided a buttonList to use");
+      if (!this.buttonList && !this.autoButton) throw new Error("You have not provided a buttonList to use");
       if (!this.pageList) throw new Error("You have not provided a pageList to use");
       if (this.interaction && this.replyMessage) process.emitWarning("replyMessage can't be used by an interaction pagination");
       // Set and return
@@ -100,7 +105,7 @@ module.exports = class PaginationWrapper {
 // Optional ////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
    // Set timeout time
    /**
-    * How many milliseconds the pagination should run for
+    * How many milliseconds your pagination will run for
     * @param {Number} timeout
     * @returns {PaginationWrapper}
     */
@@ -119,12 +124,11 @@ module.exports = class PaginationWrapper {
    // Set progressBar
    /**
     * Allows you to enable and edit a progressBar for your pagination
-    * @param {Boolean} progressBar 
     * @param {String} proSlider 
     * @param {String} proBar 
     * @returns {PaginationWrapper}
     */
-   setProgressBar(proSlider = "▣", proBar = "▢") {
+   setProgressBar({proSlider = "▣", proBar = "▢"}) {
       // Checks
       if (typeof proSlider !== "string") throw new Error("The proSlider you have provided is not a string");
       if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
@@ -151,7 +155,7 @@ module.exports = class PaginationWrapper {
     * Enables autoDelete for your pagination
     * @returns {PaginationWrapper}
     */
-   autoDelete() {
+   enableAutoDelete() {
       // Set and return
       this.autoDelete = true;
       return this;
@@ -188,12 +192,12 @@ module.exports = class PaginationWrapper {
    }
    // Set autoButtonDel
    /**
-    * Enables autoButtonDel for you pagination
+    * Enables autoDelButton for your pagination
     * @returns {PaginationWrapper}
     */
-   enableAutoButtonDel() {
+   enableAutoDelButton() {
       // Set and return
-      this.autoButtonDel = true
+      this.autoDelButton = true
       return this;
    }
 }

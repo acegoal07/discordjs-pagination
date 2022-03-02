@@ -15,7 +15,7 @@ module.exports = {
          authorID = interaction.user.id || interaction.member.user.id;
       }
       // Create filter
-      let filter = (i) =>
+      return filter = (i) =>
             (i.customId === buttonList[0].customId ||
             i.customId === buttonList[1].customId ||
             i.customId === buttonList[2].customId ||
@@ -23,6 +23,5 @@ module.exports = {
             i.customId === buttonList[4].customId) &&
             (authorIndependent && i.user.id === authorID) ||
             !authorIndependent;
-      return filter;
    }   
 }

@@ -119,9 +119,9 @@ pagination({
    buttonList, // Required
 
    autoButton: true, // optional - if you do not want custom buttons remove the buttonList parameter
-                     // and replace it will autoButtos: true which will create buttons depending on
+                     // and replace it will autoButtons: true which will create buttons depending on
                      // how many pages there are
-   autoButtonDel: true, // Optional - if you are using autoButton and would like delete buttons this 
+   autoDelButton: true, // Optional - if you are using autoButton and would like delete buttons this 
                         // parameter adds delete buttons to the buttonList
 
    timeout, // Optional - if not provided it will default to 12000ms
@@ -154,7 +154,7 @@ pagination({
    autoButton: true, // Optional - if you do not want custom buttons remove the buttonList parameter
                      // and replace it will autoButtons: true which will create buttons depending on
                      // how many pages there are
-   autoButtonDel: true, // Optional - if you are using autoButton and would like delete buttons this 
+   autoDelButton: true, // Optional - if you are using autoButton and would like delete buttons this 
                         // parameter adds delete buttons to the buttonList
 
    timeout, // Optional - if not provided it will default to 12000ms
