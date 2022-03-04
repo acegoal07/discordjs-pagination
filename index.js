@@ -24,8 +24,8 @@ module.exports = pagination = async({
    autoDelButton = false
 }) => {
    // Checks
-   if (autoButton && !buttonList) buttonList = await ButtonBuilder(pageList.length, autoDelButton);
    if (!pageList) throw new Error("Missing pages");
+   if (autoButton && !buttonList) buttonList = await ButtonBuilder(pageList.length, autoDelButton);
    if (!buttonList) throw new Error("Missing buttons");
    if (timeout < 1000) throw new Error("You have set timeout less then 1000ms which is not allowed");
    if (proSlider.length > 1) throw new Error("You can only use 1 character to represent the progressBar slider");
