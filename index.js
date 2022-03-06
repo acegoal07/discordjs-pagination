@@ -27,7 +27,7 @@ module.exports = pagination = async({
    if (!pageList) throw new Error("Missing pages");
    if (autoButton && !buttonList) buttonList = await ButtonBuilder(pageList.length, autoDelButton);
    if (!buttonList) throw new Error("Missing buttons");
-   if (timeout < 1000) throw new Error("You have set timeout less then 1000ms which is not allowed");
+   if (timeout < 3000) throw new Error("You have set timeout less then 3000ms which is not allowed");
    if (proSlider.length > 1) throw new Error("You can only use 1 character to represent the progressBar slider");
    if (proBar.length > 1) throw new Error("You can only use 1 character to the progressBar");
    if (buttonList.length < 2) throw new Error("Need provide at least 2 buttons");
@@ -53,7 +53,7 @@ module.exports = pagination = async({
       return MessagePagination(message, pageList, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent);
    }
    // Interaction
-   else if (typeof interaction?.user === "object" || typeof interaction?.member.user === "object") {
+   else if (typeof interaction?.user === "object" || typeof interaction?.member.user === "object" && interaction?.applicationId) {
       // Checks
       if (pageList.length < 2) {
          if (privateReply) {
@@ -63,7 +63,6 @@ module.exports = pagination = async({
             return interaction.deferred ? await interaction.editReply({embeds: [pageList[0]]}) : await interaction.reply({embeds: [pageList[0]]});
          }
       }
-      if (interaction === undefined) throw new Error("Please provide either interaction or message for pagination to use");
       if (interaction.ephemeral && buttonList.length === 3 || interaction.ephemeral && buttonList.length === 5) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
       if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
       // Run
