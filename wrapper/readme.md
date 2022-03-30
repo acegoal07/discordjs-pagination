@@ -21,15 +21,15 @@ const paginationWrapper = require('@acegoal07/discordjs-pagination/wrapper');
 
 // Message example
 new paginationWrapper().setMessage(message)
-   .setPageList(
+   .setPageList([
       new MessageEmbed()
          .setTitle("Embed 1")
          .setDescription("page 1"),
       new MessageEmbed()
          .setTitle("Embed 2")
          .setDescription("page 2")
-   )
-   .setButtonList(
+   ])
+   .setButtonList([
       new MessageButton()
          .setLabel(`1`)
          .setStyle(`1`)
@@ -38,20 +38,20 @@ new paginationWrapper().setMessage(message)
          .setLabel(`2`)
          .setStyle(`2`)
          .setCustomId(`2`)
-   )
+   ])
    .paginate()
 
 // Interaction example
 new paginationWrapper().setInteraction(interaction)
-   .setPageList(
+   .setPageList([
       new MessageEmbed()
          .setTitle("Embed 1")
          .setDescription("page 1"),
       new MessageEmbed()
          .setTitle("Embed 2")
          .setDescription("page 2")
-   )
-   .setButtonList(
+   ])
+   .setButtonList([
       new MessageButton()
          .setLabel(`1`)
          .setStyle(`1`)
@@ -60,7 +60,7 @@ new paginationWrapper().setInteraction(interaction)
          .setLabel(`2`)
          .setStyle(`2`)
          .setCustomId(`2`)
-   )
+   ])
    .paginate()
 ```
 ## How to use addons
