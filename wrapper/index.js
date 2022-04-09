@@ -26,6 +26,7 @@ module.exports = class PaginationWrapper {
       this.authorIndependent = false,
       this.autoButton = false,
       this.autoDelButton = false,
+      this.selectMenu = false,
       this.pagination = null
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -198,7 +199,18 @@ module.exports = class PaginationWrapper {
     */
    enableAutoDelButton() {
       // Set and return
-      this.autoDelButton = true
+      this.autoDelButton = true;
+      return this;
+   }
+   // Set selectMenu
+   /**
+    * Enables selectMenu for your pagination
+    * @deprecated This feature is has not been implemented yet and is only a concept idea 
+    * @returns {PaginationWrapper}
+    */
+   enableSelectMenu() {
+      // Set and return
+      this.selectMenu = true;
       return this;
    }
 }

@@ -24,6 +24,7 @@ module.exports = pagination = async({
    autoDelButton = false
 }) => {
    // Checks
+   if (message && interaction) throw new Error("Do not provided both interaction and message only 1 is required");
    if (!pageList) throw new Error("Missing pages");
    if (autoButton && !buttonList) buttonList = await ButtonBuilder(pageList.length, autoDelButton);
    if (!buttonList) throw new Error("Missing buttons");
