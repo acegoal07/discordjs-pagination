@@ -205,10 +205,6 @@ module.exports = class PaginationWrapper {
    // Set selectMenu
    /**
     * Enables selectMenu for your pagination
-<<<<<<< Updated upstream
-    * @deprecated This feature is has not been implemented yet and is only a concept idea 
-=======
->>>>>>> Stashed changes
     * @returns {PaginationWrapper}
     */
    enableSelectMenu() {
