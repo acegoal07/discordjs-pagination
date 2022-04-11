@@ -6,13 +6,19 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Filter Builder ////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = {
-   filterBuilder({message, interaction, buttonList, authorIndependent}) {
+   filterBuilder({message, interaction, buttonList, authorIndependent, selectMenu}) {
       // Get author
       let authorID;
       if (typeof message === "object") {
          authorID = message.author.id;
       } else {
          authorID = interaction.user.id || interaction.member.user.id;
+      }
+      if (selectMenu) {
+         return filter = (i) => 
+            (i.isSelectMenu()) &&
+            (authorIndependent && i.user.id === authorID) ||
+            !authorIndependent;
       }
       // Create filter
       return filter = (i) =>
