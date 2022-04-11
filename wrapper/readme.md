@@ -74,4 +74,5 @@ Just add these methods before the paginate function to enable the addons
 .setProgressBar({newSliderIcon, newBarIcon}) // Enables pagination for your pagination and allows you to edit the characters
 .enableAutoButton() // Enables autoButton for your pagination
 .enableAutoDelButton() // Enables autoDelButton for your pagination
+.enableSelectMenu() // Enables selectMenu for your pagination
 ```

@@ -143,6 +143,9 @@ pagination({
 
    authorIndependent: true // Optional - An option to set pagination buttons only usable by the author
                            // if you do not want this option remove it from the function call
+   
+   selectMenu: true // Optional - Replaces the page buttons with a drop menu allowing you to select 
+                    // which page you want to go to
 });
 
 // For interaction use
@@ -173,5 +176,8 @@ pagination({
    
    authorIndependent: true // Optional - An option to set pagination buttons only usable by the author
                            // if you do not want this option remove it from the function call
+                              
+   selectMenu: true // Optional - Replaces the page buttons with a drop menu allowing you to select 
+                    // which page you want to go to
 });
 ```

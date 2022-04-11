@@ -1,10 +1,6 @@
 {
   "name": "@acegoal07/discordjs-pagination",
-<<<<<<< Updated upstream
-  "version": "1.2.7-concept",
-=======
   "version": "1.2.7",
->>>>>>> Stashed changes
   "description": "A simple pagination for Discord.js",
   "main": "index.js",
   "repository": {
