@@ -4,23 +4,21 @@ const { MessageSelectMenu } = require("discord.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @param {MessageEmbed[]} pageList An array of the embeds
+ * @param {MessageEmbed[]} pageListLength An array of the embeds
  * @returns {MessageSelectMenu} Select menu
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Select menu maker /////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = selectMenuBuilder = async(pageList) => {
-   count = 0;
+module.exports = selectMenuBuilder = async(pageListLength) => {
    optionArray = [];
-   for (page of pageList) {
-      count += 1;
+   for (let i = 1; i < pageListLength + 1; i++) {
       optionArray.push(
          {
-            label: `Page ${count}`,
-            value: `${count}`,
+            label: `Page ${i}`,
+            value: `${i}`,
          }
       )
-   }
+    }
    return new MessageSelectMenu()
       .setCustomId('select')
       .setPlaceholder('Select Page')
