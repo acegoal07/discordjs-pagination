@@ -6,7 +6,7 @@ const {
    MessageEmbed, 
    MessageButton 
 } = require('discord.js');
-const paginationBase = require('../');
+const PaginationBase = require('../');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = class PaginationWrapper {
@@ -100,7 +100,7 @@ module.exports = class PaginationWrapper {
       if (!this.pageList) throw new Error("You have not provided a pageList to use");
       if (this.interaction && this.replyMessage) process.emitWarning("replyMessage can't be used by an interaction pagination");
       // Set and return
-      this.pagination = await paginationBase(this);
+      this.pagination = await PaginationBase(this);
       return this;
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
