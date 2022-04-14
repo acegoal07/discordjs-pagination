@@ -9,7 +9,7 @@
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Progress bar maker ////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = progressBarBuilder = async(pageListLength, pageNumber, proSlider, proBar) => {
+module.exports = ProgressBarBuilder = async(pageListLength, pageNumber, proSlider, proBar) => {
    // Progress maths
    const progress = pageNumber + 1;
    const emptyProgress = pageListLength - (pageNumber + 1);

@@ -5,12 +5,12 @@ const { MessageSelectMenu, MessageActionRow } = require("discord.js");
 // Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * @param {MessageEmbed[]} pageListLength An array of the embeds
- * @param {Boolean} disabled If the select menu needs to be disabeld
+ * @param {Boolean} disabled If the select menu needs to be disabled
  * @returns {MessageActionRow} Select menu
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Select menu maker /////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = selectMenuBuilder = async(pageListLength, disabled) => {
+module.exports = SelectMenuBuilder = async(pageListLength, disabled) => {
    count = 0;
    optionArray = [];
    for (let i = 1; i < pageListLength + 1; i++) {
