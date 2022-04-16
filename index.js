@@ -38,7 +38,10 @@ module.exports = pagination = async({
       process.emitWarning("More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
       buttonList = buttonList.slice(0, 5);
    }
-   for (const button of buttonList) {if (button.style === "LINK") throw new Error("Link buttons are not supported please check what type of buttons you are using")}
+   for (const button of buttonList) {
+      if (button.style === "LINK") throw new Error("Link buttons are not supported please check what type of buttons you are using");
+      if (button.disabled) throw new Error("You have provided buttons that are disabled these cant be used to turn pages, make sure the buttons you are trying to use are enabled");
+   }
    // Message
    if (typeof message?.author === "object") {
       // Checks
