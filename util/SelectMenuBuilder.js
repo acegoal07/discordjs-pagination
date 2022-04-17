@@ -25,13 +25,13 @@ module.exports = SelectMenuBuilder = async(pageListLength, disabled) => {
    if (disabled) {
       return new MessageActionRow().addComponents(
          new MessageSelectMenu()
-            .setCustomId('dselect')
+            .setCustomId('disabledSM')
             .setDisabled(true)
             .setPlaceholder('Select Page')
             .addOptions(optionArray)
       )
    }
-   // Enbaled selectMenu
+   // Enabled selectMenu
    return new MessageActionRow().addComponents(
       new MessageSelectMenu()
          .setCustomId('select')
