@@ -1,3 +1,9 @@
+## To use
+The wrapper can be accessed by using:
+```js
+const paginationWrapper = require('@acegoal07/discordjs-pagination/wrapper');
+```
+
 ## The current methods
 ```js
 .setMessage()

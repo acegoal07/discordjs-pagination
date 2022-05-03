@@ -34,7 +34,7 @@ If you supply the pagination with less than 2 embeds it will automaticity send t
 
 If you do not want custom buttons you can use the autoButton option this replaces the buttonList option and creates the buttons for you
 
-A wrapper for this pagination can be found <a href="https://github.com/acegoal07/discordjs-pagination/tree/main/wrapper">here</a> but as of the moment is not included in the most recent version of the pagination
+A wrapper for this pagination can be found <a href="https://github.com/acegoal07/discordjs-pagination/tree/main/wrapper">here</a> this is automatically included with the package when you download it and is optional if you want to use it
 
 <h1 id="makeSure">Make sure</h1>
 
