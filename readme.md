@@ -1,10 +1,31 @@
-## To use
-The wrapper can be accessed by using:
-```js
-const paginationWrapper = require('@acegoal07/discordjs-pagination/wrapper');
-```
+<h1 align="center">discordjs-pagination</h1>
+<div align="center">
+   <img alt="Repository size" src="https://img.shields.io/github/repo-size/acegoal07/discordjs-pagination">
+   <img alt="npm" src="https://img.shields.io/npm/v/@acegoal07/discordjs-pagination/latest">
+   <img alt="NPM" src="https://img.shields.io/npm/l/@acegoal07/discordjs-pagination">
+   <img alt="npm (prod) dependency version" src="https://img.shields.io/npm/dependency-version/@acegoal07/discordjs-pagination/discord.js">
+   <img alt="Libraries.io dependency status for latest release" src="https://img.shields.io/github/issues-raw/acegoal07/discordjs-pagination">
+   <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/acegoal07/discordjs-pagination">
+   <img alt="Monthly Downloads" src="https://img.shields.io/npm/dm/@acegoal07/discordjs-pagination">
+</div><br>
+<p align="center">
+   <a href="#about">About</a> &#xa0; | &#xa0;
+   <a href="#example">Example</a> &#xa0; | &#xa0;
+   <a href="#functions">Wrapper functions</a> &#xa0; | &#xa0;
+   <a href="#settingsHelp">Optional settings help</a> &#xa0; | &#xa0;
+   <a href="https://www.npmjs.com/package/@acegoal07/discordjs-pagination">NPM</a> &#xa0; | &#xa0;
+   <a href="https://github.com/acegoal07" target="_blank">Author</a>
+</p>
 
-## The current methods
+---
+
+<h3>Version 1.2.9 contains major changes that affects how you call upon the pagination please check the example to see how to update to the new version</h3>
+
+<h1 id="about">About</h1>
+This pagination supports both Message and Interaction and automaticity switches between which interface is provided
+
+<h1 id="functions">All wrapper functions</h1>
+
 ```js
 .setMessage()
 .setInteraction()
@@ -20,10 +41,11 @@ const paginationWrapper = require('@acegoal07/discordjs-pagination/wrapper');
 .enableAutoDelButtons()
 .paginate()
 ```
-## Example
+<h1 id="example">Example</h1>
+
 ```js
 const { MessageEmbed, MessageButton } = require('discord.js');
-const paginationWrapper = require('@acegoal07/discordjs-pagination/wrapper');
+const paginationWrapper = require('@acegoal07/discordjs-pagination');
 
 // Message example
 new paginationWrapper().setMessage(message)
@@ -69,8 +91,34 @@ new paginationWrapper().setInteraction(interaction)
    ])
    .paginate()
 ```
-## How to use addons
-Just add these methods before the paginate function to enable the addons
+<h1 id="settingsHelp">Optional settings help</h1>
+
+Just add these methods before the paginate function to enable the addons e.g.
+```js
+new paginationWrapper().setInteraction(interaction)
+   .setPageList([
+      new MessageEmbed()
+         .setTitle("Embed 1")
+         .setDescription("page 1"),
+      new MessageEmbed()
+         .setTitle("Embed 2")
+         .setDescription("page 2")
+   ])
+   .setButtonList([
+      new MessageButton()
+         .setLabel(`1`)
+         .setStyle(`1`)
+         .setCustomId(`1`),
+      new MessageButton()
+         .setLabel(`2`)
+         .setStyle(`2`)
+         .setCustomId(`2`)
+   ])
+   .enableAutoDelete() // <---- Make sure its before the paginate function or it wont enable
+   .paginate()
+```
+
+All the available settings and the input they need
 ```js
 .setTimeout(timeInMilliseconds) // Allows you to set a custom timeOut for your pagination
 .enableAuthorIndependent() // Enables authorIndependent for your pagination
