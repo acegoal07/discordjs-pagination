@@ -5,8 +5,8 @@ const {
    Interaction, 
    MessageEmbed, 
    MessageButton 
-} = require('discord.js');
-const PaginationBase = require('./lib/PaginationBase');
+} = require("discord.js");
+const PaginationBase = require("./lib/PaginationBase");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = class PaginationWrapper {
@@ -28,6 +28,7 @@ module.exports = class PaginationWrapper {
       this.autoDelButton = false,
       this.selectMenu = false,
       this.pageBuilderInfo = null,
+      this.buttonBuilderInfo = null,
       this.pagination = null
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,7 +99,7 @@ module.exports = class PaginationWrapper {
       console.log(this.pageBuilderInfo)
       // Checks
       if (!this.message && !this.interaction) throw new Error("You have not provided an interface to use");
-      if (!this.buttonList && !this.autoButton) throw new Error("You have not provided a buttonList to use");
+      if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("You have not provided a buttonList to use");
       if (!this.pageList && !this.pageBuilderInfo) throw new Error("You have not provided a pageList to use");
       if (this.interaction && this.replyMessage) process.emitWarning("replyMessage can't be used by an interaction pagination");
       // Set and return
@@ -216,19 +217,33 @@ module.exports = class PaginationWrapper {
    }
    // Page creator
    /**
-    * 
+    * Allows you to use the pagination to create the pages for the pagination
     * @returns {PaginationWrapper}
     */
    createPages(info = [{
-      title: null,
-      description: null,
-      fields: {
-         name: null,
-         value: null,
-         inline: false
-      }
+      title: String,
+      description: String,
+      color: String,
+      fields: [{
+         name: String,
+         value: String,
+         inline: Boolean
+      }]
    }]) {
       this.pageBuilderInfo = info;
+      return this;
+   }
+   // Button creator
+   /**
+    * Allows you to use the pagination to create the buttons for the pagination
+    * @returns {PaginationWrapper}
+    */
+   createButtons(info = [{
+      customId: String,
+      label: String,
+      style: String
+   }]) {
+      this.buttonBuilderInfo = info;
       return this;
    }
 }

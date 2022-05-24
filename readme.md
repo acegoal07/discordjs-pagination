@@ -13,6 +13,7 @@
    <a href="#example">Example</a> &#xa0; | &#xa0;
    <a href="#functions">Wrapper functions</a> &#xa0; | &#xa0;
    <a href="#settingsHelp">Optional settings help</a> &#xa0; | &#xa0;
+   <a href="#createHelp">Page and button builder</a> &#xa0; | &#xa0;
    <a href="https://www.npmjs.com/package/@acegoal07/discordjs-pagination">NPM</a> &#xa0; | &#xa0;
    <a href="https://github.com/acegoal07" target="_blank">Author</a>
 </p>
@@ -39,6 +40,8 @@ This pagination supports both Message and Interaction and automaticity switches 
 .enableAuthorIndependent()
 .enableAutoButton()
 .enableAutoDelButtons()
+.createPages()
+.createButtons()
 .paginate()
 ```
 <h1 id="example">Example</h1>
@@ -129,4 +132,51 @@ All the available settings and the input they need
 .enableAutoButton() // Enables autoButton for your pagination
 .enableAutoDelButton() // Enables autoDelButton for your pagination
 .enableSelectMenu() // Enables selectMenu for your pagination
+.createPages() // View create help to see how to use this feature
+.createButtons() // View create help to see how to use this feature
+```
+<h1 id="createHelp">Create help</h1>
+
+Create Pages example
+```js
+// This feature replaces the .setPageList() function
+.createPages([
+   {
+      title: "page1",
+      description:"page1 is here",
+      color: "RED",
+      fields: [
+         {
+            name: "field1",
+            value: "hello",
+            inline: false
+         },
+         {
+            name: "field2",
+            value: "hello",
+            inline: false
+         }
+      ]
+   },
+   {
+      // And carry on like so
+   }
+])
+// Support for more embed features is to be added
+```
+
+create Buttons example
+```js
+// This feature replaces the .setButtonList() function
+.createbuttons([
+   {
+      customId: "button1",
+      label: "i am button 1",
+      style: "SUCCESS"
+   },
+   {
+      // And carry on like so
+   }
+// Support for more button features is to be added
+])
 ```
