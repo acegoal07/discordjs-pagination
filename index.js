@@ -27,6 +27,7 @@ module.exports = class PaginationWrapper {
       this.autoButton = false,
       this.autoDelButton = false,
       this.selectMenu = false,
+      this.pageBuilderInfo = null,
       this.pagination = null
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,10 +95,11 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    async paginate() {
+      console.log(this.pageBuilderInfo)
       // Checks
       if (!this.message && !this.interaction) throw new Error("You have not provided an interface to use");
       if (!this.buttonList && !this.autoButton) throw new Error("You have not provided a buttonList to use");
-      if (!this.pageList) throw new Error("You have not provided a pageList to use");
+      if (!this.pageList && !this.pageBuilderInfo) throw new Error("You have not provided a pageList to use");
       if (this.interaction && this.replyMessage) process.emitWarning("replyMessage can't be used by an interaction pagination");
       // Set and return
       this.pagination = await PaginationBase(this);
@@ -210,6 +212,23 @@ module.exports = class PaginationWrapper {
    enableSelectMenu() {
       // Set and return
       this.selectMenu = true;
+      return this;
+   }
+   // Page creator
+   /**
+    * 
+    * @returns {PaginationWrapper}
+    */
+   createPages(info = [{
+      title: null,
+      description: null,
+      fields: {
+         name: null,
+         value: null,
+         inline: false
+      }
+   }]) {
+      this.pageBuilderInfo = info;
       return this;
    }
 }
