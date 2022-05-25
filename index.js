@@ -221,14 +221,28 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    createPages(info = [{
-      title: String,
-      description: String,
       color: String,
-      fields: [{
+	   title: String,
+      url: String,
+      author: {
          name: String,
-         value: String,
-         inline: Boolean
-      }]
+         icon_url: String,
+         url: String
+      },
+      description: String,
+      thumbnail: {
+         url: String
+      },
+      fields: [
+         {
+            name: String,
+            value: String,
+            inline: Boolean
+         },
+      ],
+      image: {
+         url: String
+      }
    }]) {
       this.pageBuilderInfo = info;
       return this;
@@ -241,7 +255,8 @@ module.exports = class PaginationWrapper {
    createButtons(info = [{
       customId: String,
       label: String,
-      style: String
+      style: String,
+      emoji: String
    }]) {
       this.buttonBuilderInfo = info;
       return this;

@@ -12,10 +12,18 @@ const { MessageButton } = require("discord.js");
 module.exports = ButtonBuilder = async(buttonBuilderInfo) => {
    let buttonList = []
    for (const button of buttonBuilderInfo) {
-         const embedButton = new MessageButton()
-            .setCustomId(button.customId)
-            .setLabel(button.label)
-            .setStyle(button.setStyle)
+      // Check for info
+      if (!button.customId) throw new Error("The custom id for the button must be provided");
+      if (!button.setStyle) throw new Error("The style for the button must be provided");
+      // Create button
+      const embedButton = new MessageButton()
+         .setCustomId(button.customId)
+         .setStyle(button.setStyle);
+         // Add check for label or emoji
+         if (button.label && !button.emoji) {embedButton.setLabel(button.label)}
+         else if (button.label && button.emoji) {embedButton.setLabel(button.label)}
+         else {embedButton.setEmoji(button.emoji)}
+      // Add button to array
       buttonList.push(embedButton)
    }
    return buttonList;

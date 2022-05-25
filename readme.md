@@ -142,41 +142,50 @@ Create Pages example
 // This feature replaces the .setPageList() function
 .createPages([
    {
-      title: "page1",
-      description:"page1 is here",
       color: "RED",
+	   title: "page1",
+      url: "https://acegoal07.dev",
+      description: "page1 is here",
+      author: {
+         name: "acegoal07",
+         icon_url: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
+         url: "https://acegoal07.dev",
+      },
+      thumbnail: {
+         url: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
+      },
       fields: [
          {
             name: "field1",
             value: "hello",
-            inline: false
+            inline: false,
          },
          {
-            name: "field2",
-            value: "hello",
-            inline: false
+            // And carry on like so
          }
-      ]
+      ],
+      image: {
+         url: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
+      }
    },
    {
       // And carry on like so
    }
 ])
-// Support for more embed features is to be added
 ```
 
 create Buttons example
 ```js
 // This feature replaces the .setButtonList() function
-.createbuttons([
+.createButtons([
    {
       customId: "button1",
       label: "i am button 1",
+      emoji: "123456789012345678", // emoji replaces the label info
       style: "SUCCESS"
    },
    {
       // And carry on like so
    }
-// Support for more button features is to be added
 ])
 ```
