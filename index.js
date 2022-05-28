@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { 
-   Message, 
-   Interaction, 
-   MessageEmbed, 
-   MessageButton 
+const {
+   Message,
+   Interaction,
+   MessageEmbed,
+   MessageButton
 } = require("discord.js");
 const PaginationBase = require("./lib/PaginationBase");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ module.exports = class PaginationWrapper {
    // Set interaction interface
    /**
     * Set the interaction interface for the pagination
-    * @param {Interaction} interaction 
+    * @param {Interaction} interaction
     * @returns {PaginationWrapper}
     */
    setInteraction(interaction) {
@@ -64,7 +64,7 @@ module.exports = class PaginationWrapper {
    // Set ButtonList
    /**
     * Set the buttonList for the pagination
-    * @param {MessageButton[]} buttonList 
+    * @param {MessageButton[]} buttonList
     * @returns {PaginationWrapper}
     */
    setButtonList(buttonList) {
@@ -79,7 +79,7 @@ module.exports = class PaginationWrapper {
    // Set pageList
    /**
     * Set the pageList for the pagination
-    * @param {MessageEmbed[]} pageList 
+    * @param {MessageEmbed[]} pageList
     * @returns {PaginationWrapper}
     */
    setPageList(pageList) {
@@ -107,7 +107,7 @@ module.exports = class PaginationWrapper {
       return this;
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Optional ////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+// Optional //////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // Set timeout time
    /**
     * How many milliseconds your pagination will run for
@@ -129,8 +129,8 @@ module.exports = class PaginationWrapper {
    // Set progressBar
    /**
     * Allows you to enable and edit a progressBar for your pagination
-    * @param {String} proSlider 
-    * @param {String} proBar 
+    * @param {String} proSlider
+    * @param {String} proBar
     * @returns {PaginationWrapper}
     */
    setProgressBar({proSlider = "▣", proBar = "▢"}) {
@@ -218,31 +218,45 @@ module.exports = class PaginationWrapper {
    // Page creator
    /**
     * Allows you to use the pagination to create the pages for the pagination
+    * @param {[{
+    *    color?: String,
+    *    title?: String,
+    *    url?: String,
+    *    author?: {
+    *       name: String,
+    *       icon_url?: String,
+    *       url?: String
+    *    },
+    *    description?: String,
+    *    thumbnailUrl?: String,
+    *    fields?: [{
+    *       name: String,
+    *       value: String,
+    *       inline?: Boolean
+    *    }],
+    *    imageUrl?: String
+    * }]} info
     * @returns {PaginationWrapper}
     */
    createPages(info = [{
-      color: String,
-	   title: String,
-      url: String,
+      color: null,
+	   title: null,
+      url: null,
       author: {
-         name: String,
-         icon_url: String,
-         url: String
+         name: null,
+         icon_url: null,
+         url: null
       },
-      description: String,
-      thumbnail: {
-         url: String
-      },
+      description: null,
+      thumbnailUrl: null,
       fields: [
          {
-            name: String,
-            value: String,
-            inline: Boolean
+            name: null,
+            value: null,
+            inline: false
          },
       ],
-      image: {
-         url: String
-      }
+      imageUrl: null
    }]) {
       this.pageBuilderInfo = info;
       return this;
@@ -250,13 +264,19 @@ module.exports = class PaginationWrapper {
    // Button creator
    /**
     * Allows you to use the pagination to create the buttons for the pagination
+    * @param {[{
+    *    customId: String,
+    *    label?: String,
+    *    style: String,
+    *    emoji?: String
+    * }]} info
     * @returns {PaginationWrapper}
     */
    createButtons(info = [{
-      customId: String,
-      label: String,
-      style: String,
-      emoji: String
+      customId: null,
+      label: null,
+      style: null,
+      emoji: null
    }]) {
       this.buttonBuilderInfo = info;
       return this;

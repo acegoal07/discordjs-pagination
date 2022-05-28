@@ -151,22 +151,18 @@ Create Pages example
          icon_url: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
          url: "https://acegoal07.dev",
       },
-      thumbnail: {
-         url: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
-      },
+      thumbnailUrl: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
       fields: [
          {
-            name: "field1",
-            value: "hello",
+            name: "Look i work",
+            value: "Hello World!",
             inline: false,
          },
          {
             // And carry on like so
          }
       ],
-      image: {
-         url: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
-      }
+      imageUrl: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
    },
    {
       // And carry on like so
@@ -181,7 +177,7 @@ create Buttons example
    {
       customId: "button1",
       label: "i am button 1",
-      emoji: "123456789012345678", // emoji replaces the label info
+      emoji: "123456789012345678", // emoji replaces the label
       style: "SUCCESS"
    },
    {

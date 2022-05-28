@@ -1,35 +1,36 @@
 {
   "name": "@acegoal07/discordjs-pagination",
-  "version": "1.2.9-beta4",
+  "version": "1.2.9",
   "description": "A simple pagination for Discord.js",
   "main": "index.js",
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
+      "type": "git",
+      "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
   },
   "keywords": [
-    "acegoal07",
-    "Discord",
-    "Buttons",
-    "Pagination",
-    "discord-buttons",
-    "paginator",
-    "discordjs",
-    "discord.js"
+      "acegoal07",
+      "Discord",
+      "Buttons",
+      "Pagination",
+      "discord-buttons",
+      "paginator",
+      "discordjs",
+      "discord.js"
   ],
   "author": "acegoal07",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/acegoal07/discordjs-pagination/issues"
+      "url": "https://github.com/acegoal07/discordjs-pagination/issues"
   },
   "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
   "dependencies": {
-    "discord.js": "^13.5.0"
+      "discord.js": "^13.5.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "postinstall": "node message.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
   },
   "publishConfig": {
-    "access": "public"
+      "access": "public"
   }
 }
