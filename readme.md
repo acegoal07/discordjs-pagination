@@ -11,173 +11,177 @@
 <p align="center">
    <a href="#about">About</a> &#xa0; | &#xa0;
    <a href="#example">Example</a> &#xa0; | &#xa0;
-   <a href="#makeSure">Make Sure</a> &#xa0; | &#xa0;
+   <a href="#functions">Wrapper functions</a> &#xa0; | &#xa0;
+   <a href="#settingsHelp">Optional settings help</a> &#xa0; | &#xa0;
+   <a href="#createHelp">Page and button builder</a> &#xa0; | &#xa0;
    <a href="https://www.npmjs.com/package/@acegoal07/discordjs-pagination">NPM</a> &#xa0; | &#xa0;
    <a href="https://github.com/acegoal07" target="_blank">Author</a>
 </p>
 
 ---
 
+<h3>Version 1.2.9 contains major changes that affects how you call upon the pagination please check the example to see how to update to the new version</h3>
+
 <h1 id="about">About</h1>
+This pagination supports both Message and Interaction and automaticity switches between which interface is provided
 
-Required dependency: 
-- discord.js version 13.5.0^
+<h1 id="functions">All wrapper functions</h1>
 
-To install use:
 ```js
-npm i @acegoal07/discordjs-pagination
+.setMessage()
+.setInteraction()
+.setPageList()
+.setButtonList()
+.setTimeout()
+.setProgressBar()
+.enableReplyMessage()
+.enableAutoDelete()
+.enablePrivateReply()
+.enableAuthorIndependent()
+.enableAutoButton()
+.enableAutoDelButtons()
+.createPages()
+.createButtons()
+.paginate()
 ```
-
-When using the interaction pagination you are able to defer the reply before calling pagination as it supports both deferred and non deferred interaction
-
-If you supply the pagination with less than 2 embeds it will automaticity send the embed without the buttons as a normal embed
-
-If you do not want custom buttons you can use the autoButton option this replaces the buttonList option and creates the buttons for you
-
-A wrapper for this pagination can be found <a href="https://github.com/acegoal07/discordjs-pagination/tree/main/wrapper">here</a> this is automatically included with the package when you download it and is optional if you want to use it
-
-<h1 id="makeSure">Make sure</h1>
-
-When calling the pagination make sure it is pagination({ }) without the brackets it won't work
-
-If you want to use either autoDelete or the delete buttons with a interaction pagination if you have already deferred the reply you can't have ephemeral enabled
-
 <h1 id="example">Example</h1>
 
 ```js
-// Import the @acegoal07/discordjs-pagination package
-const pagination = require('@acegoal07/discordjs-pagination');
-const { MessageEmbed , MessageButton } = require('discord.js');
+const { MessageEmbed, MessageButton } = require('discord.js');
+const paginationWrapper = require('@acegoal07/discordjs-pagination');
 
-// Use MessageEmbed to make pages
-// Keep in mind that Embeds should't have their footers set since
-// the pagination will overwrite the set footer
-const embed1 = new MessageEmbed()
-   .setTitle('First Page')
-   .setDescription('This is the first page');
-const embed2 = new MessageEmbed()
-   .setTitle('Second Page')
-   .setDescription('This is the second page');
+// Message example
+new paginationWrapper().setMessage(message)
+   .setPageList([
+      new MessageEmbed()
+         .setTitle("Embed 1")
+         .setDescription("page 1"),
+      new MessageEmbed()
+         .setTitle("Embed 2")
+         .setDescription("page 2")
+   ])
+   .setButtonList([
+      new MessageButton()
+         .setLabel(`1`)
+         .setStyle(`1`)
+         .setCustomId(`1`),
+      new MessageButton()
+         .setLabel(`2`)
+         .setStyle(`2`)
+         .setCustomId(`2`)
+   ])
+   .paginate()
 
-// Use MessageButton to create the buttons
-// Do not used link buttons as they don't give an output
-const button1 = new MessageButton()
-   .setCustomId('previousbtn')
-   .setLabel('Previous')
-   .setStyle('DANGER');
-const button2 = new MessageButton()
-   .setCustomId('nextbtn')
-   .setLabel('Next')
-   .setStyle('SUCCESS');
-// The delete button is optional and is not required for
-// pagination to work
-const button3 = new MessageButton()
-   .serCustomId('delbtn')
-   .setLabel('Delete')
-   .setStyle('DANGER');
-const button4 = new MessageButton()
-   .serCustomId('lastbtn')
-   .setLabel('Last Page')
-   .setStyle('Success');
-const button5 = new MessageButton()
-   .serCustomId('firstbtn')
-   .setLabel('First page')
-   .setStyle('DANGER');
+// Interaction example
+new paginationWrapper().setInteraction(interaction)
+   .setPageList([
+      new MessageEmbed()
+         .setTitle("Embed 1")
+         .setDescription("page 1"),
+      new MessageEmbed()
+         .setTitle("Embed 2")
+         .setDescription("page 2")
+   ])
+   .setButtonList([
+      new MessageButton()
+         .setLabel(`1`)
+         .setStyle(`1`)
+         .setCustomId(`1`),
+      new MessageButton()
+         .setLabel(`2`)
+         .setStyle(`2`)
+         .setCustomId(`2`)
+   ])
+   .paginate()
+```
+<h1 id="settingsHelp">Optional settings help</h1>
 
-// Create an array of embeds
-pageList = [
-	embed1,
-	embed2
-   // ... Can add as many embeds as you want
-];
+Just add these methods before the paginate function to enable the addons e.g.
+```js
+new paginationWrapper().setInteraction(interaction)
+   .setPageList([
+      new MessageEmbed()
+         .setTitle("Embed 1")
+         .setDescription("page 1"),
+      new MessageEmbed()
+         .setTitle("Embed 2")
+         .setDescription("page 2")
+   ])
+   .setButtonList([
+      new MessageButton()
+         .setLabel(`1`)
+         .setStyle(`1`)
+         .setCustomId(`1`),
+      new MessageButton()
+         .setLabel(`2`)
+         .setStyle(`2`)
+         .setCustomId(`2`)
+   ])
+   .enableAutoDelete() // <---- Make sure its before the paginate function or it wont enable
+   .paginate()
+```
 
-// Create an array of buttons
-buttonList = [
-   button1, // Next page button
-   button2, // Previous page button
-   button3 // Optional delete button (do not include if you do not want it)
-];
-// To use the first and last buttons use
-buttonList = [
-   button5, // First page button
-   button1, // Next page button
-   button2, // Previous page button
-   button4, // Last page button
-   button3 // Optional delete button (do not include if you do not want it)
-];
+All the available settings and the input they need
+```js
+.setTimeout(timeInMilliseconds) // Allows you to set a custom timeOut for your pagination
+.enableAuthorIndependent() // Enables authorIndependent for your pagination
+.enableAutoDelete() // Enables autoDelete for your pagination
+.enablePrivateReply() // Enables privateReply for your pagination
+.enableReplyMessage() // Enables replyMessage for your pagination
+.setProgressBar({newSliderIcon, newBarIcon}) // Enables pagination for your pagination and allows you to edit the characters
+.enableAutoButton() // Enables autoButton for your pagination
+.enableAutoDelButton() // Enables autoDelButton for your pagination
+.enableSelectMenu() // Enables selectMenu for your pagination
+.createPages() // View create help to see how to use this feature
+.createButtons() // View create help to see how to use this feature
+```
+<h1 id="createHelp">Create help</h1>
 
-// Create timeout amount
-const timeout = 3000;
-// Timeout is how long the collector will listen to the buttons till
-// turing off if you do not include the timeout it defaults to 12000
-// and the minimum time that can be set is 3000 any lower will result in error
+Create Pages example
+```js
+// This feature replaces the .setPageList() function
+.createPages([
+   {
+      color: "RED",
+	   title: "page1",
+      url: "https://acegoal07.dev",
+      description: "page1 is here",
+      author: {
+         name: "acegoal07",
+         icon_url: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
+         url: "https://acegoal07.dev",
+      },
+      thumbnailUrl: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
+      fields: [
+         {
+            name: "Look i work",
+            value: "Hello World!",
+            inline: false,
+         },
+         {
+            // And carry on like so
+         }
+      ],
+      imageUrl: "https://acegoal07.dev/Resources/Pictures/acegoal07.webP",
+   },
+   {
+      // And carry on like so
+   }
+])
+```
 
-// For messages use
-pagination({
-   message, // Required
-   pageList, // Required
-   buttonList, // Required
-
-   autoButton: true, // optional - if you do not want custom buttons remove the buttonList parameter
-                     // and replace it will autoButtons: true which will create buttons depending on
-                     // how many pages there are
-   autoDelButton: true, // Optional - if you are using autoButton and would like delete buttons this 
-                        // parameter adds delete buttons to the buttonList
-
-   timeout, // Optional - if not provided it will default to 12000ms
-
-   replyMessage: true, // Optional - An option to reply to the target message if you do not want
-                       // this option remove it from the function call
-
-   autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
-                     // if you do not want this option remove it from the function call
-
-   privateReply: true, // Optional - An option to have the pagination sent in a dm
-                      // if you do not want this option remove it from the function call
-
-   // Optional - An option to have the footer replaced by a progress bar
-   // if you do not want this option remove it from the function call
-   progressBar: true, // Required if you want to use the progressBar
-   proSlider: "▣", // Optional if you want a custom progressBar
-   proBar: "▢", // Optional if you want a custom progressBar
-
-   authorIndependent: true // Optional - An option to set pagination buttons only usable by the author
-                           // if you do not want this option remove it from the function call
-   
-   selectMenu: true // Optional - Replaces the page buttons with a drop menu allowing you to select 
-                    // which page you want to go to
-});
-
-// For interaction use
-pagination({
-   interaction, // Required
-   pageList, // Required
-   buttonList, // Required
-
-   autoButton: true, // Optional - if you do not want custom buttons remove the buttonList parameter
-                     // and replace it will autoButtons: true which will create buttons depending on
-                     // how many pages there are
-   autoDelButton: true, // Optional - if you are using autoButton and would like delete buttons this 
-                        // parameter adds delete buttons to the buttonList
-
-   timeout, // Optional - if not provided it will default to 12000ms
-
-   autoDelete: true, // Optional - An option to have the pagination delete it's self when the timeout ends
-                     // if you do not want this option remove it from the function call  
-
-   privateReply: true, // Optional - An option to have the pagination sent in a dm
-                      // if you do not want this option remove it from the function call
-
-   // Optional - An option to have the footer replaced by a progress bar
-   // if you do not want this option remove it from the function call
-   progressBar: true, // Required if you want to use the progressBar
-   proSlider: "▣", // Optional if you want a custom progressBar
-   proBar: "▢", // Optional if you want a custom progressBar
-   
-   authorIndependent: true // Optional - An option to set pagination buttons only usable by the author
-                           // if you do not want this option remove it from the function call
-                              
-   selectMenu: true // Optional - Replaces the page buttons with a drop menu allowing you to select 
-                    // which page you want to go to
-});
+create Buttons example
+```js
+// This feature replaces the .setButtonList() function
+.createButtons([
+   {
+      customId: "button1",
+      label: "i am button 1",
+      emoji: "123456789012345678", // emoji replaces the label
+      style: "SUCCESS"
+   },
+   {
+      // And carry on like so
+   }
+])
 ```

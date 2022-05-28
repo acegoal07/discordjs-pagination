@@ -1,52 +1,30 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const {
-   MessageButton
-} = require('discord.js')
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Buttons ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const next = new MessageButton()
-   .setLabel(`>`)
-   .setStyle(`SECONDARY`)
-   .setDisabled(false)
-   .setCustomId(`nextbtn`);
-const previous = new MessageButton()
-   .setLabel(`<`)
-   .setStyle(`SECONDARY`)
-   .setDisabled(false)
-   .setCustomId(`previousbtn`);
-const first = new MessageButton()
-   .setLabel(`<<`)
-   .setStyle(`SECONDARY`)
-   .setDisabled(false)
-   .setCustomId(`firstbtn`);
-const last = new MessageButton()
-   .setLabel(`>>`)
-   .setStyle(`SECONDARY`)
-   .setDisabled(false)
-   .setCustomId(`lastbtn`);
-const del = new MessageButton()
-   .setLabel(`🗑`)
-   .setStyle(`DANGER`)
-   .setDisabled(false)
-   .setCustomId(`delbtn`);
+const { MessageButton } = require("discord.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * Sends back a list of buttons to be used
- * @param {Number} pageListLength
- * @param {Boolean} autoDelButton
+ * Sends back a list of custom buttons
  * @returns {MessageButton[]}
-*/
+ */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Portal ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = ButtonBuilder = async(pageListLength, autoDelButton) => {
-   let buttonList
-   if (pageListLength <= 3) {
-      buttonList = [previous, next];
-   } else {
-      buttonList = [first, previous, next, last];
+// Button Builder ////////////////////////////////////////////////////////////////////////////////////////////////////////
+module.exports = ButtonBuilder = async(buttonBuilderInfo) => {
+   let buttonList = []
+   for (const button of buttonBuilderInfo) {
+      // Check for info
+      if (!button.customId) throw new Error("The custom id for the button must be provided");
+      if (!button.setStyle) throw new Error("The style for the button must be provided");
+      // Create button
+      const embedButton = new MessageButton()
+         .setCustomId(button.customId)
+         .setStyle(button.setStyle);
+         // Add check for label or emoji
+         if (button.label && !button.emoji) {embedButton.setLabel(button.label)}
+         else if (button.label && button.emoji) {embedButton.setLabel(button.label)}
+         else {embedButton.setEmoji(button.emoji)}
+      // Add button to array
+      buttonList.push(embedButton)
    }
-   if (autoDelButton) buttonList.push(del)
    return buttonList;
 }

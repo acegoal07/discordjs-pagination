@@ -1,81 +1,284 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { MessageEmbed } = require("discord.js");
-const InteractionPagination = require('./lib/InteractionPagination');
-const MessagePagination = require('./lib/MessagePagination');
-const ButtonBuilder = require('./util/ButtonBuilder');
+const {
+   Message,
+   Interaction,
+   MessageEmbed,
+   MessageButton
+} = require("discord.js");
+const PaginationBase = require("./lib/PaginationBase");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/**
- * @returns {MessageEmbed[]} The pagination
-*/
+// Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+module.exports = class PaginationWrapper {
+   // Constructor
+   constructor() {
+      this.message = null,
+      this.interaction = null,
+      this.pageList = null,
+      this.buttonList = null,
+      this.timeout = 12000,
+      this.replyMessage = false,
+      this.autoDelete = false,
+      this.privateReply = false,
+      this.progressBar = false,
+      this.proSlider = "▣",
+      this.proBar = "▢",
+      this.authorIndependent = false,
+      this.autoButton = false,
+      this.autoDelButton = false,
+      this.selectMenu = false,
+      this.pageBuilderInfo = null,
+      this.buttonBuilderInfo = null,
+      this.pagination = null
+   }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// pagination ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = pagination = async({
-   interaction, message, pageList, buttonList, timeout = 12000,
-   replyMessage = false,
-   autoDelete = false,
-   privateReply = false,
-   progressBar = false,
-   proSlider = "▣",
-   proBar = "▢",
-   authorIndependent = false,
-   autoButton = false,
-   autoDelButton = false,
-   selectMenu = false
-}) => {
-   // Checks
-   if (message && interaction) throw new Error("Do not provided both interaction and message only 1 is required");
-   if (!pageList) throw new Error("Missing pages");
-   if (autoButton && !buttonList) buttonList = await ButtonBuilder(pageList.length, autoDelButton);
-   if (!buttonList) throw new Error("Missing buttons");
-   if (selectMenu && (buttonList || autoButton || autoDelButton)) process.emitWarning("SelectMenu overwrites any button settings, remove all button settings to stop getting this message");
-   if (timeout < 3000) throw new Error("You have set timeout less then 3000ms which is not allowed");
-   if (proSlider.length > 1) throw new Error("You can only use 1 character to represent the progressBar slider");
-   if (proBar.length > 1) throw new Error("You can only use 1 character to the progressBar");
-   if (buttonList.length < 2) throw new Error("Need provide at least 2 buttons");
-   if (buttonList.length > 5) {
-      process.emitWarning("More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
-      buttonList = buttonList.slice(0, 5);
-   }
-   for (const button of buttonList) {
-      if (button.style === "LINK") throw new Error("Link buttons are not supported please check what type of buttons you are using");
-      if (button.disabled) throw new Error("You have provided buttons that are disabled these cant be used to turn pages, make sure the buttons you are trying to use are enabled");
-   }
-   // Message
-   if (typeof message?.author === "object") {
+// Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   // Set message interface
+   /**
+    * Set the message interface for the pagination
+    * @param {Message} message
+    * @returns {PaginationWrapper}
+    */
+   setMessage(message) {
       // Checks
-      if (replyMessage && privateReply) process.emitWarning("The privateReply setting overwrites and disables replyMessage setting");
-      if (!message && !message.channel) throw new Error("Channel is inaccessible");
-      if (pageList.length < 2) {
-         if (privateReply) {
-            await message.channel.send("The reply has been sent privately");
-            return message.author.send({embeds: [pageList[0]]});
-         } else {
-            return replyMessage ? message.reply({embeds: [pageList[0]]}) : message.channel.send({embeds: [pageList[0]]});
-         }
-      }
-      // Run
-      return MessagePagination(message, pageList, buttonList, timeout, replyMessage, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent, selectMenu);
+      if (typeof message !== "object") throw new Error("The message you have provided is not an object");
+      if (!message?.author) throw new Error("The message you have provided is incorrect");
+      // Set and return
+      this.message = message;
+      return this;
    }
-   // Interaction
-   else if ((typeof interaction?.user === "object" || typeof interaction?.member.user === "object") && interaction?.applicationId) {
+   // Set interaction interface
+   /**
+    * Set the interaction interface for the pagination
+    * @param {Interaction} interaction
+    * @returns {PaginationWrapper}
+    */
+   setInteraction(interaction) {
       // Checks
-      if (pageList.length < 2) {
-         if (privateReply) {
-            await interaction.deferred ? await interaction.editReply("The reply has been sent privately") : await interaction.reply("The reply has been sent privately");
-            return interaction.client.users.cache.get(interaction.member.user.id).send({embeds: [pageList[0]]});
-         } else {
-            return interaction.deferred ? await interaction.editReply({embeds: [pageList[0]]}) : await interaction.reply({embeds: [pageList[0]]});
-         }
-      }
-      if (interaction.ephemeral && (buttonList.length === 3 || buttonList.length === 5)) throw new Error("Delete buttons are not supported by embeds with ephemeral enabled");
-      if (interaction.ephemeral && autoDelete) throw new Error("Auto delete is not supported by embeds with ephemeral enabled");
-      // Run
-      return InteractionPagination(interaction, pageList, buttonList, timeout, autoDelete, privateReply, progressBar, proSlider, proBar, authorIndependent, selectMenu);
+      if (typeof interaction !== "object") throw new Error("The interaction you have provided is not an object");
+      if (!interaction?.applicationId) throw new Error("The interaction you have provided is incorrect");
+      // Set and return
+      this.interaction = interaction;
+      return this;
    }
-   // Missing interaction and message
-   else {
-      throw new Error("Please provide either interaction or message for the pagination to use");
+   // Set ButtonList
+   /**
+    * Set the buttonList for the pagination
+    * @param {MessageButton[]} buttonList
+    * @returns {PaginationWrapper}
+    */
+   setButtonList(buttonList) {
+      // Checks
+      if (!buttonList) throw new Error("The buttonList you have provided is empty");
+      if (typeof buttonList !== "object") throw new Error("The buttonList you have provided is not an object");
+      if (buttonList.length < 2) throw new Error("You need to provided a minimum of 2 buttons");
+      // Set and return
+      this.buttonList = buttonList;
+      return this;
+   }
+   // Set pageList
+   /**
+    * Set the pageList for the pagination
+    * @param {MessageEmbed[]} pageList
+    * @returns {PaginationWrapper}
+    */
+   setPageList(pageList) {
+      // Checks
+      if (!pageList) throw new Error("The pageList you have provided is empty");
+      if (typeof pageList !== "object") throw new Error("The pageList you have provided is not an object");
+      // Set and return
+      this.pageList = pageList;
+      return this;
+   }
+   // Run pagination
+   /**
+    * Run the pagination
+    * @returns {PaginationWrapper}
+    */
+   async paginate() {
+      console.log(this.pageBuilderInfo)
+      // Checks
+      if (!this.message && !this.interaction) throw new Error("You have not provided an interface to use");
+      if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("You have not provided a buttonList to use");
+      if (!this.pageList && !this.pageBuilderInfo) throw new Error("You have not provided a pageList to use");
+      if (this.interaction && this.replyMessage) process.emitWarning("replyMessage can't be used by an interaction pagination");
+      // Set and return
+      this.pagination = await PaginationBase(this);
+      return this;
+   }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Optional //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   // Set timeout time
+   /**
+    * How many milliseconds your pagination will run for
+    * @param {Number} timeout
+    * @returns {PaginationWrapper}
+    */
+   setTimeout(timeout) {
+      // Checks
+      if (timeout <= 3000) throw new Error("The time set can't be less than 3000ms");
+      if (typeof timeout !== "number") throw new Error("The time provided is not a number");
+      // Set and return
+      if (!timeout) {
+         process.emitWarning("You did not provide a timeout to set so it has defaulted to 12000ms");
+      } else {
+         this.timeout = timeout;
+      }
+      return this;
+   }
+   // Set progressBar
+   /**
+    * Allows you to enable and edit a progressBar for your pagination
+    * @param {String} proSlider
+    * @param {String} proBar
+    * @returns {PaginationWrapper}
+    */
+   setProgressBar({proSlider = "▣", proBar = "▢"}) {
+      // Checks
+      if (typeof proSlider !== "string") throw new Error("The proSlider you have provided is not a string");
+      if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
+      if (typeof proBar !== "string") throw new Error("The proBar you have provided is not a string");
+      if (proBar.length > 1 || proBar.length < 1) throw new Error("The proBar must be 1 character");
+      // Set and return
+      this.progressBar = true;
+      this.proSlider = proSlider;
+      this.proBar = proBar;
+      return this;
+   }
+   // Set replyMessage
+   /**
+    * Enables replyMessage for your pagination
+    * @returns {PaginationWrapper}
+    */
+   enableReplyMessage() {
+      // Set and return
+      this.replyMessage = true;
+      return this;
+   }
+   // Set autoDelete
+   /**
+    * Enables autoDelete for your pagination
+    * @returns {PaginationWrapper}
+    */
+   enableAutoDelete() {
+      // Set and return
+      this.autoDelete = true;
+      return this;
+   }
+   // Set privateReply
+   /**
+    * Enables privateReply for your pagination
+    * @returns {PaginationWrapper}
+    */
+   enablePrivateReply() {
+      // Set and return
+      this.privateReply = true;
+      return this;
+   }
+   // Set authorIndependent
+   /**
+    * Enables authorIndependent for your pagination
+    * @returns {PaginationWrapper}
+    */
+   enableAuthorIndependent() {
+      // Set and return
+      this.authorIndependent = true;
+      return this;
+   }
+   // Set autoButton
+   /**
+    * Enables autoButton for your pagination
+    * @returns {PaginationWrapper}
+    */
+   enableAutoButton() {
+      // Set and return
+      this.autoButton = true;
+      return this;
+   }
+   // Set autoButtonDel
+   /**
+    * Enables autoDelButton for your pagination
+    * @returns {PaginationWrapper}
+    */
+   enableAutoDelButton() {
+      // Set and return
+      this.autoDelButton = true;
+      return this;
+   }
+   // Set selectMenu
+   /**
+    * Enables selectMenu for your pagination
+    * @returns {PaginationWrapper}
+    */
+   enableSelectMenu() {
+      // Set and return
+      this.selectMenu = true;
+      return this;
+   }
+   // Page creator
+   /**
+    * Allows you to use the pagination to create the pages for the pagination
+    * @param {[{
+    *    color?: String,
+    *    title?: String,
+    *    url?: String,
+    *    author?: {
+    *       name: String,
+    *       icon_url?: String,
+    *       url?: String
+    *    },
+    *    description?: String,
+    *    thumbnailUrl?: String,
+    *    fields?: [{
+    *       name: String,
+    *       value: String,
+    *       inline?: Boolean
+    *    }],
+    *    imageUrl?: String
+    * }]} info
+    * @returns {PaginationWrapper}
+    */
+   createPages(info = [{
+      color: null,
+	   title: null,
+      url: null,
+      author: {
+         name: null,
+         icon_url: null,
+         url: null
+      },
+      description: null,
+      thumbnailUrl: null,
+      fields: [
+         {
+            name: null,
+            value: null,
+            inline: false
+         },
+      ],
+      imageUrl: null
+   }]) {
+      this.pageBuilderInfo = info;
+      return this;
+   }
+   // Button creator
+   /**
+    * Allows you to use the pagination to create the buttons for the pagination
+    * @param {[{
+    *    customId: String,
+    *    label?: String,
+    *    style: String,
+    *    emoji?: String
+    * }]} info
+    * @returns {PaginationWrapper}
+    */
+   createButtons(info = [{
+      customId: null,
+      label: null,
+      style: null,
+      emoji: null
+   }]) {
+      this.buttonBuilderInfo = info;
+      return this;
    }
 }
