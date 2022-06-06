@@ -96,7 +96,6 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    async paginate() {
-      console.log(this.pageBuilderInfo)
       // Checks
       if (!this.message && !this.interaction) throw new Error("You have not provided an interface to use");
       if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("You have not provided a buttonList to use");
