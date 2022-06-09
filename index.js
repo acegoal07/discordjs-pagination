@@ -218,7 +218,6 @@ module.exports = class PaginationWrapper {
    /**
     * Allows you to use the pagination to create the pages for the pagination
     * @param {[{
-    *    color?: String,
     *    title?: String,
     *    url?: String,
     *    author?: {
@@ -234,11 +233,11 @@ module.exports = class PaginationWrapper {
     *       inline?: Boolean
     *    }],
     *    imageUrl?: String
+    *    color?: 'DEFAULT' | 'WHITE' | 'AQUA' | 'GREEN' | 'BLUE'| 'YELLOW' | 'PURPLE' | 'LUMINOUS_VIVID_PINK' | 'FUCHSIA' | 'GOLD' | 'ORANGE' | 'RED' | 'GREY' | 'DARKER_GREY' | 'NAVY' | 'DARK_AQUA' | 'DARK_GREEN' | 'DARK_BLUE' | 'DARK_PURPLE' | 'DARK_VIVID_PINK' | 'DARK_GOLD' | 'DARK_ORANGE' | 'DARK_RED' | 'DARK_GREY' | 'LIGHT_GREY' | 'DARK_NAVY' | 'BLURPLE' | 'GREYPLE' | 'DARK_BUT_NOT_BLACK' | 'NOT_QUITE_BLACK' | 'RANDOM',
     * }]} info
     * @returns {PaginationWrapper}
     */
    createPages(info = [{
-      color: null,
 	   title: null,
       url: null,
       author: {
@@ -255,7 +254,8 @@ module.exports = class PaginationWrapper {
             inline: false
          },
       ],
-      imageUrl: null
+      imageUrl: null,
+      color: null
    }]) {
       this.pageBuilderInfo = info;
       return this;
@@ -266,7 +266,7 @@ module.exports = class PaginationWrapper {
     * @param {[{
     *    customId: String,
     *    label?: String,
-    *    style: String,
+    *    style: "PRIMARY" | "SECONDARY" | "SUCCESS" | "DANGER" | "LINK",
     *    emoji?: String
     * }]} info
     * @returns {PaginationWrapper}

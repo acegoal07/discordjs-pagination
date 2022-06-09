@@ -20,8 +20,6 @@
 
 ---
 
-<h3>Version 1.2.9 contains major changes that affects how you call upon the pagination please check the example to see how to update to the new version</h3>
-
 <h1 id="about">About</h1>
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided
 

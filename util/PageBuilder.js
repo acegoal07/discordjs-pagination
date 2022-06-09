@@ -11,15 +11,16 @@ const { MessageEmbed } = require("discord.js");
 // Page Builder //////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = PageBuilder = async(pageBuilderInfo) => {
    let pageList = [];
-   for(const page of pageBuilderInfo) {
-   const embed = new MessageEmbed();
-      if (page.title) embed.setTitle(page.title);
-      if (page.description) embed.setDescription(page.description);
-      if (page.color) embed.setColor(page.color);
-      if (page.fields) embed.addFields(page.fields);
-      if (page.imageUrl) embed.setImage(page.imageUrl);
-      if (page.thumbnailUrl) embed.setThumbnail(page.thumbnailUrl);
-      if (page.author) embed.setAuthor(page.author);
+   for (const page of pageBuilderInfo) {
+      const embed = new MessageEmbed();
+         if (page.title) embed.setTitle(page.title);
+         if (page.description) embed.setDescription(page.description);
+         if (page.color) embed.setColor(page.color);
+         if (page.fields) embed.addFields(page.fields);
+         if (page.imageUrl) embed.setImage(page.imageUrl);
+         if (page.thumbnailUrl) embed.setThumbnail(page.thumbnailUrl);
+         if (page.author) embed.setAuthor(page.author);
+         if (page.url) embed.setURL(page.url)
       pageList.push(embed);
    }
    return pageList
