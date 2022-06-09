@@ -20,7 +20,7 @@ module.exports = PageBuilder = async(pageBuilderInfo) => {
          if (page.imageUrl) embed.setImage(page.imageUrl);
          if (page.thumbnailUrl) embed.setThumbnail(page.thumbnailUrl);
          if (page.author) embed.setAuthor(page.author);
-         if (page.url) embed.setURL(page.url)
+         if (page.url) embed.setURL(page.url);
       pageList.push(embed);
    }
    return pageList
