@@ -23,6 +23,11 @@
 <h1 id="about">About</h1>
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided
 
+To download the package use
+```cmd
+npm i @acegoal07/discordjs-pagination
+```
+
 <h1 id="functions">All wrapper functions</h1>
 
 ```js
