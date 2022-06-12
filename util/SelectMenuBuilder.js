@@ -12,7 +12,6 @@ const { MessageSelectMenu, MessageActionRow } = require("discord.js");
 // Select menu maker /////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = SelectMenuBuilder = async(pageListLength, disabled) => {
    try {
-      count = 0;
       optionArray = [];
       for (let i = 1; i < pageListLength + 1; i++) {
          optionArray.push(
