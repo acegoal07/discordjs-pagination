@@ -6,7 +6,7 @@ const PaginationBase = require("./lib/PaginationBase");
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.3.0 
+ * @version 1.3.0
  * @author acegoal07
  */
 module.exports = class PaginationWrapper {
@@ -233,36 +233,36 @@ module.exports = class PaginationWrapper {
     *       inline?: Boolean
     *    }],
     *    imageUrl?: String,
-    *    color?: 'DEFAULT' 
-    *       | 'WHITE' 
-    *       | 'AQUA' 
-    *       | 'GREEN' 
+    *    color?: 'DEFAULT'
+    *       | 'WHITE'
+    *       | 'AQUA'
+    *       | 'GREEN'
     *       | 'BLUE'
-    *       | 'YELLOW' 
-    *       | 'PURPLE' 
-    *       | 'LUMINOUS_VIVID_PINK' 
-    *       | 'FUCHSIA' 
-    *       | 'GOLD' 
-    *       | 'ORANGE' 
-    *       | 'RED' 
-    *       | 'GREY' 
-    *       | 'DARKER_GREY' 
-    *       | 'NAVY' 
-    *       | 'DARK_AQUA' 
-    *       | 'DARK_GREEN' 
-    *       | 'DARK_BLUE' 
-    *       | 'DARK_PURPLE' 
-    *       | 'DARK_VIVID_PINK' 
-    *       | 'DARK_GOLD' 
-    *       | 'DARK_ORANGE' 
-    *       | 'DARK_RED' 
-    *       | 'DARK_GREY' 
-    *       | 'LIGHT_GREY' 
-    *       | 'DARK_NAVY' 
-    *       | 'BLURPLE' 
-    *       | 'GREYPLE' 
-    *       | 'DARK_BUT_NOT_BLACK' 
-    *       | 'NOT_QUITE_BLACK' 
+    *       | 'YELLOW'
+    *       | 'PURPLE'
+    *       | 'LUMINOUS_VIVID_PINK'
+    *       | 'FUCHSIA'
+    *       | 'GOLD'
+    *       | 'ORANGE'
+    *       | 'RED'
+    *       | 'GREY'
+    *       | 'DARKER_GREY'
+    *       | 'NAVY'
+    *       | 'DARK_AQUA'
+    *       | 'DARK_GREEN'
+    *       | 'DARK_BLUE'
+    *       | 'DARK_PURPLE'
+    *       | 'DARK_VIVID_PINK'
+    *       | 'DARK_GOLD'
+    *       | 'DARK_ORANGE'
+    *       | 'DARK_RED'
+    *       | 'DARK_GREY'
+    *       | 'LIGHT_GREY'
+    *       | 'DARK_NAVY'
+    *       | 'BLURPLE'
+    *       | 'GREYPLE'
+    *       | 'DARK_BUT_NOT_BLACK'
+    *       | 'NOT_QUITE_BLACK'
     *       | 'RANDOM'
     * }]} info
     * @returns {PaginationWrapper}
@@ -296,10 +296,10 @@ module.exports = class PaginationWrapper {
     * @param {[{
     *    customId: String,
     *    label?: String,
-    *    style: "PRIMARY" 
-    *       | "SECONDARY" 
-    *       | "SUCCESS" 
-    *       | "DANGER" 
+    *    style: "PRIMARY"
+    *       | "SECONDARY"
+    *       | "SUCCESS"
+    *       | "DANGER"
     *       | "LINK",
     *    emoji?: String
     * }]} info

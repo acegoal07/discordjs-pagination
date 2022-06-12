@@ -16,7 +16,7 @@ module.exports = {
             authorID = interaction.user.id || interaction.member.user.id;
          }
          if (selectMenu) {
-            return filter = (i) => 
+            return filter = (i) =>
                (i.isSelectMenu()) &&
                (authorIndependent && i.user.id === authorID) ||
                !authorIndependent;
