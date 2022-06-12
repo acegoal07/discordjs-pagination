@@ -10,12 +10,16 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Progress bar maker ////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = ProgressBarBuilder = async(pageListLength, pageNumber, proSlider, proBar) => {
-   // Progress maths
-   const progress = pageNumber + 1;
-   const emptyProgress = pageListLength - (pageNumber + 1);
-   // Progress text
-   const progressText = proSlider.repeat(progress);
-   const emptyProgressText = proBar.repeat(emptyProgress);
-   // Create bar
-   return `[${progressText+emptyProgressText}] : Page ${pageNumber + 1}`;
+   try {
+      // Progress maths
+      const progress = pageNumber + 1;
+      const emptyProgress = pageListLength - (pageNumber + 1);
+      // Progress text
+      const progressText = proSlider.repeat(progress);
+      const emptyProgressText = proBar.repeat(emptyProgress);
+      // Create bar
+      return `[${progressText+emptyProgressText}] : Page ${pageNumber + 1}`;
+   } catch(error) {
+      return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
+   }
 }

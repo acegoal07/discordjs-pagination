@@ -39,12 +39,16 @@ const del = new MessageButton()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Portal ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = AutoButtonBuilder = async(pageListLength, autoDelButton) => {
-   let buttonList
-   if (pageListLength <= 3) {
-      buttonList = [previous, next];
-   } else {
-      buttonList = [first, previous, next, last];
+   try {
+      let buttonList
+      if (pageListLength <= 3) {
+         buttonList = [previous, next];
+      } else {
+         buttonList = [first, previous, next, last];
+      }
+      if (autoDelButton) buttonList.push(del)
+      return buttonList;
+   } catch(error) {
+      return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
    }
-   if (autoDelButton) buttonList.push(del)
-   return buttonList;
 }

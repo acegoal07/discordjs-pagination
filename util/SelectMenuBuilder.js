@@ -11,31 +11,35 @@ const { MessageSelectMenu, MessageActionRow } = require("discord.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Select menu maker /////////////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = SelectMenuBuilder = async(pageListLength, disabled) => {
-   count = 0;
-   optionArray = [];
-   for (let i = 1; i < pageListLength + 1; i++) {
-      optionArray.push(
-         {
-            label: `Page ${i}`,
-            value: `${i}`,
-         }
-      )
-   }
-   // Disabled selectMenu
-   if (disabled) {
+   try {
+      count = 0;
+      optionArray = [];
+      for (let i = 1; i < pageListLength + 1; i++) {
+         optionArray.push(
+            {
+               label: `Page ${i}`,
+               value: `${i}`,
+            }
+         )
+      }
+      // Disabled selectMenu
+      if (disabled) {
+         return new MessageActionRow().addComponents(
+            new MessageSelectMenu()
+               .setCustomId('disabledSM')
+               .setDisabled(true)
+               .setPlaceholder('Select Page')
+               .addOptions(optionArray)
+         )
+      }
+      // Enabled selectMenu
       return new MessageActionRow().addComponents(
          new MessageSelectMenu()
-            .setCustomId('disabledSM')
-            .setDisabled(true)
+            .setCustomId('select')
             .setPlaceholder('Select Page')
             .addOptions(optionArray)
       )
+   } catch(error) {
+      return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
    }
-   // Enabled selectMenu
-   return new MessageActionRow().addComponents(
-      new MessageSelectMenu()
-         .setCustomId('select')
-         .setPlaceholder('Select Page')
-         .addOptions(optionArray)
-   )
 }
