@@ -24,7 +24,7 @@
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided
 
 To download the package use
-```cmd
+```sh
 npm i @acegoal07/discordjs-pagination
 ```
 
