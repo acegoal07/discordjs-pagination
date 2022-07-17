@@ -20,10 +20,10 @@ module.exports = ButtonBuilder = async(buttonBuilderInfo) => {
          const embedButton = new MessageButton()
             .setCustomId(button.customId)
             .setStyle(button.setStyle);
-            // Add check for label or emoji
-            if (button.label && !button.emoji) {embedButton.setLabel(button.label)}
-            else if (button.label && button.emoji) {embedButton.setLabel(button.label)}
-            else {embedButton.setEmoji(button.emoji)}
+         // Add check for label or emoji
+         if (button.label && !button.emoji) {embedButton.setLabel(button.label)}
+         else if (button.label && button.emoji) {embedButton.setLabel(button.label)}
+         else {embedButton.setEmoji(button.emoji)}
          // Add button to array
          buttonList.push(embedButton)
       }

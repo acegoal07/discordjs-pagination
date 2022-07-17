@@ -30,14 +30,15 @@ module.exports = SelectMenuBuilder = async(pageListLength, disabled) => {
                .setPlaceholder('Select Page')
                .addOptions(optionArray)
          )
+      } else {
+         // Enabled selectMenu
+         return new MessageActionRow().addComponents(
+            new MessageSelectMenu()
+               .setCustomId('select')
+               .setPlaceholder('Select Page')
+               .addOptions(optionArray)
+         )         
       }
-      // Enabled selectMenu
-      return new MessageActionRow().addComponents(
-         new MessageSelectMenu()
-            .setCustomId('select')
-            .setPlaceholder('Select Page')
-            .addOptions(optionArray)
-      )
    } catch(error) {
       return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
    }

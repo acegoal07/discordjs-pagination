@@ -15,8 +15,8 @@ module.exports = DisabledButtons = async(buttonList) => {
       let count = 0;
       for (const button of buttonList) {
          count += 1;
-         // Disable emoji buttons
          if (!button.label) {
+            // Disable emoji buttons
             disabledButtonList.push(
                new MessageButton()
                   .setEmoji(`<${button.emoji.animated ? `a:${button.emoji.name}:${button.emoji.id}` : `${button.emoji.name}:${button.emoji.id}`}>`)
@@ -24,9 +24,8 @@ module.exports = DisabledButtons = async(buttonList) => {
                   .setDisabled(true)
                   .setCustomId(`disabledBtn${count}`)
             );
-         }
-         // Disable text buttons
-         else {
+         } else {
+            // Disable text buttons
             disabledButtonList.push(
                new MessageButton()
                   .setLabel(`${button.label}`)
