@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { Message, Interaction, EmbedBuilder, ButtonBuilder } = require("discord.js"),
-   PaginationBase = require("./lib/PaginationBase");
+const { Message, Interaction, EmbedBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const PaginationBase = require("./lib/PaginationBase");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -12,24 +12,24 @@ const { Message, Interaction, EmbedBuilder, ButtonBuilder } = require("discord.j
 module.exports = class PaginationWrapper {
    // Constructor
    constructor() {
-      this.message = null,
-      this.interaction = null,
-      this.pageList = null,
-      this.buttonList = null,
-      this.timeout = 12000,
-      this.replyMessage = false,
-      this.autoDelete = false,
-      this.privateReply = false,
-      this.progressBar = false,
-      this.proSlider = "▣",
-      this.proBar = "▢",
-      this.authorIndependent = false,
-      this.autoButton = false,
-      this.autoDelButton = false,
-      this.selectMenu = false,
-      this.pageBuilderInfo = null,
-      this.buttonBuilderInfo = null,
-      this.pagination = null
+      this.message = null;
+      this.interaction = null;
+      this.pageList = null;
+      this.buttonList = null;
+      this.timeout = 12000;
+      this.replyMessage = false;
+      this.autoDelete = false;
+      this.privateReply = false;
+      this.progressBar = false;
+      this.proSlider = "▣";
+      this.proBar = "▢";
+      this.authorIndependent = false;
+      this.autoButton = false;
+      this.autoDelButton = false;
+      this.selectMenu = false;
+      this.pageBuilderInfo = null;
+      this.buttonBuilderInfo = null;
+      this.pagination = null;
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ module.exports = class PaginationWrapper {
    }
    // Set ButtonList
    /**
-    * Set the buttonList for the pagination
+    * Set the buttonList for the paginationY
     * @param {ButtonBuilder[]} buttonList
     * @returns {PaginationWrapper}
     */
@@ -233,37 +233,36 @@ module.exports = class PaginationWrapper {
     *       inline?: Boolean
     *    }],
     *    imageUrl?: String,
-    *    color?: 'DEFAULT'
-    *       | 'WHITE'
-    *       | 'AQUA'
-    *       | 'GREEN'
-    *       | 'BLUE'
-    *       | 'YELLOW'
-    *       | 'PURPLE'
-    *       | 'LUMINOUS_VIVID_PINK'
-    *       | 'FUCHSIA'
-    *       | 'GOLD'
-    *       | 'ORANGE'
-    *       | 'RED'
-    *       | 'GREY'
-    *       | 'DARKER_GREY'
-    *       | 'NAVY'
-    *       | 'DARK_AQUA'
-    *       | 'DARK_GREEN'
-    *       | 'DARK_BLUE'
-    *       | 'DARK_PURPLE'
-    *       | 'DARK_VIVID_PINK'
-    *       | 'DARK_GOLD'
-    *       | 'DARK_ORANGE'
-    *       | 'DARK_RED'
-    *       | 'DARK_GREY'
-    *       | 'LIGHT_GREY'
-    *       | 'DARK_NAVY'
-    *       | 'BLURPLE'
-    *       | 'GREYPLE'
-    *       | 'DARK_BUT_NOT_BLACK'
-    *       | 'NOT_QUITE_BLACK'
-    *       | 'RANDOM'
+    *    color?: 'Default'
+    *       |  'White'
+    *       |  'Aqua'
+    *       |  'Green'
+    *       |  'Blue'
+    *       |  'Yellow'
+    *       |  'Purple'
+    *       |  'LuminousVividPink'
+    *       |  'Fuchsia'
+    *       |  'Gold'
+    *       |  'Orange'
+    *       |  'Red'
+    *       |  'Grey'
+    *       |  'Navy'
+    *       |  'DarkAqua'
+    *       |  'DarkGreen'
+    *       |  'DarkBlue'
+    *       |  'DarkPurple'
+    *       |  'DarkVividPink'
+    *       |  'DarkGold'
+    *       |  'DarkOrange'
+    *       |  'DarkRed'
+    *       |  'DarkGrey'
+    *       |  'DarkerGrey'
+    *       |  'LightGrey'
+    *       |  'DarkNavy'
+    *       |  'Blurple'
+    *       |  'Greyple'
+    *       |  'DarkButNotBlack'
+    *       |  'NotQuiteBlack'
     * }]} info
     * @returns {PaginationWrapper}
     */
@@ -296,11 +295,10 @@ module.exports = class PaginationWrapper {
     * @param {[{
     *    customId: String,
     *    label?: String,
-    *    style: "PRIMARY"
-    *       | "SECONDARY"
-    *       | "SUCCESS"
-    *       | "DANGER"
-    *       | "LINK",
+    *    style: "Primary"
+    *       | "Secondary"
+    *       | "Success"
+    *       | "Danger",
     *    emoji?: String
     * }]} info
     * @returns {PaginationWrapper}

@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
   "dependencies": {
-      "discord.js": "^14.0.1"
+      "discord.js": "^14.0.2"
   },
   "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"

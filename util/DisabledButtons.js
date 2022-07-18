@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -15,12 +15,12 @@ module.exports = DisabledButtons = async(buttonList) => {
       let count = 0;
       for (const button of buttonList) {
          count += 1;
-         if (!button.label) {
+         if (!button.data.label) {
             // Disable emoji buttons
             disabledButtonList.push(
                new ButtonBuilder()
-                  .setEmoji(`<${button.emoji.animated ? `a:${button.emoji.name}:${button.emoji.id}` : `${button.emoji.name}:${button.emoji.id}`}>`)
-                  .setStyle(`${button.style}`)
+                  .setEmoji(`<${button.data.emoji?.animated ? `a:${button.data.emoji.name}:${button.data.emoji.id}` : `${button.data.emoji.name}:${button.data.emoji.id}`}>`)
+                  .setStyle(`${button.data.style}`)
                   .setDisabled(true)
                   .setCustomId(`disabledBtn${count}`)
             );
@@ -28,8 +28,8 @@ module.exports = DisabledButtons = async(buttonList) => {
             // Disable text buttons
             disabledButtonList.push(
                new ButtonBuilder()
-                  .setLabel(`${button.label}`)
-                  .setStyle(`${button.style}`)
+                  .setLabel(`${button.data.label}`)
+                  .setStyle(`${button.data.style}`)
                   .setDisabled(true)
                   .setCustomId(`disabledBtn${count}`)
             );

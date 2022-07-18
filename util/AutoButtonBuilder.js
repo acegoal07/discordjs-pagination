@@ -1,31 +1,31 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { ButtonBuilder, ButtonStyle } = require("discord.js");
+const { ButtonBuilder } = require("discord.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Buttons ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const next = new ButtonBuilder()
    .setLabel(`>`)
-   .setStyle(ButtonStyle.Secondary)
+   .setStyle("Secondary")
    .setDisabled(false)
    .setCustomId(`nextbtn`);
 const previous = new ButtonBuilder()
    .setLabel(`<`)
-   .setStyle(ButtonStyle.Secondary)
+   .setStyle("Secondary")
    .setDisabled(false)
    .setCustomId(`previousbtn`);
 const first = new ButtonBuilder()
    .setLabel(`<<`)
-   .setStyle(ButtonStyle.Secondary)
+   .setStyle("Secondary")
    .setDisabled(false)
    .setCustomId(`firstbtn`);
 const last = new ButtonBuilder()
    .setLabel(`>>`)
-   .setStyle(ButtonStyle.Secondary)
+   .setStyle("Secondary")
    .setDisabled(false)
    .setCustomId(`lastbtn`);
 const del = new ButtonBuilder()
    .setLabel(`🗑`)
-   .setStyle(ButtonStyle.Danger)
+   .setStyle("Danger")
    .setDisabled(false)
    .setCustomId(`delbtn`);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,9 +38,9 @@ const del = new ButtonBuilder()
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Portal ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = AutoButtonBuilder = async(pageListLength, autoDelButton) => {
+module.exports = Builder = async(pageListLength, autoDelButton) => {
    try {
-      let buttonList
+      let buttonList = [];
       if (pageListLength <= 3) {
          buttonList = [previous, next];
       } else {

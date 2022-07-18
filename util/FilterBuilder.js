@@ -24,11 +24,11 @@ module.exports = {
          } else {
             // Create filter
             return filter = (i) =>
-                  (i.customId === buttonList[0].customId ||
-                  i.customId === buttonList[1].customId ||
-                  i.customId === buttonList[2].customId ||
-                  i.customId === buttonList[3].customId ||
-                  i.customId === buttonList[4].customId) &&
+                  (i.custom_id === buttonList[0].custom_id ||
+                  i.custom_id === buttonList[1].custom_id ||
+                  i.custom_id === buttonList[2].custom_id ||
+                  i.custom_id === buttonList[3].custom_id ||
+                  i.custom_id === buttonList[4].custom_id) &&
                   (authorIndependent && i.user.id === authorID) ||
                   !authorIndependent;            
          }
