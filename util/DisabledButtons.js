@@ -1,11 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { MessageActionRow, MessageButton } = require("discord.js");
+const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @param {MessageButton[]} buttonList - An array of the buttons
- * @returns {MessageActionRow} Disabled message action row
+ * @param {ButtonBuilder[]} buttonList - An array of the buttons
+ * @returns {ActionRowBuilder} Disabled message action row
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Disabler //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,7 +18,7 @@ module.exports = DisabledButtons = async(buttonList) => {
          if (!button.label) {
             // Disable emoji buttons
             disabledButtonList.push(
-               new MessageButton()
+               new ButtonBuilder()
                   .setEmoji(`<${button.emoji.animated ? `a:${button.emoji.name}:${button.emoji.id}` : `${button.emoji.name}:${button.emoji.id}`}>`)
                   .setStyle(`${button.style}`)
                   .setDisabled(true)
@@ -27,7 +27,7 @@ module.exports = DisabledButtons = async(buttonList) => {
          } else {
             // Disable text buttons
             disabledButtonList.push(
-               new MessageButton()
+               new ButtonBuilder()
                   .setLabel(`${button.label}`)
                   .setStyle(`${button.style}`)
                   .setDisabled(true)
@@ -35,7 +35,7 @@ module.exports = DisabledButtons = async(buttonList) => {
             );
          }
       }
-      return new MessageActionRow().addComponents(disabledButtonList);
+      return new ActionRowBuilder().addComponents(disabledButtonList);
    } catch(error) {
       return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
    }

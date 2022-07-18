@@ -1,12 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { MessageSelectMenu, MessageActionRow } = require("discord.js");
+const { SelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @param {MessageEmbed[]} pageListLength An array of the embeds
+ * @param {EmbedBuilder[]} pageListLength An array of the embeds
  * @param {Boolean} disabled If the select menu needs to be disabled
- * @returns {MessageActionRow} Select menu
+ * @returns {ActionRowBuilder} Select menu
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Select menu maker /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,8 +23,8 @@ module.exports = SelectMenuBuilder = async(pageListLength, disabled) => {
       }
       // Disabled selectMenu
       if (disabled) {
-         return new MessageActionRow().addComponents(
-            new MessageSelectMenu()
+         return new ActionRowBuilder().addComponents(
+            new SelectMenuBuilder()
                .setCustomId('disabledSM')
                .setDisabled(true)
                .setPlaceholder('Select Page')
@@ -32,8 +32,8 @@ module.exports = SelectMenuBuilder = async(pageListLength, disabled) => {
          )
       } else {
          // Enabled selectMenu
-         return new MessageActionRow().addComponents(
-            new MessageSelectMenu()
+         return new ActionRowBuilder().addComponents(
+            new SelectMenuBuilder()
                .setCustomId('select')
                .setPlaceholder('Select Page')
                .addOptions(optionArray)

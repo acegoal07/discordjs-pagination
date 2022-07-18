@@ -1,31 +1,31 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { MessageButton } = require("discord.js");
+const { ButtonBuilder, ButtonStyle } = require("discord.js");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Buttons ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const next = new MessageButton()
+const next = new ButtonBuilder()
    .setLabel(`>`)
-   .setStyle(`SECONDARY`)
+   .setStyle(ButtonStyle.Secondary)
    .setDisabled(false)
    .setCustomId(`nextbtn`);
-const previous = new MessageButton()
+const previous = new ButtonBuilder()
    .setLabel(`<`)
-   .setStyle(`SECONDARY`)
+   .setStyle(ButtonStyle.Secondary)
    .setDisabled(false)
    .setCustomId(`previousbtn`);
-const first = new MessageButton()
+const first = new ButtonBuilder()
    .setLabel(`<<`)
-   .setStyle(`SECONDARY`)
+   .setStyle(ButtonStyle.Secondary)
    .setDisabled(false)
    .setCustomId(`firstbtn`);
-const last = new MessageButton()
+const last = new ButtonBuilder()
    .setLabel(`>>`)
-   .setStyle(`SECONDARY`)
+   .setStyle(ButtonStyle.Secondary)
    .setDisabled(false)
    .setCustomId(`lastbtn`);
-const del = new MessageButton()
+const del = new ButtonBuilder()
    .setLabel(`🗑`)
-   .setStyle(`DANGER`)
+   .setStyle(ButtonStyle.Danger)
    .setDisabled(false)
    .setCustomId(`delbtn`);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ const del = new MessageButton()
  * Sends back a list of buttons to be used
  * @param {Number} pageListLength
  * @param {Boolean} autoDelButton
- * @returns {MessageButton[]}
+ * @returns {ButtonBuilder[]}
 */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Portal ////////////////////////////////////////////////////////////////////////////////////////////////////////////////

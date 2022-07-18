@@ -50,7 +50,7 @@ npm i @acegoal07/discordjs-pagination
 <h1 id="example">Example</h1>
 
 ```js
-const { MessageEmbed, MessageButton } = require('discord.js');
+const { MessageEmbed, MessageButton, ButtonStyle } = require('discord.js');
 const paginationWrapper = require('@acegoal07/discordjs-pagination');
 
 // Message example
@@ -66,11 +66,11 @@ new paginationWrapper().setMessage(message)
    .setButtonList([
       new MessageButton()
          .setLabel(`1`)
-         .setStyle(`1`)
+         .setStyle(ButtonStyle.Secondary)
          .setCustomId(`1`),
       new MessageButton()
          .setLabel(`2`)
-         .setStyle(`2`)
+         .setStyle(ButtonStyle.Secondary)
          .setCustomId(`2`)
    ])
    .paginate()
@@ -88,11 +88,11 @@ new paginationWrapper().setInteraction(interaction)
    .setButtonList([
       new MessageButton()
          .setLabel(`1`)
-         .setStyle(`1`)
+         .setStyle(ButtonStyle.Secondary)
          .setCustomId(`1`),
       new MessageButton()
          .setLabel(`2`)
-         .setStyle(`2`)
+         .setStyle(ButtonStyle.Secondary)
          .setCustomId(`2`)
    ])
    .paginate()
@@ -113,11 +113,11 @@ new paginationWrapper().setInteraction(interaction)
    .setButtonList([
       new MessageButton()
          .setLabel(`1`)
-         .setStyle(`1`)
+         .setStyle(ButtonStyle.Secondary)
          .setCustomId(`1`),
       new MessageButton()
          .setLabel(`2`)
-         .setStyle(`2`)
+         .setStyle(ButtonStyle.Secondary)
          .setCustomId(`2`)
    ])
    .enableAutoDelete() // <---- Make sure its before the paginate function or it wont enable
@@ -145,7 +145,7 @@ Create Pages example
 // This feature replaces the .setPageList() function
 .createPages([
    {
-      color: "RED",
+      color: "Red",
 	   title: "page1",
       url: "https://acegoal07.dev",
       description: "page1 is here",
@@ -175,13 +175,14 @@ Create Pages example
 
 create Buttons example
 ```js
+const { buttonStyle } = require("discordjs");
 // This feature replaces the .setButtonList() function
 .createButtons([
    {
       customId: "button1",
       label: "i am button 1",
       emoji: "123456789012345678", // emoji replaces the label
-      style: "SUCCESS"
+      style: buttonStyle.Success
    },
    {
       // And carry on like so
