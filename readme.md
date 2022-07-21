@@ -54,25 +54,25 @@ npm i @acegoal07/discordjs-pagination@1.3.0
 <h1 id="example">Example</h1>
 
 ```js
-const { MessageEmbed, MessageButton } = require('discord.js');
+const { EmbedBuilder, ButtonBuilder } = require('discord.js');
 const paginationWrapper = require('@acegoal07/discordjs-pagination');
 
 // Message example
 new paginationWrapper().setMessage(message)
    .setPageList([
-      new MessageEmbed()
+      new EmbedBuilder()
          .setTitle("Embed 1")
          .setDescription("page 1"),
-      new MessageEmbed()
+      new EmbedBuilder()
          .setTitle("Embed 2")
          .setDescription("page 2")
    ])
    .setButtonList([
-      new MessageButton()
+      new ButtonBuilder()
          .setLabel(`1`)
          .setStyle("Secondary")
          .setCustomId(`1`),
-      new MessageButton()
+      new ButtonBuilder()
          .setLabel(`2`)
          .setStyle("Secondary")
          .setCustomId(`2`)
@@ -82,19 +82,19 @@ new paginationWrapper().setMessage(message)
 // Interaction example
 new paginationWrapper().setInteraction(interaction)
    .setPageList([
-      new MessageEmbed()
+      new EmbedBuilder()
          .setTitle("Embed 1")
          .setDescription("page 1"),
-      new MessageEmbed()
+      new EmbedBuilder()
          .setTitle("Embed 2")
          .setDescription("page 2")
    ])
    .setButtonList([
-      new MessageButton()
+      new ButtonBuilder()
          .setLabel(`1`)
          .setStyle("Secondary")
          .setCustomId(`1`),
-      new MessageButton()
+      new ButtonBuilder()
          .setLabel(`2`)
          .setStyle("Secondary")
          .setCustomId(`2`)
@@ -107,19 +107,19 @@ Just add these methods before the paginate function to enable the addons e.g.
 ```js
 new paginationWrapper().setInteraction(interaction)
    .setPageList([
-      new MessageEmbed()
+      new EmbedBuilder()
          .setTitle("Embed 1")
          .setDescription("page 1"),
-      new MessageEmbed()
+      new EmbedBuilder()
          .setTitle("Embed 2")
          .setDescription("page 2")
    ])
    .setButtonList([
-      new MessageButton()
+      new ButtonBuilder()
          .setLabel(`1`)
          .setStyle("Secondary")
          .setCustomId(`1`),
-      new MessageButton()
+      new ButtonBuilder()
          .setLabel(`2`)
          .setStyle("Secondary")
          .setCustomId(`2`)

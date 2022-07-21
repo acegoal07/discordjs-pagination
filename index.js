@@ -263,10 +263,10 @@ module.exports = class PaginationWrapper {
     *       |  'Greyple'
     *       |  'DarkButNotBlack'
     *       |  'NotQuiteBlack'
-    * }]} info
+    * }]} data
     * @returns {PaginationWrapper}
     */
-   createPages(info = [{
+   createPages(data = [{
 	   title: null,
       url: null,
       author: {
@@ -286,7 +286,7 @@ module.exports = class PaginationWrapper {
       imageUrl: null,
       color: null
    }]) {
-      this.pageBuilderInfo = info;
+      this.pageBuilderInfo = data;
       return this;
    }
    // Button creator
