@@ -150,7 +150,7 @@ Create Pages example
 .createPages([
    {
       color: "Red",
-	   title: "page1",
+      title: "page1",
       url: "https://acegoal07.dev",
       description: "page1 is here",
       author: {
