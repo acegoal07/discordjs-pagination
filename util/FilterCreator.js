@@ -29,7 +29,7 @@ module.exports = {
                   i.custom_id === buttonList[3].custom_id ||
                   i.custom_id === buttonList[4].custom_id) &&
                   (authorIndependent && i.user.id === authorID) ||
-                  !authorIndependent;            
+                  !authorIndependent;
          }
       } catch(error) {
          return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
