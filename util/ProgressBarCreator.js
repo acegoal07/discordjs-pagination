@@ -1,15 +1,14 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Params ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Params
 /**
+ * Sends back a string that represents the page as a progressbar
  * @param {Number} pageListLength - An array of the embeds
  * @param {Number} pageNumber - Current page number
  * @param {String} proSlider - The symbol used to symbolise position on the progressBar
  * @param {String} proBar - The symbol used to symbolise pages to go on the progressBar
  * @returns {String} Progress bar
 */
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Progress bar maker ////////////////////////////////////////////////////////////////////////////////////////////////////
-module.exports = Builder = async(pageListLength, pageNumber, proSlider, proBar) => {
+// Progress bar maker
+module.exports = ProgressBarCreator = async(pageListLength, pageNumber, proSlider, proBar) => {
    try {
       // Progress maths
       const progress = pageNumber + 1;
