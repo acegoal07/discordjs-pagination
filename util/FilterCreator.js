@@ -23,11 +23,11 @@ module.exports = {
          } else {
             // Create filter
             return filter = (i) =>
-                  (i.custom_id === buttonList[0].custom_id ||
-                  i.custom_id === buttonList[1].custom_id ||
-                  i.custom_id === buttonList[2].custom_id ||
-                  i.custom_id === buttonList[3].custom_id ||
-                  i.custom_id === buttonList[4].custom_id) &&
+                  (i.customId === buttonList[0].data.custom_id ||
+                  i.customId === buttonList[1].data.custom_id ||
+                  i.customId === buttonList[2].data.custom_id ||
+                  i.customId === buttonList[3].data.custom_id ||
+                  i.customId === buttonList[4].data.custom_id) &&
                   (authorIndependent && i.user.id === authorID) ||
                   !authorIndependent;
          }

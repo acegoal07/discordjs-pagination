@@ -7,9 +7,8 @@ module.exports = {
     * Sends back a list of buttons to be used
     * @param {Number} pageListLength
     * @param {Boolean} autoDelButton
-    * @returns {ButtonBuilder[]}
     */
-   async AutoButtonCreator() {
+   async AutoButtonCreator(pageListLength, autoDelButton) {
       // Pre-made buttons
       const next = new ButtonBuilder()
          .setLabel(`>`)
@@ -45,15 +44,14 @@ module.exports = {
             buttonList = [first, previous, next, last];
          }
          if (autoDelButton) buttonList.push(del)
-         return buttonList;
+         return Promise.resolve(buttonList);
       } catch(error) {
-         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButton ${error}`)
+         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`)
       }
    },
    // ButtonCreator params
    /**
     * Sends back a list of custom buttons
-    * @returns {ButtonBuilder[]}
     */
    async ButtonCreator() {
       try {
@@ -74,7 +72,7 @@ module.exports = {
             // Add button to array
             buttonList.push(embedButton)
          }
-         return buttonList;
+         return Promise.resolve(buttonList);
       } catch(error) {
          return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function ButtonCreator ${error}`)
       }
@@ -82,9 +80,8 @@ module.exports = {
    // DisabledButtonCreator params
    /**
     * @param {ButtonBuilder[]} buttonList - An array of the buttons
-    * @returns {ActionRowBuilder} Disabled message action row
     */
-   async DisabledButtonCreator() {
+   async DisabledButtonCreator(buttonList) {
       try {
          let disabledButtonList = []
          let count = 0;
@@ -110,9 +107,9 @@ module.exports = {
                );
             }
          }
-         return new ActionRowBuilder().addComponents(disabledButtonList);
+         return Promise.resolve(new ActionRowBuilder().addComponents(disabledButtonList));
       } catch(error) {
-         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function ButtonCreator ${error}`)
+         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`)
       }
    }
 }

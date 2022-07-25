@@ -5,7 +5,6 @@ module.exports = {
    /**
     * Creates a select menu to be used as a way to interact with the pagination
     * @param {Number} pageListLength An array of the embeds
-    * @returns {ActionRowBuilder} Select menu
     */
    async SelectMenuCreator(pageListLength) {
       try {
@@ -20,12 +19,14 @@ module.exports = {
             )
          }
          // Select menu builder
-         return new ActionRowBuilder().addComponents(
-            new SelectMenuBuilder()
-               .setCustomId('select')
-               .setPlaceholder('Select Page')
-               .addOptions(optionArray)
 
+         return Promise.resolve(
+            new ActionRowBuilder().addComponents(
+               new SelectMenuBuilder()
+                  .setCustomId('select')
+                  .setPlaceholder('Select Page')
+                  .addOptions(optionArray)
+            )
          )
       } catch(error) {
          return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function SelectMenuCreator ${error}`)
@@ -33,7 +34,6 @@ module.exports = {
    },
    /**
     * @param {Number} pageListLength An array of the embeds
-    * @returns {ActionRowBuilder} Select menu
     */
    async DisabledSelectMenuCreator(pageListLength) {
       try {
@@ -48,19 +48,17 @@ module.exports = {
             )
          }
          // Select menu builder
-         return new ActionRowBuilder().addComponents(
-            new SelectMenuBuilder()
-               .setCustomId('disabledSM')
-               .setDisabled(true)
-               .setPlaceholder('Select Page')
-               .addOptions(optionArray)
+         return Promise.resolve(
+            new ActionRowBuilder().addComponents(
+               new SelectMenuBuilder()
+                  .setCustomId('disabledSM')
+                  .setDisabled(true)
+                  .setPlaceholder('Select Page')
+                  .addOptions(optionArray)
+            )            
          )
       } catch(error) {
          return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledSelectMenuCreator ${error}`)
       }
    }
 }
-
-
-
-
