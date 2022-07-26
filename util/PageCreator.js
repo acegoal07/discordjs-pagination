@@ -10,7 +10,7 @@ module.exports = {
       try {
             let pageList = [];
             for (const page of pageBuilderInfo) {
-               if (!page) throw new Error("PageCreator ERROR: blank page info was passed into createPages")
+               if (!page) throw new Error("PageCreator ERROR: Blank page info was passed into createPages")
                const embed = new EmbedBuilder();
                if (page.title) embed.setTitle(page.title);
                if (page.description) embed.setDescription(page.description);
