@@ -100,6 +100,16 @@ new paginationWrapper().setInteraction(interaction)
          .setCustomId(`2`)
    ])
    .paginate()
+
+// Interaction ephemeral examples
+   // way 1 sends a deferred interaction with it enabled
+   await deferReply({ephemeral: true})
+   new paginationWrapper().setInteraction(interaction)
+      .setPageList([ ........
+
+   // way 2 sends an un-deferred interaction which is used to enable it
+   new paginationWrapper().setInteraction(interaction, true) 
+      .setPageList([ ........
 ```
 <h1 id="settingsHelp">Optional settings help</h1>
 
