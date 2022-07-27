@@ -145,7 +145,7 @@ All the available settings and the input they need
 .enableAutoDelete() // Enables autoDelete for your pagination
 .enablePrivateReply() // Enables privateReply for your pagination
 .enableReplyMessage() // Enables replyMessage for your pagination
-.setProgressBar({newSliderIcon, newBarIcon}) // Enables pagination for your pagination and allows you to edit the characters
+.setProgressBar({newSliderIcon, newBarIcon}) // Enables ProgressBar for your pagination and also allows you to edit the characters
 .enableAutoButton() // Enables autoButton for your pagination
 .enableAutoDelButton() // Enables autoDelButton for your pagination
 .enableSelectMenu() // Enables selectMenu for your pagination

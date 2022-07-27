@@ -52,7 +52,7 @@ module.exports = class PaginationWrapper {
    /**
     * Set the interaction interface for the pagination
     * @param {Interaction} interaction
-    * @param {Boolean} ephemeral Used to enable ephemeral response for interactions
+    * @param {Boolean} ephemeral
     * @returns {PaginationWrapper}
     */
    setInteraction(interaction, ephemeral = false) {
