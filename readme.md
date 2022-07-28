@@ -21,7 +21,7 @@
 ---
 
 <h1 id="about">About</h1>
-This pagination supports both Message and Interaction and automaticity switches between which interface is provided<br><br>
+This pagination supports both Message and Interaction and automaticity switches between which interface is provided, It also adjusts multiple things about the pagination depending on the data that's provided making it very customisable and user friendly<br><br>
 
 To download the package use:<br><br>
 For discord version 14.0.0 and higher
@@ -32,6 +32,10 @@ For discord version 13.9.0 and bellow
 ```sh
 npm i @acegoal07/discordjs-pagination@1.3.0
 ```
+
+### Addition info
+The interaction pagination supports deferred interactions but you do not need to defer the interaction yourself as the pagination does it automatically if it is not deferred
+
 <h1 id="functions">All wrapper functions</h1>
 
 ```js
