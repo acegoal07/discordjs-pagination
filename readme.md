@@ -20,6 +20,8 @@
 
 ---
 
+<h2>The idea behind this version is to create a pagination that can run completely in direct messages without requiring a server, to try out this version of the pagination message me on discord at acegoal07#8511</h2>
+
 <h1 id="about">About</h1>
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided, It also adjusts multiple things about the pagination depending on the data that's provided making it very customisable and user friendly<br><br>
 
