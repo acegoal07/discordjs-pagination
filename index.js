@@ -12,10 +12,14 @@ const PaginationBase = require("./lib/PaginationBase");
 module.exports = class PaginationWrapper {
    // Constructor
    constructor() {
+      // Interfaces
       this.message = null;
       this.interaction = null;
+      this.direct = null;
+      // Required inputs
       this.pageList = null;
       this.buttonList = null;
+      // Options
       this.timeout = 12000;
       this.replyMessage = false;
       this.autoDelete = false;
@@ -30,6 +34,7 @@ module.exports = class PaginationWrapper {
       this.pageBuilderInfo = null;
       this.buttonBuilderInfo = null;
       this.ephemeral = false;
+      // Pagination
       this.pagination = null;
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -42,8 +47,8 @@ module.exports = class PaginationWrapper {
     */
    setMessage(message) {
       // Checks
-      if (typeof message !== "object") throw new Error("The message you have provided is not an object");
-      if (!message?.author) throw new Error("The message you have provided is incorrect");
+      if (typeof message !== "object") throw new Error("setMessage ERROR: The message you have provided is not an object");
+      if (!message?.author) throw new Error("setMessage ERROR: The message you have provided is incorrect");
       // Set and return
       this.message = message;
       return this;
@@ -61,12 +66,32 @@ module.exports = class PaginationWrapper {
          this.ephemeral = true;
       }
       // Checks
-      if (typeof interaction !== "object") throw new Error("The interaction you have provided is not an object");
-      if (!interaction?.applicationId) throw new Error("The interaction you have provided is incorrect");
+      if (typeof interaction !== "object") throw new Error("setInteraction ERROR: The interaction you have provided is not an object");
+      if (!interaction?.applicationId) throw new Error("setInteraction ERROR: The interaction you have provided is incorrect");
       // Set and return
       this.interaction = interaction;
       return this;
    }
+
+
+
+   // Set direct message interface
+   /**
+    * Set the message interface for the pagination to be used for direct messages
+    * @param {Message} direct
+    * @returns {PaginationWrapper}
+    */
+   setDirect(direct) {
+      // Checks
+      if (typeof direct !== "object") throw new Error("setDirect ERROR: The message you have provided is not an object");
+      if (!direct?.author) throw new Error("setDirect ERROR: The message you have provided is incorrect");
+      // Set and return
+      this.direct = direct;
+      return this;
+   }
+
+
+
    // Set ButtonList
    /**
     * Set the buttonList for the paginationY
@@ -75,9 +100,9 @@ module.exports = class PaginationWrapper {
     */
    setButtonList(buttonList) {
       // Checks
-      if (!buttonList) throw new Error("The buttonList you have provided is empty");
-      if (typeof buttonList !== "object") throw new Error("The buttonList you have provided is not an object");
-      if (buttonList.length < 2) throw new Error("You need to provided a minimum of 2 buttons");
+      if (!buttonList) throw new Error("setButtonList ERROR: The buttonList you have provided is empty");
+      if (typeof buttonList !== "object") throw new Error("setButtonList ERROR: The buttonList you have provided is not an object");
+      if (buttonList.length < 2) throw new Error("setButtonList ERROR: You need to provided a minimum of 2 buttons");
       // Set and return
       this.buttonList = buttonList;
       return this;
@@ -90,8 +115,8 @@ module.exports = class PaginationWrapper {
     */
    setPageList(pageList) {
       // Checks
-      if (!pageList) throw new Error("The pageList you have provided is empty");
-      if (typeof pageList !== "object") throw new Error("The pageList you have provided is not an object");
+      if (!pageList) throw new Error("setPageList ERROR: The pageList you have provided is empty");
+      if (typeof pageList !== "object") throw new Error("setPageList ERROR: The pageList you have provided is not an object");
       // Set and return
       this.pageList = pageList;
       return this;
@@ -103,10 +128,10 @@ module.exports = class PaginationWrapper {
     */
    async paginate() {
       // Checks
-      if (!this.message && !this.interaction) throw new Error("You have not provided an interface to use");
-      if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("You have not provided a buttonList to use");
-      if (!this.pageList && !this.pageBuilderInfo) throw new Error("You have not provided a pageList to use");
-      if (this.interaction && this.replyMessage) process.emitWarning("replyMessage can't be used by an interaction pagination");
+      if (!this.message && !this.interaction) throw new Error("paginate ERROR: You have not provided an interface to use");
+      if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
+      if (!this.pageList && !this.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
+      if (this.interaction && this.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
       // Set and return
       this.pagination = await PaginationBase(this);
       return this;
@@ -121,11 +146,11 @@ module.exports = class PaginationWrapper {
     */
    setTimeout(timeout) {
       // Checks
-      if (timeout <= 3000) throw new Error("The time set can't be less than 3000ms");
-      if (typeof timeout !== "number") throw new Error("The time provided is not a number");
+      if (timeout <= 3000) throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");
+      if (typeof timeout !== "number") throw new Error("setTimeout ERROR: The time provided is not a number");
       // Set and return
       if (!timeout) {
-         process.emitWarning("You did not provide a timeout to set so it has defaulted to 12000ms");
+         process.emitWarning("setTimeout WARNING: You did not provide a timeout to set so it has defaulted to 12000ms");
       } else {
          this.timeout = timeout;
       }
@@ -140,10 +165,10 @@ module.exports = class PaginationWrapper {
     */
    setProgressBar({proSlider = "▣", proBar = "▢"}) {
       // Checks
-      if (typeof proSlider !== "string") throw new Error("The proSlider you have provided is not a string");
-      if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
-      if (typeof proBar !== "string") throw new Error("The proBar you have provided is not a string");
-      if (proBar.length > 1 || proBar.length < 1) throw new Error("The proBar must be 1 character");
+      if (typeof proSlider !== "string") throw new Error("setProgressBar ERROR: The proSlider you have provided is not a string");
+      if (proSlider.length > 1 || proSlider.length < 1) throw new Error("setProgressBar ERROR: The proSlider must be 1 character");
+      if (typeof proBar !== "string") throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");
+      if (proBar.length > 1 || proBar.length < 1) throw new Error("setProgressBar ERROR: The proBar must be 1 character");
       // Set and return
       this.progressBar = true;
       this.proSlider = proSlider;
