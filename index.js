@@ -1,21 +1,19 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { Message, Interaction, EmbedBuilder, ButtonBuilder } = require("discord.js");
+const { Message, Interaction, EmbedBuilder, ButtonBuilder, MessagePayload } = require("discord.js");
 const PaginationBase = require("./lib/PaginationBase");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.3.5
+ * @version 1.3.7
  * @author acegoal07
  */
 module.exports = class PaginationWrapper {
    // Constructor
    constructor() {
       // Interfaces
-      this.message = null;
-      this.interaction = null;
-      this.direct = null;
+      this.interface = null;
       // Required inputs
       this.pageList = null;
       this.buttonList = null;
@@ -48,9 +46,9 @@ module.exports = class PaginationWrapper {
    setMessage(message) {
       // Checks
       if (typeof message !== "object") throw new Error("setMessage ERROR: The message you have provided is not an object");
-      if (!message?.author) throw new Error("setMessage ERROR: The message you have provided is incorrect");
+      if (!new MessagePayload(message).isMessage) throw new Error("setMessage ERROR: The message you have provided is incorrect");
       // Set and return
-      this.message = message;
+      this.interface = message;
       return this;
    }
    // Set interaction interface
@@ -67,31 +65,11 @@ module.exports = class PaginationWrapper {
       }
       // Checks
       if (typeof interaction !== "object") throw new Error("setInteraction ERROR: The interaction you have provided is not an object");
-      if (!interaction?.applicationId) throw new Error("setInteraction ERROR: The interaction you have provided is incorrect");
+      if (!new MessagePayload(interaction).isInteraction) throw new Error("setInteraction ERROR: The interaction you have provided is incorrect");
       // Set and return
-      this.interaction = interaction;
+      this.interface = interaction;
       return this;
    }
-
-
-
-   // Set direct message interface
-   /**
-    * Set the message interface for the pagination to be used for direct messages
-    * @param {Message} direct
-    * @returns {PaginationWrapper}
-    */
-   setDirect(direct) {
-      // Checks
-      if (typeof direct !== "object") throw new Error("setDirect ERROR: The message you have provided is not an object");
-      if (!direct?.author) throw new Error("setDirect ERROR: The message you have provided is incorrect");
-      // Set and return
-      this.direct = direct;
-      return this;
-   }
-
-
-
    // Set ButtonList
    /**
     * Set the buttonList for the paginationY
@@ -128,10 +106,10 @@ module.exports = class PaginationWrapper {
     */
    async paginate() {
       // Checks
-      if (!this.message && !this.interaction) throw new Error("paginate ERROR: You have not provided an interface to use");
+      if (!this.interface) throw new Error("paginate ERROR: You have not provided an interface to use");
       if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
       if (!this.pageList && !this.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
-      if (this.interaction && this.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
+      if (new MessagePayload(this.interface).isInteraction && this.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
       // Set and return
       this.pagination = await PaginationBase(this);
       return this;
