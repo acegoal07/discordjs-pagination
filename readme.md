@@ -27,6 +27,8 @@ The check now to see if it is an interaction pagination or a message pagination 
 
 When setting the interface both interaction and message are combined into one reference
 
+Adds the concept of combining setMessage and setInteraction
+
 <h1 id="about">About</h1>
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided, It also adjusts multiple things about the pagination depending on the data that's provided making it very customisable and user friendly<br><br>
 

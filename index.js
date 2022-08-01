@@ -37,6 +37,26 @@ module.exports = class PaginationWrapper {
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   // Set interface
+   /**
+    * Sets the used interface for the pagination
+    * @param {Message | Interaction} _interface
+    * @returns {PaginationWrapper}
+    */
+   setInterface(_interface, options = {ephemeral: true}) {
+      // Interface already set
+      if (this.interface) throw new Error("setInterface ERROR: The interface has already been set and can't be changed");
+      // Missing interface
+      if (!_interface) throw new Error("setInterface ERROR: The interface you have provided is invalid");
+      // Set message interface
+      if (new MessagePayload(_interface).isMessage) {
+         if (options.ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
+      }
+      // Set ephemeral
+      this.ephemeral = options.ephemeral;
+      // Set and return
+      this.interface = _interface;
+   }
    // Set message interface
    /**
     * Set the message interface for the pagination
