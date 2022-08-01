@@ -44,6 +44,8 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setMessage(message) {
+      // Interface already set
+      if (this.interface) throw new Error("setMessage ERROR: The interface has already been set and can't be changed");
       // Checks
       if (typeof message !== "object") throw new Error("setMessage ERROR: The message you have provided is not an object");
       if (!new MessagePayload(message).isMessage) throw new Error("setMessage ERROR: The message you have provided is incorrect");
@@ -59,10 +61,10 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setInteraction(interaction, ephemeral = false) {
+      // Interface already set
+      if (this.interface) throw new Error("setInteraction ERROR: The interface has already been set and can't be changed");
       // enable ephemeral
-      if (ephemeral) {
-         this.ephemeral = true;
-      }
+      this.ephemeral = ephemeral;
       // Checks
       if (typeof interaction !== "object") throw new Error("setInteraction ERROR: The interaction you have provided is not an object");
       if (!new MessagePayload(interaction).isInteraction) throw new Error("setInteraction ERROR: The interaction you have provided is incorrect");

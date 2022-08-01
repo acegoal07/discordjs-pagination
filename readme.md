@@ -22,6 +22,11 @@
 
 <h2>This is a rework of how the pagination detects the difference between interactions and messages</h2>
 
+### Change motes
+The check now to see if it is an interaction pagination or a message pagination is done using a discord.js function
+
+When setting the interface both interaction and message are combined into one reference
+
 <h1 id="about">About</h1>
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided, It also adjusts multiple things about the pagination depending on the data that's provided making it very customisable and user friendly<br><br>
 
