@@ -22,16 +22,20 @@ module.exports = class PaginationWrapper {
       this.replyMessage = false;
       this.autoDelete = false;
       this.privateReply = false;
-      this.progressBar = false;
-      this.proSlider = "▣";
-      this.proBar = "▢";
       this.authorIndependent = false;
-      this.autoButton = false;
-      this.autoDelButton = false;
       this.selectMenu = false;
       this.pageBuilderInfo = null;
       this.buttonBuilderInfo = null;
       this.ephemeral = false;
+      this.autoButton = {
+         toggle: false,
+         deleteButton: false
+      };
+      this.progressBar = {
+         toggle: false,
+         slider: "▣",
+         bar: "▢"
+      };
       // Pagination
       this.pagination = null;
    }
@@ -43,17 +47,17 @@ module.exports = class PaginationWrapper {
     * @param {Message | Interaction} _interface
     * @returns {PaginationWrapper}
     */
-   setInterface(_interface, options = {ephemeral: true}) {
+   setInterface(_interface, options = {interaction_ephemeral: false}) {
       // Interface already set
       if (this.interface) throw new Error("setInterface ERROR: The interface has already been set and can't be changed");
       // Missing interface
       if (!_interface) throw new Error("setInterface ERROR: The interface you have provided is invalid");
       // Set message interface
       if (new MessagePayload(_interface).isMessage) {
-         if (options.ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
+         if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
       }
       // Set ephemeral
-      this.ephemeral = options.ephemeral;
+      this.ephemeral = options.interaction_ephemeral;
       // Set and return
       this.interface = _interface;
    }
@@ -162,20 +166,20 @@ module.exports = class PaginationWrapper {
    // Set progressBar
    /**
     * Allows you to enable and edit a progressBar for your pagination
-    * @param {String} proSlider
-    * @param {String} proBar
+    * @param {String} slider
+    * @param {String} bar
     * @returns {PaginationWrapper}
     */
-   setProgressBar({proSlider = "▣", proBar = "▢"}) {
+   setProgressBar({slider = "▣", bar = "▢"}) {
       // Checks
-      if (typeof proSlider !== "string") throw new Error("setProgressBar ERROR: The proSlider you have provided is not a string");
-      if (proSlider.length > 1 || proSlider.length < 1) throw new Error("setProgressBar ERROR: The proSlider must be 1 character");
-      if (typeof proBar !== "string") throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");
-      if (proBar.length > 1 || proBar.length < 1) throw new Error("setProgressBar ERROR: The proBar must be 1 character");
+      if (typeof slider !== "string") throw new Error("setProgressBar ERROR: The proSlider you have provided is not a string");
+      if (slider.length > 1 || slider.length < 1) throw new Error("setProgressBar ERROR: The proSlider must be 1 character");
+      if (typeof bar !== "string") throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");
+      if (bar.length > 1 || bar.length < 1) throw new Error("setProgressBar ERROR: The proBar must be 1 character");
       // Set and return
-      this.progressBar = true;
-      this.proSlider = proSlider;
-      this.proBar = proBar;
+      this.progressBar.toggle = true;
+      this.progressBar.slider = slider;
+      this.progressBar.bar = bar;
       return this;
    }
    // Set replyMessage
@@ -221,16 +225,19 @@ module.exports = class PaginationWrapper {
    // Set autoButton
    /**
     * Enables autoButton for your pagination
+    * @param {Boolean} deleteButton
     * @returns {PaginationWrapper}
     */
-   enableAutoButton() {
+   enableAutoButton(deleteButton = false) {
       // Set and return
-      this.autoButton = true;
+      this.autoButton.toggle = true;
+      this.autoButton.deleteButton = deleteButton;
       return this;
    }
    // Set autoButtonDel
    /**
     * Enables autoDelButton for your pagination
+    * @deprecated This function has been made into a setting on the enableAutoButton function
     * @returns {PaginationWrapper}
     */
    enableAutoDelButton() {
