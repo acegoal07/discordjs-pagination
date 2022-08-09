@@ -1,39 +1,66 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { Message, Interaction, EmbedBuilder, ButtonBuilder } = require("discord.js");
+const { Message, Interaction, EmbedBuilder, ButtonBuilder, MessagePayload } = require("discord.js");
 const PaginationBase = require("./lib/PaginationBase");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.3.5
+ * @version 1.3.7
  * @author acegoal07
  */
 module.exports = class PaginationWrapper {
    // Constructor
    constructor() {
-      this.message = null;
-      this.interaction = null;
+      // Interfaces
+      this.interface = null;
+      // Required inputs
       this.pageList = null;
       this.buttonList = null;
+      // Options
       this.timeout = 12000;
       this.replyMessage = false;
       this.autoDelete = false;
       this.privateReply = false;
-      this.progressBar = false;
-      this.proSlider = "▣";
-      this.proBar = "▢";
       this.authorIndependent = false;
-      this.autoButton = false;
-      this.autoDelButton = false;
       this.selectMenu = false;
       this.pageBuilderInfo = null;
       this.buttonBuilderInfo = null;
       this.ephemeral = false;
+      this.autoButton = {
+         toggle: false,
+         deleteButton: false
+      };
+      this.progressBar = {
+         toggle: false,
+         slider: "▣",
+         bar: "▢"
+      };
+      // Pagination
       this.pagination = null;
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   // Set interface
+   /**
+    * Sets the used interface for the pagination
+    * @param {Message | Interaction} _interface
+    * @returns {PaginationWrapper}
+    */
+   setInterface(_interface, options = {interaction_ephemeral: false}) {
+      // Interface already set
+      if (this.interface) throw new Error("setInterface ERROR: The interface has already been set and can't be changed");
+      // Missing interface
+      if (!_interface) throw new Error("setInterface ERROR: The interface you have provided is invalid");
+      // Set message interface
+      if (new MessagePayload(_interface).isMessage) {
+         if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
+      }
+      // Set ephemeral
+      this.ephemeral = options.interaction_ephemeral;
+      // Set and return
+      this.interface = _interface;
+   }
    // Set message interface
    /**
     * Set the message interface for the pagination
@@ -41,11 +68,13 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setMessage(message) {
+      // Interface already set
+      if (this.interface) throw new Error("setMessage ERROR: The interface has already been set and can't be changed");
       // Checks
-      if (typeof message !== "object") throw new Error("The message you have provided is not an object");
-      if (!message?.author) throw new Error("The message you have provided is incorrect");
+      if (typeof message !== "object") throw new Error("setMessage ERROR: The message you have provided is not an object");
+      if (!new MessagePayload(message).isMessage) throw new Error("setMessage ERROR: The message you have provided is incorrect");
       // Set and return
-      this.message = message;
+      this.interface = message;
       return this;
    }
    // Set interaction interface
@@ -56,15 +85,15 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setInteraction(interaction, ephemeral = false) {
+      // Interface already set
+      if (this.interface) throw new Error("setInteraction ERROR: The interface has already been set and can't be changed");
       // enable ephemeral
-      if (ephemeral) {
-         this.ephemeral = true;
-      }
+      this.ephemeral = ephemeral;
       // Checks
-      if (typeof interaction !== "object") throw new Error("The interaction you have provided is not an object");
-      if (!interaction?.applicationId) throw new Error("The interaction you have provided is incorrect");
+      if (typeof interaction !== "object") throw new Error("setInteraction ERROR: The interaction you have provided is not an object");
+      if (!new MessagePayload(interaction).isInteraction) throw new Error("setInteraction ERROR: The interaction you have provided is incorrect");
       // Set and return
-      this.interaction = interaction;
+      this.interface = interaction;
       return this;
    }
    // Set ButtonList
@@ -75,9 +104,9 @@ module.exports = class PaginationWrapper {
     */
    setButtonList(buttonList) {
       // Checks
-      if (!buttonList) throw new Error("The buttonList you have provided is empty");
-      if (typeof buttonList !== "object") throw new Error("The buttonList you have provided is not an object");
-      if (buttonList.length < 2) throw new Error("You need to provided a minimum of 2 buttons");
+      if (!buttonList) throw new Error("setButtonList ERROR: The buttonList you have provided is empty");
+      if (typeof buttonList !== "object") throw new Error("setButtonList ERROR: The buttonList you have provided is not an object");
+      if (buttonList.length < 2) throw new Error("setButtonList ERROR: You need to provided a minimum of 2 buttons");
       // Set and return
       this.buttonList = buttonList;
       return this;
@@ -90,8 +119,8 @@ module.exports = class PaginationWrapper {
     */
    setPageList(pageList) {
       // Checks
-      if (!pageList) throw new Error("The pageList you have provided is empty");
-      if (typeof pageList !== "object") throw new Error("The pageList you have provided is not an object");
+      if (!pageList) throw new Error("setPageList ERROR: The pageList you have provided is empty");
+      if (typeof pageList !== "object") throw new Error("setPageList ERROR: The pageList you have provided is not an object");
       // Set and return
       this.pageList = pageList;
       return this;
@@ -102,11 +131,14 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    async paginate() {
+      // References
+      const interfaceCheck = new MessagePayload(this.interface);
       // Checks
-      if (!this.message && !this.interaction) throw new Error("You have not provided an interface to use");
-      if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("You have not provided a buttonList to use");
-      if (!this.pageList && !this.pageBuilderInfo) throw new Error("You have not provided a pageList to use");
-      if (this.interaction && this.replyMessage) process.emitWarning("replyMessage can't be used by an interaction pagination");
+      if (!this.interface) throw new Error("paginate ERROR: You have not provided an interface to use");
+      if (!interfaceCheck.isInteraction && !interfaceCheck.isMessage) throw new Error("paginate ERROR: You have not provided an interface that can be used");
+      if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
+      if (!this.pageList && !this.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
+      if (interfaceCheck.isInteraction && this.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
       // Set and return
       this.pagination = await PaginationBase(this);
       return this;
@@ -121,11 +153,11 @@ module.exports = class PaginationWrapper {
     */
    setTimeout(timeout) {
       // Checks
-      if (timeout <= 3000) throw new Error("The time set can't be less than 3000ms");
-      if (typeof timeout !== "number") throw new Error("The time provided is not a number");
+      if (timeout <= 3000) throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");
+      if (typeof timeout !== "number") throw new Error("setTimeout ERROR: The time provided is not a number");
       // Set and return
       if (!timeout) {
-         process.emitWarning("You did not provide a timeout to set so it has defaulted to 12000ms");
+         process.emitWarning("setTimeout WARNING: You did not provide a timeout to set so it has defaulted to 12000ms");
       } else {
          this.timeout = timeout;
       }
@@ -134,20 +166,20 @@ module.exports = class PaginationWrapper {
    // Set progressBar
    /**
     * Allows you to enable and edit a progressBar for your pagination
-    * @param {String} proSlider
-    * @param {String} proBar
+    * @param {String} slider
+    * @param {String} bar
     * @returns {PaginationWrapper}
     */
-   setProgressBar({proSlider = "▣", proBar = "▢"}) {
+   setProgressBar({slider = "▣", bar = "▢"}) {
       // Checks
-      if (typeof proSlider !== "string") throw new Error("The proSlider you have provided is not a string");
-      if (proSlider.length > 1 || proSlider.length < 1) throw new Error("The proSlider must be 1 character");
-      if (typeof proBar !== "string") throw new Error("The proBar you have provided is not a string");
-      if (proBar.length > 1 || proBar.length < 1) throw new Error("The proBar must be 1 character");
+      if (typeof slider !== "string") throw new Error("setProgressBar ERROR: The proSlider you have provided is not a string");
+      if (slider.length > 1 || slider.length < 1) throw new Error("setProgressBar ERROR: The proSlider must be 1 character");
+      if (typeof bar !== "string") throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");
+      if (bar.length > 1 || bar.length < 1) throw new Error("setProgressBar ERROR: The proBar must be 1 character");
       // Set and return
-      this.progressBar = true;
-      this.proSlider = proSlider;
-      this.proBar = proBar;
+      this.progressBar.toggle = true;
+      this.progressBar.slider = slider;
+      this.progressBar.bar = bar;
       return this;
    }
    // Set replyMessage
@@ -193,16 +225,19 @@ module.exports = class PaginationWrapper {
    // Set autoButton
    /**
     * Enables autoButton for your pagination
+    * @param {Boolean} deleteButton
     * @returns {PaginationWrapper}
     */
-   enableAutoButton() {
+   enableAutoButton(deleteButton = false) {
       // Set and return
-      this.autoButton = true;
+      this.autoButton.toggle = true;
+      this.autoButton.deleteButton = deleteButton;
       return this;
    }
    // Set autoButtonDel
    /**
     * Enables autoDelButton for your pagination
+    * @deprecated This function has been made into a setting on the enableAutoButton function
     * @returns {PaginationWrapper}
     */
    enableAutoDelButton() {

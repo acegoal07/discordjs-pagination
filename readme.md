@@ -39,6 +39,7 @@ The interaction pagination supports deferred interactions but you do not need to
 <h1 id="functions">All wrapper functions</h1>
 
 ```js
+.setInterface() // This is a feature that could be cut depending on what people think to it
 .setMessage()
 .setInteraction()
 .setPageList()
@@ -114,6 +115,10 @@ new paginationWrapper().setInteraction(interaction)
    // way 2 sends an un-deferred interaction which is used to enable it
    new paginationWrapper().setInteraction(interaction, true) 
       .setPageList([ ........
+
+   // way 3 sends an un-deferred interaction which is used to enable it
+   new paginationWrapper().setInterface({interaction_ephemeral: true}) 
+      .setPageList([ ........
 ```
 <h1 id="settingsHelp">Optional settings help</h1>
 
@@ -150,8 +155,7 @@ All the available settings and the input they need
 .enablePrivateReply() // Enables privateReply for your pagination
 .enableReplyMessage() // Enables replyMessage for your pagination
 .setProgressBar({newSliderIcon, newBarIcon}) // Enables ProgressBar for your pagination and also allows you to edit the characters
-.enableAutoButton() // Enables autoButton for your pagination
-.enableAutoDelButton() // Enables autoDelButton for your pagination
+.enableAutoButton(deleteButton) // Enables autoButton for your pagination
 .enableSelectMenu() // Enables selectMenu for your pagination
 .createPages() // View create help to see how to use this feature
 .createButtons() // View create help to see how to use this feature
