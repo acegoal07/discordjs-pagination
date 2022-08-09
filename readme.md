@@ -20,15 +20,6 @@
 
 ---
 
-<h2>This is a rework of how the pagination detects the difference between interactions and messages</h2>
-
-### Change motes
-The check now to see if it is an interaction pagination or a message pagination is done using a discord.js function
-
-When setting the interface both interaction and message are combined into one reference
-
-Adds the concept of combining setMessage and setInteraction
-
 <h1 id="about">About</h1>
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided, It also adjusts multiple things about the pagination depending on the data that's provided making it very customisable and user friendly<br><br>
 
@@ -48,6 +39,7 @@ The interaction pagination supports deferred interactions but you do not need to
 <h1 id="functions">All wrapper functions</h1>
 
 ```js
+.setInterface() // This is a feature that could be cut depending on what people think to it
 .setMessage()
 .setInteraction()
 .setPageList()
@@ -123,6 +115,10 @@ new paginationWrapper().setInteraction(interaction)
    // way 2 sends an un-deferred interaction which is used to enable it
    new paginationWrapper().setInteraction(interaction, true) 
       .setPageList([ ........
+
+   // way 3 sends an un-deferred interaction which is used to enable it
+   new paginationWrapper().setInterface({interaction_ephemeral: true}) 
+      .setPageList([ ........
 ```
 <h1 id="settingsHelp">Optional settings help</h1>
 
@@ -159,8 +155,7 @@ All the available settings and the input they need
 .enablePrivateReply() // Enables privateReply for your pagination
 .enableReplyMessage() // Enables replyMessage for your pagination
 .setProgressBar({newSliderIcon, newBarIcon}) // Enables ProgressBar for your pagination and also allows you to edit the characters
-.enableAutoButton() // Enables autoButton for your pagination
-.enableAutoDelButton() // Enables autoDelButton for your pagination
+.enableAutoButton(deleteButton) // Enables autoButton for your pagination
 .enableSelectMenu() // Enables selectMenu for your pagination
 .createPages() // View create help to see how to use this feature
 .createButtons() // View create help to see how to use this feature

@@ -8,14 +8,14 @@
 */
 // Progress bar maker
 module.exports = {
-   async ProgressBarCreator(pageListLength, pageNumber, slider, bar) {
+   async ProgressBarCreator(pageListLength, pageNumber, progressBar, slider, bar) {
       try {
          // Progress maths
          const progress = pageNumber + 1;
          const emptyProgress = pageListLength - (pageNumber + 1);
          // Progress text
-         const progressText = slider.repeat(progress);
-         const emptyProgressText = bar.repeat(emptyProgress);
+         const progressText = progressBar.slider.repeat(progress);
+         const emptyProgressText = progressBar.bar.repeat(emptyProgress);
          // Create bar
          return Promise.resolve(`[${progressText+emptyProgressText}] : Page ${pageNumber + 1}`);
       } catch(error) {

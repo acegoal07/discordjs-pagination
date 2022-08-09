@@ -138,7 +138,7 @@ module.exports = class PaginationWrapper {
       if (!interfaceCheck.isInteraction && !interfaceCheck.isMessage) throw new Error("paginate ERROR: You have not provided an interface that can be used");
       if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
       if (!this.pageList && !this.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
-      if (new MessagePayload(this.interface).isInteraction && this.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
+      if (interfaceCheck.isInteraction && this.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
       // Set and return
       this.pagination = await PaginationBase(this);
       return this;
