@@ -39,9 +39,7 @@ The interaction pagination supports deferred interactions but you do not need to
 <h1 id="functions">All wrapper functions</h1>
 
 ```js
-.setInterface() // This is a feature that could be cut depending on what people think to it
-.setMessage()
-.setInteraction()
+.setInterface()
 .setPageList()
 .setButtonList()
 .setTimeout()
