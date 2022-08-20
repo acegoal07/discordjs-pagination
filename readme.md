@@ -63,7 +63,7 @@ const { EmbedBuilder, ButtonBuilder } = require('discord.js');
 const paginationWrapper = require('@acegoal07/discordjs-pagination');
 
 // Message example
-new paginationWrapper().setMessage(message)
+new paginationWrapper().setInterface(message)
    .setPageList([
       new EmbedBuilder()
          .setTitle("Embed 1")
@@ -85,7 +85,7 @@ new paginationWrapper().setMessage(message)
    .paginate()
 
 // Interaction example
-new paginationWrapper().setInteraction(interaction)
+new paginationWrapper().setInterface(interaction)
    .setPageList([
       new EmbedBuilder()
          .setTitle("Embed 1")
@@ -113,11 +113,7 @@ new paginationWrapper().setInteraction(interaction)
       .setPageList([ ........
 
    // way 2 sends an un-deferred interaction which is used to enable it
-   new paginationWrapper().setInteraction(interaction, true) 
-      .setPageList([ ........
-
-   // way 3 sends an un-deferred interaction which is used to enable it
-   new paginationWrapper().setInterface({interaction_ephemeral: true}) 
+   new paginationWrapper().setInterface(interaction, {interaction_ephemeral: true}) 
       .setPageList([ ........
 ```
 <h1 id="settingsHelp">Optional settings help</h1>

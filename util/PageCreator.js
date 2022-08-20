@@ -1,11 +1,10 @@
 // Dependencies
 const { EmbedBuilder } = require("discord.js");
-// Params
-/**
- * Sends back a list of custom pages to use
- */
 // Page Builder
 module.exports = {
+   /**
+    * Sends back a list of custom pages to use
+    */
    async PageCreator(pageBuilderInfo) {
       try {
             let pageList = [];

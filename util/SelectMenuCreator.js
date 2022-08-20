@@ -19,7 +19,6 @@ module.exports = {
             )
          }
          // Select menu builder
-
          return Promise.resolve(
             new ActionRowBuilder().addComponents(
                new SelectMenuBuilder()
@@ -33,6 +32,7 @@ module.exports = {
       }
    },
    /**
+    * Creates a disabled select menu
     * @param {Number} pageListLength An array of the embeds
     */
    async DisabledSelectMenuCreator(pageListLength) {

@@ -60,40 +60,26 @@ module.exports = class PaginationWrapper {
       this.ephemeral = options.interaction_ephemeral;
       // Set and return
       this.interface = _interface;
+      return this;
    }
    // Set message interface
    /**
-    * Set the message interface for the pagination
-    * @param {Message} message
+    * @deprecated setMessage has been merged with setInteraction into setInterface
     * @returns {PaginationWrapper}
     */
    setMessage(message) {
-      // Interface already set
-      if (this.interface) throw new Error("setMessage ERROR: The interface has already been set and can't be changed");
-      // Checks
-      if (typeof message !== "object") throw new Error("setMessage ERROR: The message you have provided is not an object");
-      if (!new MessagePayload(message).isMessage) throw new Error("setMessage ERROR: The message you have provided is incorrect");
-      // Set and return
-      this.interface = message;
+      process.emitWarning("Deprecated ERROR: setMessage has been merged with setInteraction into setInterface check documentation for more info")
+      this.setInterface(message);
       return this;
    }
    // Set interaction interface
    /**
-    * Set the interaction interface for the pagination
-    * @param {Interaction} interaction
-    * @param {Boolean} ephemeral
+    * @deprecated setInteraction has been merged with setMessage into setInterface
     * @returns {PaginationWrapper}
     */
    setInteraction(interaction, ephemeral = false) {
-      // Interface already set
-      if (this.interface) throw new Error("setInteraction ERROR: The interface has already been set and can't be changed");
-      // enable ephemeral
-      this.ephemeral = ephemeral;
-      // Checks
-      if (typeof interaction !== "object") throw new Error("setInteraction ERROR: The interaction you have provided is not an object");
-      if (!new MessagePayload(interaction).isInteraction) throw new Error("setInteraction ERROR: The interaction you have provided is incorrect");
-      // Set and return
-      this.interface = interaction;
+      process.emitWarning("Deprecated ERROR: setInteraction has been merged with setMessage into setInterface check documentation for more info")
+      this.setInterface(interaction, ephemeral);
       return this;
    }
    // Set ButtonList
@@ -232,17 +218,6 @@ module.exports = class PaginationWrapper {
       // Set and return
       this.autoButton.toggle = true;
       this.autoButton.deleteButton = deleteButton;
-      return this;
-   }
-   // Set autoButtonDel
-   /**
-    * Enables autoDelButton for your pagination
-    * @deprecated This function has been made into a setting on the enableAutoButton function
-    * @returns {PaginationWrapper}
-    */
-   enableAutoDelButton() {
-      // Set and return
-      this.autoDelButton = true;
       return this;
    }
    // Set selectMenu

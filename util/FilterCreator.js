@@ -1,10 +1,8 @@
-// Params
-/**
- * Crates the filter needed to interpret input for the pagination
- * @returns {Function} The button filter
-*/
-// Filter Builder
 module.exports = {
+   /**
+    * Crates the filter needed to interpret input for the pagination
+    * @returns {Function} The button filter
+    */
    FilterCreator({message, interaction, buttonList, authorIndependent, selectMenu}) {
       try {
          // Get author
