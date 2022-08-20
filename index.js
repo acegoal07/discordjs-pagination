@@ -68,7 +68,7 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setMessage(message) {
-      process.emitWarning("Deprecated ERROR: setMessage has been merged with setInteraction into setInterface check documentation for more info")
+      process.emitWarning("Deprecated WARNING: setMessage has been merged with setInteraction into setInterface check documentation for more info")
       this.setInterface(message);
       return this;
    }
@@ -78,7 +78,7 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setInteraction(interaction, ephemeral = false) {
-      process.emitWarning("Deprecated ERROR: setInteraction has been merged with setMessage into setInterface check documentation for more info")
+      process.emitWarning("Deprecated WARNING: setInteraction has been merged with setMessage into setInterface check documentation for more info")
       this.setInterface(interaction, ephemeral);
       return this;
    }
