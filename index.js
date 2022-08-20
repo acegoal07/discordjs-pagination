@@ -23,7 +23,6 @@ module.exports = class PaginationWrapper {
       this.autoDelete = false;
       this.privateReply = false;
       this.authorIndependent = false;
-      this.selectMenu = false;
       this.pageBuilderInfo = null;
       this.buttonBuilderInfo = null;
       this.ephemeral = false;
@@ -36,6 +35,10 @@ module.exports = class PaginationWrapper {
          slider: "▣",
          bar: "▢"
       };
+      this.selectMenu = {
+         toggle: false,
+         labels: null
+      }
       // Pagination
       this.pagination = null;
    }
@@ -68,7 +71,7 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setMessage(message) {
-      process.emitWarning("Deprecated WARNING: setMessage has been merged with setInteraction into setInterface check documentation for more info")
+      process.emitWarning("Deprecated WARNING: setMessage has been merged with setInteraction into setInterface check documentation for more info");
       this.setInterface(message);
       return this;
    }
@@ -78,7 +81,7 @@ module.exports = class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    setInteraction(interaction, ephemeral = false) {
-      process.emitWarning("Deprecated WARNING: setInteraction has been merged with setMessage into setInterface check documentation for more info")
+      process.emitWarning("Deprecated WARNING: setInteraction has been merged with setMessage into setInterface check documentation for more info");
       this.setInterface(interaction, ephemeral);
       return this;
    }
@@ -223,11 +226,13 @@ module.exports = class PaginationWrapper {
    // Set selectMenu
    /**
     * Enables selectMenu for your pagination
+    * @param {Array} data
     * @returns {PaginationWrapper}
     */
-   enableSelectMenu() {
+   enableSelectMenu(data = null) {
       // Set and return
-      this.selectMenu = true;
+      this.selectMenu.toggle = true;
+      this.selectMenu.labels = data
       return this;
    }
    // Page creator

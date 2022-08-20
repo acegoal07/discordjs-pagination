@@ -7,6 +7,7 @@ module.exports = {
     * Sends back a list of buttons to be used
     * @param {Number} pageListLength
     * @param {Boolean} autoDelButton
+    * @returns {Promise.<buttonList: Array>}
     */
    async AutoButtonCreator(pageListLength, autoDelButton) {
       // Pre-made buttons
@@ -52,6 +53,7 @@ module.exports = {
    // ButtonCreator params
    /**
     * Sends back a list of custom buttons
+    * @returns {Promise.<buttonList: Array>}
     */
    async ButtonCreator() {
       try {
@@ -80,6 +82,7 @@ module.exports = {
    // DisabledButtonCreator params
    /**
     * @param {ButtonBuilder[]} buttonList - An array of the buttons
+    * @returns {Promise.<ActionRowBuilder>}
     */
    async DisabledButtonCreator(buttonList) {
       try {

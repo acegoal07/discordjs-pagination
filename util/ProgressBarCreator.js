@@ -4,6 +4,7 @@ module.exports = {
     * @param {Number} pageListLength - An array of the embeds
     * @param {Number} pageNumber - Current page number
     * @param {Object} progressBar - All the progressBar settings
+    * @returns {Promise.<String>}
    */
    async ProgressBarCreator(pageListLength, pageNumber, progressBar) {
       try {
