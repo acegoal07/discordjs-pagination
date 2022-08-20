@@ -60,10 +60,10 @@ The interaction pagination supports deferred interactions but you do not need to
 
 ```js
 const { EmbedBuilder, ButtonBuilder } = require('discord.js');
-const paginationWrapper = require('@acegoal07/discordjs-pagination');
+const pagination = require('@acegoal07/discordjs-pagination');
 
 // Message example
-new paginationWrapper().setInterface(message)
+new pagination().setInterface(message)
    .setPageList([
       new EmbedBuilder()
          .setTitle("Embed 1")
@@ -85,7 +85,7 @@ new paginationWrapper().setInterface(message)
    .paginate()
 
 // Interaction example
-new paginationWrapper().setInterface(interaction)
+new pagination().setInterface(interaction)
    .setPageList([
       new EmbedBuilder()
          .setTitle("Embed 1")
@@ -109,18 +109,18 @@ new paginationWrapper().setInterface(interaction)
 // Interaction ephemeral examples
    // way 1 sends a deferred interaction with it enabled
    await deferReply({ephemeral: true})
-   new paginationWrapper().setInteraction(interaction)
+   new pagination().setInterface(interaction)
       .setPageList([ ........
 
    // way 2 sends an un-deferred interaction which is used to enable it
-   new paginationWrapper().setInterface(interaction, {interaction_ephemeral: true}) 
+   new pagination().setInterface(interaction, {interaction_ephemeral: true}) 
       .setPageList([ ........
 ```
 <h1 id="settingsHelp">Optional settings help</h1>
 
 Just add these methods before the paginate function to enable the addons e.g.
 ```js
-new paginationWrapper().setInteraction(interaction)
+new pagination().setInterface(interaction)
    .setPageList([
       new EmbedBuilder()
          .setTitle("Embed 1")
