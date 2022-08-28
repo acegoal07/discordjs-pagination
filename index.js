@@ -65,26 +65,6 @@ module.exports = class PaginationWrapper {
       this.interface = _interface;
       return this;
    }
-   // Set message interface
-   /**
-    * @deprecated setMessage has been merged with setInteraction into setInterface
-    * @returns {PaginationWrapper}
-    */
-   setMessage(message) {
-      process.emitWarning("Deprecated WARNING: setMessage has been merged with setInteraction into setInterface check documentation for more info");
-      this.setInterface(message);
-      return this;
-   }
-   // Set interaction interface
-   /**
-    * @deprecated setInteraction has been merged with setMessage into setInterface
-    * @returns {PaginationWrapper}
-    */
-   setInteraction(interaction, ephemeral = false) {
-      process.emitWarning("Deprecated WARNING: setInteraction has been merged with setMessage into setInterface check documentation for more info");
-      this.setInterface(interaction, ephemeral);
-      return this;
-   }
    // Set ButtonList
    /**
     * Set the buttonList for the paginationY
