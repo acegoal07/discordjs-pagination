@@ -37,7 +37,8 @@ module.exports = class PaginationWrapper {
       };
       this.selectMenu = {
          toggle: false,
-         labels: null
+         labels: null,
+         useTitle: false
       }
       // Pagination
       this.pagination = null;
@@ -206,13 +207,17 @@ module.exports = class PaginationWrapper {
    // Set selectMenu
    /**
     * Enables selectMenu for your pagination
-    * @param {Array} data
+    * @param {{
+    *    data?: Array,
+    *    useTitle?: Boolean
+    * }} 
     * @returns {PaginationWrapper}
     */
-   enableSelectMenu(data = null) {
+   enableSelectMenu({data, useTitle}) {
       // Set and return
       this.selectMenu.toggle = true;
       this.selectMenu.labels = data
+      this.selectMenu.useTitle = useTitle
       return this;
    }
    // Page creator
@@ -315,3 +320,5 @@ module.exports = class PaginationWrapper {
       return this;
    }
 }
+
+module.exports.prototype.enableSelectMenu({useTitle: false})
