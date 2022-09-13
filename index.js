@@ -213,11 +213,11 @@ module.exports = class PaginationWrapper {
     * }} 
     * @returns {PaginationWrapper}
     */
-   enableSelectMenu({data, useTitle}) {
+   enableSelectMenu({data = null, useTitle = false}) {
       // Set and return
       this.selectMenu.toggle = true;
-      this.selectMenu.labels = data
-      this.selectMenu.useTitle = useTitle
+      this.selectMenu.labels = data;
+      this.selectMenu.useTitle = useTitle;
       return this;
    }
    // Page creator
@@ -320,5 +320,3 @@ module.exports = class PaginationWrapper {
       return this;
    }
 }
-
-module.exports.prototype.enableSelectMenu({useTitle: false})
