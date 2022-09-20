@@ -213,10 +213,10 @@ module.exports = class PaginationWrapper {
     * }} 
     * @returns {PaginationWrapper}
     */
-   enableSelectMenu({data = null, useTitle = false}) {
+   enableSelectMenu({labels = null, useTitle = false}) {
       // Set and return
       this.selectMenu.toggle = true;
-      this.selectMenu.labels = data;
+      this.selectMenu.labels = labels;
       this.selectMenu.useTitle = useTitle;
       return this;
    }

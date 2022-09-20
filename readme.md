@@ -152,7 +152,7 @@ All the available settings and the input they need
 .enableReplyMessage() // Enables replyMessage for your pagination
 .setProgressBar({newSliderIcon, newBarIcon}) // Enables ProgressBar for your pagination and also allows you to edit the characters
 .enableAutoButton(deleteButton) // Enables autoButton for your pagination
-.enableSelectMenu([labels]) // Enables selectMenu for your pagination and allows you to set custom labels for the selectMenu items
+.enableSelectMenu({useTitle, labels}) // Enables selectMenu for your pagination and allows you to set custom labels for the selectMenu items
 .createPages() // View create help to see how to use this feature
 .createButtons() // View create help to see how to use this feature
 ```
