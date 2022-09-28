@@ -3,6 +3,7 @@
   "version": "1.3.9",
   "description": "A simple pagination for Discord.js",
   "main": "index",
+  "types": "types",
   "repository": {
       "type": "git",
       "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
