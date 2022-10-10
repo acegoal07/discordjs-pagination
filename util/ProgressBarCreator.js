@@ -8,9 +8,6 @@ module.exports = {
    */
    async ProgressBarCreator(pageListLength, pageNumber, progressBar) {
       try {
-         // Progress maths
-         // const progress = pageNumber + 1;
-         // const emptyProgress = pageListLength - (pageNumber + 1);
          // Progress text
          const progressText = progressBar.slider.repeat(pageNumber + 1);
          const emptyProgressText = progressBar.bar.repeat(pageListLength - (pageNumber + 1));
