@@ -1,38 +1,35 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const { Message, Interaction, EmbedBuilder, ButtonBuilder, MessagePayload } = require("discord.js");
-const PaginationBase = require("./lib/PaginationBase");
+const { PaginationBase } = require("./lib/PaginationBase");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
  * @version 1.4.0
  * @author acegoal07
- * @param {{
- *    timeout?: Number,
- *    autoDelete?: Boolean,
- *    authorIndependent?: Boolean,
- *    privateReply?: Boolean,
- *    replyMessage?: Boolean
- * }}
  */
 class PaginationWrapper {
    // Constructor
-   constructor({timeout = 12000, autoDelete = false, authorIndependent = false, privateReply = false, replyMessage = false}) {
-      // 
-      // Interfaces
-      this.portal = null;
-      // Required inputs
-      this.pageList = null;
-      this.buttonList = null;
+   constructor() {
+      // System settings 
+      this.paginationInfo = {
+         // Interfaces
+         portal: null,
+         // Required inputs
+         pageList: null,
+         buttonList: null,
+         // Pagination
+         pagination: null
+      }
       // Options
       this.options = {
          // General options
-         timeout: timeout,
-         replyMessage: replyMessage,
-         autoDelete: autoDelete,
-         privateReply: privateReply,
-         authorIndependent: authorIndependent,
+         timeout: 12000,
+         replyMessage: false,
+         autoDelete: false,
+         privateReply: false,
+         authorIndependent: false,
          pageBuilderInfo: null,
          buttonBuilderInfo: null,
          ephemeral: false,
@@ -54,10 +51,7 @@ class PaginationWrapper {
             useTitle: false
          }
       }
-      // Pagination
-      this.pagination = null;
    }
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // Set interface
@@ -78,30 +72,43 @@ class PaginationWrapper {
          if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
       }
       // Set ephemeral
-      this.ephemeral = options.interaction_ephemeral;
+      this.options.ephemeral = options.interaction_ephemeral;
       // Set and return
-      this.portal = _interface;
+      this.paginationInfo.portal = _interface;
       return this;
    }
    // Set portal
    /**
     * Sets the used portal for the pagination
     * @param {Message | Interaction} portal
+    * @param {{
+    *    interaction_ephemeral: Boolean,
+    *    timeout?: Number,
+    *    autoDelete?: Boolean,
+    *    authorIndependent?: Boolean,
+    *    privateReply?: Boolean,
+    *    replyMessage?: Boolean
+    * }} options
     * @returns {PaginationWrapper}
     */
-    setPortal(portal, options = {interaction_ephemeral: false}) {
+   setPortal(portal, options = {interaction_ephemeral: false, timeout: 12000, autoDelete: false, authorIndependent: false, privateReply: false, replyMessage: false}) {
       // Portal already set
-      if (this.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
+      if (this.paginationInfo.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
       // Missing portal
       if (!_interface) throw new Error("setInterface ERROR: The portal you have provided is invalid");
       // Set message portal
       if (new MessagePayload(portal).isMessage) {
          if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
       }
-      // Set ephemeral
+      // Set other settings
       this.options.ephemeral = options.interaction_ephemeral;
+      this.options.timeout = options.timeout;
+      this.options.autoDelete = options.autoDelete;
+      this.options.authorIndependent = options.authorIndependent;
+      this.options.privateReply = options.privateReply;
+      this.options.replyMessage = options.replyMessage;
       // Set and return
-      this.portal = portal;
+      this.paginationInfo.portal = portal;
       return this;
    }
    // Set ButtonList
@@ -116,7 +123,7 @@ class PaginationWrapper {
       if (typeof buttonList !== "object") throw new Error("setButtonList ERROR: The buttonList you have provided is not an object");
       if (buttonList.length < 2) throw new Error("setButtonList ERROR: You need to provided a minimum of 2 buttons");
       // Set and return
-      this.buttonList = buttonList;
+      this.paginationInfo.buttonList = buttonList;
       return this;
    }
    // Set pageList
@@ -130,7 +137,7 @@ class PaginationWrapper {
       if (!pageList) throw new Error("setPageList ERROR: The pageList you have provided is empty");
       if (typeof pageList !== "object") throw new Error("setPageList ERROR: The pageList you have provided is not an object");
       // Set and return
-      this.pageList = pageList;
+      this.paginationInfo.pageList = pageList;
       return this;
    }
    // Run pagination
@@ -139,16 +146,17 @@ class PaginationWrapper {
     * @returns {PaginationWrapper}
     */
    async paginate() {
+      // Checks portal info exists
+      if (!this.paginationInfo.portal) throw new Error("paginate ERROR: You have not provided an portal to use");
       // References
-      const portalCheck = new MessagePayload(this.portal);
+      const portalCheck = new MessagePayload(this.paginationInfo.portal);
       // Checks
-      if (!this.portal) throw new Error("paginate ERROR: You have not provided an portal to use");
       if (!portalCheck.isInteraction && !portalCheck.isMessage) throw new Error("paginate ERROR: You have not provided an portal that can be used");
       if (!this.options.buttonList && !this.options.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
       if (!this.options.pageList && !this.options.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
       if (portalCheck.isInteraction && this.options.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
       // Set and return
-      this.pagination = await PaginationBase(this);
+      this.paginationInfo.pagination = await PaginationBase(this);
       return this;
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,10 +166,10 @@ class PaginationWrapper {
     * How many milliseconds your pagination will run for
     * @param {Number} timeout
     * @returns {PaginationWrapper}
-    * @deprecated This function has been deprecated and moved into the pagination wrapper call
+    * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    setTimeout(timeout) {
-      console.log("This function has been deprecated and moved into the pagination wrapper call");
+      console.log("This function has been deprecated and moved into the setPortal function options");
       // Checks
       if (timeout <= 3000) throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");
       if (typeof timeout !== "number") throw new Error("setTimeout ERROR: The time provided is not a number");
@@ -201,19 +209,19 @@ class PaginationWrapper {
     */
    enableReplyMessage() {
       // Set and return
-      this.replyMessage = true;
+      this.options.replyMessage = true;
       return this;
    }
    // Set autoDelete
    /**
     * Enables autoDelete for your pagination
     * @returns {PaginationWrapper}
-    * @deprecated This function has been deprecated and moved into the pagination wrapper call
+    * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    enableAutoDelete() {
-      console.log("This function has been deprecated and moved into the pagination wrapper call");
+      console.log("This function has been deprecated and moved into the setPortal function options");
       // Set and return
-      this.autoDelete = true;
+      this.options.autoDelete = true;
       return this;
    }
    // Set privateReply
@@ -223,19 +231,19 @@ class PaginationWrapper {
     */
    enablePrivateReply() {
       // Set and return
-      this.privateReply = true;
+      this.options.privateReply = true;
       return this;
    }
    // Set authorIndependent
    /**
     * Enables authorIndependent for your pagination
     * @returns {PaginationWrapper}
-    * @deprecated This function has been deprecated and moved into the pagination wrapper call
+    * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    enableAuthorIndependent() {
-      console.log("This function has been deprecated and moved into the pagination wrapper call");
+      console.log("This function has been deprecated and moved into the setPortal function options");
       // Set and return
-      this.authorIndependent = true;
+      this.options.authorIndependent = true;
       return this;
    }
    // Set autoButton
@@ -246,8 +254,8 @@ class PaginationWrapper {
     */
    enableAutoButton(deleteButton = false) {
       // Set and return
-      this.autoButton.toggle = true;
-      this.autoButton.deleteButton = deleteButton;
+      this.options.autoButton.toggle = true;
+      this.options.autoButton.deleteButton = deleteButton;
       return this;
    }
    // Set selectMenu
@@ -261,9 +269,9 @@ class PaginationWrapper {
     */
    enableSelectMenu({labels = null, useTitle = false}) {
       // Set and return
-      this.selectMenu.toggle = true;
-      this.selectMenu.labels = labels;
-      this.selectMenu.useTitle = useTitle;
+      this.options.selectMenu.toggle = true;
+      this.options.selectMenu.labels = labels;
+      this.options.selectMenu.useTitle = useTitle;
       return this;
    }
    // Page creator
@@ -339,7 +347,7 @@ class PaginationWrapper {
       imageUrl: null,
       color: null
    }]) {
-      this.pageBuilderInfo = data;
+      this.options.pageBuilderInfo = data;
       return this;
    }
    // Button creator
@@ -362,7 +370,7 @@ class PaginationWrapper {
       style: null,
       emoji: null
    }]) {
-      this.buttonBuilderInfo = info;
+      this.options.buttonBuilderInfo = info;
       return this;
    }
 }

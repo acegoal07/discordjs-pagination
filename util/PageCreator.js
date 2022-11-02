@@ -4,6 +4,7 @@ const { EmbedBuilder } = require("discord.js");
 module.exports = {
    /**
     * Sends back a list of custom pages to use
+    * @param {Array} pageBuilderInfo
     * @returns {Promise.<pageList: Array>}
     */
    async PageCreator(pageBuilderInfo) {

@@ -1,2 +1,29 @@
-declare function _exports(message: Message, pageList: EmbedBuilder[], buttonList: ButtonBuilder[], timeout: number, replyMessage: boolean, autoDelete: boolean, privateReply: boolean, progressBar: any, authorIndependent: boolean, selectMenu: any): EmbedBuilder[];
-export = _exports;
+export function MessagePagination(paginationInfo: {
+    portal: Message;
+    pageList: EmbedBuilder[];
+    buttonList: ButtonBuilder[];
+    pagination: null;
+}, options: {
+    timeout: number;
+    replyMessage: boolean;
+    autoDelete: boolean;
+    privateReply: boolean;
+    authorIndependent: boolean;
+    pageBuilderInfo: any[];
+    buttonBuilderInfo: any[];
+    ephemeral: boolean;
+    autoButton: {
+        toggle: boolean;
+        deleteButton: boolean;
+    };
+    progressBar: {
+        toggle: boolean;
+        slider: string;
+        bar: string;
+    };
+    selectMenu: {
+        toggle: boolean;
+        labels: any[];
+        useTitle: boolean;
+    };
+}): EmbedBuilder[];
