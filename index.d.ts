@@ -1,5 +1,14 @@
-export = PaginationWrapper;
-declare class PaginationWrapper {
+/**
+ * Creates a paginations embed for discordjs with customisable options
+ * @version 1.3.9
+ * @author acegoal07
+ */
+export class PaginationWrapper {
+    constructor({ timeout, autoDelete, authorIndependent }: {
+        timeout?: number;
+        autoDelete?: boolean;
+        authorIndependent?: boolean;
+    });
     interface: any;
     pageList: EmbedBuilder[];
     buttonList: ButtonBuilder[];
@@ -79,6 +88,7 @@ declare class PaginationWrapper {
      * How many milliseconds your pagination will run for
      * @param {Number} timeout
      * @returns {PaginationWrapper}
+     * @deprecated This function has been deprecated and moved into the pagination wrapper call
      */
     setTimeout(timeout: number): PaginationWrapper;
     /**
@@ -96,6 +106,7 @@ declare class PaginationWrapper {
     /**
      * Enables autoDelete for your pagination
      * @returns {PaginationWrapper}
+     * @deprecated This function has been deprecated and moved into the pagination wrapper call
      */
     enableAutoDelete(): PaginationWrapper;
     /**
@@ -106,6 +117,7 @@ declare class PaginationWrapper {
     /**
      * Enables authorIndependent for your pagination
      * @returns {PaginationWrapper}
+     * @deprecated This function has been deprecated and moved into the pagination wrapper call
      */
     enableAuthorIndependent(): PaginationWrapper;
     /**

@@ -6,64 +6,102 @@ const PaginationBase = require("./lib/PaginationBase");
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.3.7
+ * @version 1.4.0
  * @author acegoal07
+ * @param {{
+ *    timeout?: Number,
+ *    autoDelete?: Boolean,
+ *    authorIndependent?: Boolean,
+ *    privateReply?: Boolean,
+ *    replyMessage?: Boolean
+ * }}
  */
-module.exports = class PaginationWrapper {
+class PaginationWrapper {
    // Constructor
-   constructor() {
+   constructor({timeout = 12000, autoDelete = false, authorIndependent = false, privateReply = false, replyMessage = false}) {
+      // 
       // Interfaces
-      this.interface = null;
+      this.portal = null;
       // Required inputs
       this.pageList = null;
       this.buttonList = null;
       // Options
-      this.timeout = 12000;
-      this.replyMessage = false;
-      this.autoDelete = false;
-      this.privateReply = false;
-      this.authorIndependent = false;
-      this.pageBuilderInfo = null;
-      this.buttonBuilderInfo = null;
-      this.ephemeral = false;
-      this.autoButton = {
-         toggle: false,
-         deleteButton: false
-      };
-      this.progressBar = {
-         toggle: false,
-         slider: "▣",
-         bar: "▢"
-      };
-      this.selectMenu = {
-         toggle: false,
-         labels: null,
-         useTitle: false
+      this.options = {
+         // General options
+         timeout: timeout,
+         replyMessage: replyMessage,
+         autoDelete: autoDelete,
+         privateReply: privateReply,
+         authorIndependent: authorIndependent,
+         pageBuilderInfo: null,
+         buttonBuilderInfo: null,
+         ephemeral: false,
+         // AutoButton settings
+         autoButton: {
+            toggle: false,
+            deleteButton: false
+         },
+         // Progressbar settings
+         progressBar: {
+            toggle: false,
+            slider: "▣",
+            bar: "▢"
+         },
+         // SelectMenu settings
+         selectMenu: {
+            toggle: false,
+            labels: null,
+            useTitle: false
+         }
       }
       // Pagination
       this.pagination = null;
    }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // Set interface
    /**
-    * Sets the used interface for the pagination
+    * Sets the used portal for the pagination
     * @param {Message | Interaction} _interface
+    * @deprecated This function has been deprecated and replaced with setPortal to stop clashes with future versions of javascript
     * @returns {PaginationWrapper}
     */
    setInterface(_interface, options = {interaction_ephemeral: false}) {
+      process.emitWarning("This function has been deprecated and replaced with setPortal to stop clashes with future versions of javascript");
       // Interface already set
-      if (this.interface) throw new Error("setInterface ERROR: The interface has already been set and can't be changed");
-      // Missing interface
-      if (!_interface) throw new Error("setInterface ERROR: The interface you have provided is invalid");
-      // Set message interface
+      if (this.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
+      // Missing portal
+      if (!_interface) throw new Error("setInterface ERROR: The portal you have provided is invalid");
+      // Set message portal
       if (new MessagePayload(_interface).isMessage) {
          if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
       }
       // Set ephemeral
       this.ephemeral = options.interaction_ephemeral;
       // Set and return
-      this.interface = _interface;
+      this.portal = _interface;
+      return this;
+   }
+   // Set portal
+   /**
+    * Sets the used portal for the pagination
+    * @param {Message | Interaction} portal
+    * @returns {PaginationWrapper}
+    */
+    setPortal(portal, options = {interaction_ephemeral: false}) {
+      // Portal already set
+      if (this.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
+      // Missing portal
+      if (!_interface) throw new Error("setInterface ERROR: The portal you have provided is invalid");
+      // Set message portal
+      if (new MessagePayload(portal).isMessage) {
+         if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
+      }
+      // Set ephemeral
+      this.options.ephemeral = options.interaction_ephemeral;
+      // Set and return
+      this.portal = portal;
       return this;
    }
    // Set ButtonList
@@ -102,13 +140,13 @@ module.exports = class PaginationWrapper {
     */
    async paginate() {
       // References
-      const interfaceCheck = new MessagePayload(this.interface);
+      const portalCheck = new MessagePayload(this.portal);
       // Checks
-      if (!this.interface) throw new Error("paginate ERROR: You have not provided an interface to use");
-      if (!interfaceCheck.isInteraction && !interfaceCheck.isMessage) throw new Error("paginate ERROR: You have not provided an interface that can be used");
-      if (!this.buttonList && !this.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
-      if (!this.pageList && !this.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
-      if (interfaceCheck.isInteraction && this.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
+      if (!this.portal) throw new Error("paginate ERROR: You have not provided an portal to use");
+      if (!portalCheck.isInteraction && !portalCheck.isMessage) throw new Error("paginate ERROR: You have not provided an portal that can be used");
+      if (!this.options.buttonList && !this.options.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
+      if (!this.options.pageList && !this.options.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
+      if (portalCheck.isInteraction && this.options.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
       // Set and return
       this.pagination = await PaginationBase(this);
       return this;
@@ -120,8 +158,10 @@ module.exports = class PaginationWrapper {
     * How many milliseconds your pagination will run for
     * @param {Number} timeout
     * @returns {PaginationWrapper}
+    * @deprecated This function has been deprecated and moved into the pagination wrapper call
     */
    setTimeout(timeout) {
+      console.log("This function has been deprecated and moved into the pagination wrapper call");
       // Checks
       if (timeout <= 3000) throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");
       if (typeof timeout !== "number") throw new Error("setTimeout ERROR: The time provided is not a number");
@@ -129,15 +169,17 @@ module.exports = class PaginationWrapper {
       if (!timeout) {
          process.emitWarning("setTimeout WARNING: You did not provide a timeout to set so it has defaulted to 12000ms");
       } else {
-         this.timeout = timeout;
+         this.options.timeout = timeout;
       }
       return this;
    }
    // Set progressBar
    /**
     * Allows you to enable and edit a progressBar for your pagination
-    * @param {String} slider
-    * @param {String} bar
+    * @param {{
+    *    slider?: String,
+    *    bar?: String
+    * }}
     * @returns {PaginationWrapper}
     */
    setProgressBar({slider = "▣", bar = "▢"}) {
@@ -147,9 +189,9 @@ module.exports = class PaginationWrapper {
       if (typeof bar !== "string") throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");
       if (bar.length > 1 || bar.length < 1) throw new Error("setProgressBar ERROR: The proBar must be 1 character");
       // Set and return
-      this.progressBar.toggle = true;
-      this.progressBar.slider = slider;
-      this.progressBar.bar = bar;
+      this.options.progressBar.toggle = true;
+      this.options.progressBar.slider = slider;
+      this.options.progressBar.bar = bar;
       return this;
    }
    // Set replyMessage
@@ -166,8 +208,10 @@ module.exports = class PaginationWrapper {
    /**
     * Enables autoDelete for your pagination
     * @returns {PaginationWrapper}
+    * @deprecated This function has been deprecated and moved into the pagination wrapper call
     */
    enableAutoDelete() {
+      console.log("This function has been deprecated and moved into the pagination wrapper call");
       // Set and return
       this.autoDelete = true;
       return this;
@@ -186,8 +230,10 @@ module.exports = class PaginationWrapper {
    /**
     * Enables authorIndependent for your pagination
     * @returns {PaginationWrapper}
+    * @deprecated This function has been deprecated and moved into the pagination wrapper call
     */
    enableAuthorIndependent() {
+      console.log("This function has been deprecated and moved into the pagination wrapper call");
       // Set and return
       this.authorIndependent = true;
       return this;
@@ -320,3 +366,6 @@ module.exports = class PaginationWrapper {
       return this;
    }
 }
+
+// Exporter
+module.exports = { PaginationWrapper };
