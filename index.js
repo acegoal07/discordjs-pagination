@@ -9,7 +9,7 @@ const { PaginationBase } = require("./lib/PaginationBase");
  * @version 1.4.0
  * @author acegoal07
  */
-class PaginationWrapper {
+exports.Pagination = class {
    // Constructor
    constructor() {
       // System settings 
@@ -59,7 +59,7 @@ class PaginationWrapper {
     * Sets the used portal for the pagination
     * @param {Message | Interaction} _interface
     * @deprecated This function has been deprecated and replaced with setPortal to stop clashes with future versions of javascript
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    setInterface(_interface, options = {interaction_ephemeral: false}) {
       process.emitWarning("This function has been deprecated and replaced with setPortal to stop clashes with future versions of javascript");
@@ -89,7 +89,7 @@ class PaginationWrapper {
     *    privateReply?: Boolean,
     *    replyMessage?: Boolean
     * }} options
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    setPortal(portal, options = {interaction_ephemeral: false, timeout: 12000, autoDelete: false, authorIndependent: false, privateReply: false, replyMessage: false}) {
       // Portal already set
@@ -115,7 +115,7 @@ class PaginationWrapper {
    /**
     * Set the buttonList for the paginationY
     * @param {ButtonBuilder[]} buttonList
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    setButtonList(buttonList) {
       // Checks
@@ -130,7 +130,7 @@ class PaginationWrapper {
    /**
     * Set the pageList for the pagination
     * @param {EmbedBuilder[]} pageList
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    setPageList(pageList) {
       // Checks
@@ -143,7 +143,7 @@ class PaginationWrapper {
    // Run pagination
    /**
     * Run the pagination
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    async paginate() {
       // Checks portal info exists
@@ -165,7 +165,7 @@ class PaginationWrapper {
    /**
     * How many milliseconds your pagination will run for
     * @param {Number} timeout
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    setTimeout(timeout) {
@@ -188,7 +188,7 @@ class PaginationWrapper {
     *    slider?: String,
     *    bar?: String
     * }}
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    setProgressBar({slider = "▣", bar = "▢"}) {
       // Checks
@@ -205,7 +205,7 @@ class PaginationWrapper {
    // Set replyMessage
    /**
     * Enables replyMessage for your pagination
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    enableReplyMessage() {
       // Set and return
@@ -215,7 +215,7 @@ class PaginationWrapper {
    // Set autoDelete
    /**
     * Enables autoDelete for your pagination
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    enableAutoDelete() {
@@ -227,7 +227,7 @@ class PaginationWrapper {
    // Set privateReply
    /**
     * Enables privateReply for your pagination
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    enablePrivateReply() {
       // Set and return
@@ -237,7 +237,7 @@ class PaginationWrapper {
    // Set authorIndependent
    /**
     * Enables authorIndependent for your pagination
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    enableAuthorIndependent() {
@@ -250,7 +250,7 @@ class PaginationWrapper {
    /**
     * Enables autoButton for your pagination
     * @param {Boolean} deleteButton
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    enableAutoButton(deleteButton = false) {
       // Set and return
@@ -265,7 +265,7 @@ class PaginationWrapper {
     *    data?: Array,
     *    useTitle?: Boolean
     * }} 
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    enableSelectMenu({labels = null, useTitle = false}) {
       // Set and return
@@ -325,7 +325,7 @@ class PaginationWrapper {
     *       |  'DarkButNotBlack'
     *       |  'NotQuiteBlack'
     * }]} data
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    createPages(data = [{
 	   title: null,
@@ -362,7 +362,7 @@ class PaginationWrapper {
     *       | "Danger",
     *    emoji?: String
     * }]} info
-    * @returns {PaginationWrapper}
+    * @returns {Pagination}
     */
    createButtons(info = [{
       customId: null,
@@ -374,6 +374,3 @@ class PaginationWrapper {
       return this;
    }
 }
-
-// Exporter
-module.exports = { PaginationWrapper };
