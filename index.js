@@ -82,7 +82,7 @@ exports.Pagination = class {
     * Sets the used portal for the pagination
     * @param {Message | Interaction} portal
     * @param {{
-    *    interaction_ephemeral: Boolean,
+    *    interaction_ephemeral?: Boolean,
     *    timeout?: Number,
     *    autoDelete?: Boolean,
     *    authorIndependent?: Boolean,
@@ -95,7 +95,7 @@ exports.Pagination = class {
       // Portal already set
       if (this.paginationInfo.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
       // Missing portal
-      if (!_interface) throw new Error("setInterface ERROR: The portal you have provided is invalid");
+      if (!portal) throw new Error("setInterface ERROR: The portal you have provided is invalid");
       // Set message portal
       if (new MessagePayload(portal).isMessage) {
          if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
@@ -152,8 +152,8 @@ exports.Pagination = class {
       const portalCheck = new MessagePayload(this.paginationInfo.portal);
       // Checks
       if (!portalCheck.isInteraction && !portalCheck.isMessage) throw new Error("paginate ERROR: You have not provided an portal that can be used");
-      if (!this.options.buttonList && !this.options.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
-      if (!this.options.pageList && !this.options.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
+      if (!this.paginationInfo.buttonList && !this.options.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
+      if (!this.paginationInfo.pageList && !this.options.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
       if (portalCheck.isInteraction && this.options.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
       // Set and return
       this.paginationInfo.pagination = await PaginationBase(this);

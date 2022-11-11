@@ -1,8 +1,3 @@
-/**
- * Creates a paginations embed for discordjs with customisable options
- * @version 1.4.0
- * @author acegoal07
- */
 export class Pagination {
     paginationInfo: {
         portal: any;
@@ -47,7 +42,7 @@ export class Pagination {
      * Sets the used portal for the pagination
      * @param {Message | Interaction} portal
      * @param {{
-     *    interaction_ephemeral: Boolean,
+     *    interaction_ephemeral?: Boolean,
      *    timeout?: Number,
      *    autoDelete?: Boolean,
      *    authorIndependent?: Boolean,
@@ -57,7 +52,7 @@ export class Pagination {
      * @returns {Pagination}
      */
     setPortal(portal: Message | Interaction, options?: {
-        interaction_ephemeral: boolean;
+        interaction_ephemeral?: boolean;
         timeout?: number;
         autoDelete?: boolean;
         authorIndependent?: boolean;
