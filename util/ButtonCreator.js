@@ -90,25 +90,9 @@ module.exports = {
          let count = 0;
          for (const button of buttonList) {
             count += 1;
-            if (!button.data.label) {
-               // Disable emoji buttons
-               disabledButtonList.push(
-                  new ButtonBuilder()
-                     .setEmoji(`<${button.data.emoji?.animated ? `a:${button.data.emoji.name}:${button.data.emoji.id}` : `${button.data.emoji.name}:${button.data.emoji.id}`}>`)
-                     .setStyle(`${button.data.style}`)
-                     .setDisabled(true)
-                     .setCustomId(`disabledBtn${count}`)
-               );
-            } else {
-               // Disable text buttons
-               disabledButtonList.push(
-                  new ButtonBuilder()
-                     .setLabel(`${button.data.label}`)
-                     .setStyle(`${button.data.style}`)
-                     .setDisabled(true)
-                     .setCustomId(`disabledBtn${count}`)
-               );
-            }
+            button.data.custom_id = `disabledBtn${count}`;
+            button.data.disabled = true;
+            disabledButtonList.push(button);
          }
          return Promise.resolve(new ActionRowBuilder().addComponents(disabledButtonList));
       } catch(error) {

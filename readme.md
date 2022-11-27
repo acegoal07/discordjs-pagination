@@ -23,6 +23,8 @@
 <h1 id="about">About</h1>
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided, It also adjusts multiple things about the pagination depending on the data that's provided making it very customisable and user friendly<br><br>
 
+This version of @acegoal07/discordjs-pagination is a rework of how some functions work this has been done to improve usability and performance<br><br>
+
 To download the package use:<br><br>
 For discord version 14.0.0 and higher
 ```sh
@@ -44,12 +46,12 @@ The interaction pagination supports deferred interactions but you do not need to
 .setInterface()
 .setPageList()
 .setButtonList()
-.setTimeout()
+~~.setTimeout()~~
 .setProgressBar()
-.enableReplyMessage()
-.enableAutoDelete()
-.enablePrivateReply()
-.enableAuthorIndependent()
+~~.enableReplyMessage()~~
+~~.enableAutoDelete()~~
+~~.enablePrivateReply()~~
+~~.enableAuthorIndependent()~~
 .enableAutoButton()
 .enableAutoDelButtons()
 .createPages()
