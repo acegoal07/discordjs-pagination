@@ -23,7 +23,7 @@
 <h1 id="about">About</h1>
 This pagination supports both Message and Interaction and automaticity switches between which interface is provided, It also adjusts multiple things about the pagination depending on the data that's provided making it very customisable and user friendly<br><br>
 
-To download the package use:<br><br>
+To download the package use:<br>
 For discord version 14.0.0 and higher
 ```sh
 npm i @acegoal07/discordjs-pagination
