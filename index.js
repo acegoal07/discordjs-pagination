@@ -91,7 +91,7 @@ exports.Pagination = class {
     * }} options
     * @returns {Pagination}
     */
-   setPortal(portal, options = {interaction_ephemeral: false, timeout: 12000, autoDelete: false, authorIndependent: false, privateReply: false, replyMessage: false}) {
+   setPortal(portal, options = {interaction_ephemeral: false}) {
       // Portal already set
       if (this.paginationInfo.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
       // Missing portal
@@ -102,11 +102,6 @@ exports.Pagination = class {
       }
       // Set other settings
       this.options.ephemeral = options.interaction_ephemeral;
-      this.options.timeout = options.timeout;
-      this.options.autoDelete = options.autoDelete;
-      this.options.authorIndependent = options.authorIndependent;
-      this.options.privateReply = options.privateReply;
-      this.options.replyMessage = options.replyMessage;
       // Set and return
       this.paginationInfo.portal = portal;
       return this;
@@ -166,10 +161,8 @@ exports.Pagination = class {
     * How many milliseconds your pagination will run for
     * @param {Number} timeout
     * @returns {Pagination}
-    * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    setTimeout(timeout) {
-      console.log("This function has been deprecated and moved into the setPortal function options");
       // Checks
       if (timeout <= 3000) throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");
       if (typeof timeout !== "number") throw new Error("setTimeout ERROR: The time provided is not a number");
@@ -216,10 +209,8 @@ exports.Pagination = class {
    /**
     * Enables autoDelete for your pagination
     * @returns {Pagination}
-    * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    enableAutoDelete() {
-      console.log("This function has been deprecated and moved into the setPortal function options");
       // Set and return
       this.options.autoDelete = true;
       return this;
@@ -238,10 +229,8 @@ exports.Pagination = class {
    /**
     * Enables authorIndependent for your pagination
     * @returns {Pagination}
-    * @deprecated This function has been deprecated and moved into the setPortal function options
     */
    enableAuthorIndependent() {
-      console.log("This function has been deprecated and moved into the setPortal function options");
       // Set and return
       this.options.authorIndependent = true;
       return this;

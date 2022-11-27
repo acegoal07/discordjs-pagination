@@ -80,7 +80,6 @@ export class Pagination {
      * How many milliseconds your pagination will run for
      * @param {Number} timeout
      * @returns {Pagination}
-     * @deprecated This function has been deprecated and moved into the setPortal function options
      */
     setTimeout(timeout: number): Pagination;
     /**
@@ -103,7 +102,6 @@ export class Pagination {
     /**
      * Enables autoDelete for your pagination
      * @returns {Pagination}
-     * @deprecated This function has been deprecated and moved into the setPortal function options
      */
     enableAutoDelete(): Pagination;
     /**
@@ -114,7 +112,6 @@ export class Pagination {
     /**
      * Enables authorIndependent for your pagination
      * @returns {Pagination}
-     * @deprecated This function has been deprecated and moved into the setPortal function options
      */
     enableAuthorIndependent(): Pagination;
     /**
