@@ -46,12 +46,12 @@ The interaction pagination supports deferred interactions but you do not need to
 .setInterface()
 .setPageList()
 .setButtonList()
-~~.setTimeout()~~
+.setTimeout()
 .setProgressBar()
-~~.enableReplyMessage()~~
-~~.enableAutoDelete()~~
-~~.enablePrivateReply()~~
-~~.enableAuthorIndependent()~~
+.enableReplyMessage()
+.enableAutoDelete()
+.enablePrivateReply()
+.enableAuthorIndependent()
 .enableAutoButton()
 .enableAutoDelButtons()
 .createPages()
