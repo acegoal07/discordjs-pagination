@@ -86,13 +86,19 @@ module.exports = {
     */
    async DisabledButtonCreator(buttonList) {
       try {
-         let disabledButtonList = []
          let count = 0;
+         const disabledButtonList = [];
          for (const button of buttonList) {
             count += 1;
-            button.data.custom_id = `disabledBtn${count}`;
-            button.data.disabled = true;
-            disabledButtonList.push(button);
+            disabledButtonList.push(
+               new ButtonBuilder({
+                  emoji: button.data.emoji,
+                  custom_id: `disabledBtn${count}`,
+                  label: button.data.label,
+                  style: button.data.style,
+                  disabled: true
+               })
+            )
          }
          return Promise.resolve(new ActionRowBuilder().addComponents(disabledButtonList));
       } catch(error) {

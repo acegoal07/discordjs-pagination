@@ -25,7 +25,7 @@ exports.Pagination = class {
       // Options
       this.options = {
          // General options
-         timeout: 12000,
+         timeout: 20000,
          replyMessage: false,
          autoDelete: false,
          privateReply: false,

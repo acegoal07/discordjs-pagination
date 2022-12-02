@@ -1,5 +1,5 @@
 // Dependencies
-const { SelectMenuBuilder, ActionRowBuilder } = require("discord.js");
+const { StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 // Functions
 module.exports = {
    /**
@@ -23,7 +23,7 @@ module.exports = {
          // Select menu builder
          return Promise.resolve(
             new ActionRowBuilder().addComponents(
-               new SelectMenuBuilder()
+               new StringSelectMenuBuilder()
                   .setCustomId('select')
                   .setPlaceholder('Select Page')
                   .addOptions(optionArray)
@@ -54,7 +54,7 @@ module.exports = {
          // Select menu builder
          return Promise.resolve(
             new ActionRowBuilder().addComponents(
-               new SelectMenuBuilder()
+               new StringSelectMenuBuilder()
                   .setCustomId('disabledSM')
                   .setDisabled(true)
                   .setPlaceholder('Select Page')

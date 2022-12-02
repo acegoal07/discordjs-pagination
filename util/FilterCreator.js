@@ -27,7 +27,7 @@ exports.FilterCreator = ({message, interaction, buttonList, authorIndependent, s
       if (selectMenu) {
          // Create select menu filter
          filter = (i) =>
-            (i.isSelectMenu()) &&
+            (i.isStringSelectMenu()) &&
             (authorIndependent && i.user.id === authorID) ||
             !authorIndependent;
       } else {
