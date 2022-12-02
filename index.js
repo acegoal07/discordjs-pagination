@@ -6,7 +6,7 @@ const { PaginationBase } = require("./lib/PaginationBase");
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.4.0
+ * @version 1.4.4
  * @author acegoal07
  */
 exports.Pagination = class {
@@ -54,29 +54,6 @@ exports.Pagination = class {
    }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   // Set interface
-   /**
-    * Sets the used portal for the pagination
-    * @param {Message | Interaction} _interface
-    * @deprecated This function has been deprecated and replaced with setPortal to stop clashes with future versions of javascript
-    * @returns {Pagination}
-    */
-   setInterface(_interface, options = {interaction_ephemeral: false}) {
-      process.emitWarning("This function has been deprecated and replaced with setPortal to stop clashes with future versions of javascript");
-      // Interface already set
-      if (this.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
-      // Missing portal
-      if (!_interface) throw new Error("setInterface ERROR: The portal you have provided is invalid");
-      // Set message portal
-      if (new MessagePayload(_interface).isMessage) {
-         if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
-      }
-      // Set ephemeral
-      this.options.ephemeral = options.interaction_ephemeral;
-      // Set and return
-      this.paginationInfo.portal = _interface;
-      return this;
-   }
    // Set portal
    /**
     * Sets the used portal for the pagination
@@ -251,7 +228,7 @@ exports.Pagination = class {
    /**
     * Enables selectMenu for your pagination
     * @param {{
-    *    data?: Array,
+    *    labels?: Array,
     *    useTitle?: Boolean
     * }} 
     * @returns {Pagination}
@@ -261,6 +238,9 @@ exports.Pagination = class {
       this.options.selectMenu.toggle = true;
       this.options.selectMenu.labels = labels;
       this.options.selectMenu.useTitle = useTitle;
+      if (labels && useTitle) {
+         throw new Error("enableSelectMenu ERROR: You can not use both useTitle and custom labels");
+      }
       return this;
    }
    // Page creator

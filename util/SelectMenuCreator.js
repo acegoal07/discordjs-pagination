@@ -30,7 +30,7 @@ module.exports = {
             )
          )
       } catch(error) {
-         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function SelectMenuCreator ${error}`)
+         return Promise.reject(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function SelectMenuCreator ${error}`);
       }
    },
    /**
@@ -62,7 +62,7 @@ module.exports = {
             )
          )
       } catch(error) {
-         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledSelectMenuCreator ${error}`)
+         return Promise.reject(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledSelectMenuCreator ${error}`)
       }
    }
 }

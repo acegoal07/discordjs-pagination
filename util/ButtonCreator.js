@@ -47,7 +47,7 @@ module.exports = {
          if (autoDelButton) buttonList.push(del)
          return Promise.resolve(buttonList);
       } catch(error) {
-         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`)
+         return Promise.reject(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`);
       }
    },
    // ButtonCreator params
@@ -76,7 +76,7 @@ module.exports = {
          }
          return Promise.resolve(buttonList);
       } catch(error) {
-         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function ButtonCreator ${error}`)
+         return Promise.reject(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function ButtonCreator ${error}`);
       }
    },
    // DisabledButtonCreator params
@@ -96,7 +96,7 @@ module.exports = {
          }
          return Promise.resolve(new ActionRowBuilder().addComponents(disabledButtonList));
       } catch(error) {
-         return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`)
+         return Promise.reject(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`);
       }
    }
 }

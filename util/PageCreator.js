@@ -25,7 +25,7 @@ module.exports = {
             }
             return Promise.resolve(pageList);
          } catch(error) {
-            return console.log(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
+            return Promise.reject(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);
          }
    }
 }

@@ -31,15 +31,6 @@ export class Pagination {
     };
     /**
      * Sets the used portal for the pagination
-     * @param {Message | Interaction} _interface
-     * @deprecated This function has been deprecated and replaced with setPortal to stop clashes with future versions of javascript
-     * @returns {Pagination}
-     */
-    setInterface(_interface: Message | Interaction, options?: {
-        interaction_ephemeral: boolean;
-    }): Pagination;
-    /**
-     * Sets the used portal for the pagination
      * @param {Message | Interaction} portal
      * @param {{
      *    interaction_ephemeral?: Boolean,
@@ -123,13 +114,13 @@ export class Pagination {
     /**
      * Enables selectMenu for your pagination
      * @param {{
-     *    data?: Array,
+     *    labels?: Array,
      *    useTitle?: Boolean
      * }}
      * @returns {Pagination}
      */
     enableSelectMenu({ labels, useTitle }: {
-        data?: any[];
+        labels?: any[];
         useTitle?: boolean;
     }): Pagination;
     /**
