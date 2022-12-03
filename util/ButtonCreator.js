@@ -53,26 +53,25 @@ module.exports = {
    // ButtonCreator params
    /**
     * Sends back a list of custom buttons
+    * @param {Array} buttonBuilderInfo
     * @returns {Promise.<buttonList: Array>}
     */
-   async ButtonCreator() {
+   async ButtonCreator(buttonBuilderInfo) {
       try {
          let buttonList = []
          for (const button of buttonBuilderInfo) {
             // Check for info
-            if (!button.emoji && !button.label) throw new Error("ButtonCreator ERROR: Neither a emoji or label was provided");
             if (!button.customId) throw new Error("ButtonCreator ERROR: The custom id for the button must be provided");
             if (!button.setStyle) throw new Error("ButtonCreator ERROR: The style for the button must be provided");
             // Create button
-            const embedButton = new ButtonBuilder()
-               .setCustomId(button.customId)
-               .setStyle(button.setStyle);
-            // Add check for label or emoji
-            if (!button.emoji) {embedButton.setLabel(button.label)}
-            else if (button.label && button.emoji) {embedButton.setLabel(button.label)}
-            else {embedButton.setEmoji(button.emoji)}
-            // Add button to array
-            buttonList.push(embedButton)
+            buttonList.push(
+               new ButtonBuilder({
+                  custom_id: button.customId,
+                  style: button.setStyle,
+                  label: button.label,
+                  emoji: button.emoji
+               })               
+            )
          }
          return Promise.resolve(buttonList);
       } catch(error) {

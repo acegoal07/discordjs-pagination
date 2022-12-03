@@ -11,17 +11,19 @@ module.exports = {
       try {
             let pageList = [];
             for (const page of pageBuilderInfo) {
-               if (!page) throw new Error("PageCreator ERROR: undefined page was passed into createPages")
-               const embed = new EmbedBuilder();
-               if (page.title) embed.setTitle(page.title);
-               if (page.description) embed.setDescription(page.description);
-               if (page.color) embed.setColor(page.color);
-               if (page.fields) embed.addFields(page.fields);
-               if (page.imageUrl) embed.setImage(page.imageUrl);
-               if (page.thumbnailUrl) embed.setThumbnail(page.thumbnailUrl);
-               if (page.author) embed.setAuthor(page.author);
-               if (page.url) embed.setURL(page.url);
-               pageList.push(embed);
+               if (!page) throw new Error("PageCreator ERROR: undefined page was passed into createPages");
+               pageList.push(
+                  new EmbedBuilder({
+                     title: page.title,
+                     description: page.description,
+                     color: page.color,
+                     fields: page.fields,
+                     image: page.imageUrl,
+                     thumbnail: page.thumbnailUrl,
+                     author: page.author,
+                     url: page.url
+                  })                  
+               )
             }
             return Promise.resolve(pageList);
          } catch(error) {
