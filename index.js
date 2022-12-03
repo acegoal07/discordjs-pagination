@@ -66,7 +66,7 @@ exports.Pagination = class {
     *    privateReply?: Boolean,
     *    replyMessage?: Boolean
     * }} options
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    setPortal(portal, options = {interaction_ephemeral: false}) {
       // Portal already set
@@ -87,7 +87,7 @@ exports.Pagination = class {
    /**
     * Set the buttonList for the paginationY
     * @param {ButtonBuilder[]} buttonList
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    setButtonList(buttonList) {
       // Checks
@@ -102,7 +102,7 @@ exports.Pagination = class {
    /**
     * Set the pageList for the pagination
     * @param {EmbedBuilder[]} pageList
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    setPageList(pageList) {
       // Checks
@@ -115,7 +115,7 @@ exports.Pagination = class {
    // Run pagination
    /**
     * Run the pagination
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    async paginate() {
       // Checks portal info exists
@@ -137,7 +137,7 @@ exports.Pagination = class {
    /**
     * How many milliseconds your pagination will run for
     * @param {Number} timeout
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    setTimeout(timeout) {
       // Checks
@@ -158,7 +158,7 @@ exports.Pagination = class {
     *    slider?: String,
     *    bar?: String
     * }}
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    setProgressBar({slider = "▣", bar = "▢"}) {
       // Checks
@@ -175,7 +175,7 @@ exports.Pagination = class {
    // Set replyMessage
    /**
     * Enables replyMessage for your pagination
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    enableReplyMessage() {
       // Set and return
@@ -185,7 +185,7 @@ exports.Pagination = class {
    // Set autoDelete
    /**
     * Enables autoDelete for your pagination
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    enableAutoDelete() {
       // Set and return
@@ -195,7 +195,7 @@ exports.Pagination = class {
    // Set privateReply
    /**
     * Enables privateReply for your pagination
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    enablePrivateReply() {
       // Set and return
@@ -205,7 +205,7 @@ exports.Pagination = class {
    // Set authorIndependent
    /**
     * Enables authorIndependent for your pagination
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    enableAuthorIndependent() {
       // Set and return
@@ -216,7 +216,7 @@ exports.Pagination = class {
    /**
     * Enables autoButton for your pagination
     * @param {Boolean} deleteButton
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    enableAutoButton(deleteButton = false) {
       // Set and return
@@ -231,7 +231,7 @@ exports.Pagination = class {
     *    labels?: Array,
     *    useTitle?: Boolean
     * }} 
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    enableSelectMenu({labels = null, useTitle = false}) {
       // Set and return
@@ -294,7 +294,7 @@ exports.Pagination = class {
     *       |  'DarkButNotBlack'
     *       |  'NotQuiteBlack'
     * }]} data
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    createPages(data = [{
 	   title: null,
@@ -331,7 +331,7 @@ exports.Pagination = class {
     *       | "Danger",
     *    emoji?: String
     * }]} info
-    * @returns {Pagination}
+    * @returns {exports.Pagination}
     */
    createButtons(info = [{
       customId: null,

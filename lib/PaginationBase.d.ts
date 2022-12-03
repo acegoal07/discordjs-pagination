@@ -29,4 +29,4 @@ export function PaginationBase({ paginationInfo, options }: {
             useTitle: boolean;
         };
     };
-}): Promise<any>;
+}): Promise<EmbedBuilder[]>;

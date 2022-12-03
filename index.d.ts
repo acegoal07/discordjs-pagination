@@ -40,7 +40,7 @@ export class Pagination {
      *    privateReply?: Boolean,
      *    replyMessage?: Boolean
      * }} options
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     setPortal(portal: Message | Interaction, options?: {
         interaction_ephemeral?: boolean;
@@ -53,24 +53,24 @@ export class Pagination {
     /**
      * Set the buttonList for the paginationY
      * @param {ButtonBuilder[]} buttonList
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     setButtonList(buttonList: ButtonBuilder[]): Pagination;
     /**
      * Set the pageList for the pagination
      * @param {EmbedBuilder[]} pageList
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     setPageList(pageList: EmbedBuilder[]): Pagination;
     /**
      * Run the pagination
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     paginate(): Pagination;
     /**
      * How many milliseconds your pagination will run for
      * @param {Number} timeout
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     setTimeout(timeout: number): Pagination;
     /**
@@ -79,7 +79,7 @@ export class Pagination {
      *    slider?: String,
      *    bar?: String
      * }}
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     setProgressBar({ slider, bar }: {
         slider?: string;
@@ -87,28 +87,28 @@ export class Pagination {
     }): Pagination;
     /**
      * Enables replyMessage for your pagination
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     enableReplyMessage(): Pagination;
     /**
      * Enables autoDelete for your pagination
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     enableAutoDelete(): Pagination;
     /**
      * Enables privateReply for your pagination
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     enablePrivateReply(): Pagination;
     /**
      * Enables authorIndependent for your pagination
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     enableAuthorIndependent(): Pagination;
     /**
      * Enables autoButton for your pagination
      * @param {Boolean} deleteButton
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     enableAutoButton(deleteButton?: boolean): Pagination;
     /**
@@ -117,7 +117,7 @@ export class Pagination {
      *    labels?: Array,
      *    useTitle?: Boolean
      * }}
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     enableSelectMenu({ labels, useTitle }: {
         labels?: any[];
@@ -173,7 +173,7 @@ export class Pagination {
      *       |  'DarkButNotBlack'
      *       |  'NotQuiteBlack'
      * }]} data
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     createPages(data?: [
         {
@@ -208,7 +208,7 @@ export class Pagination {
      *       | "Danger",
      *    emoji?: String
      * }]} info
-     * @returns {Pagination}
+     * @returns {exports.Pagination}
      */
     createButtons(info?: [
         {

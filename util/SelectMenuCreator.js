@@ -6,7 +6,7 @@ module.exports = {
     * Creates a select menu to be used as a way to interact with the pagination
     * @param {Number} pageListLength An array of the embeds
     * @param {Array} labels An array of labels
-    * @returns {Promise.<ActionRowBuilder>}
+    * @returns {Promise.<ActionRowBuilder[]>}
     */
    async SelectMenuCreator(pageListLength, labels) {
       try {
@@ -37,7 +37,7 @@ module.exports = {
     * Creates a disabled select menu
     * @param {Number} pageListLength An array of the embeds
     * @param {Array} labels An array of labels
-    * @returns {Promise.<ActionRowBuilder>}
+    * @returns {Promise.<ActionRowBuilder[]>}
     */
    async DisabledSelectMenuCreator(pageListLength, labels) {
       try {
