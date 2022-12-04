@@ -11,8 +11,8 @@ export function PaginationBase({ paginationInfo, options }: {
         autoDelete: boolean;
         privateReply: boolean;
         authorIndependent: boolean;
-        pageBuilderInfo: any;
-        buttonBuilderInfo: any;
+        pageBuilderData: any;
+        buttonBuilderData: any;
         ephemeral: boolean;
         autoButton: {
             toggle: boolean;

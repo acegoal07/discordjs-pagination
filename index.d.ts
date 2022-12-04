@@ -11,8 +11,8 @@ export class Pagination {
         autoDelete: boolean;
         privateReply: boolean;
         authorIndependent: boolean;
-        pageBuilderInfo: any;
-        buttonBuilderInfo: any;
+        pageBuilderData: any;
+        buttonBuilderData: any;
         ephemeral: boolean;
         autoButton: {
             toggle: boolean;
@@ -172,10 +172,10 @@ export class Pagination {
      *       |  'Greyple'
      *       |  'DarkButNotBlack'
      *       |  'NotQuiteBlack'
-     * }]} data
+     * }]} buildData
      * @returns {exports.Pagination}
      */
-    createPages(data?: [
+    createPages(buildData?: [
         {
             title?: string;
             url?: string;
@@ -207,10 +207,10 @@ export class Pagination {
      *       | "Success"
      *       | "Danger",
      *    emoji?: String
-     * }]} info
+     * }]} buildData
      * @returns {exports.Pagination}
      */
-    createButtons(info?: [
+    createButtons(buildData?: [
         {
             customId: string;
             label?: string;

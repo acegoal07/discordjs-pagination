@@ -51,13 +51,21 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
 // ButtonCreator params
 /**
  * Sends back a list of custom buttons
- * @param {Array} buttonBuilderInfo
+ * @param {[{
+ *    customId: String,
+ *    label?: String,
+ *    style: "Primary"
+ *       | "Secondary"
+ *       | "Success"
+ *       | "Danger",
+ *    emoji?: String
+ * }]} buttonBuilderData
  * @returns {Promise.<buttonList[]>}
  */
-exports.ButtonCreator = async(buttonBuilderInfo) => {
+exports.ButtonCreator = async(buttonBuilderData) => {
    try {
       let buttonList = []
-      for (const button of buttonBuilderInfo) {
+      for (const button of buttonBuilderData) {
          // Check for info
          if (!button.customId) throw new Error("ButtonCreator ERROR: The custom id for the button must be provided");
          if (!button.setStyle) throw new Error("ButtonCreator ERROR: The style for the button must be provided");

@@ -9,8 +9,8 @@ export function InteractionPagination(paginationInfo: {
     autoDelete: boolean;
     privateReply: boolean;
     authorIndependent: boolean;
-    pageBuilderInfo: any[];
-    buttonBuilderInfo: any[];
+    pageBuilderData: any[];
+    buttonBuilderData: any[];
     ephemeral: boolean;
     autoButton: {
         toggle: boolean;

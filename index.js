@@ -30,8 +30,8 @@ exports.Pagination = class {
          autoDelete: false,
          privateReply: false,
          authorIndependent: false,
-         pageBuilderInfo: null,
-         buttonBuilderInfo: null,
+         pageBuilderData: null,
+         buttonBuilderData: null,
          ephemeral: false,
          // AutoButton settings
          autoButton: {
@@ -124,7 +124,7 @@ exports.Pagination = class {
       const portalCheck = new MessagePayload(this.paginationInfo.portal);
       // Checks
       if (!portalCheck.isInteraction && !portalCheck.isMessage) throw new Error("paginate ERROR: You have not provided an portal that can be used");
-      if (!this.paginationInfo.buttonList && !this.options.autoButton && !this.buttonBuilderInfo) throw new Error("paginate ERROR: You have not provided a buttonList to use");
+      if (!this.paginationInfo.buttonList && !this.options.autoButton && !this.buttonBuilderData) throw new Error("paginate ERROR: You have not provided a buttonList to use");
       if (!this.paginationInfo.pageList && !this.options.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
       if (portalCheck.isInteraction && this.options.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
       // Set and return
@@ -293,10 +293,10 @@ exports.Pagination = class {
     *       |  'Greyple'
     *       |  'DarkButNotBlack'
     *       |  'NotQuiteBlack'
-    * }]} data
+    * }]} buildData
     * @returns {exports.Pagination}
     */
-   createPages(data = [{
+   createPages(buildData = [{
 	   title: null,
       url: null,
       author: {
@@ -316,7 +316,7 @@ exports.Pagination = class {
       imageUrl: null,
       color: null
    }]) {
-      this.options.pageBuilderInfo = data;
+      this.options.pageBuilderData = buildData;
       return this;
    }
    // Button creator
@@ -330,16 +330,16 @@ exports.Pagination = class {
     *       | "Success"
     *       | "Danger",
     *    emoji?: String
-    * }]} info
+    * }]} buildData
     * @returns {exports.Pagination}
     */
-   createButtons(info = [{
+   createButtons(buildData = [{
       customId: null,
       label: null,
       style: null,
       emoji: null
    }]) {
-      this.options.buttonBuilderInfo = info;
+      this.options.buttonBuilderData = buildData;
       return this;
    }
 }
