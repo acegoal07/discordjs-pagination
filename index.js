@@ -6,7 +6,7 @@ const { PaginationBase } = require("./lib/PaginationBase");
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.4.4
+ * @version 1.4.8
  * @author acegoal07
  */
 exports.Pagination = class {
@@ -33,12 +33,13 @@ exports.Pagination = class {
          pageBuilderData: null,
          buttonBuilderData: null,
          ephemeral: false,
+         disabledButtons: true,
          // AutoButton settings
          autoButton: {
             toggle: false,
             deleteButton: false
          },
-         // Progressbar settings
+         // ProgressBar settings
          progressBar: {
             toggle: false,
             slider: "▣",
@@ -241,6 +242,15 @@ exports.Pagination = class {
       if (labels && useTitle) {
          throw new Error("enableSelectMenu ERROR: You can not use both useTitle and custom labels");
       }
+      return this;
+   }
+   // Disable DisabledButtons
+   /**
+    * Disables the buttons being disabled and re applied to the pagination after the timeout ends
+    * @returns {exports.Pagination}
+    */
+   disableDisabledButtons() {
+      this.options.disabledButtons = false;
       return this;
    }
    // Page creator

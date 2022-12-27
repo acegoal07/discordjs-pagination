@@ -43,6 +43,6 @@ exports.FilterCreator = ({message, interaction, buttonList, authorIndependent, s
       }
       return filter;
    } catch(error) {
-      throw new Error(`Error occured with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);
+      throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);
    }
 }
