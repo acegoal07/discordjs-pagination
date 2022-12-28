@@ -6,7 +6,7 @@ const { PaginationBase } = require("./lib/PaginationBase");
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.4.8
+ * @version 1.4.9
  * @author acegoal07
  */
 exports.Pagination = class {
@@ -25,7 +25,7 @@ exports.Pagination = class {
       // Options
       this.options = {
          // General options
-         timeout: 3000,
+         timeout: 20000,
          replyMessage: false,
          autoDelete: false,
          privateReply: false,
