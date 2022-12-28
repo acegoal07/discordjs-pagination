@@ -7,8 +7,7 @@
 export function SelectMenuCreator(pageListLength: number, labels: any[]): Promise<ActionRowBuilder[]>;
 /**
  * Creates a disabled select menu
- * @param {Number} pageListLength An array of the embeds
- * @param {Array} labels An array of labels
+ * @param {ActionRowBuilder[]} actionRow
  * @returns {Promise.<ActionRowBuilder[]>}
  */
-export function DisabledSelectMenuCreator(pageListLength: number, labels: any[]): Promise<ActionRowBuilder[]>;
+export function DisabledSelectMenuCreator(actionRow: ActionRowBuilder[]): Promise<ActionRowBuilder[]>;

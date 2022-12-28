@@ -13,6 +13,7 @@ export function PaginationBase({ paginationInfo, options }: {
         authorIndependent: boolean;
         pageBuilderData: any;
         buttonBuilderData: any;
+        disabledButtons: boolean;
         ephemeral: boolean;
         autoButton: {
             toggle: boolean;
@@ -25,7 +26,7 @@ export function PaginationBase({ paginationInfo, options }: {
         };
         selectMenu: {
             toggle: boolean;
-            labels: any;
+            labels: any[];
             useTitle: boolean;
         };
     };

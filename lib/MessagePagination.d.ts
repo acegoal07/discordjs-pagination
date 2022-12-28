@@ -12,6 +12,7 @@ export function MessagePagination(paginationInfo: {
     pageBuilderData: any[];
     buttonBuilderData: any[];
     ephemeral: boolean;
+    disabledButtons: boolean;
     autoButton: {
         toggle: boolean;
         deleteButton: boolean;

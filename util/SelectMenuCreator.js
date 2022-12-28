@@ -16,7 +16,7 @@ module.exports = {
             optionArray.push(
                {
                   label: `${labels[i - 1] ? `${labels[i - 1]}` : `Page ${i}`}`,
-                  value: `${i}`,
+                  value: `${i}`
                }
             )
          }
@@ -24,7 +24,7 @@ module.exports = {
          return Promise.resolve(
             new ActionRowBuilder().addComponents(
                new StringSelectMenuBuilder()
-                  .setCustomId('select')
+                  .setCustomId('selectMenu')
                   .setPlaceholder('Select Page')
                   .addOptions(optionArray)
             )
@@ -35,30 +35,19 @@ module.exports = {
    },
    /**
     * Creates a disabled select menu
-    * @param {Number} pageListLength An array of the embeds
-    * @param {Array} labels An array of labels
+    * @param {ActionRowBuilder[]} actionRow
     * @returns {Promise.<ActionRowBuilder[]>}
     */
-   async DisabledSelectMenuCreator(pageListLength, labels) {
+   async DisabledSelectMenuCreator(actionRow) {
       try {
-         // Options creator
-         let optionArray = [];
-         for (let i = 1; i < pageListLength + 1; i++) {
-            optionArray.push(
-               {
-                  label: `${labels[i - 1] ? `${labels[i - 1]}` : `Page ${i}`}`,
-                  value: `${i}`,
-               }
-            )
-         }
          // Select menu builder
          return Promise.resolve(
             new ActionRowBuilder().addComponents(
                new StringSelectMenuBuilder()
-                  .setCustomId('disabledSM')
-                  .setDisabled(true)
+                  .setCustomId('dsiabledSelectMenu')
                   .setPlaceholder('Select Page')
-                  .addOptions(optionArray)
+                  .setDisabled()
+                  .addOptions(actionRow.components[0].data.options)
             )
          )
       } catch(error) {

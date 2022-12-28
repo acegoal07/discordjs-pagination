@@ -25,7 +25,7 @@ exports.Pagination = class {
       // Options
       this.options = {
          // General options
-         timeout: 20000,
+         timeout: 3000,
          replyMessage: false,
          autoDelete: false,
          privateReply: false,
@@ -158,19 +158,19 @@ exports.Pagination = class {
     * @param {{
     *    slider?: String,
     *    bar?: String
-    * }}
+    * }} settings
     * @returns {exports.Pagination}
     */
-   setProgressBar({slider = "▣", bar = "▢"}) {
+   setProgressBar(settings = {slider: "▣", bar: "▢"}) {
       // Checks
-      if (typeof slider !== "string") throw new Error("setProgressBar ERROR: The proSlider you have provided is not a string");
-      if (slider.length > 1 || slider.length < 1) throw new Error("setProgressBar ERROR: The proSlider must be 1 character");
-      if (typeof bar !== "string") throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");
-      if (bar.length > 1 || bar.length < 1) throw new Error("setProgressBar ERROR: The proBar must be 1 character");
+      if (typeof settings.slider !== "string") throw new Error("setProgressBar ERROR: The proSlider you have provided is not a string");
+      if (settings.slider.length > 1 || settings.slider.length < 1) throw new Error("setProgressBar ERROR: The proSlider must be 1 character");
+      if (typeof settings.bar !== "string") throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");
+      if (settings.bar.length > 1 || settings.bar.length < 1) throw new Error("setProgressBar ERROR: The proBar must be 1 character");
       // Set and return
       this.options.progressBar.toggle = true;
-      this.options.progressBar.slider = slider;
-      this.options.progressBar.bar = bar;
+      this.options.progressBar.slider = settings.slider;
+      this.options.progressBar.bar = settings.bar;
       return this;
    }
    // Set replyMessage
@@ -229,21 +229,18 @@ exports.Pagination = class {
    /**
     * Enables selectMenu for your pagination
     * @param {{
-    *    labels?: Array,
-    *    useTitle?: Boolean
-    * }} 
+    *    customLabels?: Array,
+    *    useTitles?: Boolean
+    * }} settings
     * @returns {exports.Pagination}
     */
-   enableSelectMenu({labels = null, useTitle = false}) {
+  enableSelectMenu(settings = {customLabels: null, useTitles: false}) {
       // Set and return
       this.options.selectMenu.toggle = true;
-      this.options.selectMenu.labels = labels;
-      this.options.selectMenu.useTitle = useTitle;
-      if (labels && useTitle) {
-         throw new Error("enableSelectMenu ERROR: You can not use both useTitle and custom labels");
-      }
+      this.options.selectMenu.labels = settings.customLabels;
+      this.options.selectMenu.useTitle = settings.useTitles;
       return this;
-   }
+  }
    // Disable DisabledButtons
    /**
     * Disables the buttons being disabled and re applied to the pagination after the timeout ends

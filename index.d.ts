@@ -14,6 +14,7 @@ export class Pagination {
         pageBuilderData: any;
         buttonBuilderData: any;
         ephemeral: boolean;
+        disabledButtons: boolean;
         autoButton: {
             toggle: boolean;
             deleteButton: boolean;
@@ -78,10 +79,10 @@ export class Pagination {
      * @param {{
      *    slider?: String,
      *    bar?: String
-     * }}
+     * }} settings
      * @returns {exports.Pagination}
      */
-    setProgressBar({ slider, bar }: {
+    setProgressBar(settings?: {
         slider?: string;
         bar?: string;
     }): Pagination;
@@ -114,15 +115,20 @@ export class Pagination {
     /**
      * Enables selectMenu for your pagination
      * @param {{
-     *    labels?: Array,
-     *    useTitle?: Boolean
-     * }}
+     *    customLabels?: Array,
+     *    useTitles?: Boolean
+     * }} settings
      * @returns {exports.Pagination}
      */
-    enableSelectMenu({ labels, useTitle }: {
-        labels?: any[];
-        useTitle?: boolean;
+    enableSelectMenu(settings?: {
+        customLabels?: any[];
+        useTitles?: boolean;
     }): Pagination;
+    /**
+     * Disables the buttons being disabled and re applied to the pagination after the timeout ends
+     * @returns {exports.Pagination}
+     */
+    disableDisabledButtons(): Pagination;
     /**
      * Allows you to use the pagination to create the pages for the pagination
      * @param {[{
