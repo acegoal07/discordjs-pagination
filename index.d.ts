@@ -11,10 +11,10 @@ export class Pagination {
         autoDelete: boolean;
         privateReply: boolean;
         authorIndependent: boolean;
-        pageBuilderData: any;
-        buttonBuilderData: any;
         ephemeral: boolean;
         disabledButtons: boolean;
+        pageBuilderData: any;
+        buttonBuilderData: any;
         autoButton: {
             toggle: boolean;
             deleteButton: boolean;
@@ -26,30 +26,20 @@ export class Pagination {
         };
         selectMenu: {
             toggle: boolean;
-            labels: any;
             useTitle: boolean;
+            labels: any;
         };
     };
     /**
      * Sets the used portal for the pagination
      * @param {Message | Interaction} portal
      * @param {{
-     *    interaction_ephemeral?: Boolean,
-     *    timeout?: Number,
-     *    autoDelete?: Boolean,
-     *    authorIndependent?: Boolean,
-     *    privateReply?: Boolean,
-     *    replyMessage?: Boolean
-     * }} options
+     *    interaction_ephemeral?: Boolean
+     * }} settings
      * @returns {exports.Pagination}
      */
-    setPortal(portal: Message | Interaction, options?: {
+    setPortal(portal: Message | Interaction, settings?: {
         interaction_ephemeral?: boolean;
-        timeout?: number;
-        autoDelete?: boolean;
-        authorIndependent?: boolean;
-        privateReply?: boolean;
-        replyMessage?: boolean;
     }): Pagination;
     /**
      * Set the buttonList for the paginationY

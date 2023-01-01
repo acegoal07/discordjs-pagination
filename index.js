@@ -30,10 +30,11 @@ exports.Pagination = class {
          autoDelete: false,
          privateReply: false,
          authorIndependent: false,
-         pageBuilderData: null,
-         buttonBuilderData: null,
          ephemeral: false,
          disabledButtons: true,
+         // BuilderData
+         pageBuilderData: null,
+         buttonBuilderData: null,
          // AutoButton settings
          autoButton: {
             toggle: false,
@@ -48,8 +49,8 @@ exports.Pagination = class {
          // SelectMenu settings
          selectMenu: {
             toggle: false,
-            labels: null,
-            useTitle: false
+            useTitle: false,
+            labels: null
          }
       }
    }
@@ -60,26 +61,21 @@ exports.Pagination = class {
     * Sets the used portal for the pagination
     * @param {Message | Interaction} portal
     * @param {{
-    *    interaction_ephemeral?: Boolean,
-    *    timeout?: Number,
-    *    autoDelete?: Boolean,
-    *    authorIndependent?: Boolean,
-    *    privateReply?: Boolean,
-    *    replyMessage?: Boolean
-    * }} options
+    *    interaction_ephemeral?: Boolean
+    * }} settings
     * @returns {exports.Pagination}
     */
-   setPortal(portal, options = {interaction_ephemeral: false}) {
+   setPortal(portal, settings = {interaction_ephemeral: false}) {
       // Portal already set
       if (this.paginationInfo.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
       // Missing portal
       if (!portal) throw new Error("setInterface ERROR: The portal you have provided is invalid");
       // Set message portal
       if (new MessagePayload(portal).isMessage) {
-         if (options.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
+         if (settings.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
       }
       // Set other settings
-      this.options.ephemeral = options.interaction_ephemeral;
+      this.options.ephemeral = settings.interaction_ephemeral;
       // Set and return
       this.paginationInfo.portal = portal;
       return this;
