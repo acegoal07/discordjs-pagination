@@ -6,7 +6,7 @@ const { PaginationBase } = require("./lib/PaginationBase");
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.4.9
+ * @version 1.5.0
  * @author acegoal07
  */
 exports.Pagination = class {
