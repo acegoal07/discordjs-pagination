@@ -5,32 +5,37 @@
   "main": "index",
   "types": "types",
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
+    "type": "git",
+    "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
   },
   "keywords": [
-      "acegoal07",
-      "Discord",
-      "Buttons",
-      "Pagination",
-      "discord-buttons",
-      "paginator",
-      "discordjs",
-      "discord.js"
+    "acegoal07",
+    "Discord",
+    "Buttons",
+    "Pagination",
+    "discord-buttons",
+    "paginator",
+    "discordjs",
+    "discord.js"
   ],
   "author": "acegoal07",
   "license": "MIT",
   "bugs": {
-      "url": "https://github.com/acegoal07/discordjs-pagination/issues"
+    "url": "https://github.com/acegoal07/discordjs-pagination/issues"
   },
   "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
   "dependencies": {
-      "discord.js": "^14.7.1"
+    "discord.js": "^14.7.1"
   },
   "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types && npm run tscBuild",
+    "tscBuild": "npx tsc && npm run copy",
+    "copy": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
   },
   "publishConfig": {
-      "access": "public"
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18"
   }
 }

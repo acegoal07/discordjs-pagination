@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Dependencies
 const { StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 // Functions
@@ -5,7 +6,7 @@ module.exports = {
    /**
     * Creates a select menu to be used as a way to interact with the pagination
     * @param {Number} pageListLength An array of the embeds
-    * @param {Array} labels An array of labels
+    * @param {Array<String>} labels An array of labels
     * @returns {Promise.<ActionRowBuilder[]>}
     */
    async SelectMenuCreator(pageListLength, labels) {
@@ -44,7 +45,7 @@ module.exports = {
          return Promise.resolve(
             new ActionRowBuilder().addComponents(
                new StringSelectMenuBuilder()
-                  .setCustomId('dsiabledSelectMenu')
+                  .setCustomId('disabledSelectMenu')
                   .setPlaceholder('Select Page')
                   .setDisabled()
                   .addOptions(actionRow.components[0].data.options)

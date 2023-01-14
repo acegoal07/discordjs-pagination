@@ -1,3 +1,5 @@
+// @ts-nocheck
+// Dependencies
 const { Message, Interaction, ButtonBuilder } = require("discord.js");
 /**
  * Crates the filter needed to interpret input for the pagination
@@ -8,7 +10,7 @@ const { Message, Interaction, ButtonBuilder } = require("discord.js");
  *    authorIndependent: Boolean,
  *    selectMenu: {
  *       toggle: Boolean,
- *       labels: Array,
+ *       labels: Array<String>,
  *       useTitle: Boolean
  *    }
  * }}

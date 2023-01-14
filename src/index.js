@@ -1,3 +1,4 @@
+// @ts-nocheck
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const { Message, Interaction, EmbedBuilder, ButtonBuilder, MessagePayload } = require("discord.js");
@@ -225,7 +226,7 @@ exports.Pagination = class {
    /**
     * Enables selectMenu for your pagination
     * @param {{
-    *    customLabels?: Array,
+    *    customLabels?: Array<String>,
     *    useTitles?: Boolean
     * }} settings
     * @returns {exports.Pagination}

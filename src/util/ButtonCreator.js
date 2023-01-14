@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Dependencies
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 // AutoButton params
