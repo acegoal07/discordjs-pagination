@@ -1,14 +1,16 @@
+// @ts-nocheck
 // Dependencies
-const { Message, ActionRowBuilder, EmbedBuilder, ButtonBuilder } = require("discord.js");
+const { Interaction, ActionRowBuilder,  EmbedBuilder, ButtonBuilder } = require("discord.js");
 const { DisabledButtonCreator } = require("../util/ButtonCreator");
 const { SelectMenuCreator, DisabledSelectMenuCreator } = require("../util/SelectMenuCreator");
 const { ProgressBarCreator } = require("../util/ProgressBarCreator");
 const { FilterCreator } = require("../util/FilterCreator");
 // Params
 /**
- * The Message pagination
+ * The interaction pagination
+ *
  * @param {{
- *    portal: Message,
+ *    portal: Interaction,
  *    pageList: EmbedBuilder[],
  *    buttonList: ButtonBuilder[],
  *    pagination: null
@@ -19,8 +21,8 @@ const { FilterCreator } = require("../util/FilterCreator");
  *    autoDelete: Boolean,
  *    privateReply: Boolean,
  *    authorIndependent: Boolean,
- *    pageBuilderData: Array,
- *    buttonBuilderData: Array,
+ *    pageBuilderData: Array<Object>,
+ *    buttonBuilderData: Array<Object>,
  *    ephemeral: Boolean,
  *    disabledButtons: Boolean,
  *    autoButton: {
@@ -34,14 +36,14 @@ const { FilterCreator } = require("../util/FilterCreator");
  *    },
  *    selectMenu: {
  *       toggle: Boolean,
- *       labels: Array,
+ *       labels: Array<String>,
  *       useTitle: Boolean
  *    }
  * }} options
  * @returns {EmbedBuilder[]} The pagination
  */
-// Message pagination
-exports.MessagePagination = async(paginationInfo, options) => {
+// Interaction pagination
+exports.InteractionPagination = async(paginationInfo, options) => {
    try {
       // Set page number
       let pageNumber = 0;
@@ -52,14 +54,16 @@ exports.MessagePagination = async(paginationInfo, options) => {
       };
       let pagination;
       if (options.privateReply) {
-         await paginationInfo.portal.channel.send("The reply has been sent privately");
-         pagination = await paginationInfo.portal.author.send(paginationContent);
+         paginationInfo.portal.deferred ? await paginationInfo.portal.editReply("The reply has been sent privately") : await paginationInfo.portal.reply("The reply has been sent privately");
+         pagination = await paginationInfo.portal.client.users.cache.get(paginationInfo.portal.member.user.id).send(paginationContent);
+      } else if (paginationInfo.portal.deferred) {
+         pagination = await paginationInfo.portal.editReply(paginationContent);
       } else {
-         pagination = options.replyMessage ? await paginationInfo.portal.reply(paginationContent) : await paginationInfo.portal.channel.send(paginationContent);
+         pagination = await paginationInfo.portal.reply(paginationContent);
       }
       // Create collector
-      const collector = pagination.createMessageComponentCollector({
-         filter: FilterCreator({message: paginationInfo.portal, buttonList: paginationInfo.buttonList, authorIndependent: options.authorIndependent, selectMenu: options.selectMenu}),
+      const collector = await pagination.createMessageComponentCollector({
+         filter: FilterCreator({interaction: paginationInfo.portal, buttonList: paginationInfo.buttonList, authorIndependent: options.authorIndependent, selectMenu: options.selectMenu}),
          time: options.timeout
       });
       // Button inputs
@@ -101,15 +105,14 @@ exports.MessagePagination = async(paginationInfo, options) => {
                   return;
                // Catch null
                case null:
-                  throw new Error("MessagePagination ERROR: The button input is null");
+                  throw new Error("InteractionPagination ERROR: The button input is null");
                // Catch undefined
                case undefined:
-                  throw new Error("MessagePagination ERROR: The button input is undefined");
+                  throw new Error("InteractionPagination ERROR: The button input is undefined");
                // Default
                default:
                   break;
             }
-            // Deferrer update
             if (!i.deferred) await i.deferUpdate();
             // Edit page after input
             await i.editReply({
@@ -122,7 +125,7 @@ exports.MessagePagination = async(paginationInfo, options) => {
             // Deferrer update
             if (!i.deferred) await i.deferUpdate();
             // Edit page after input
-            pageNumber = i.values[0] - 1;
+            pageNumber = i.values[0] - 1 ;
             await i.editReply({
                embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(paginationInfo.pageList.length, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${paginationInfo.pageList.length}`}`})],
                fetchReply: true
@@ -135,28 +138,22 @@ exports.MessagePagination = async(paginationInfo, options) => {
       collector.once("end", async() => {
          try {
             // Make sure the embed exists
-            await paginationInfo.portal.channel.messages.fetch(pagination.id);
+            await paginationInfo.portal.channel.messages.fetch({message: pagination.id});
             // Delete if autoDelete in enabled
-            if (options.autoDelete) {
-               return pagination.delete();
-            }
+            if (options.autoDelete) return pagination.delete();
             // No disabled buttons
-            else if (!options.disabledButtons) {
-               return pagination.edit({ components: [] });
+            if (!options.disabledButtons) return paginationInfo.portal.editReply({ components: [await DisabledSelectMenuCreator(pagination.components[0])] });
+            // Disable select menu
+            if (options.selectMenu.toggle) {
+               try {
+                  return paginationInfo.portal.editReply({ components: [await DisabledSelectMenuCreator(pagination.components[0])] });
+               } catch(error) {}
             }
+            // Disable buttons
             else {
-               // Disable select menu
-               if (options.selectMenu.toggle) {
-                  try {
-                     return pagination.edit({ components: [await DisabledSelectMenuCreator(pagination.components[0])] });
-                  } catch(error) {}
-               }
-               // Disable buttons
-               else {
-                  try {
-                     return pagination.edit({ components: [await DisabledButtonCreator(paginationInfo.buttonList)] });
-                  } catch (error) {return}
-               }               
+               try {
+                  return paginationInfo.portal.editReply({ components: [await DisabledButtonCreator(paginationInfo.buttonList)] });
+               } catch (error) {return}
             }
          } catch(error) {return}
       });

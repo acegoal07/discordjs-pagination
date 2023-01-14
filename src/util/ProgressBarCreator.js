@@ -1,5 +1,6 @@
+// @ts-nocheck
 /**
- * Sends back a string that represents the page as a progressbar
+ * Sends back a string that represents the page as a progressBar
  * @param {Number} pageListLength - An array of the embeds
  * @param {Number} pageNumber - Current page number
  * @param {{

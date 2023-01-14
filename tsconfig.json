@@ -1,12 +1,12 @@
 {
-  "include": ["index.js", "./util/", "./lib/"],
-  "compilerOptions": {
-    "strict": true,
-    "lib": ["es2018", "dom"],
-    "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "declarationMap": true
-  }
+    "include": ["src/**/*"],
+    "compilerOptions": {
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowJs": true,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist",
+        "declarationMap": true
+    }
 }
