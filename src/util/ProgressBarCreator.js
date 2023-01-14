@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * Sends back a string that represents the page as a progressBar
  * @param {Number} pageListLength - An array of the embeds

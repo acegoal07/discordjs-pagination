@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Dependencies
 const { Message, ActionRowBuilder, EmbedBuilder, ButtonBuilder } = require("discord.js");
 const { DisabledButtonCreator } = require("../util/ButtonCreator");

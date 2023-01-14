@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Dependencies
 const { StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
 // Functions

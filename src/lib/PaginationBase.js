@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Dependencies
 const { MessagePayload, EmbedBuilder } = require("discord.js");
 const { InteractionPagination } = require("./InteractionPagination");

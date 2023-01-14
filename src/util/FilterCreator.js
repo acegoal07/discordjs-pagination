@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Dependencies
 const { Message, Interaction, ButtonBuilder } = require("discord.js");
 /**

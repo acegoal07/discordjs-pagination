@@ -1,4 +1,3 @@
-// @ts-nocheck
 // Dependencies
 const { EmbedBuilder } = require("discord.js");
 /**
