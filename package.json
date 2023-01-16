@@ -28,9 +28,11 @@
     "discord.js": "^14.7.1"
   },
   "scripts": {
-    "build": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types && npm run tscBuild",
-    "tscBuild": "npx tsc && npm run copy",
-    "copy": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
+    "build": "npm run buildTypes && npm run tscBuild && npm run copyFiles",
+    "build+publish": "npm run build && cd dist && npm publish",
+    "buildTypes": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
+    "tscBuild": "npx tsc",
+    "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
   },
   "publishConfig": {
     "access": "public"
