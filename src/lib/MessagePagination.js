@@ -73,20 +73,20 @@ exports.MessagePagination = async(paginationInfo, options) => {
                      pageNumber = 0;
                      break;
                   }
-                  pageNumber = pageNumber > 0 ? pageNumber-- : paginationInfo.pageList.length - 1;
+                  pageNumber = pageNumber > 0 ? --pageNumber: paginationInfo.pageList.length - 1;
                   break;
                // Button 2
                case paginationInfo.buttonList[1].data.custom_id:
                   if (paginationInfo.buttonList.length > 3) {
-                     pageNumber = pageNumber > 0 ? pageNumber-- : paginationInfo.pageList.length - 1;
+                     pageNumber = pageNumber > 0 ? --pageNumber : paginationInfo.pageList.length - 1;
                      break;
                   }
-                  pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? +pageNumber++ : 0;
+                  pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? ++pageNumber : 0;
                   break;
                // Button 3
                case paginationInfo.buttonList[2].data.custom_id:
                   if (paginationInfo.buttonList.length > 3) {
-                     pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? pageNumber++ : 0;
+                     pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? ++pageNumber : 0;
                      break
                   }
                   pagination.delete();
