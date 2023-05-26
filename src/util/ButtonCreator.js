@@ -5,7 +5,7 @@ const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
  * Sends back a list of buttons to be used
  * @param {Number} pageListLength
  * @param {Boolean} autoDelButton
- * @returns {Promise.<buttonList[]>}
+ * @returns {Promise.<import("discord.js").buttonList[]>}
  */
 exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
    // Pre-made buttons
@@ -42,7 +42,7 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
       } else {
          buttonList = [first, previous, next, last];
       }
-      if (autoDelButton) buttonList.push(del)
+      if (autoDelButton) {buttonList.push(del);}
       return Promise.resolve(buttonList);
    } catch(error) {
       return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`);
@@ -60,15 +60,15 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
  *       | "Danger",
  *    emoji?: String
  * }]} buttonBuilderData
- * @returns {Promise.<buttonList[]>}
+ * @returns {Promise.<import("discord.js").buttonList[]>}
  */
 exports.ButtonCreator = async(buttonBuilderData) => {
    try {
-      let buttonList = []
+      const buttonList = []
       for (const button of buttonBuilderData) {
          // Check for info
-         if (!button.customId) throw new Error("ButtonCreator ERROR: The custom id for the button must be provided");
-         if (!button.setStyle) throw new Error("ButtonCreator ERROR: The style for the button must be provided");
+         if (!button.customId) {throw new Error("ButtonCreator ERROR: The custom id for the button must be provided");}
+         if (!button.setStyle) {throw new Error("ButtonCreator ERROR: The style for the button must be provided");}
          // Create button
          buttonList.push(
             new ButtonBuilder({
@@ -77,7 +77,7 @@ exports.ButtonCreator = async(buttonBuilderData) => {
                label: button.label,
                emoji: button.emoji
             })
-         )
+         );
       }
       return Promise.resolve(buttonList);
    } catch(error) {
@@ -87,7 +87,7 @@ exports.ButtonCreator = async(buttonBuilderData) => {
 // DisabledButtonCreator params
 /**
  * @param {ButtonBuilder[]} buttonList - An array of the buttons
- * @returns {Promise.<ActionRowBuilder[]>}
+ * @returns {Promise.<import("discord.js").ActionRowBuilder[]>}
  */
 exports.DisabledButtonCreator = async(buttonList) => {
    try {
@@ -103,10 +103,8 @@ exports.DisabledButtonCreator = async(buttonList) => {
                style: button.data.style,
                disabled: true
             })
-         )
+         );
       }
       return Promise.resolve(new ActionRowBuilder().addComponents(disabledButtonList));
-   } catch(error) {
-      return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`);
-   }
+   } catch(error) {return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`);}
 }

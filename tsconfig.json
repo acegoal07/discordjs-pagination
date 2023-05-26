@@ -1,12 +1,17 @@
 {
-    "include": ["src/**/*"],
-    "compilerOptions": {
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "allowJs": true,
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "dist",
-        "declarationMap": true
-    }
+   "include": ["src/**/*"],
+   "compilerOptions": {
+      "target": "ES6",
+      "module": "commonjs",
+      "strict": true,
+      "forceConsistentCasingInFileNames": true,
+      "allowJs": true,
+      "declaration": true,
+      "emitDeclarationOnly": true,
+      "outDir": "dist",
+      "declarationMap": true,
+      "noImplicitAny": false,
+      "incremental": true,
+      "verbatimModuleSyntax": false
+   }
 }

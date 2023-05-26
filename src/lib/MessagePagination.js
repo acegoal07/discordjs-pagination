@@ -1,16 +1,16 @@
 // Dependencies
-const { Message, ActionRowBuilder, EmbedBuilder, ButtonBuilder } = require("discord.js");
-const { DisabledButtonCreator } = require("../util/ButtonCreator");
-const { SelectMenuCreator, DisabledSelectMenuCreator } = require("../util/SelectMenuCreator");
-const { ProgressBarCreator } = require("../util/ProgressBarCreator");
-const { FilterCreator } = require("../util/FilterCreator");
+const { ActionRowBuilder } = require("discord.js"),
+   { DisabledButtonCreator } = require("../util/ButtonCreator"),
+   { SelectMenuCreator, DisabledSelectMenuCreator } = require("../util/SelectMenuCreator"),
+   { ProgressBarCreator } = require("../util/ProgressBarCreator"),
+   { FilterCreator } = require("../util/FilterCreator");
 // Params
 /**
  * The Message pagination
  * @param {{
- *    portal: Message,
- *    pageList: EmbedBuilder[],
- *    buttonList: ButtonBuilder[],
+ *    portal: import("discord.js").Message,
+ *    pageList: import("discord.js").EmbedBuilder[],
+ *    buttonList: import("discord.js").ButtonBuilder[],
  *    pagination: null
  * }} paginationInfo
  * @param {{
@@ -38,7 +38,7 @@ const { FilterCreator } = require("../util/FilterCreator");
  *       useTitle: Boolean
  *    }
  * }} options
- * @returns {EmbedBuilder[]} The pagination
+ * @returns {import("discord.js").EmbedBuilder[]} The pagination
  */
 // Message pagination
 exports.MessagePagination = async(paginationInfo, options) => {
@@ -73,20 +73,20 @@ exports.MessagePagination = async(paginationInfo, options) => {
                      pageNumber = 0;
                      break;
                   }
-                  pageNumber = pageNumber > 0 ? --pageNumber : paginationInfo.pageList.length - 1;
+                  pageNumber = pageNumber > 0 ? pageNumber-- : paginationInfo.pageList.length - 1;
                   break;
                // Button 2
                case paginationInfo.buttonList[1].data.custom_id:
                   if (paginationInfo.buttonList.length > 3) {
-                     pageNumber = pageNumber > 0 ? --pageNumber : paginationInfo.pageList.length - 1;
+                     pageNumber = pageNumber > 0 ? pageNumber-- : paginationInfo.pageList.length - 1;
                      break;
                   }
-                  pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? ++pageNumber : 0;
+                  pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? +pageNumber++ : 0;
                   break;
                // Button 3
                case paginationInfo.buttonList[2].data.custom_id:
                   if (paginationInfo.buttonList.length > 3) {
-                     pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? ++pageNumber : 0;
+                     pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? pageNumber++ : 0;
                      break
                   }
                   pagination.delete();
@@ -110,7 +110,7 @@ exports.MessagePagination = async(paginationInfo, options) => {
                   break;
             }
             // Deferrer update
-            if (!i.deferred) await i.deferUpdate();
+            if (!i.deferred) {await i.deferUpdate();}
             // Edit page after input
             await i.editReply({
                embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(paginationInfo.pageList.length, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${paginationInfo.pageList.length}`}`})],
@@ -120,7 +120,7 @@ exports.MessagePagination = async(paginationInfo, options) => {
          // Select menu response
          else {
             // Deferrer update
-            if (!i.deferred) await i.deferUpdate();
+            if (!i.deferred) {await i.deferUpdate();}
             // Edit page after input
             pageNumber = i.values[0] - 1;
             await i.editReply({
@@ -149,18 +149,16 @@ exports.MessagePagination = async(paginationInfo, options) => {
                if (options.selectMenu.toggle) {
                   try {
                      return pagination.edit({ components: [await DisabledSelectMenuCreator(pagination.components[0])] });
-                  } catch(error) {}
+                  } catch(error) {return;}
                }
                // Disable buttons
                else {
                   try {
                      return pagination.edit({ components: [await DisabledButtonCreator(paginationInfo.buttonList)] });
-                  } catch (error) {return}
-               }               
+                  } catch (error) {return;}
+               }
             }
-         } catch(error) {return}
+         } catch(error) {return;}
       });
-   } catch(error) {
-      return console.log(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
-   }
+   } catch(error) {return console.log(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }

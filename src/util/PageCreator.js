@@ -54,9 +54,9 @@ const { EmbedBuilder } = require("discord.js");
  */
 exports.PageCreator = async(pageBuilderData) => {
    try {
-      let pageList = [];
+      const pageList = [];
       for (const page of pageBuilderData) {
-         if (!page) throw new Error("PageCreator ERROR: undefined page was passed into createPages");
+         if (!page) {throw new Error("PageCreator ERROR: undefined page was passed into createPages");}
          pageList.push(
             new EmbedBuilder({
                title: page.title,
@@ -68,10 +68,8 @@ exports.PageCreator = async(pageBuilderData) => {
                author: page.author,
                url: page.url
             })
-         )
+         );
       }
       return Promise.resolve(pageList);
-   } catch(error) {
-      return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);
-   }
+   } catch(error) {return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }

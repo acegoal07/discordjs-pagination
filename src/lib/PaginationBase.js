@@ -1,13 +1,13 @@
 // Dependencies
-const { MessagePayload, EmbedBuilder } = require("discord.js");
-const { InteractionPagination } = require("./InteractionPagination");
-const { MessagePagination } = require("./MessagePagination");
-const { AutoButtonCreator, ButtonCreator } = require("../util/ButtonCreator");
-const { PageCreator } = require("../util/PageCreator");
+const { MessagePayload } = require("discord.js"),
+   { InteractionPagination } = require("./InteractionPagination"),
+   { MessagePagination } = require("./MessagePagination"),
+   { AutoButtonCreator, ButtonCreator } = require("../util/ButtonCreator"),
+   { PageCreator } = require("../util/PageCreator");
 // Params
 /**
  * The function that prepares the required data and detects whether its a interaction or message pagination
- * @returns {Promise.<EmbedBuilder[]>}
+ * @returns {Promise.<import("discord.js").EmbedBuilder[]>}
  */
 // pagination
 exports.PaginationBase = async({
@@ -68,25 +68,25 @@ exports.PaginationBase = async({
             throw new Error("PaginationBase ERROR: Missing buttons");
          }
       }
-      if (options.selectMenu.toggle && (paginationInfo.buttonList || options.autoButton.toggle || options.autoButton.deleteButton)) process.emitWarning("PaginationBase WARNING: SelectMenu overwrites any button settings, remove all button settings to stop getting this message");
-      if (options.timeout < 3000) throw new Error("PaginationBase ERROR: You have set timeout less then 3000ms which is not allowed");
+      if (options.selectMenu.toggle && (paginationInfo.buttonList || options.autoButton.toggle || options.autoButton.deleteButton)) {process.emitWarning("PaginationBase WARNING: SelectMenu overwrites any button settings, remove all button settings to stop getting this message");}
+      if (options.timeout < 3000) {throw new Error("PaginationBase ERROR: You have set timeout less then 3000ms which is not allowed");}
       if (options.progressBar.toggle) {
-         if (options.progressBar.slider.length > 1) throw new Error("PaginationBase ERROR: You can only use 1 character to represent the progressBar slider");
-         if (options.progressBar.bar.length > 1) throw new Error("PaginationBase ERROR: You can only use 1 character to the progressBar");
+         if (options.progressBar.slider.length > 1) {throw new Error("PaginationBase ERROR: You can only use 1 character to represent the progressBar slider");}
+         if (options.progressBar.bar.length > 1) {throw new Error("PaginationBase ERROR: You can only use 1 character to the progressBar");}
       }
       if (!options.selectMenu.toggle) {
-         if (paginationInfo.buttonList.length < 2) throw new Error("PaginationBase ERROR: Need provide at least 2 buttons");
+         if (paginationInfo.buttonList.length < 2) {throw new Error("PaginationBase ERROR: Need provide at least 2 buttons");}
          if (paginationInfo.buttonList.length > 5) {
             process.emitWarning("PaginationBase WARNING: More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
             paginationInfo.buttonList = paginationInfo.buttonList.slice(0, 5);
          }
          for (const button of paginationInfo.buttonList) {
-            if (button.style === "LINK") throw new Error("PaginationBase ERROR: Link buttons are not supported please check what type of buttons you are using");
-            if (button.disabled) throw new Error("PaginationBase ERROR: You have provided buttons that are disabled these cant be used to turn pages, make sure the buttons you are trying to use are enabled");
+            if (button.style === "LINK") {throw new Error("PaginationBase ERROR: Link buttons are not supported please check what type of buttons you are using");}
+            if (button.disabled) {throw new Error("PaginationBase ERROR: You have provided buttons that are disabled these cant be used to turn pages, make sure the buttons you are trying to use are enabled");}
          }
       } else {
          if (!options.selectMenu.labels) {
-            let labelData = [];
+            const labelData = [];
             if (options.selectMenu.useTitle) {
                for (const page of paginationInfo.pageList) {
                   labelData.push(`${page.data.title}`);
@@ -94,7 +94,7 @@ exports.PaginationBase = async({
             } else {
                for (let i=0; i<paginationInfo.pageList.length + 1; i++) {
                   labelData.push(`Page ${i + 1}`);
-               }               
+               }
             }
             options.selectMenu.labels = labelData;
          }
@@ -125,8 +125,8 @@ exports.PaginationBase = async({
          return Promise.resolve(InteractionPagination(paginationInfo, options));
       }
       // Message + Checks
-      if (options.replyMessage && options.privateReply) process.emitWarning("PaginationBase WARNING: The privateReply setting overwrites and disables replyMessage setting");
-      if (!paginationInfo.portal.channel) throw new Error("PaginationBase ERROR: Channel is inaccessible");
+      if (options.replyMessage && options.privateReply) {process.emitWarning("PaginationBase WARNING: The privateReply setting overwrites and disables replyMessage setting");}
+      if (!paginationInfo.portal.channel) {throw new Error("PaginationBase ERROR: Channel is inaccessible");}
       if (paginationInfo.pageList.length < 2) {
          if (options.privateReply) {
             await paginationInfo.portal.channel.send("The reply has been sent privately");
@@ -137,7 +137,5 @@ exports.PaginationBase = async({
       }
       // Run
       return Promise.resolve(MessagePagination(paginationInfo, options));
-   } catch(error) {
-      return console.log(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`)
-   }
+   } catch(error) {return console.log(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }

@@ -1,11 +1,9 @@
-// Dependencies
-const { Message, Interaction, ButtonBuilder } = require("discord.js");
 /**
  * Crates the filter needed to interpret input for the pagination
  * @param {{
- *    message?: Message,
- *    interaction?: Interaction,
- *    buttonList: ButtonBuilder,
+ *    message?: import("discord.js").Message,
+ *    interaction?: import("discord.js").Interaction,
+ *    buttonList: import("discord.js").ButtonBuilder,
  *    authorIndependent: Boolean,
  *    selectMenu: {
  *       toggle: Boolean,
@@ -43,7 +41,5 @@ exports.FilterCreator = ({message, interaction, buttonList, authorIndependent, s
             !authorIndependent;
       }
       return filter;
-   } catch(error) {
-      throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);
-   }
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }

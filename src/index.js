@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
-const { Message, Interaction, EmbedBuilder, ButtonBuilder, MessagePayload } = require("discord.js");
-const { PaginationBase } = require("./lib/PaginationBase");
+const { MessagePayload } = require("discord.js"),
+   { PaginationBase } = require("./lib/PaginationBase");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -59,7 +59,7 @@ exports.Pagination = class {
    // Set portal
    /**
     * Sets the used portal for the pagination
-    * @param {Message | Interaction} portal
+    * @param {import("discord.js").Message | import("discord.js").Interaction} portal
     * @param {{
     *    interaction_ephemeral?: Boolean
     * }} settings
@@ -67,13 +67,11 @@ exports.Pagination = class {
     */
    setPortal(portal, settings = {interaction_ephemeral: false}) {
       // Portal already set
-      if (this.paginationInfo.portal) throw new Error("setInterface ERROR: The portal has already been set and can't be changed");
+      if (this.paginationInfo.portal) {throw new Error("setInterface ERROR: The portal has already been set and can't be changed");}
       // Missing portal
-      if (!portal) throw new Error("setInterface ERROR: The portal you have provided is invalid");
+      if (!portal) {throw new Error("setInterface ERROR: The portal you have provided is invalid");}
       // Set message portal
-      if (new MessagePayload(portal).isMessage) {
-         if (settings.interaction_ephemeral) throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");
-      }
+      if (new MessagePayload(portal).isMessage && settings.interaction_ephemeral) {throw process.emitWarning("setInterface WARNINGS: Ephemeral has no effect on none interaction paginations");}
       // Set other settings
       this.options.ephemeral = settings.interaction_ephemeral;
       // Set and return
@@ -83,14 +81,14 @@ exports.Pagination = class {
    // Set ButtonList
    /**
     * Set the buttonList for the paginationY
-    * @param {ButtonBuilder[]} buttonList
+    * @param {import("discord.js").ButtonBuilder[]} buttonList
     * @returns {exports.Pagination}
     */
    setButtonList(buttonList) {
       // Checks
-      if (!buttonList) throw new Error("setButtonList ERROR: The buttonList you have provided is empty");
-      if (typeof buttonList !== "object") throw new Error("setButtonList ERROR: The buttonList you have provided is not an object");
-      if (buttonList.length < 2) throw new Error("setButtonList ERROR: You need to provided a minimum of 2 buttons");
+      if (!buttonList) {throw new Error("setButtonList ERROR: The buttonList you have provided is empty");}
+      if (typeof buttonList !== "object") {throw new Error("setButtonList ERROR: The buttonList you have provided is not an object");}
+      if (buttonList.length < 2) {throw new Error("setButtonList ERROR: You need to provided a minimum of 2 buttons");}
       // Set and return
       this.paginationInfo.buttonList = buttonList;
       return this;
@@ -98,13 +96,13 @@ exports.Pagination = class {
    // Set pageList
    /**
     * Set the pageList for the pagination
-    * @param {EmbedBuilder[]} pageList
+    * @param {import("discord.js").EmbedBuilder[]} pageList
     * @returns {exports.Pagination}
     */
    setPageList(pageList) {
       // Checks
-      if (!pageList) throw new Error("setPageList ERROR: The pageList you have provided is empty");
-      if (typeof pageList !== "object") throw new Error("setPageList ERROR: The pageList you have provided is not an object");
+      if (!pageList) {throw new Error("setPageList ERROR: The pageList you have provided is empty");}
+      if (typeof pageList !== "object") {throw new Error("setPageList ERROR: The pageList you have provided is not an object");}
       // Set and return
       this.paginationInfo.pageList = pageList;
       return this;
@@ -116,14 +114,14 @@ exports.Pagination = class {
     */
    async paginate() {
       // Checks portal info exists
-      if (!this.paginationInfo.portal) throw new Error("paginate ERROR: You have not provided an portal to use");
+      if (!this.paginationInfo.portal) {throw new Error("paginate ERROR: You have not provided an portal to use");}
       // References
       const portalCheck = new MessagePayload(this.paginationInfo.portal);
       // Checks
-      if (!portalCheck.isInteraction && !portalCheck.isMessage) throw new Error("paginate ERROR: You have not provided an portal that can be used");
-      if (!this.paginationInfo.buttonList && !this.options.autoButton && !this.buttonBuilderData) throw new Error("paginate ERROR: You have not provided a buttonList to use");
-      if (!this.paginationInfo.pageList && !this.options.pageBuilderInfo) throw new Error("paginate ERROR: You have not provided a pageList to use");
-      if (portalCheck.isInteraction && this.options.replyMessage) process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");
+      if (!portalCheck.isInteraction && !portalCheck.isMessage) {throw new Error("paginate ERROR: You have not provided an portal that can be used");}
+      if (!this.paginationInfo.buttonList && !this.options.autoButton && !this.buttonBuilderData) {throw new Error("paginate ERROR: You have not provided a buttonList to use");}
+      if (!this.paginationInfo.pageList && !this.options.pageBuilderInfo) {throw new Error("paginate ERROR: You have not provided a pageList to use");}
+      if (portalCheck.isInteraction && this.options.replyMessage) {process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");}
       // Set and return
       this.paginationInfo.pagination = await PaginationBase(this);
       return this;
@@ -138,8 +136,8 @@ exports.Pagination = class {
     */
    setTimeout(timeout) {
       // Checks
-      if (timeout <= 3000) throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");
-      if (typeof timeout !== "number") throw new Error("setTimeout ERROR: The time provided is not a number");
+      if (timeout <= 3000) {throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");}
+      if (typeof timeout !== "number") {throw new Error("setTimeout ERROR: The time provided is not a number");}
       // Set and return
       if (!timeout) {
          process.emitWarning("setTimeout WARNING: You did not provide a timeout to set so it has defaulted to 12000ms");
@@ -159,10 +157,10 @@ exports.Pagination = class {
     */
    setProgressBar(settings = {slider: "▣", bar: "▢"}) {
       // Checks
-      if (typeof settings.slider !== "string") throw new Error("setProgressBar ERROR: The proSlider you have provided is not a string");
-      if (settings.slider.length > 1 || settings.slider.length < 1) throw new Error("setProgressBar ERROR: The proSlider must be 1 character");
-      if (typeof settings.bar !== "string") throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");
-      if (settings.bar.length > 1 || settings.bar.length < 1) throw new Error("setProgressBar ERROR: The proBar must be 1 character");
+      if (typeof settings.slider !== "string") {throw new Error("setProgressBar ERROR: The proSlider you have provided is not a string");}
+      if (settings.slider.length > 1 || settings.slider.length < 1) {throw new Error("setProgressBar ERROR: The proSlider must be 1 character");}
+      if (typeof settings.bar !== "string") {throw new Error("setProgressBar ERROR: The proBar you have provided is not a string");}
+      if (settings.bar.length > 1 || settings.bar.length < 1) {throw new Error("setProgressBar ERROR: The proBar must be 1 character");}
       // Set and return
       this.options.progressBar.toggle = true;
       this.options.progressBar.slider = settings.slider;
