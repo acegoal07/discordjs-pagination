@@ -64,11 +64,12 @@ exports.PaginationBase = async({
       if (paginationInfo.pageList && paginationInfo.imageList) {
          throw new Error("PaginationBase ERROR: A pageList and a imageList has been provided only one can at a time");
       }
+      const pageLength = options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length;
       if (!paginationInfo.buttonList && !options.selectMenu.toggle) {
          if (options.buttonBuilderData) {
             paginationInfo.buttonList = await ButtonCreator(options.buttonBuilderData);
          } else if (options.autoButton.toggle && !options.buttonBuilderData) {
-            paginationInfo.buttonList = await AutoButtonCreator(options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length, options.autoButton.deleteButton);
+            paginationInfo.buttonList = await AutoButtonCreator(pageLength, options.autoButton.deleteButton);
          } else {
             throw new Error("PaginationBase ERROR: Missing buttons");
          }
@@ -97,8 +98,7 @@ exports.PaginationBase = async({
                   labelData.push(`${page.data.title}`);
                }
             } else {
-               const number = options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length;
-               for (let i=0; i<number + 1; i++) {
+               for (let i=0; i<pageLength + 1; i++) {
                   labelData.push(`Page ${i + 1}`);
                }
             }
@@ -108,7 +108,7 @@ exports.PaginationBase = async({
       // Interaction
       if (new MessagePayload(paginationInfo.portal).isInteraction) {
          // Checks
-         if (options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length < 2) {
+         if (pageLength < 2) {
             if (options.privateReply) {
                await paginationInfo.portal.deferred ? await paginationInfo.portal.editReply("The reply has been sent privately") : await paginationInfo.portal.reply({ content: "The reply has been sent privately", ephemeral: options.ephemeral});
                return paginationInfo.portal.client.users.cache.get(paginationInfo.portal.member.user.id).send({embeds: [paginationInfo.pageList[0]]});
