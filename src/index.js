@@ -1,23 +1,22 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dependencies //////////////////////////////////////////////////////////////////////////////////////////////////////////
 const { MessagePayload } = require("discord.js"),
    { PaginationBase } = require("./lib/PaginationBase");
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.5.0
+ * @version 1.5.2
  * @author acegoal07
  */
 exports.Pagination = class {
    // Constructor
    constructor() {
-      // System settings 
+      // System settings
       this.paginationInfo = {
          // Interfaces
          portal: null,
          // Required inputs
          pageList: null,
+         imageList: null,
          buttonList: null,
          // Pagination
          pagination: null
@@ -32,6 +31,7 @@ exports.Pagination = class {
          authorIndependent: false,
          ephemeral: false,
          disabledButtons: true,
+         imageList: false,
          // BuilderData
          pageBuilderData: null,
          buttonBuilderData: null,
@@ -54,7 +54,6 @@ exports.Pagination = class {
          }
       }
    }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // Set portal
    /**
@@ -107,6 +106,21 @@ exports.Pagination = class {
       this.paginationInfo.pageList = pageList;
       return this;
    }
+   // Set imageList
+   /**
+    * Sets the imageList for the pagination
+    * @param {import("discord.js").AttachmentBuilder[]} imageList
+    * @returns {exports.Pagination}
+    */
+   setImageList(imageList) {
+      // Checks
+      if (!imageList) {throw new Error("setImageList ERROR: The imageList you have provided is empty");}
+      if (typeof imageList !== "object") {throw new Error("setImageList ERROR: The imageList you have provided is not an object");}
+      // Set and return
+      this.paginationInfo.imageList = imageList;
+      this.options.imageList = true;
+      return this;
+   }
    // Run pagination
    /**
     * Run the pagination
@@ -120,13 +134,12 @@ exports.Pagination = class {
       // Checks
       if (!portalCheck.isInteraction && !portalCheck.isMessage) {throw new Error("paginate ERROR: You have not provided an portal that can be used");}
       if (!this.paginationInfo.buttonList && !this.options.autoButton && !this.buttonBuilderData) {throw new Error("paginate ERROR: You have not provided a buttonList to use");}
-      if (!this.paginationInfo.pageList && !this.options.pageBuilderInfo) {throw new Error("paginate ERROR: You have not provided a pageList to use");}
+      if (!this.paginationInfo.pageList && !this.options.pageBuilderInfo && !this.options.imageList) {throw new Error("paginate ERROR: You have not provided a pageList to use");}
       if (portalCheck.isInteraction && this.options.replyMessage) {process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");}
       // Set and return
       this.paginationInfo.pagination = await PaginationBase(this);
       return this;
    }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Optional //////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // Set timeout time
    /**
@@ -228,13 +241,13 @@ exports.Pagination = class {
     * }} settings
     * @returns {exports.Pagination}
     */
-  enableSelectMenu(settings = {customLabels: null, useTitles: false}) {
-      // Set and return
-      this.options.selectMenu.toggle = true;
-      this.options.selectMenu.labels = settings.customLabels;
-      this.options.selectMenu.useTitle = settings.useTitles;
-      return this;
-  }
+   enableSelectMenu(settings = {customLabels: null, useTitles: false}) {
+         // Set and return
+         this.options.selectMenu.toggle = true;
+         this.options.selectMenu.labels = settings.customLabels;
+         this.options.selectMenu.useTitle = settings.useTitles;
+         return this;
+   }
    // Disable DisabledButtons
    /**
     * Disables the buttons being disabled and re applied to the pagination after the timeout ends
@@ -295,6 +308,7 @@ exports.Pagination = class {
     *       |  'DarkButNotBlack'
     *       |  'NotQuiteBlack'
     * }]} buildData
+    * @deprecated This function has been deprecated has it is not required
     * @returns {exports.Pagination}
     */
    createPages(buildData = [{
@@ -312,7 +326,7 @@ exports.Pagination = class {
             name: null,
             value: null,
             inline: false
-         },
+         }
       ],
       imageUrl: null,
       color: null
@@ -332,6 +346,7 @@ exports.Pagination = class {
     *       | "Danger",
     *    emoji?: String
     * }]} buildData
+    * @deprecated This function has been deprecated has it is not required
     * @returns {exports.Pagination}
     */
    createButtons(buildData = [{

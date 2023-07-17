@@ -11,6 +11,7 @@ const { ActionRowBuilder } = require("discord.js"),
  * @param {{
  *    portal: import("discord.js").Interaction,
  *    pageList: import("discord.js").EmbedBuilder[],
+ *    imageList: import("discord.js").AttachmentBuilder[],
  *    buttonList: import("discord.js").ButtonBuilder[],
  *    pagination: null
  * }} paginationInfo
@@ -24,6 +25,7 @@ const { ActionRowBuilder } = require("discord.js"),
  *    buttonBuilderData: Array<Object>,
  *    ephemeral: Boolean,
  *    disabledButtons: Boolean,
+ *    imageList: Boolean,
  *    autoButton: {
  *       toggle: Boolean,
  *       deleteButton: Boolean
@@ -46,11 +48,16 @@ exports.InteractionPagination = async(paginationInfo, options) => {
    try {
       // Set page number
       let pageNumber = 0;
+      const pageLength = options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length;
       // Create embed
-      const paginationContent = {
-         embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(paginationInfo.pageList.length, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${paginationInfo.pageList.length}`}`})],
-         components: [options.selectMenu.toggle ? await SelectMenuCreator(paginationInfo.pageList.length, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)], fetchReply: true
-      };
+      const paginationContent = options.imageList ?
+      {
+         files: [paginationInfo.imageList[pageNumber]],
+         components: [options.selectMenu.toggle ? await SelectMenuCreator(pageLength, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)], fetchReply: true
+      } : {
+         embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],
+         components: [options.selectMenu.toggle ? await SelectMenuCreator(pageLength, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)], fetchReply: true
+      }
       let pagination;
       if (options.privateReply) {
          paginationInfo.portal.deferred ? await paginationInfo.portal.editReply("The reply has been sent privately") : await paginationInfo.portal.reply("The reply has been sent privately");
@@ -76,27 +83,27 @@ exports.InteractionPagination = async(paginationInfo, options) => {
                      pageNumber = 0;
                      break;
                   }
-                  pageNumber = pageNumber > 0 ? --pageNumber : paginationInfo.pageList.length - 1;
+                  pageNumber = pageNumber > 0 ? --pageNumber : pageLength - 1;
                   break;
                // Button 2
                case paginationInfo.buttonList[1].data.custom_id:
                   if (paginationInfo.buttonList.length > 3) {
-                     pageNumber = pageNumber > 0 ? --pageNumber : paginationInfo.pageList.length - 1;
+                     pageNumber = pageNumber > 0 ? --pageNumber : pageLength - 1;
                      break;
                   }
-                  pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? ++pageNumber : 0;
+                  pageNumber = pageNumber + 1 < pageLength ? ++pageNumber : 0;
                   break;
                // Button 3
                case paginationInfo.buttonList[2].data.custom_id:
                   if (paginationInfo.buttonList.length > 3) {
-                     pageNumber = pageNumber + 1 < paginationInfo.pageList.length ? ++pageNumber : 0;
+                     pageNumber = pageNumber + 1 < pageLength ? ++pageNumber : 0;
                      break
                   }
                   pagination.delete();
                   return;
                // Button 4
                case paginationInfo.buttonList[3].data.custom_id:
-                  pageNumber = paginationInfo.pageList.length - 1 ;
+                  pageNumber = pageLength - 1 ;
                   break;
                // Button 5
                case paginationInfo.buttonList[4].data.custom_id:
@@ -114,10 +121,15 @@ exports.InteractionPagination = async(paginationInfo, options) => {
             }
             if (!i.deferred) {await i.deferUpdate();}
             // Edit page after input
-            await i.editReply({
-               embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(paginationInfo.pageList.length, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${paginationInfo.pageList.length}`}`})],
-               fetchReply: true
-            }).catch(error => {return console.log(error)});
+            await i.editReply(options.imageList ?
+               {
+                  files: [paginationInfo.imageList[pageNumber]],
+                  fetchReply: true
+               } : {
+                  embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],
+                  fetchReply: true
+               }
+            ).catch(error => {return console.log(error)});
          }
          // Select menu response
          else {
@@ -125,10 +137,15 @@ exports.InteractionPagination = async(paginationInfo, options) => {
             if (!i.deferred) {await i.deferUpdate();}
             // Edit page after input
             pageNumber = i.values[0] - 1 ;
-            await i.editReply({
-               embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(paginationInfo.pageList.length, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${paginationInfo.pageList.length}`}`})],
-               fetchReply: true
-            }).catch(error => {return console.log(error)});
+            await i.editReply(options.imageList ?
+               {
+                  files: [paginationInfo.imageList[pageNumber]],
+                  fetchReply: true
+               } : {
+                  embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],
+                  fetchReply: true
+               }
+            ).catch(error => {return console.log(error)});
          }
          // Refresh timeout timer
          collector.resetTimer();
