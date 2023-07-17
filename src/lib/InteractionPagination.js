@@ -103,7 +103,7 @@ exports.InteractionPagination = async(paginationInfo, options) => {
                   return;
                // Button 4
                case paginationInfo.buttonList[3].data.custom_id:
-                  pageNumber = pageLength - 1 ;
+                  pageNumber = pageLength - 1;
                   break;
                // Button 5
                case paginationInfo.buttonList[4].data.custom_id:

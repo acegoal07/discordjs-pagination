@@ -97,7 +97,8 @@ exports.PaginationBase = async({
                   labelData.push(`${page.data.title}`);
                }
             } else {
-               for (let i=0; i<options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length + 1; i++) {
+               const number = options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length;
+               for (let i=0; i<number + 1; i++) {
                   labelData.push(`Page ${i + 1}`);
                }
             }
