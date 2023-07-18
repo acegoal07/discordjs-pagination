@@ -69,7 +69,7 @@ exports.InteractionPagination = async(paginationInfo, options) => {
       }
       // Create collector
       const collector = await pagination.createMessageComponentCollector({
-         filter: FilterCreator({interaction: paginationInfo.portal, buttonList: paginationInfo.buttonList, authorIndependent: options.authorIndependent, selectMenu: options.selectMenu}),
+         filter: FilterCreator({interaction: paginationInfo.portal, buttonList: paginationInfo.buttonList, authorIndependent: options.authorIndependent, selectMenu: options.selectMenu.toggle}),
          time: options.timeout
       });
       // Button inputs

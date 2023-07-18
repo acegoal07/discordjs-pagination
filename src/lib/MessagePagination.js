@@ -66,7 +66,7 @@ exports.MessagePagination = async(paginationInfo, options) => {
       }
       // Create collector
       const collector = pagination.createMessageComponentCollector({
-         filter: FilterCreator({message: paginationInfo.portal, buttonList: paginationInfo.buttonList, authorIndependent: options.authorIndependent, selectMenu: options.selectMenu}),
+         filter: FilterCreator({message: paginationInfo.portal, buttonList: paginationInfo.buttonList, authorIndependent: options.authorIndependent, selectMenu: options.selectMenu.toggle}),
          time: options.timeout
       });
       // Button inputs
