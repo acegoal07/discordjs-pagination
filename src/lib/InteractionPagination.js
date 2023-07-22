@@ -158,7 +158,7 @@ exports.InteractionPagination = async(paginationInfo, options) => {
             // Delete if autoDelete in enabled
             if (options.autoDelete) {return pagination.delete();}
             // No disabled buttons
-            if (!options.disabledButtons) {return paginationInfo.portal.editReply({ components: [await DisabledSelectMenuCreator(pagination.components[0])] });}
+            if (!options.disabledButtons) {return pagination.editReply({ components: [] });}
             // Disable buttons or select menu
             try {
                return pagination.editReply(options.selectMenu.toggle ?
@@ -167,8 +167,8 @@ exports.InteractionPagination = async(paginationInfo, options) => {
                   } : {
                      components: [await DisabledButtonCreator(paginationInfo.buttonList)]
                   }
-               ).catch(error => {return console.log(error)});
-            } catch(error) {return;}
+               );
+            } catch(error) {return console.log(error);}
          } catch(error) {return;}
       });
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}

@@ -152,21 +152,21 @@ exports.MessagePagination = async(paginationInfo, options) => {
       collector.once("end", async() => {
          try {
             // Make sure the embed exists
-            await paginationInfo.portal.channel.messages.fetch(pagination.id);
+            await paginationInfo.portal.channel.messages.fetch({message: pagination.id});
             // Delete if autoDelete in enabled
             if (options.autoDelete) {return pagination.delete();}
             // No disabled buttons
             if (!options.disabledButtons) {return pagination.edit({ components: [] });}
             // Disable buttons or select menu
             try {
-               return pagination.editReply(options.selectMenu.toggle ?
+               return pagination.edit(options.selectMenu.toggle ?
                   {
                      components: [await DisabledSelectMenuCreator(pagination.components[0])]
                   } : {
                      components: [await DisabledButtonCreator(paginationInfo.buttonList)]
                   }
-               ).catch(error => {return console.log(error)});
-            } catch(error) {return;}
+               );
+            } catch(error) {return console.log(error);}
          } catch(error) {return;}
       });
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
