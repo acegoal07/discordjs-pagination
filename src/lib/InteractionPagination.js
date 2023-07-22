@@ -159,19 +159,17 @@ exports.InteractionPagination = async(paginationInfo, options) => {
             if (options.autoDelete) {return pagination.delete();}
             // No disabled buttons
             if (!options.disabledButtons) {return paginationInfo.portal.editReply({ components: [await DisabledSelectMenuCreator(pagination.components[0])] });}
-            // Disable select menu
-            if (options.selectMenu.toggle) {
-               try {
-                  return paginationInfo.portal.editReply({ components: [await DisabledSelectMenuCreator(pagination.components[0])] });
-               } catch(error) {return;}
-            }
-            // Disable buttons
-            else {
-               try {
-                  return paginationInfo.portal.editReply({ components: [await DisabledButtonCreator(paginationInfo.buttonList)] });
-               } catch (error) {return;}
-            }
+            // Disable buttons or select menu
+            try {
+               return pagination.editReply(options.selectMenu.toggle ?
+                  {
+                     components: [await DisabledSelectMenuCreator(pagination.components[0])]
+                  } : {
+                     components: [await DisabledButtonCreator(paginationInfo.buttonList)]
+                  }
+               ).catch(error => {return console.log(error)});
+            } catch(error) {return;}
          } catch(error) {return;}
       });
-   } catch(error) {return console.log(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }

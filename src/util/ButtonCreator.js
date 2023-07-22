@@ -44,9 +44,7 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
       }
       if (autoDelButton) {buttonList.push(del);}
       return Promise.resolve(buttonList);
-   } catch(error) {
-      return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`);
-   }
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`);}
 }
 // ButtonCreator params
 /**
@@ -80,9 +78,7 @@ exports.ButtonCreator = async(buttonBuilderData) => {
          );
       }
       return Promise.resolve(buttonList);
-   } catch(error) {
-      return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function ButtonCreator ${error}`);
-   }
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function ButtonCreator ${error}`);}
 }
 // DisabledButtonCreator params
 /**
@@ -106,5 +102,5 @@ exports.DisabledButtonCreator = async(buttonList) => {
          );
       }
       return Promise.resolve(new ActionRowBuilder().addComponents(disabledButtonList));
-   } catch(error) {return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`);}
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`);}
 }

@@ -71,5 +71,5 @@ exports.PageCreator = async(pageBuilderData) => {
          );
       }
       return Promise.resolve(pageList);
-   } catch(error) {return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }

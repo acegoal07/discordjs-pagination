@@ -154,28 +154,20 @@ exports.MessagePagination = async(paginationInfo, options) => {
             // Make sure the embed exists
             await paginationInfo.portal.channel.messages.fetch(pagination.id);
             // Delete if autoDelete in enabled
-            if (options.autoDelete) {
-               return pagination.delete();
-            }
+            if (options.autoDelete) {return pagination.delete();}
             // No disabled buttons
-            else if (!options.disabledButtons) {
-               return pagination.edit({ components: [] });
-            }
-            else {
-               // Disable select menu
-               if (options.selectMenu.toggle) {
-                  try {
-                     return pagination.edit({ components: [await DisabledSelectMenuCreator(pagination.components[0])] });
-                  } catch(error) {return;}
-               }
-               // Disable buttons
-               else {
-                  try {
-                     return pagination.edit({ components: [await DisabledButtonCreator(paginationInfo.buttonList)] });
-                  } catch (error) {return;}
-               }
-            }
+            if (!options.disabledButtons) {return pagination.edit({ components: [] });}
+            // Disable buttons or select menu
+            try {
+               return pagination.editReply(options.selectMenu.toggle ?
+                  {
+                     components: [await DisabledSelectMenuCreator(pagination.components[0])]
+                  } : {
+                     components: [await DisabledButtonCreator(paginationInfo.buttonList)]
+                  }
+               ).catch(error => {return console.log(error)});
+            } catch(error) {return;}
          } catch(error) {return;}
       });
-   } catch(error) {return console.log(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }

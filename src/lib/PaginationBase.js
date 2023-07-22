@@ -154,5 +154,5 @@ exports.PaginationBase = async({
       }
       // Run
       return Promise.resolve(MessagePagination(paginationInfo, options));
-   } catch(error) {return console.log(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }

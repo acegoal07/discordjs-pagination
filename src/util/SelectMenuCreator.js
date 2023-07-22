@@ -28,9 +28,7 @@ exports.SelectMenuCreator = async(pageListLength, labels) => {
                .addOptions(optionArray)
          )
       );
-   } catch(error) {
-      return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function selectMenuCreator ${error}`);
-   }
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function selectMenuCreator ${error}`);}
 }
 // Select menu disabler
 /**
@@ -50,7 +48,5 @@ exports.DisabledSelectMenuCreator = async(actionRow) => {
                .addOptions(actionRow.components[0].data.options)
          )
       );
-   } catch(error) {
-      return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function disabledSelectMenuCreator ${error}`)
-   }
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function disabledSelectMenuCreator ${error}`);}
 }

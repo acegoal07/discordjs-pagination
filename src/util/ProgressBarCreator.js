@@ -16,5 +16,5 @@ exports.ProgressBarCreator = async (pageListLength, pageNumber, progressBar) => 
       const emptyProgressText = progressBar.bar.repeat(pageListLength - (pageNumber + 1));
       // Create bar
       return Promise.resolve(`[${progressText+emptyProgressText}] : Page ${pageNumber + 1}`);
-   } catch(error) {return Promise.reject(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
+   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
 }
