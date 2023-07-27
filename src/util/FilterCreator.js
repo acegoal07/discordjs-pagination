@@ -3,7 +3,7 @@
  * @param {{
  *    message?: import("discord.js").Message,
  *    interaction?: import("discord.js").Interaction,
- *    buttonList: import("discord.js").ButtonBuilder,
+ *    buttonList: import("discord.js").ButtonBuilder[],
  *    authorIndependent: Boolean,
  *    selectMenu: {
  *       toggle: Boolean,
@@ -16,12 +16,7 @@
 exports.FilterCreator = ({message, interaction, buttonList, authorIndependent, selectMenu}) => {
    try {
       // Get author
-      let authorID;
-      if (typeof message === "object") {
-         authorID = message.author.id;
-      } else {
-         authorID = interaction.user.id || interaction.member.user.id;
-      }
+      const authorID = typeof message === "object" ? message.author.id : interaction.user.id || interaction.member.user.id;
       let filter;
       if (selectMenu) {
          // Create select menu filter

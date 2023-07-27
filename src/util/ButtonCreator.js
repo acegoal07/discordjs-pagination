@@ -5,7 +5,7 @@ const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
  * Sends back a list of buttons to be used
  * @param {Number} pageListLength
  * @param {Boolean} autoDelButton
- * @returns {Promise.<import("discord.js").buttonList[]>}
+ * @returns {Promise.<import("discord.js").ButtonBuilder[]>}
  */
 exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
    // Pre-made buttons
@@ -36,12 +36,7 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
       .setCustomId(`delbtn`);
    // Function code
    try {
-      let buttonList = [];
-      if (pageListLength <= 3) {
-         buttonList = [previous, next];
-      } else {
-         buttonList = [first, previous, next, last];
-      }
+      const buttonList = pageListLength <= 3 ? [previous, next] : [first, previous, next, last];
       if (autoDelButton) {buttonList.push(del);}
       return Promise.resolve(buttonList);
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`);}
@@ -58,7 +53,7 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
  *       | "Danger",
  *    emoji?: String
  * }]} buttonBuilderData
- * @returns {Promise.<import("discord.js").buttonList[]>}
+ * @returns {Promise.<import("discord.js").ButtonBuilder[]>}
  */
 exports.ButtonCreator = async(buttonBuilderData) => {
    try {

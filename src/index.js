@@ -54,7 +54,6 @@ exports.Pagination = class {
          }
       }
    }
-// Required //////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // Set portal
    /**
     * Sets the used portal for the pagination
@@ -140,7 +139,6 @@ exports.Pagination = class {
       this.paginationInfo.pagination = await PaginationBase(this);
       return this;
    }
-// Optional //////////////////////////////////////////////////////////////////////////////////////////////////////////////
    // Set timeout time
    /**
     * How many milliseconds your pagination will run for
