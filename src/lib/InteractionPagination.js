@@ -53,10 +53,14 @@ exports.InteractionPagination = async(paginationInfo, options) => {
       const paginationContent = options.imageList ?
       {
          files: [paginationInfo.imageList[pageNumber]],
-         components: [options.selectMenu.toggle ? await SelectMenuCreator(pageLength, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)], fetchReply: true
+         components: [options.selectMenu.toggle ? await SelectMenuCreator(pageLength, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)],
+         fetchReply: true,
+         ephemeral: options.ephemeral
       } : {
          embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],
-         components: [options.selectMenu.toggle ? await SelectMenuCreator(pageLength, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)], fetchReply: true
+         components: [options.selectMenu.toggle ? await SelectMenuCreator(pageLength, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)],
+         fetchReply: true,
+         ephemeral: options.ephemeral
       }
       let pagination;
       if (options.privateReply) {
@@ -153,12 +157,13 @@ exports.InteractionPagination = async(paginationInfo, options) => {
       // Timeout ended or embed was deleted
       collector.once("end", async() => {
          try {
+            if (paginationInfo.portal.ephemeral) {return;}
             // Make sure the embed exists
             await paginationInfo.portal.channel.messages.fetch({message: pagination.id});
             // Delete if autoDelete in enabled
             if (options.autoDelete) {return pagination.delete();}
             // No disabled buttons
-            if (!options.disabledButtons) {return pagination.edit({ components: [] });}
+            if (!options.disabledButtons) {return pagination.edit({components: []});}
             // Disable buttons or select menu
             try {
                return pagination.edit(options.selectMenu.toggle ?

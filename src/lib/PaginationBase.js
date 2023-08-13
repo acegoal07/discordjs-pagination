@@ -110,10 +110,10 @@ exports.PaginationBase = async({
          // Checks
          if (pageLength < 2) {
             if (options.privateReply) {
-               await paginationInfo.portal.deferred ? await paginationInfo.portal.editReply("The reply has been sent privately") : await paginationInfo.portal.reply({ content: "The reply has been sent privately", ephemeral: options.ephemeral});
+               await paginationInfo.portal.deferred ? await paginationInfo.portal.editReply("The reply has been sent privately") : await paginationInfo.portal.reply({content: "The reply has been sent privately", ephemeral: options.ephemeral});
                return paginationInfo.portal.client.users.cache.get(paginationInfo.portal.member.user.id).send({embeds: [paginationInfo.pageList[0]]});
             } else {
-               return paginationInfo.portal.deferred ? await paginationInfo.portal.editReply({embeds: [paginationInfo.pageList[0]]}) : await paginationInfo.portal.reply({embeds: [paginationInfo.pageList[0]]});
+               return paginationInfo.portal.deferred ? await paginationInfo.portal.editReply({embeds: [paginationInfo.pageList[0]]}) : await paginationInfo.portal.reply({embeds: [paginationInfo.pageList[0]], ephemeral: options.ephemeral});
             }
          }
          if (paginationInfo.portal.ephemeral) {

@@ -156,7 +156,7 @@ exports.MessagePagination = async(paginationInfo, options) => {
             // Delete if autoDelete in enabled
             if (options.autoDelete) {return pagination.delete();}
             // No disabled buttons
-            if (!options.disabledButtons) {return pagination.edit({ components: [] });}
+            if (!options.disabledButtons) {return pagination.edit({components: []});}
             // Disable buttons or select menu
             try {
                return pagination.edit(options.selectMenu.toggle ?
