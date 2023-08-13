@@ -158,10 +158,10 @@ exports.InteractionPagination = async(paginationInfo, options) => {
             // Delete if autoDelete in enabled
             if (options.autoDelete) {return pagination.delete();}
             // No disabled buttons
-            if (!options.disabledButtons) {return pagination.editReply({ components: [] });}
+            if (!options.disabledButtons) {return pagination.edit({ components: [] });}
             // Disable buttons or select menu
             try {
-               return pagination.editReply(options.selectMenu.toggle ?
+               return pagination.edit(options.selectMenu.toggle ?
                   {
                      components: [await DisabledSelectMenuCreator(pagination.components[0])]
                   } : {
