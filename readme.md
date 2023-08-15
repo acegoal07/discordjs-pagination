@@ -17,7 +17,7 @@
 ---
 
 <h1 id="about">About</h1>
-This pagination supports both Message and Interaction and automaticity switches between which interface is provided, It also adjusts multiple things about the pagination depending on the data that's provided making it very customisable and user friendly<br><br>
+This pagination supports both Message and Interaction this is all handled by the package which works out which method to use depending on which interface is provided, It also adjusts multiple settings and attributes about the function as it goes on depending on information provided making it easy to use and very customisable
 
 ### To download the package use
 ```sh
