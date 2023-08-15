@@ -75,7 +75,6 @@ exports.PaginationBase = async({
          }
       }
       if (options.selectMenu.toggle && (paginationInfo.buttonList || options.autoButton.toggle || options.autoButton.deleteButton)) {process.emitWarning("PaginationBase WARNING: SelectMenu overwrites any button settings, remove all button settings to stop getting this message");}
-      if (options.timeout < 3000) {throw new Error("PaginationBase ERROR: You have set timeout less then 3000ms which is not allowed");}
       if (options.progressBar.toggle) {
          if (options.progressBar.slider.length > 1) {throw new Error("PaginationBase ERROR: You can only use 1 character to represent the progressBar slider");}
          if (options.progressBar.bar.length > 1) {throw new Error("PaginationBase ERROR: You can only use 1 character to the progressBar");}
@@ -119,9 +118,6 @@ exports.PaginationBase = async({
          if (paginationInfo.portal.ephemeral) {
             if (paginationInfo.buttonList.length === 3 || paginationInfo.buttonList.length === 5) {
                throw new Error("PaginationBase ERROR: Delete buttons are not supported by embeds with ephemeral enabled");
-            }
-            if (options.autoDelete) {
-               throw new Error("PaginationBase ERROR: Auto delete is not supported by embeds with ephemeral enabled");
             }
             if (options.ephemeral) {
                process.emitWarning("PaginationBase WARNING: The interaction already has ephemeral enable meaning the pagination does not require the setting enabled");

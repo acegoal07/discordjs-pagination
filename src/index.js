@@ -4,7 +4,7 @@ const { MessagePayload } = require("discord.js"),
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.5.4
+ * @version 1.5.6
  * @author acegoal07
  */
 exports.Pagination = class {
@@ -147,7 +147,7 @@ exports.Pagination = class {
     */
    setTimeout(timeout) {
       // Checks
-      if (timeout <= 3000) {throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");}
+      if (timeout < 3000) {throw new Error("setTimeout ERROR: The time set can't be less than 3000ms");}
       if (typeof timeout !== "number") {throw new Error("setTimeout ERROR: The time provided is not a number");}
       // Set and return
       if (!timeout) {

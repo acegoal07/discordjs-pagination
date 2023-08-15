@@ -157,17 +157,15 @@ exports.InteractionPagination = async(paginationInfo, options) => {
       // Timeout ended or embed was deleted
       collector.once("end", async() => {
          try {
-            // Checks whether ephemeral is enabled and exists if it is
-            if (paginationInfo.portal.ephemeral) {return;}
             // Make sure the embed exists
             await paginationInfo.portal.channel.messages.fetch({message: pagination.id});
             // Delete if autoDelete in enabled
-            if (options.autoDelete) {return pagination.delete();}
+            if (options.autoDelete) {return paginationInfo.portal.deleteReply()}
             // No disabled buttons
-            if (!options.disabledButtons) {return pagination.edit({components: []});}
+            if (!options.disabledButtons) {return paginationInfo.portal.editReply({components: []});}
             // Disable buttons or select menu
             try {
-               return pagination.edit(options.selectMenu.toggle ?
+               return paginationInfo.portal.editReply(options.selectMenu.toggle ?
                   {
                      components: [await DisabledSelectMenuCreator(pagination.components[0])]
                   } : {
