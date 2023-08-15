@@ -157,6 +157,7 @@ exports.InteractionPagination = async(paginationInfo, options) => {
       // Timeout ended or embed was deleted
       collector.once("end", async() => {
          try {
+            // Checks whether ephemeral is enabled and exists if it is
             if (paginationInfo.portal.ephemeral) {return;}
             // Make sure the embed exists
             await paginationInfo.portal.channel.messages.fetch({message: pagination.id});
