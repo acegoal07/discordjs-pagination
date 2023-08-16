@@ -101,7 +101,7 @@ exports.InteractionPagination = async(paginationInfo, options) => {
                case paginationInfo.buttonList[2].data.custom_id:
                   if (paginationInfo.buttonList.length > 3) {
                      pageNumber = pageNumber + 1 < pageLength ? ++pageNumber : 0;
-                     break
+                     break;
                   }
                   pagination.delete();
                   return;
@@ -140,7 +140,7 @@ exports.InteractionPagination = async(paginationInfo, options) => {
             // Deferrer update
             if (!i.deferred) {await i.deferUpdate();}
             // Edit page after input
-            pageNumber = i.values[0] - 1 ;
+            pageNumber = i.values[0] - 1;
             await i.editReply(options.imageList ?
                {
                   files: [paginationInfo.imageList[pageNumber]],
@@ -160,19 +160,17 @@ exports.InteractionPagination = async(paginationInfo, options) => {
             // Make sure the embed exists
             await paginationInfo.portal.channel.messages.fetch({message: pagination.id});
             // Delete if autoDelete in enabled
-            if (options.autoDelete) {return paginationInfo.portal.deleteReply()}
+            if (options.autoDelete) {return paginationInfo.portal.deleteReply().catch(error => {return console.log(error)});}
             // No disabled buttons
-            if (!options.disabledButtons) {return paginationInfo.portal.editReply({components: []});}
+            if (!options.disabledButtons) {return paginationInfo.portal.editReply({components: []}).catch(error => {return console.log(error)});}
             // Disable buttons or select menu
-            try {
-               return paginationInfo.portal.editReply(options.selectMenu.toggle ?
-                  {
-                     components: [await DisabledSelectMenuCreator(pagination.components[0])]
-                  } : {
-                     components: [await DisabledButtonCreator(paginationInfo.buttonList)]
-                  }
-               );
-            } catch(error) {return console.log(error);}
+            return paginationInfo.portal.editReply(options.selectMenu.toggle ?
+               {
+                  components: [await DisabledSelectMenuCreator(pagination.components[0])]
+               } : {
+                  components: [await DisabledButtonCreator(paginationInfo.buttonList)]
+               }
+            ).catch(error => {console.log(error)});
          } catch(error) {return;}
       });
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}

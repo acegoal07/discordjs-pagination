@@ -96,7 +96,7 @@ exports.MessagePagination = async(paginationInfo, options) => {
                case paginationInfo.buttonList[2].data.custom_id:
                   if (paginationInfo.buttonList.length > 3) {
                      pageNumber = pageNumber + 1 < pageLength ? ++pageNumber : 0;
-                     break
+                     break;
                   }
                   pagination.delete();
                   return;
@@ -154,21 +154,19 @@ exports.MessagePagination = async(paginationInfo, options) => {
       collector.once("end", async() => {
          try {
             // Make sure the embed exists
-            await paginationInfo.portal.channel.messages.fetch({message: pagination.id});
+            (await paginationInfo.portal.channel.messages.fetch({message: pagination.id}));
             // Delete if autoDelete in enabled
-            if (options.autoDelete) {return pagination.delete();}
+            if (options.autoDelete) {return pagination.delete().catch(error => {return console.log(error)});}
             // No disabled buttons
-            if (!options.disabledButtons) {return pagination.edit({components: []});}
+            if (!options.disabledButtons) {return pagination.edit({components: []}).catch(error => {return console.log(error)});}
             // Disable buttons or select menu
-            try {
-               return pagination.edit(options.selectMenu.toggle ?
-                  {
-                     components: [await DisabledSelectMenuCreator(pagination.components[0])]
-                  } : {
-                     components: [await DisabledButtonCreator(paginationInfo.buttonList)]
-                  }
-               );
-            } catch(error) {return console.log(error);}
+            return pagination.edit(options.selectMenu.toggle ?
+               {
+                  components: [await DisabledSelectMenuCreator(pagination.components[0])]
+               } : {
+                  components: [await DisabledButtonCreator(paginationInfo.buttonList)]
+               }
+            ).catch(error => {console.log(error)});
          } catch(error) {return;}
       });
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
