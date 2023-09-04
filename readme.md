@@ -20,8 +20,13 @@
 This pagination supports both Message and Interaction this is all handled by the package which works out which method to use depending on which interface is provided, It also adjusts multiple settings and attributes about the function as it goes on depending on information provided making it easy to use and very customisable
 
 ### To download the package use
+npm
 ```sh
 npm i @acegoal07/discordjs-pagination
+```
+yarn
+```sh
+yarn add @acegoal07/discordjs-pagination
 ```
 
 If your interested in supporting my projects you can find donation options <a href="https://acegoal07.dev/donate">here</a>
