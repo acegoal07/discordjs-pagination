@@ -41,40 +41,6 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
       return Promise.resolve(buttonList);
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`);}
 }
-// ButtonCreator params
-/**
- * Sends back a list of custom buttons
- * @param {[{
- *    customId: String,
- *    label?: String,
- *    style: "Primary"
- *       | "Secondary"
- *       | "Success"
- *       | "Danger",
- *    emoji?: String
- * }]} buttonBuilderData
- * @returns {Promise.<import("discord.js").ButtonBuilder[]>}
- */
-exports.ButtonCreator = async(buttonBuilderData) => {
-   try {
-      const buttonList = []
-      for (const button of buttonBuilderData) {
-         // Check for info
-         if (!button.customId) {throw new Error("ButtonCreator ERROR: The custom id for the button must be provided");}
-         if (!button.setStyle) {throw new Error("ButtonCreator ERROR: The style for the button must be provided");}
-         // Create button
-         buttonList.push(
-            new ButtonBuilder({
-               custom_id: button.customId,
-               style: button.setStyle,
-               label: button.label,
-               emoji: button.emoji
-            })
-         );
-      }
-      return Promise.resolve(buttonList);
-   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function ButtonCreator ${error}`);}
-}
 // DisabledButtonCreator params
 /**
  * @param {ButtonBuilder[]} buttonList - An array of the buttons
