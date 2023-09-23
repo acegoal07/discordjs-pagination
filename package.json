@@ -32,7 +32,7 @@
     "build+publish": "npm run build && cd dist && npm publish",
     "buildTypes": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
     "tscBuild": "npx tsc",
-    "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist && xcopy /y .npmrc dist"
+    "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
   },
   "publishConfig": {
     "access": "public"
