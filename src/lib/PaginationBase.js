@@ -28,8 +28,6 @@ exports.PaginationBase = async({
       autoDelete: false,
       privateReply: false,
       authorIndependent: false,
-      pageBuilderData: null,
-      buttonBuilderData: null,
       disabledButtons: true,
       imageList: false,
       ephemeral: false,
@@ -55,20 +53,14 @@ exports.PaginationBase = async({
    try {
       // Checks
       if (!paginationInfo.pageList && !paginationInfo.imageList) {
-         if (options.pageBuilderData) {
-            paginationInfo.pageList = await PageCreator(options.pageBuilderData);
-         } else {
-            throw new Error("PaginationBase ERROR: Missing pages or images");
-         }
+         throw new Error("PaginationBase ERROR: Missing pages or images");
       }
       if (paginationInfo.pageList && paginationInfo.imageList) {
          throw new Error("PaginationBase ERROR: A pageList and a imageList has been provided only one can at a time");
       }
       const pageLength = options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length;
       if (!paginationInfo.buttonList && !options.selectMenu.toggle) {
-         if (options.buttonBuilderData) {
-            paginationInfo.buttonList = await ButtonCreator(options.buttonBuilderData);
-         } else if (options.autoButton.toggle && !options.buttonBuilderData) {
+         if (options.autoButton.toggle) {
             paginationInfo.buttonList = await AutoButtonCreator(pageLength, options.autoButton.deleteButton);
          } else {
             throw new Error("PaginationBase ERROR: Missing buttons");

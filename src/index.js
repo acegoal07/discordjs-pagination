@@ -4,7 +4,7 @@ const { MessagePayload } = require("discord.js"),
 // Wrapper ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.5.6
+ * @version 1.5.7
  * @author acegoal07
  */
 exports.Pagination = class {
@@ -32,9 +32,6 @@ exports.Pagination = class {
          ephemeral: false,
          disabledButtons: true,
          imageList: false,
-         // BuilderData
-         pageBuilderData: null,
-         buttonBuilderData: null,
          // AutoButton settings
          autoButton: {
             toggle: false,
@@ -132,7 +129,7 @@ exports.Pagination = class {
       const portalCheck = new MessagePayload(this.paginationInfo.portal);
       // Checks
       if (!portalCheck.isInteraction && !portalCheck.isMessage) {throw new Error("paginate ERROR: You have not provided an portal that can be used");}
-      if (!this.paginationInfo.buttonList && !this.options.autoButton && !this.buttonBuilderData) {throw new Error("paginate ERROR: You have not provided a buttonList to use");}
+      if (!this.paginationInfo.buttonList && !this.options.autoButton) {throw new Error("paginate ERROR: You have not provided a buttonList to use");}
       if (!this.paginationInfo.pageList && !this.options.pageBuilderInfo && !this.options.imageList) {throw new Error("paginate ERROR: You have not provided a pageList to use");}
       if (portalCheck.isInteraction && this.options.replyMessage) {process.emitWarning("paginate WARNING: replyMessage can't be used by an interaction pagination");}
       // Set and return
@@ -253,107 +250,6 @@ exports.Pagination = class {
     */
    disableDisabledButtons() {
       this.options.disabledButtons = false;
-      return this;
-   }
-   // Page creator
-   /**
-    * Allows you to use the pagination to create the pages for the pagination
-    * @param {[{
-    *    title?: String,
-    *    url?: String,
-    *    author?: {
-    *       name: String,
-    *       icon_url?: String,
-    *       url?: String
-    *    },
-    *    description?: String,
-    *    thumbnailUrl?: String,
-    *    fields?: [{
-    *       name: String,
-    *       value: String,
-    *       inline?: Boolean
-    *    }],
-    *    imageUrl?: String,
-    *    color?: 'Default'
-    *       |  'Random'
-    *       |  'White'
-    *       |  'Aqua'
-    *       |  'Green'
-    *       |  'Blue'
-    *       |  'Yellow'
-    *       |  'Purple'
-    *       |  'LuminousVividPink'
-    *       |  'Fuchsia'
-    *       |  'Gold'
-    *       |  'Orange'
-    *       |  'Red'
-    *       |  'Grey'
-    *       |  'Navy'
-    *       |  'DarkAqua'
-    *       |  'DarkGreen'
-    *       |  'DarkBlue'
-    *       |  'DarkPurple'
-    *       |  'DarkVividPink'
-    *       |  'DarkGold'
-    *       |  'DarkOrange'
-    *       |  'DarkRed'
-    *       |  'DarkGrey'
-    *       |  'DarkerGrey'
-    *       |  'LightGrey'
-    *       |  'DarkNavy'
-    *       |  'Blurple'
-    *       |  'Greyple'
-    *       |  'DarkButNotBlack'
-    *       |  'NotQuiteBlack'
-    * }]} buildData
-    * @deprecated This function has been deprecated has it is not required
-    * @returns {exports.Pagination}
-    */
-   createPages(buildData = [{
-	   title: null,
-      url: null,
-      author: {
-         name: null,
-         icon_url: null,
-         url: null
-      },
-      description: null,
-      thumbnailUrl: null,
-      fields: [
-         {
-            name: null,
-            value: null,
-            inline: false
-         }
-      ],
-      imageUrl: null,
-      color: null
-   }]) {
-      this.options.pageBuilderData = buildData;
-      return this;
-   }
-   // Button creator
-   /**
-    * Allows you to use the pagination to create the buttons for the pagination
-    * @param {[{
-    *    customId: String,
-    *    label?: String,
-    *    style: "Primary"
-    *       | "Secondary"
-    *       | "Success"
-    *       | "Danger",
-    *    emoji?: String
-    * }]} buildData
-    * @deprecated This function has been deprecated has it is not required
-    * @returns {exports.Pagination}
-    */
-   createButtons(buildData = [{
-      customId: null,
-      label: null,
-      style: null,
-      emoji: null
-   }]) {
-      this.options.buttonBuilderData = buildData;
       return this;
    }
 }
