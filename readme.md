@@ -29,9 +29,9 @@ yarn
 yarn add @acegoal07/discordjs-pagination
 ```
 
-If your interested in supporting my projects you can find donation options <a href="https://acegoal07.dev/donate">here</a>
-
 ### Addition info
 The interaction pagination supports deferred interactions but you do not need to defer the interaction yourself as the pagination does it automatically if it is not deferred
 
 You can find information on how to use this package on the github wiki which can be found <a href="https://github.com/acegoal07/discordjs-pagination/wiki">here</a>
+
+If your interested in supporting my projects you can find donation options <a href="https://acegoal07.dev/donate">here</a>
