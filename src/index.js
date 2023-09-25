@@ -81,8 +81,8 @@ exports.Pagination = class {
     */
    setButtonList(buttonList) {
       // Checks
-      if (!buttonList) {throw new Error("setButtonList ERROR: The buttonList you have provided is empty");}
       if (typeof buttonList !== "object") {throw new Error("setButtonList ERROR: The buttonList you have provided is not an object");}
+      if (!buttonList || buttonList.length === 0) {throw new Error("setButtonList ERROR: The buttonList you have provided is empty");}
       if (buttonList.length < 2) {throw new Error("setButtonList ERROR: You need to provided a minimum of 2 buttons");}
       // Set and return
       this.paginationInfo.buttonList = buttonList;
@@ -96,8 +96,8 @@ exports.Pagination = class {
     */
    setPageList(pageList) {
       // Checks
-      if (!pageList) {throw new Error("setPageList ERROR: The pageList you have provided is empty");}
       if (typeof pageList !== "object") {throw new Error("setPageList ERROR: The pageList you have provided is not an object");}
+      if (!pageList || pageList.length === 0) {throw new Error("setPageList ERROR: The pageList you have provided is empty");}
       // Set and return
       this.paginationInfo.pageList = pageList;
       return this;
@@ -110,8 +110,8 @@ exports.Pagination = class {
     */
    setImageList(imageList) {
       // Checks
-      if (!imageList) {throw new Error("setImageList ERROR: The imageList you have provided is empty");}
       if (typeof imageList !== "object") {throw new Error("setImageList ERROR: The imageList you have provided is not an object");}
+      if (!imageList || imageList.length === 0) {throw new Error("setImageList ERROR: The imageList you have provided is empty");}
       // Set and return
       this.paginationInfo.imageList = imageList;
       this.options.imageList = true;

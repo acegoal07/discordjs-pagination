@@ -51,7 +51,6 @@ exports.DisabledButtonCreator = async(buttonList) => {
       let count = 0;
       const disabledButtonList = [];
       for (const button of buttonList) {
-         count += 1;
          disabledButtonList.push(
             new ButtonBuilder({
                emoji: button.data.emoji,
@@ -61,6 +60,7 @@ exports.DisabledButtonCreator = async(buttonList) => {
                disabled: true
             })
          );
+         count += 1;
       }
       return Promise.resolve(new ActionRowBuilder().addComponents(disabledButtonList));
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`);}

@@ -2,8 +2,7 @@
 const { MessagePayload } = require("discord.js"),
    { InteractionPagination } = require("./InteractionPagination"),
    { MessagePagination } = require("./MessagePagination"),
-   { AutoButtonCreator, ButtonCreator } = require("../util/ButtonCreator"),
-   { PageCreator } = require("../util/PageCreator");
+   { AutoButtonCreator } = require("../util/ButtonCreator");
 // Params
 /**
  * The function that prepares the required data and detects whether its a interaction or message pagination

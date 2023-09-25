@@ -18,7 +18,7 @@ exports.FilterCreator = ({message, interaction, buttonList, authorIndependent, s
       // Get author
       const authorID = typeof message === "object" ? message.author.id : interaction.user.id || interaction.member.user.id;
       let filter;
-      if (selectMenu) {
+      if (selectMenu.toggle) {
          // Create select menu filter
          filter = (i) =>
             (i.isStringSelectMenu()) &&
