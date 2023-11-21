@@ -51,7 +51,6 @@ exports.Pagination = class {
          }
       }
    }
-   // Set portal
    /**
     * Sets the used portal for the pagination
     * @param {import("discord.js").Message | import("discord.js").Interaction} portal
@@ -73,7 +72,6 @@ exports.Pagination = class {
       this.paginationInfo.portal = portal;
       return this;
    }
-   // Set ButtonList
    /**
     * Set the buttonList for the paginationY
     * @param {import("discord.js").ButtonBuilder[]} buttonList
@@ -88,7 +86,6 @@ exports.Pagination = class {
       this.paginationInfo.buttonList = buttonList;
       return this;
    }
-   // Set pageList
    /**
     * Set the pageList for the pagination
     * @param {import("discord.js").EmbedBuilder[]} pageList
@@ -102,7 +99,6 @@ exports.Pagination = class {
       this.paginationInfo.pageList = pageList;
       return this;
    }
-   // Set imageList
    /**
     * Sets the imageList for the pagination
     * @param {import("discord.js").AttachmentBuilder[]} imageList
@@ -117,7 +113,6 @@ exports.Pagination = class {
       this.options.imageList = true;
       return this;
    }
-   // Run pagination
    /**
     * Run the pagination
     * @returns {exports.Pagination}
@@ -136,7 +131,6 @@ exports.Pagination = class {
       this.paginationInfo.pagination = await PaginationBase(this);
       return this;
    }
-   // Set timeout time
    /**
     * How many milliseconds your pagination will run for
     * @param {Number} timeout
@@ -154,7 +148,6 @@ exports.Pagination = class {
       }
       return this;
    }
-   // Set progressBar
    /**
     * Allows you to enable and edit a progressBar for your pagination
     * @param {{
@@ -175,7 +168,6 @@ exports.Pagination = class {
       this.options.progressBar.bar = settings.bar;
       return this;
    }
-   // Set replyMessage
    /**
     * Enables replyMessage for your pagination
     * @returns {exports.Pagination}
@@ -185,7 +177,6 @@ exports.Pagination = class {
       this.options.replyMessage = true;
       return this;
    }
-   // Set autoDelete
    /**
     * Enables autoDelete for your pagination
     * @returns {exports.Pagination}
@@ -195,7 +186,6 @@ exports.Pagination = class {
       this.options.autoDelete = true;
       return this;
    }
-   // Set privateReply
    /**
     * Enables privateReply for your pagination
     * @returns {exports.Pagination}
@@ -205,7 +195,6 @@ exports.Pagination = class {
       this.options.privateReply = true;
       return this;
    }
-   // Set authorIndependent
    /**
     * Enables authorIndependent for your pagination
     * @returns {exports.Pagination}
@@ -215,7 +204,6 @@ exports.Pagination = class {
       this.options.authorIndependent = true;
       return this;
    }
-   // Set autoButton
    /**
     * Enables autoButton for your pagination
     * @param {Boolean} deleteButton
@@ -227,7 +215,6 @@ exports.Pagination = class {
       this.options.autoButton.deleteButton = deleteButton;
       return this;
    }
-   // Set selectMenu
    /**
     * Enables selectMenu for your pagination
     * @param {{
@@ -243,7 +230,6 @@ exports.Pagination = class {
          this.options.selectMenu.useTitle = settings.useTitles;
          return this;
    }
-   // Disable DisabledButtons
    /**
     * Disables the buttons being disabled and re applied to the pagination after the timeout ends
     * @returns {exports.Pagination}

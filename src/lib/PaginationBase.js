@@ -70,7 +70,19 @@ exports.PaginationBase = async({
          if (options.progressBar.slider.length > 1) {throw new Error("PaginationBase ERROR: You can only use 1 character to represent the progressBar slider");}
          if (options.progressBar.bar.length > 1) {throw new Error("PaginationBase ERROR: You can only use 1 character to the progressBar");}
       }
-      if (!options.selectMenu.toggle) {
+      if (options.selectMenu.toggle && !options.selectMenu.labels) {
+         const labelData = [];
+         if (options.selectMenu.useTitle) {
+            for (const page of paginationInfo.pageList) {
+               labelData.push(`${page.data.title}`);
+            }
+         } else {
+            for (let i=0; i<pageLength + 1; i++) {
+               labelData.push(`Page ${i + 1}`);
+            }
+         }
+         options.selectMenu.labels = labelData;
+      } else {
          if (paginationInfo.buttonList.length < 2) {throw new Error("PaginationBase ERROR: Need provide at least 2 buttons");}
          if (paginationInfo.buttonList.length > 5) {
             process.emitWarning("PaginationBase WARNING: More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
@@ -80,20 +92,6 @@ exports.PaginationBase = async({
             if (button.style === "LINK") {throw new Error("PaginationBase ERROR: Link buttons are not supported please check what type of buttons you are using");}
             if (button.disabled) {throw new Error("PaginationBase ERROR: You have provided buttons that are disabled these cant be used to turn pages, make sure the buttons you are trying to use are enabled");}
          }
-      } else {
-         if (!options.selectMenu.labels) {
-            const labelData = [];
-            if (options.selectMenu.useTitle) {
-               for (const page of paginationInfo.pageList) {
-                  labelData.push(`${page.data.title}`);
-               }
-            } else {
-               for (let i=0; i<pageLength + 1; i++) {
-                  labelData.push(`Page ${i + 1}`);
-               }
-            }
-            options.selectMenu.labels = labelData;
-         }
       }
       // Interaction
       if (new MessagePayload(paginationInfo.portal).isInteraction) {
@@ -101,9 +99,29 @@ exports.PaginationBase = async({
          if (pageLength < 2) {
             if (options.privateReply) {
                await paginationInfo.portal.deferred ? await paginationInfo.portal.editReply("The reply has been sent privately") : await paginationInfo.portal.reply({content: "The reply has been sent privately", ephemeral: options.ephemeral});
-               return paginationInfo.portal.client.users.cache.get(paginationInfo.portal.member.user.id).send({embeds: [paginationInfo.pageList[0]]});
+               return paginationInfo.portal.client.users.cache.get(paginationInfo.portal.member.user.id).send(options.imageList ?
+                  {
+                     files: [paginationInfo.imageList[0]]
+                  } : {
+                     embeds: [paginationInfo.pageList[0]]
+                  }
+               );
             } else {
-               return paginationInfo.portal.deferred ? await paginationInfo.portal.editReply({embeds: [paginationInfo.pageList[0]]}) : await paginationInfo.portal.reply({embeds: [paginationInfo.pageList[0]], ephemeral: options.ephemeral});
+               return paginationInfo.portal.deferred ? await paginationInfo.portal.editReply(options.imageList ?
+                  {
+                     files: [paginationInfo.imageList[0]]
+                  } : {
+                     embeds: [paginationInfo.pageList[0]]
+                  }
+               ) : await paginationInfo.portal.reply(options.imageList ?
+                  {
+                     files: [paginationInfo.imageList[0]],
+                     ephemeral: options.ephemeral
+                  } : {
+                     embeds: [paginationInfo.pageList[0]],
+                     ephemeral: options.ephemeral
+                  }
+               );
             }
          }
          if (paginationInfo.portal.ephemeral) {
@@ -120,23 +138,30 @@ exports.PaginationBase = async({
       // Message + Checks
       if (options.replyMessage && options.privateReply) {process.emitWarning("PaginationBase WARNING: The privateReply setting overwrites and disables replyMessage setting");}
       if (!paginationInfo.portal.channel) {throw new Error("PaginationBase ERROR: Channel is inaccessible");}
-      if (options.imageList) {
-         if (paginationInfo.imageList < 2) {
-            if (options.privateReply) {
-               await paginationInfo.portal.channel.send("The reply has been sent privately");
-               return paginationInfo.portal.author.send({embeds: [paginationInfo.imageList[0]]});
-            } else {
-               return options.replyMessage ? paginationInfo.portal.reply({embeds: [paginationInfo.imageList[0]]}) : paginationInfo.portal.channel.send({embeds: [paginationInfo.imageList[0]]});
-            }
-         }
-      } else {
-         if (paginationInfo.pageList.length < 2) {
-            if (options.privateReply) {
-               await paginationInfo.portal.channel.send("The reply has been sent privately");
-               return paginationInfo.portal.author.send({embeds: [paginationInfo.pageList[0]]});
-            } else {
-               return options.replyMessage ? paginationInfo.portal.reply({embeds: [paginationInfo.pageList[0]]}) : paginationInfo.portal.channel.send({embeds: [paginationInfo.pageList[0]]});
-            }
+      if (pageLength < 2) {
+         if (options.privateReply) {
+            await paginationInfo.portal.channel.send("The reply has been sent privately");
+            return paginationInfo.portal.author.send(options.imageList ?
+               {
+                  files: [paginationInfo.imageList[0]]
+               } : {
+                  embeds: [paginationInfo.pageList[0]]
+               }
+            );
+         } else {
+            return options.replyMessage ? paginationInfo.portal.reply(options.imageList ?
+               {
+                  files: [paginationInfo.imageList[0]]
+               } : {
+                  embeds: [paginationInfo.pageList[0]]
+               }
+            ) : paginationInfo.portal.channel.send(options.imageList ?
+               {
+                  files: [paginationInfo.imageList[0]]
+               } : {
+                  embeds: [paginationInfo.pageList[0]]
+               }
+            );
          }
       }
       // Run

@@ -119,8 +119,8 @@ exports.MessagePagination = async(paginationInfo, options) => {
             // Deferrer update
             if (!i.deferred) {await i.deferUpdate();}
             // Edit page after input
-            await i.editReply(
-               options.imageList ? {
+            await i.editReply(options.imageList ?
+               {
                   files: [paginationInfo.imageList[pageNumber]],
                   fetchReply: true
                } : {
@@ -135,8 +135,8 @@ exports.MessagePagination = async(paginationInfo, options) => {
             if (!i.deferred) {await i.deferUpdate();}
             // Edit page after input
             pageNumber = i.values[0] - 1;
-            await i.editReply(
-               options.imageList ? {
+            await i.editReply(options.imageList ?
+               {
                   files: [paginationInfo.imageList[pageNumber]],
                   fetchReply: true
                } : {
