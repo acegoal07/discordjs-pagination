@@ -1,6 +1,5 @@
 // Dependencies
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
-// AutoButton params
 /**
  * Sends back a list of buttons to be used
  * @param {Number} pageListLength
@@ -41,8 +40,8 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
       return Promise.resolve(buttonList);
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`);}
 }
-// DisabledButtonCreator params
 /**
+ * Sends back a list of disabled buttons to be used
  * @param {ButtonBuilder[]} buttonList - An array of the buttons
  * @returns {Promise.<import("discord.js").ActionRowBuilder[]>}
  */

@@ -40,7 +40,6 @@ const { ActionRowBuilder } = require("discord.js"),
  * }} options
  * @returns {import("discord.js").EmbedBuilder[]} The pagination
  */
-// Message pagination
 exports.MessagePagination = async(paginationInfo, options) => {
    try {
       // Set page number

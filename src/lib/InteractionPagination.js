@@ -7,7 +7,6 @@ const { ActionRowBuilder } = require("discord.js"),
 // Params
 /**
  * The interaction pagination
- *
  * @param {{
  *    portal: import("discord.js").Interaction,
  *    pageList: import("discord.js").EmbedBuilder[],
@@ -41,7 +40,6 @@ const { ActionRowBuilder } = require("discord.js"),
  * }} options
  * @returns {import("discord.js").EmbedBuilder[]} The pagination
  */
-// Interaction pagination
 exports.InteractionPagination = async(paginationInfo, options) => {
    try {
       // Set page number

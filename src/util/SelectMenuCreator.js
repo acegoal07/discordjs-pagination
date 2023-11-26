@@ -1,6 +1,5 @@
 // Dependencies
 const { StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
-// Select menu builder
 /**
  * Creates a select menu to be used as a way to interact with the pagination
  * @param {Number} pageListLength An array of the embeds
@@ -30,7 +29,6 @@ exports.SelectMenuCreator = async(pageListLength, labels) => {
       );
    } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function selectMenuCreator ${error}`);}
 }
-// Select menu disabler
 /**
  * Creates a disabled select menu
  * @param {import("discord.js").ActionRowBuilder[]} actionRow
