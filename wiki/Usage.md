@@ -4,6 +4,7 @@
 * <a href="#setButtonList">`setButtonList`</a> - This is used to set the buttons to be used by the pagination
 * <a href="#setPageList">`setPageList`</a> - This is used to set the pages used in the pagination
 * <a href="#setImageList">`setImageList`</a> - This is used to set the images used for the pagination 
+* <a href="#setAttachmentList"> `setAttachmentList`</a> - This is used to set the attachment list for the embeds
 * <a href="#paginate">`paginate`</a> - This is used run the pagination
 
 ***
@@ -107,6 +108,28 @@ const imageList = [
 .setImageList([
    new AttachmentBuilder("url"),
    new AttachmentBuilder("path")
+])
+```
+
+***
+## `setAttachmentList`
+> This is used to set the attachment list for the embed that can then be used for images
+
+**Parameters**
+* `attachmentList`
+
+**Example**
+```js
+// Using const
+const attachmentList = [
+   new AttachmentBuilder(`img1.jpg`),
+   new AttachmentBuilder(`img2.jpg`)
+]
+.setAttachmentList(attachmentList)
+// Inline
+.setAttachmentList([
+   new AttachmentBuilder(`img1.jpg`),
+   new AttachmentBuilder(`img2.jpg`)
 ])
 ```
 

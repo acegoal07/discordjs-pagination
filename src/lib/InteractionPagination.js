@@ -12,6 +12,7 @@ const { ActionRowBuilder } = require("discord.js"),
  *    pageList: import("discord.js").EmbedBuilder[],
  *    imageList: import("discord.js").AttachmentBuilder[],
  *    buttonList: import("discord.js").ButtonBuilder[],
+ *    attachmentList: import("discord.js").AttachmentBuilder[],
  *    pagination: null
  * }} paginationInfo
  * @param {{
@@ -49,6 +50,12 @@ exports.InteractionPagination = async(paginationInfo, options) => {
       const paginationContent = options.imageList ?
       {
          files: [paginationInfo.imageList[pageNumber]],
+         components: [options.selectMenu.toggle ? await SelectMenuCreator(pageLength, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)],
+         fetchReply: true,
+         ephemeral: options.ephemeral
+      } : paginationInfo.attachmentList !== null ? {
+         embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],
+         files: [paginationInfo.attachmentList[pageNumber] !== null ? paginationInfo.attachmentList[pageNumber] : null],
          components: [options.selectMenu.toggle ? await SelectMenuCreator(pageLength, options.selectMenu.labels) : new ActionRowBuilder().addComponents(paginationInfo.buttonList)],
          fetchReply: true,
          ephemeral: options.ephemeral
@@ -125,7 +132,11 @@ exports.InteractionPagination = async(paginationInfo, options) => {
                {
                   files: [paginationInfo.imageList[pageNumber]],
                   fetchReply: true
-               } : {
+               } : paginationInfo.attachmentList !== null ? {
+                  embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],
+                  files: [paginationInfo.attachmentList[pageNumber] !== null ? paginationInfo.attachmentList[pageNumber] : null],
+                  fetchReply: true
+               } :{
                   embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],
                   fetchReply: true
                }
@@ -140,6 +151,10 @@ exports.InteractionPagination = async(paginationInfo, options) => {
             await i.editReply(options.imageList ?
                {
                   files: [paginationInfo.imageList[pageNumber]],
+                  fetchReply: true
+               } : paginationInfo.attachmentList !== null ? {
+                  embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],
+                  files: [paginationInfo.attachmentList[pageNumber] !== null ? paginationInfo.attachmentList[pageNumber] : null],
                   fetchReply: true
                } : {
                   embeds: [paginationInfo.pageList[pageNumber].setFooter({text: `${options.progressBar.toggle ? `${await ProgressBarCreator(pageLength, pageNumber, options.progressBar)}` : `Page ${pageNumber + 1} / ${pageLength}`}`})],

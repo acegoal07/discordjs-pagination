@@ -17,6 +17,7 @@ exports.PaginationBase = async({
       pageList: null,
       imageList: null,
       buttonList: null,
+      attachmentList: null,
       // Pagination
       pagination: null
    },
@@ -102,6 +103,9 @@ exports.PaginationBase = async({
                return paginationInfo.portal.client.users.cache.get(paginationInfo.portal.member.user.id).send(options.imageList ?
                   {
                      files: [paginationInfo.imageList[0]]
+                  } : paginationInfo.attachmentList !== null ? {
+                     embeds: [paginationInfo.pageList[0]],
+                     files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
                   } : {
                      embeds: [paginationInfo.pageList[0]]
                   }
@@ -110,12 +114,19 @@ exports.PaginationBase = async({
                return paginationInfo.portal.deferred ? await paginationInfo.portal.editReply(options.imageList ?
                   {
                      files: [paginationInfo.imageList[0]]
+                  } : paginationInfo.attachmentList !== null ? {
+                     embeds: [paginationInfo.pageList[0]],
+                     files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
                   } : {
                      embeds: [paginationInfo.pageList[0]]
                   }
                ) : await paginationInfo.portal.reply(options.imageList ?
                   {
                      files: [paginationInfo.imageList[0]],
+                     ephemeral: options.ephemeral
+                  } : paginationInfo.attachmentList !== null ? {
+                     embeds: [paginationInfo.pageList[0]],
+                     files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null],
                      ephemeral: options.ephemeral
                   } : {
                      embeds: [paginationInfo.pageList[0]],
@@ -144,6 +155,9 @@ exports.PaginationBase = async({
             return paginationInfo.portal.author.send(options.imageList ?
                {
                   files: [paginationInfo.imageList[0]]
+               } : paginationInfo.attachmentList !== null ? {
+                  embeds: [paginationInfo.pageList[0]],
+                  files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
                } : {
                   embeds: [paginationInfo.pageList[0]]
                }
@@ -152,12 +166,18 @@ exports.PaginationBase = async({
             return options.replyMessage ? paginationInfo.portal.reply(options.imageList ?
                {
                   files: [paginationInfo.imageList[0]]
+               } : paginationInfo.attachmentList !== null ? {
+                  embeds: [paginationInfo.pageList[0]],
+                  files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
                } : {
                   embeds: [paginationInfo.pageList[0]]
                }
             ) : paginationInfo.portal.channel.send(options.imageList ?
                {
                   files: [paginationInfo.imageList[0]]
+               } : paginationInfo.attachmentList !== null ? {
+                  embeds: [paginationInfo.pageList[0]],
+                  files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
                } : {
                   embeds: [paginationInfo.pageList[0]]
                }

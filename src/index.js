@@ -18,6 +18,7 @@ exports.Pagination = class {
          pageList: null,
          imageList: null,
          buttonList: null,
+         attachmentList: null,
          // Pagination
          pagination: null
       }
@@ -111,6 +112,19 @@ exports.Pagination = class {
       // Set and return
       this.paginationInfo.imageList = imageList;
       this.options.imageList = true;
+      return this;
+   }
+   /**
+    * Sets the attachmentList for the pagination
+    * @param {import("discord.js").AttachmentBuilder[]} attachmentList
+    * @returns {exports.Pagination}
+    */
+   setAttachmentList(attachmentList) {
+      // Checks
+      if (typeof attachmentList !== "object") {throw new Error("setAttachmentList ERROR: The attachmentList you have provided is not an object");}
+      if (!attachmentList || attachmentList.length === 0) {throw new Error("setAttachmentList ERROR: The attachmentList you have provided is empty");}
+      // Set and return
+      this.paginationInfo.attachmentList = attachmentList;
       return this;
    }
    /**

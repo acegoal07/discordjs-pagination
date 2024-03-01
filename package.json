@@ -1,6 +1,6 @@
 {
   "name": "@acegoal07/discordjs-pagination",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "description": "A simple pagination for Discord.js",
   "main": "index",
   "types": "types",
@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
   "dependencies": {
-    "discord.js": "^14.7.1"
+    "discord.js": "^14.7.1",
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "build": "npm run buildTypes && npm run tscBuild && npm run copyFiles",

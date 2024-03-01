@@ -18,6 +18,7 @@
 .setPageList()
 .setImageList()
 .setButtonList()
+.setAttachmentList()
 .setTimeout()
 .setProgressBar()
 .enableReplyMessage()
