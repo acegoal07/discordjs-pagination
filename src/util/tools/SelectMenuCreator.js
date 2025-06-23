@@ -6,7 +6,7 @@ const { StringSelectMenuBuilder, ActionRowBuilder } = require("discord.js");
  * @param {Array<String>} labels An array of labels
  * @returns {Promise.<import("discord.js").ActionRowBuilder[]>}
  */
-exports.SelectMenuCreator = async(pageListLength, labels) => {
+exports.SelectMenuCreator = async (pageListLength, labels) => {
    try {
       // Options creator
       const optionArray = [];
@@ -27,14 +27,14 @@ exports.SelectMenuCreator = async(pageListLength, labels) => {
                .addOptions(optionArray)
          )
       );
-   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function selectMenuCreator ${error}`);}
+   } catch (error) { throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js", "")} function selectMenuCreator ${error}`); }
 }
 /**
  * Creates a disabled select menu
  * @param {import("discord.js").ActionRowBuilder[]} actionRow
  * @returns {Promise.<import("discord.js").ActionRowBuilder[]>}
  */
-exports.DisabledSelectMenuCreator = async(actionRow) => {
+exports.DisabledSelectMenuCreator = async (actionRow) => {
    try {
       // Select menu builder
       return Promise.resolve(
@@ -46,5 +46,5 @@ exports.DisabledSelectMenuCreator = async(actionRow) => {
                .addOptions(actionRow.components[0].data.options)
          )
       );
-   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function disabledSelectMenuCreator ${error}`);}
+   } catch (error) { throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js", "")} function disabledSelectMenuCreator ${error}`); }
 }

@@ -1,76 +1,60 @@
 // Dependencies
-const { MessagePayload } = require("discord.js"),
+const { MessageFlags } = require("discord.js"),
    { InteractionPagination } = require("./InteractionPagination"),
    { MessagePagination } = require("./MessagePagination"),
-   { AutoButtonCreator } = require("../util/ButtonCreator");
-// Params
+   { AutoButtonCreator } = require("../util/tools/ButtonCreator");
+
 /**
- * The function that prepares the required data and detects whether its a interaction or message pagination
+ * The function that prepares the required data and detects whether it's an interaction or message pagination
+ * @param {{
+ *    paginationInfo: import("../util/typedef/paginationInfo").PaginationInfo,
+ *    options: import("../util/typedef/paginationOptions").PaginationOptions
+ * }} params
  * @returns {Promise.<import("discord.js").EmbedBuilder[]>}
  */
-// pagination
-exports.PaginationBase = async({
-   paginationInfo = {
-      // Interfaces
-      portal: null,
-      // Required inputs
-      pageList: null,
-      imageList: null,
-      buttonList: null,
-      attachmentList: null,
-      // Pagination
-      pagination: null
-   },
-   options = {
-      // General options
-      timeout: 12000,
-      replyMessage: false,
-      autoDelete: false,
-      privateReply: false,
-      authorIndependent: false,
-      disabledButtons: true,
-      imageList: false,
-      ephemeral: false,
-      // AutoButton settings
-      autoButton: {
-         toggle: false,
-         deleteButton: false
-      },
-      // ProgressBar settings
-      progressBar: {
-         toggle: false,
-         slider: "▣",
-         bar: "▢"
-      },
-      // SelectMenu settings
-      selectMenu: {
-         toggle: false,
-         labels: [],
-         useTitle: false
-      }
-   }
-}) => {
+exports.PaginationBase = async ({ paginationInfo, options }) => {
    try {
-      // Checks
+      // Validate required inputs
       if (!paginationInfo.pageList && !paginationInfo.imageList) {
-         throw new Error("PaginationBase ERROR: Missing pages or images");
+         throw new Error("PaginationBase ERROR: You must provide either a pageList or an imageList.");
       }
       if (paginationInfo.pageList && paginationInfo.imageList) {
-         throw new Error("PaginationBase ERROR: A pageList and a imageList has been provided only one can at a time");
+         throw new Error("PaginationBase ERROR: Provide only one of pageList or imageList, not both.");
       }
-      const pageLength = options.imageList ? paginationInfo.imageList.length : paginationInfo.pageList.length;
+
+      const pageLength = options.imageList
+         ? paginationInfo.imageList.length
+         : paginationInfo.pageList.length;
+
+      // Button/SelectMenu setup
       if (!paginationInfo.buttonList && !options.selectMenu.toggle) {
          if (options.autoButton.toggle) {
             paginationInfo.buttonList = await AutoButtonCreator(pageLength, options.autoButton.deleteButton);
          } else {
-            throw new Error("PaginationBase ERROR: Missing buttons");
+            throw new Error("PaginationBase ERROR: You must provide a buttonList or enable selectMenu/autoButton.");
          }
       }
-      if (options.selectMenu.toggle && (paginationInfo.buttonList || options.autoButton.toggle || options.autoButton.deleteButton)) {process.emitWarning("PaginationBase WARNING: SelectMenu overwrites any button settings, remove all button settings to stop getting this message");}
-      if (options.progressBar.toggle) {
-         if (options.progressBar.slider.length > 1) {throw new Error("PaginationBase ERROR: You can only use 1 character to represent the progressBar slider");}
-         if (options.progressBar.bar.length > 1) {throw new Error("PaginationBase ERROR: You can only use 1 character to the progressBar");}
+
+      if (
+         options.selectMenu.toggle &&
+         (paginationInfo.buttonList || options.autoButton.toggle || options.autoButton.deleteButton)
+      ) {
+         process.emitWarning(
+            "PaginationBase WARNING: selectMenu overwrites any button settings. Remove all button settings to stop this warning."
+         );
       }
+
+      // ProgressBar validation
+      if (options.progressBar.toggle) {
+         if (typeof options.progressBar.slider !== "string" || options.progressBar.slider.length !== 1) {
+            throw new Error("PaginationBase ERROR: The progressBar slider must be a single character string.");
+         }
+         if (typeof options.progressBar.bar !== "string" || options.progressBar.bar.length !== 1) {
+            throw new Error("PaginationBase ERROR: The progressBar bar must be a single character string.");
+         }
+      }
+
+      // SelectMenu label setup
       if (options.selectMenu.toggle && !options.selectMenu.labels) {
          const labelData = [];
          if (options.selectMenu.useTitle) {
@@ -78,113 +62,116 @@ exports.PaginationBase = async({
                labelData.push(`${page.data.title}`);
             }
          } else {
-            for (let i=0; i<pageLength + 1; i++) {
+            for (let i = 0; i < pageLength; i++) {
                labelData.push(`Page ${i + 1}`);
             }
          }
          options.selectMenu.labels = labelData;
-      } else {
-         if (paginationInfo.buttonList.length < 2) {throw new Error("PaginationBase ERROR: Need provide at least 2 buttons");}
+      } else if (paginationInfo.buttonList) {
+         if (paginationInfo.buttonList.length < 2) {
+            throw new Error("PaginationBase ERROR: You must provide at least 2 buttons.");
+         }
          if (paginationInfo.buttonList.length > 5) {
-            process.emitWarning("PaginationBase WARNING: More than 5 buttons have been provided the extras will be removed, remove the extra buttons from the buttonList to stop getting this message");
+            process.emitWarning(
+               "PaginationBase WARNING: More than 5 buttons provided. Extras will be removed."
+            );
             paginationInfo.buttonList = paginationInfo.buttonList.slice(0, 5);
          }
          for (const button of paginationInfo.buttonList) {
-            if (button.style === "LINK") {throw new Error("PaginationBase ERROR: Link buttons are not supported please check what type of buttons you are using");}
-            if (button.disabled) {throw new Error("PaginationBase ERROR: You have provided buttons that are disabled these cant be used to turn pages, make sure the buttons you are trying to use are enabled");}
+            if (button.style === "LINK") {
+               throw new Error("PaginationBase ERROR: Link buttons are not supported.");
+            }
+            if (button.disabled) {
+               throw new Error("PaginationBase ERROR: Provided buttons must not be disabled.");
+            }
          }
       }
-      // Interaction
-      if (new MessagePayload(paginationInfo.portal).isInteraction) {
-         // Checks
+
+      // Interaction Pagination
+      if (paginationInfo.portal?.constructor?.name?.endsWith('Interaction')) {
          if (pageLength < 2) {
             if (options.privateReply) {
-               await paginationInfo.portal.deferred ? await paginationInfo.portal.editReply("The reply has been sent privately") : await paginationInfo.portal.reply({content: "The reply has been sent privately", ephemeral: options.ephemeral});
-               return paginationInfo.portal.client.users.cache.get(paginationInfo.portal.member.user.id).send(options.imageList ?
-                  {
-                     files: [paginationInfo.imageList[0]]
-                  } : paginationInfo.attachmentList !== null ? {
-                     embeds: [paginationInfo.pageList[0]],
-                     files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
-                  } : {
-                     embeds: [paginationInfo.pageList[0]]
-                  }
+               if (paginationInfo.portal.deferred) {
+                  await paginationInfo.portal.editReply("The reply has been sent privately");
+               } else {
+                  await paginationInfo.portal.reply({ content: "The reply has been sent privately", flags: options.ephemeral ? MessageFlags.Ephemeral : null });
+               }
+               return paginationInfo.portal.client.users.cache.get(paginationInfo.portal.member.user.id).send(
+                  options.imageList
+                     ? { files: [paginationInfo.imageList[0]] }
+                     : paginationInfo.attachmentList !== null
+                        ? {
+                           embeds: [paginationInfo.pageList[0]],
+                           files: [paginationInfo.attachmentList[0] ?? null]
+                        }
+                        : { embeds: [paginationInfo.pageList[0]] }
                );
             } else {
-               return paginationInfo.portal.deferred ? await paginationInfo.portal.editReply(options.imageList ?
-                  {
-                     files: [paginationInfo.imageList[0]]
-                  } : paginationInfo.attachmentList !== null ? {
-                     embeds: [paginationInfo.pageList[0]],
-                     files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
-                  } : {
-                     embeds: [paginationInfo.pageList[0]]
-                  }
-               ) : await paginationInfo.portal.reply(options.imageList ?
-                  {
-                     files: [paginationInfo.imageList[0]],
-                     ephemeral: options.ephemeral
-                  } : paginationInfo.attachmentList !== null ? {
-                     embeds: [paginationInfo.pageList[0]],
-                     files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null],
-                     ephemeral: options.ephemeral
-                  } : {
-                     embeds: [paginationInfo.pageList[0]],
-                     ephemeral: options.ephemeral
-                  }
-               );
+               const payload = options.imageList
+                  ? { files: [paginationInfo.imageList[0]] }
+                  : paginationInfo.attachmentList !== null
+                     ? {
+                        embeds: [paginationInfo.pageList[0]],
+                        files: [paginationInfo.attachmentList[0] ?? null]
+                     }
+                     : { embeds: [paginationInfo.pageList[0]] };
+
+               if (paginationInfo.portal.deferred) {
+                  return await paginationInfo.portal.editReply(payload);
+               } else {
+                  return await paginationInfo.portal.reply({ ...payload, flags: options.ephemeral ? MessageFlags.Ephemeral : null });
+               }
             }
          }
          if (paginationInfo.portal.ephemeral) {
             if (paginationInfo.buttonList.length === 3 || paginationInfo.buttonList.length === 5) {
-               throw new Error("PaginationBase ERROR: Delete buttons are not supported by embeds with ephemeral enabled");
+               throw new Error("PaginationBase ERROR: Delete buttons are not supported when ephemeral is enabled.");
             }
             if (options.ephemeral) {
-               process.emitWarning("PaginationBase WARNING: The interaction already has ephemeral enable meaning the pagination does not require the setting enabled");
+               process.emitWarning(
+                  "PaginationBase WARNING: The interaction already has ephemeral enabled; the pagination does not require the setting enabled."
+               );
             }
          }
-         // Run
          return Promise.resolve(InteractionPagination(paginationInfo, options));
       }
-      // Message + Checks
-      if (options.replyMessage && options.privateReply) {process.emitWarning("PaginationBase WARNING: The privateReply setting overwrites and disables replyMessage setting");}
-      if (!paginationInfo.portal.channel) {throw new Error("PaginationBase ERROR: Channel is inaccessible");}
+
+      // Message Pagination
+      if (options.replyMessage && options.privateReply) {
+         process.emitWarning("PaginationBase WARNING: privateReply overwrites and disables replyMessage.");
+      }
+      if (!paginationInfo.portal.channel) {
+         throw new Error("PaginationBase ERROR: Channel is inaccessible.");
+      }
       if (pageLength < 2) {
          if (options.privateReply) {
             await paginationInfo.portal.channel.send("The reply has been sent privately");
-            return paginationInfo.portal.author.send(options.imageList ?
-               {
-                  files: [paginationInfo.imageList[0]]
-               } : paginationInfo.attachmentList !== null ? {
-                  embeds: [paginationInfo.pageList[0]],
-                  files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
-               } : {
-                  embeds: [paginationInfo.pageList[0]]
-               }
+            return paginationInfo.portal.author.send(
+               options.imageList
+                  ? { files: [paginationInfo.imageList[0]] }
+                  : paginationInfo.attachmentList !== null
+                     ? {
+                        embeds: [paginationInfo.pageList[0]],
+                        files: [paginationInfo.attachmentList[0] ?? null]
+                     }
+                     : { embeds: [paginationInfo.pageList[0]] }
             );
          } else {
-            return options.replyMessage ? paginationInfo.portal.reply(options.imageList ?
-               {
-                  files: [paginationInfo.imageList[0]]
-               } : paginationInfo.attachmentList !== null ? {
-                  embeds: [paginationInfo.pageList[0]],
-                  files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
-               } : {
-                  embeds: [paginationInfo.pageList[0]]
-               }
-            ) : paginationInfo.portal.channel.send(options.imageList ?
-               {
-                  files: [paginationInfo.imageList[0]]
-               } : paginationInfo.attachmentList !== null ? {
-                  embeds: [paginationInfo.pageList[0]],
-                  files: [paginationInfo.attachmentList[0] !== null ? paginationInfo.attachmentList[0] : null]
-               } : {
-                  embeds: [paginationInfo.pageList[0]]
-               }
-            );
+            const payload = options.imageList
+               ? { files: [paginationInfo.imageList[0]] }
+               : paginationInfo.attachmentList !== null
+                  ? {
+                     embeds: [paginationInfo.pageList[0]],
+                     files: [paginationInfo.attachmentList[0] ?? null]
+                  }
+                  : { embeds: [paginationInfo.pageList[0]] };
+            return options.replyMessage
+               ? paginationInfo.portal.reply(payload)
+               : paginationInfo.portal.channel.send(payload);
          }
       }
-      // Run
       return Promise.resolve(MessagePagination(paginationInfo, options));
-   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} ${error}`);}
-}
+   } catch (error) {
+      throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js", "")}: ${error.message}`);
+   }
+};

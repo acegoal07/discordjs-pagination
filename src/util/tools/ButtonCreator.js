@@ -36,16 +36,16 @@ exports.AutoButtonCreator = async (pageListLength, autoDelButton) => {
    // Function code
    try {
       const buttonList = pageListLength <= 3 ? [previous, next] : [first, previous, next, last];
-      if (autoDelButton) {buttonList.push(del);}
+      if (autoDelButton) { buttonList.push(del); }
       return Promise.resolve(buttonList);
-   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function AutoButtonCreator ${error}`);}
+   } catch (error) { throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js", "")} function AutoButtonCreator ${error}`); }
 }
 /**
  * Sends back a list of disabled buttons to be used
  * @param {ButtonBuilder[]} buttonList - An array of the buttons
  * @returns {Promise.<import("discord.js").ActionRowBuilder[]>}
  */
-exports.DisabledButtonCreator = async(buttonList) => {
+exports.DisabledButtonCreator = async (buttonList) => {
    try {
       let count = 0;
       const disabledButtonList = [];
@@ -62,5 +62,5 @@ exports.DisabledButtonCreator = async(buttonList) => {
          count += 1;
       }
       return Promise.resolve(new ActionRowBuilder().addComponents(disabledButtonList));
-   } catch(error) {throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js","")} function DisabledButtonCreator ${error}`);}
+   } catch (error) { throw new Error(`Error occurred with ${__filename.split(/[\\/]/).pop().replace(".js", "")} function DisabledButtonCreator ${error}`); }
 }
