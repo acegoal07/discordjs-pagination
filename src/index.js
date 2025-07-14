@@ -5,7 +5,7 @@ const { MessagePayload } = require("discord.js"),
 
 /**
  * Creates a paginations embed for discordjs with customisable options
- * @version 1.6.0
+ * @version 1.6.1
  * @license MIT
  * @author acegoal07
  */

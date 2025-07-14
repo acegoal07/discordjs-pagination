@@ -1,4 +1,4 @@
-exports.PaginationInfo = class {
+module.exports = class PaginationInfo {
    constructor() {
       /**
        * The portal for the pagination, can be a Message or Interaction

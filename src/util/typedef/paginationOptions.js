@@ -1,4 +1,4 @@
-exports.PaginationOptions = class {
+module.exports = class PaginationOptions {
    constructor() {
       this.timeout = 20000;
       this.replyMessage = false;
@@ -23,4 +23,4 @@ exports.PaginationOptions = class {
          labels: null
       };
    }
-}
+};

@@ -1,9 +1,9 @@
 {
   "name": "@acegoal07/discordjs-pagination",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "A simple pagination for Discord.js",
-  "main": "index",
-  "types": "types",
+  "main": "index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
