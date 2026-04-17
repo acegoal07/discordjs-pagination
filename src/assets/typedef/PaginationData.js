@@ -23,7 +23,7 @@ module.exports = class PaginationData {
    pages = [];
 
    /**
-    * @type {import('discord.js').ButtonBuilder[]}
+    * @type {import('../builders/Builders').PageButtonBuilder[]}
     */
    buttons = [];
 }

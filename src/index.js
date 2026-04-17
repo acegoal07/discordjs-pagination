@@ -1,5 +1,5 @@
 const { Message } = require('discord.js'),
-   { ContextType, ButtonPosition } = require('./assets/enums/Enums'),
+   { ContextType, ButtonFunction } = require('./assets/enums/Enums'),
    PaginationData = require('./assets/typedef/PaginationData'),
    { EmbedPageBuilder, ImagePageBuilder, PageButtonBuilder } = require('./assets/builders/Builders'),
    baseHandler = require('./lib/BaseHandler');
@@ -80,8 +80,8 @@ class Pagination {
       const filteredButtons = buttons.filter(button => button instanceof PageButtonBuilder);
 
       if (filteredButtons.length < 2) { throw new Error("[DATA ERROR]: You need at least to buttons passed in for the pagination a next and back button"); }
-      if (filteredButtons.some(button => button.position == ButtonPosition.next)) { throw new Error("[DATA ERROR]: No next button is present in the provided buttons"); }
-      if (filteredButtons.some(button => button.position == ButtonPosition.back)) { throw new Error("[DATA ERROR]: No back button is present in the provided buttons"); }
+      if (filteredButtons.some(button => button.position == ButtonFunction.next)) { throw new Error("[DATA ERROR]: No next button is present in the provided buttons"); }
+      if (filteredButtons.some(button => button.position == ButtonFunction.back)) { throw new Error("[DATA ERROR]: No back button is present in the provided buttons"); }
 
       this.paginationData.buttons = filteredButtons;
 
@@ -102,4 +102,4 @@ module.exports.Pagination = Pagination;
 module.exports.EmbedPageBuilder = EmbedPageBuilder;
 module.exports.ImagePageBuilder = ImagePageBuilder;
 module.exports.PageButtonBuilder = PageButtonBuilder;
-module.exports.ButtonPosition = ButtonPosition;
+module.exports.ButtonFunction = ButtonFunction;

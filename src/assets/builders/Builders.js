@@ -1,5 +1,5 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder } = require('discord.js'),
-   { PageType, ButtonPosition } = require('../enums/Enums');
+   { PageType, ButtonFunction } = require('../enums/Enums');
 
 module.exports = { EmbedPageBuilder, ImagePageBuilder, PageButtonBuilder };
 
@@ -68,13 +68,13 @@ class PageButtonBuilder {
       this.button = new ButtonBuilder();
 
       /**
-       * @type {ButtonPosition}
+       * @type {ButtonFunction}
        */
       this.position = null;
    }
 
    /**
-    * @param {ButtonPosition} position
+    * @param {ButtonFunction} position
     * @returns {void}
     */
    setPosition(position = null) {
