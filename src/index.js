@@ -1,5 +1,5 @@
 const { Message } = require('discord.js'),
-   { ContextType, ButtonFunction } = require('./assets/enums/Enums'),
+   { ContextType, ButtonAction } = require('./assets/enums/Enums'),
    PaginationData = require('./assets/typedef/PaginationData'),
    { EmbedPageBuilder, ImagePageBuilder, PageButtonBuilder } = require('./assets/builders/Builders'),
    baseHandler = require('./lib/BaseHandler');
@@ -17,22 +17,29 @@ class Pagination {
    /**
     * Allows for pagination settings to be configured for it's need
     * @param {{
+    *    timeout?: Number;
     *    interactionEphemeral?: Boolean;
-    *    timeout: Number;
+    *    authorSpecific? Boolean;
     * }}
     * @returns {Pagination}
     */
-   config({ interactionEphemeral = false, timeout = 20000 }) {
+   config({ timeout = 20000, interactionEphemeral = false, authorSpecific = false }) {
+      if (Number.isNaN(timeout)) {
+         this.paginationData.settings.timeout = timeout;
+      } else {
+         throw new TypeError("[TYPE ERROR]: Timeout setting is not a number");
+      }
+
       if (typeof interactionEphemeral === 'boolean') {
          this.paginationData.settings.interactionEphemeral = interactionEphemeral;
       } else {
          throw new TypeError("[TYPE ERROR]: Ephemeral setting is not a boolean");
       }
 
-      if (Number.isNaN(timeout)) {
-         this.paginationData.settings.timeout = timeout;
+      if (typeof authorSpecific === 'boolean') {
+         this.paginationData.settings.interactionEphemeral = interactionEphemeral;
       } else {
-         throw new TypeError("[TYPE ERROR]: Timeout setting is not a number");
+         throw new TypeError("[TYPE ERROR]: Author specific setting is not a boolean");
       }
 
       return this;
@@ -80,8 +87,8 @@ class Pagination {
       const filteredButtons = buttons.filter(button => button instanceof PageButtonBuilder);
 
       if (filteredButtons.length < 2) { throw new Error("[DATA ERROR]: You need at least to buttons passed in for the pagination a next and back button"); }
-      if (filteredButtons.some(button => button.position == ButtonFunction.next)) { throw new Error("[DATA ERROR]: No next button is present in the provided buttons"); }
-      if (filteredButtons.some(button => button.position == ButtonFunction.back)) { throw new Error("[DATA ERROR]: No back button is present in the provided buttons"); }
+      if (filteredButtons.some(button => button.position == ButtonAction.next)) { throw new Error("[DATA ERROR]: No next button is present in the provided buttons"); }
+      if (filteredButtons.some(button => button.position == ButtonAction.back)) { throw new Error("[DATA ERROR]: No back button is present in the provided buttons"); }
 
       this.paginationData.buttons = filteredButtons;
 
@@ -102,4 +109,4 @@ module.exports.Pagination = Pagination;
 module.exports.EmbedPageBuilder = EmbedPageBuilder;
 module.exports.ImagePageBuilder = ImagePageBuilder;
 module.exports.PageButtonBuilder = PageButtonBuilder;
-module.exports.ButtonFunction = ButtonFunction;
+module.exports.ButtonAction = ButtonAction;

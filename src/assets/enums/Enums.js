@@ -1,4 +1,4 @@
-module.exports = { ContextType, PageType, ButtonFunction };
+module.exports = { ContextType, PageType, ButtonAction };
 
 /**
  * @readonly
@@ -23,7 +23,7 @@ const PageType = Object.freeze({
  * @readonly
  * @enum {number}
  */
-const ButtonFunction = Object.freeze({
+const ButtonAction = Object.freeze({
    next: 0,
    back: 1,
    start: 2,

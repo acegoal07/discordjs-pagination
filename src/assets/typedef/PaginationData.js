@@ -33,14 +33,20 @@ module.exports = class PaginationData {
  */
 class PaginationSettings {
    /**
+    * How long the pagination should stay active for (Default: 20000ms)
+    * @type {Number}
+    */
+   timeout = 20000;
+
+   /**
     * Whether or not to make the pagination ephemeral
     * @type {Boolean}
     */
    interactionEphemeral = false;
 
    /**
-    * How long the pagination should stay active for (Default: 20000ms)
-    * @type {Number}
+    * Whether or not the pagination can be controlled by only the author
+    * @type {Boolean}
     */
-   timeout = 20000;
+   authorSpecific = false;
 }
