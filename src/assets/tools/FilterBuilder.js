@@ -5,11 +5,11 @@ const { ButtonAction, ContextType } = require('../enums/Enums')
  */
 module.exports = function filterBuilder(paginationData) {
    return (i) => (
-      (i.customId === paginationData.buttons.find(b => b.position === ButtonAction.start).button.data.custom_id ||
-         i.customId === paginationData.buttons.find(b => b.position === ButtonAction.next).button.data.custom_id ||
-         i.customId === paginationData.buttons.find(b => b.position === ButtonAction.back).button.data.custom_id ||
-         i.customId === paginationData.buttons.find(b => b.position === ButtonAction.end).button.data.custom_id ||
-         i.customId === paginationData.buttons.find(b => b.position === ButtonAction.delete).button.data.custom_id) &&
+      (i.customId === paginationData.buttons.find(b => b.action === ButtonAction.start).data.custom_id ||
+         i.customId === paginationData.buttons.find(b => b.action === ButtonAction.next).data.custom_id ||
+         i.customId === paginationData.buttons.find(b => b.action === ButtonAction.back).data.custom_id ||
+         i.customId === paginationData.buttons.find(b => b.action === ButtonAction.end).data.custom_id ||
+         i.customId === paginationData.buttons.find(b => b.action === ButtonAction.delete).data.custom_id) &&
       (
          paginationData.settings.authorSpecific &&
          i.user.id === paginationData.contextType == ContextType.message ?

@@ -24,7 +24,7 @@ class Pagination {
     * @returns {Pagination}
     */
    config({ timeout = 20000, interactionEphemeral = false, authorSpecific = false }) {
-      if (Number.isNaN(timeout)) {
+      if (!Number.isNaN(timeout)) {
          this.paginationData.settings.timeout = timeout;
       } else {
          throw new TypeError("[TYPE ERROR]: Timeout setting is not a number");
@@ -37,7 +37,7 @@ class Pagination {
       }
 
       if (typeof authorSpecific === 'boolean') {
-         this.paginationData.settings.interactionEphemeral = interactionEphemeral;
+         this.paginationData.settings.authorSpecific = authorSpecific;
       } else {
          throw new TypeError("[TYPE ERROR]: Author specific setting is not a boolean");
       }
@@ -86,9 +86,9 @@ class Pagination {
 
       const filteredButtons = buttons.filter(button => button instanceof PageButtonBuilder);
 
-      if (filteredButtons.length < 2) { throw new Error("[DATA ERROR]: You need at least to buttons passed in for the pagination a next and back button"); }
-      if (filteredButtons.some(button => button.position == ButtonAction.next)) { throw new Error("[DATA ERROR]: No next button is present in the provided buttons"); }
-      if (filteredButtons.some(button => button.position == ButtonAction.back)) { throw new Error("[DATA ERROR]: No back button is present in the provided buttons"); }
+      if (filteredButtons.length < 2) { throw new Error("[DATA ERROR]: You need at least two buttons passed in for the pagination, a next and back button"); }
+      if (!filteredButtons.some(button => button.action === ButtonAction.next)) { throw new Error("[DATA ERROR]: No next button is present in the provided buttons"); }
+      if (!filteredButtons.some(button => button.action === ButtonAction.back)) { throw new Error("[DATA ERROR]: No back button is present in the provided buttons"); }
 
       this.paginationData.buttons = filteredButtons;
 

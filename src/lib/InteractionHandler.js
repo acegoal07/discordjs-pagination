@@ -1,11 +1,13 @@
 const { ButtonAction } = require('../assets/enums/Enums');
 const FilterBuilder = require('../assets/tools/FilterBuilder');
+const PagePayloadBuilder = require('../assets/tools/PagePayloadBuilder');
 
 /**
  * @param {import('../assets/typedef/PaginationData')} paginationData
  */
 module.exports = async function interactionHandler(paginationData) {
-   const pagination = await paginationData.context.editReply();
+   const pagePosition = 0;
+   const pagination = await paginationData.context.editReply(PagePayloadBuilder(paginationData, pagePosition));
 
    const collector = await pagination.createMessageComponentCollector({
       filter: FilterBuilder,
@@ -13,7 +15,7 @@ module.exports = async function interactionHandler(paginationData) {
    });
 
    collector.on("collect", async (i) => {
-      switch(paginationData.buttons.find(button => button.button.data.custom_id == i.customId).position) {
+      switch (paginationData.buttons.find(button => button.data.custom_id == i.customId).action) {
          case ButtonAction.next:
             console.log("next");
             break;

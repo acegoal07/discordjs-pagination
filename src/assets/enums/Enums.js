@@ -1,5 +1,3 @@
-module.exports = { ContextType, PageType, ButtonAction };
-
 /**
  * @readonly
  * @enum {number}
@@ -30,3 +28,5 @@ const ButtonAction = Object.freeze({
    end: 3,
    delete: 4
 });
+
+module.exports = { ContextType, PageType, ButtonAction };

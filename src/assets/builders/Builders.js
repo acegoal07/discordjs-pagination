@@ -1,24 +1,18 @@
 const { AttachmentBuilder, EmbedBuilder, ButtonBuilder } = require('discord.js'),
    { PageType, ButtonAction } = require('../enums/Enums');
 
-module.exports = { EmbedPageBuilder, ImagePageBuilder, PageButtonBuilder };
-
 /**
  * Used to build embed pages for the pagination
  */
-class EmbedPageBuilder {
+class EmbedPageBuilder extends EmbedBuilder {
    constructor() {
+      super();
+
       /**
        * Defines the type of page it is
        * @type {PageType}
        */
       this.pageType = PageType.embed;
-
-      /**
-       * The Embed you can edit your data to
-       * @type {EmbedBuilder}
-       */
-      this.embed = new EmbedBuilder();
 
       /**
        * A attachment that can be used in the embed
@@ -62,26 +56,25 @@ class ImagePageBuilder {
 /**
  * Used to build the buttons for the pagination
  */
-class PageButtonBuilder {
+class PageButtonBuilder extends ButtonBuilder {
    constructor() {
-      /**
-       * @type {ButtonBuilder}
-       */
-      this.button = new ButtonBuilder();
+      super();
 
       /**
        * @type {ButtonAction}
        */
-      this.function = null;
+      this.action = null;
    }
 
    /**
     * @param {ButtonAction} action
     * @returns {PageButtonBuilder}
     */
-   setPosition(action = null) {
+   setAction(action = null) {
       this.action = action;
 
       return this;
    }
 }
+
+module.exports = { EmbedPageBuilder, ImagePageBuilder, PageButtonBuilder };
