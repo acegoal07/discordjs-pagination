@@ -29,6 +29,9 @@ yarn
 yarn add @acegoal07/discordjs-pagination
 ```
 
+### V2 Information 
+V2 is a complete rebuild from the ground up of the pagination package, this redesign introduces more customisability, new features and also aims to make using the package simpler. This version will also allow users to combine both embed pages and image pages allowing for more variety when it comes to paginations, the buttons have also been complety changed no longer relying on placement in an array but instead making it so you can define what a button does letting you decied the order in which the buttons go 
+
 ### Addition info
 The interaction pagination supports deferred interactions but you do not need to defer the interaction yourself as the pagination does it automatically if it is not deferred
 
