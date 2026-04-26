@@ -1,9 +1,11 @@
+const PaginationSettings = require('./PaginationSettings');
+
 /**
  * Where all the pagination data is stored
  */
 module.exports = class PaginationData {
    /**
-    * @type {PaginationSettings}
+    * @type {import('./PaginationSettings')}
     */
    settings = new PaginationSettings();
 
@@ -18,35 +20,12 @@ module.exports = class PaginationData {
    contextType = 0;
 
    /**
-    * @type {Array<import('../builders/Builders').EmbedPageBuilder | import('../builders/Builders').ImagePageBuilder>}
+    * @type {Array<import('../builders/EmbedPageBuilder') | import('../builders/ImagePageBuilder')>}
     */
    pages = [];
 
    /**
-    * @type {import('../builders/Builders').PageButtonBuilder[]}
+    * @type {import('../builders/PageButtonBuilder')[]}
     */
    buttons = [];
-}
-
-/**
- * The Pagination settings
- */
-class PaginationSettings {
-   /**
-    * How long the pagination should stay active for (Default: 20000ms)
-    * @type {Number}
-    */
-   timeout = 20000;
-
-   /**
-    * Whether or not to make the pagination ephemeral
-    * @type {Boolean}
-    */
-   interactionEphemeral = false;
-
-   /**
-    * Whether or not the pagination can be controlled by only the author
-    * @type {Boolean}
-    */
-   authorSpecific = false;
 }

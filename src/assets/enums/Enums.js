@@ -29,4 +29,14 @@ const ButtonAction = Object.freeze({
    delete: 4
 });
 
-module.exports = { ContextType, PageType, ButtonAction };
+/**
+ * @readonly
+ * @enum {number}
+ */
+const TimeoutEnding = Object.freeze({
+   disableButtons: 0,
+   deletePagination: 1,
+   deleteButtons: 2
+});
+
+module.exports = { ContextType, PageType, ButtonAction, TimeoutEnding };

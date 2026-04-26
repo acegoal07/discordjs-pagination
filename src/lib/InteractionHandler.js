@@ -1,39 +1,74 @@
-const { ButtonAction } = require('../assets/enums/Enums');
-const FilterBuilder = require('../assets/tools/FilterBuilder');
-const PagePayloadBuilder = require('../assets/tools/PagePayloadBuilder');
+const { ComponentType } = require('discord.js'),
+   { ButtonAction, TimeoutEnding } = require('../assets/enums/Enums'),
+   filterBuilder = require('../assets/builders/FilterBuilder'),
+   pagePayloadBuilder = require('../assets/builders/PagePayloadBuilder'),
+   disableButtons = require('../assets/tools/DisableButtons');
 
 /**
  * @param {import('../assets/typedef/PaginationData')} paginationData
  */
 module.exports = async function interactionHandler(paginationData) {
-   const pagePosition = 0;
-   const pagination = await paginationData.context.editReply(PagePayloadBuilder(paginationData, pagePosition));
+   let pagePosition = 0;
+   const pagination = await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
 
    const collector = await pagination.createMessageComponentCollector({
-      filter: FilterBuilder,
-      time: paginationData.settings.timeout
+      filter: filterBuilder,
+      time: paginationData.settings.timeout,
+      ComponentType: ComponentType.Button
    });
 
    collector.on("collect", async (i) => {
       switch (paginationData.buttons.find(button => button.data.custom_id == i.customId).action) {
          case ButtonAction.next:
-            console.log("next");
+            if ((pagePosition + 1) !== paginationData.pages.length) {
+               pagePosition++;
+               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+            }
             break;
          case ButtonAction.back:
-            console.log("back");
+            if (pagePosition !== 0) {
+               pagePosition--;
+               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+            }
             break;
          case ButtonAction.start:
-            console.log("start");
+            if (pagePosition !== 0) {
+               pagePosition = 0;
+               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+            }
             break;
          case ButtonAction.end:
-            console.log("end");
+            if (pagePosition !== paginationData.pages.length) {
+               pagePosition = (paginationData.pages.length - 1);
+               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+            }
             break;
          case ButtonAction.delete:
-            console.log("delete");
+            pagination.delete();
+            collector.stop();
             break;
          default:
             console.warn("[COLLECTOR ERROR]: No recognised button was pressed");
             break;
       }
+      if (!i.deferred) { await i.deferUpdate(); }
+      collector.resetTimer();
+   });
+
+   collector.on("end", async () => {
+      await paginationData.context.channel.messages.fetch({ message: pagination.id })
+         .then(async (i) => {
+            if (paginationData.settings.timeoutEnding === TimeoutEnding.deletePagination) {
+               pagination.delete();
+            } else if (paginationData.settings.timeoutEnding === TimeoutEnding.deleteButtons) {
+               await paginationData.context.editReply({ components: [] });
+            } else {
+               disableButtons(paginationData);
+               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+            }
+            disableButtons(paginationData);
+            await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+         })
+         .catch(() => { return; });
    });
 }

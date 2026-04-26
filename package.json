@@ -30,7 +30,7 @@
   "scripts": {
     "build": "npm run buildTypes && npm run tscBuild && npm run copyFiles",
     "build+publish": "npm run build && cd dist && npm publish",
-    "buildTypes": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types",
+    "buildTypes": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types --ignoreConfig",
     "tscBuild": "npx tsc",
     "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
   },

@@ -1,5 +1,5 @@
-const { ActionRowBuilder } = require('discord.js');
-const { PageType } = require('../enums/Enums');
+const { ActionRowBuilder, MessageFlags } = require('discord.js'),
+   { PageType, ContextType } = require('../enums/Enums');
 
 /**
  * @param {import('../typedef/PaginationData')} paginationData
@@ -22,6 +22,10 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
             paginationData.buttons.map(buttonData => buttonData)
          )
       ];
+   }
+
+   if (paginationData.context.type === ContextType.interaction && paginationData.settings.interactionEphemeral && paginationData.context.flags == MessageFlags.Ephemeral) {
+      payload.flags = MessageFlags.Ephemeral;
    }
 
    return payload;

@@ -1,7 +1,9 @@
 const { Message } = require('discord.js'),
-   { ContextType, ButtonAction } = require('./assets/enums/Enums'),
+   { ContextType, ButtonAction, TimeoutEnding } = require('./assets/enums/Enums'),
    PaginationData = require('./assets/typedef/PaginationData'),
-   { EmbedPageBuilder, ImagePageBuilder, PageButtonBuilder } = require('./assets/builders/Builders'),
+   EmbedPageBuilder = require('./assets/builders/EmbedPageBuilder'),
+   ImagePageBuilder = require('./assets/builders/ImagePageBuilder'),
+   PageButtonBuilder = require('./assets/builders/PageButtonBuilder'),
    baseHandler = require('./lib/BaseHandler');
 
 /**
@@ -16,18 +18,20 @@ class Pagination {
 
    /**
     * Allows for pagination settings to be configured for it's need
-    * @param {{
-    *    timeout?: Number;
-    *    interactionEphemeral?: Boolean;
-    *    authorSpecific? Boolean;
-    * }}
+    * @param {import('./assets/typedef/PaginationSettings')}
     * @returns {Pagination}
     */
-   config({ timeout = 20000, interactionEphemeral = false, authorSpecific = false }) {
-      if (!Number.isNaN(timeout)) {
-         this.paginationData.settings.timeout = timeout;
-      } else {
+   config({ timeout = 20000, timeoutEnding = TimeoutEnding.disableButtons, interactionEphemeral = false, authorSpecific = false }) {
+      if (Number.isNaN(timeout)) {
          throw new TypeError("[TYPE ERROR]: Timeout setting is not a number");
+      } else {
+         this.paginationData.settings.timeout = timeout;
+      }
+
+      if (typeof timeoutEnding === 'number') {
+         this.paginationData.settings.timeoutEnding = timeoutEnding;
+      } else {
+         throw new TypeError("[TYPE ERROR]: Timeout ending setting is not a number");
       }
 
       if (typeof interactionEphemeral === 'boolean') {
@@ -110,3 +114,4 @@ module.exports.EmbedPageBuilder = EmbedPageBuilder;
 module.exports.ImagePageBuilder = ImagePageBuilder;
 module.exports.PageButtonBuilder = PageButtonBuilder;
 module.exports.ButtonAction = ButtonAction;
+module.exports.TimeoutEnding = TimeoutEnding;

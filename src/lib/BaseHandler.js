@@ -1,7 +1,8 @@
-const { ContextType, PageType } = require('../assets/enums/Enums'),
+const { MessageFlags } = require('discord.js'),
+   { ContextType } = require('../assets/enums/Enums'),
    interactionHandler = require('./InteractionHandler'),
    messageHandler = require('./MessageHandler'),
-   pagePayloadBuilder = require('../assets/tools/PagePayloadBuilder');
+   pagePayloadBuilder = require('../assets/builders/PagePayloadBuilder');
 
 /**
  * @param {import('../assets/typedef/PaginationData')} paginationData
@@ -17,7 +18,7 @@ module.exports = async function baseHandler(paginationData) {
       await messageHandler(paginationData);
    } else if (paginationData.contextType === ContextType.interaction) {
       if (!paginationData.context.deferred) {
-         await paginationData.context.deferReply();
+         await paginationData.context.deferReply(paginationData.settings.interactionEphemeral ? { flags: MessageFlags.Ephemeral } : null);
       }
 
       if (paginationData.pages.length < 2) {
