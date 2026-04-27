@@ -6,26 +6,40 @@ const { ActionRowBuilder, MessageFlags } = require('discord.js'),
  * @param {Number} pagePosition
  */
 module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
-   const payload = paginationData.pages[pagePosition].pageType === PageType.embed ?
-      {
-         embeds: paginationData.pages[pagePosition] == null ? [] : [paginationData.pages[pagePosition].setFooter({ text: `${pagePosition + 1}/${paginationData.pages.length}` })],
-         files: paginationData.pages[pagePosition].attachment == null ? [] : [paginationData.pages[pagePosition].attachment]
-      } :
-      {
-         embeds: [],
-         files: paginationData.pages[pagePosition].image == null ? [] : [paginationData.pages[pagePosition].image]
-      };
-
-   if (paginationData.pages.length > 1) {
-      payload.components = [
-         new ActionRowBuilder().addComponents(
-            paginationData.buttons.map(buttonData => buttonData)
-         )
-      ];
+   let payload;
+   const pageData = paginationData.pages[pagePosition];
+   switch (paginationData.pages[pagePosition].pageType) {
+      case PageType.embed:
+         payload = {
+            embeds: pageData == null ? [] : [pageData.setFooter({ text: `${pagePosition + 1}/${paginationData.pages.length}` })],
+            files: pageData.attachment == null ? [] : [pageData.attachment]
+         }
+         break;
+      case PageType.image:
+         payload = {
+            embeds: [],
+            files: pageData.image == null ? [] : [pageData.image]
+         }
+         break;
+      case PageType.text:
+         payload = {
+            content: pageData.text,
+            embeds: [],
+            files: []
+         }
+         break;
+      default:
+         throw new TypeError("[TYPE ERROR]: The page type is not a valid type");
    }
 
    if (paginationData.context.type === ContextType.interaction && paginationData.settings.interactionEphemeral && paginationData.context.flags == MessageFlags.Ephemeral) {
       payload.flags = MessageFlags.Ephemeral;
+   }
+
+   if (paginationData.pages.length > 1) {
+      payload.components = [
+         new ActionRowBuilder().addComponents(paginationData.buttons)
+      ];
    }
 
    return payload;

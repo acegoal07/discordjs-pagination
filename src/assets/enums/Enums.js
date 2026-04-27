@@ -14,7 +14,8 @@ const ContextType = Object.freeze({
  */
 const PageType = Object.freeze({
    embed: 0,
-   image: 1
+   image: 1,
+   text: 2
 });
 
 /**

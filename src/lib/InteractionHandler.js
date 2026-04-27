@@ -18,6 +18,7 @@ module.exports = async function interactionHandler(paginationData) {
    });
 
    collector.on("collect", async (i) => {
+      collector.resetTimer();
       switch (paginationData.buttons.find(button => button.data.custom_id == i.customId).action) {
          case ButtonAction.next:
             if ((pagePosition + 1) !== paginationData.pages.length) {
@@ -52,22 +53,25 @@ module.exports = async function interactionHandler(paginationData) {
             break;
       }
       if (!i.deferred) { await i.deferUpdate(); }
-      collector.resetTimer();
    });
 
    collector.on("end", async () => {
       await paginationData.context.channel.messages.fetch({ message: pagination.id })
-         .then(async (i) => {
-            if (paginationData.settings.timeoutEnding === TimeoutEnding.deletePagination) {
-               pagination.delete();
-            } else if (paginationData.settings.timeoutEnding === TimeoutEnding.deleteButtons) {
-               await paginationData.context.editReply({ components: [] });
-            } else {
-               disableButtons(paginationData);
-               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+         .then(async () => {
+            switch (paginationData.settings.timeoutEnding) {
+               case TimeoutEnding.deleteButtons:
+                  await paginationData.context.editReply({ components: [] });
+                  break;
+               case TimeoutEnding.deletePagination:
+                  pagination.delete();
+                  break;
+               case TimeoutEnding.disableButtons:
+                  disableButtons(paginationData);
+                  await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+                  break;
+               default:
+                  return;
             }
-            disableButtons(paginationData);
-            await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
          })
          .catch(() => { return; });
    });

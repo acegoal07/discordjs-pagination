@@ -3,6 +3,7 @@ const { Message } = require('discord.js'),
    PaginationData = require('./assets/typedef/PaginationData'),
    EmbedPageBuilder = require('./assets/builders/EmbedPageBuilder'),
    ImagePageBuilder = require('./assets/builders/ImagePageBuilder'),
+   TextPageBuilder = require('./assets/builders/TextPageBuilder'),
    PageButtonBuilder = require('./assets/builders/PageButtonBuilder'),
    baseHandler = require('./lib/BaseHandler');
 
@@ -75,6 +76,9 @@ class Pagination {
     */
    setPages(pages = []) {
       if (!Array.isArray(pages)) { throw new TypeError("[TYPE ERROR]: The pages you have provided is not an Array"); }
+      if (pages.length === 0) { throw new Error("[DATA ERROR]: No Pages have been provided") }
+      if ((pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder).length == 0)) { throw new TypeError("[TYPE ERROR]: There are no compatible pages provided"); }
+
       this.paginationData.pages = pages;
 
       return this;
@@ -112,6 +116,7 @@ module.exports = Pagination;
 module.exports.Pagination = Pagination;
 module.exports.EmbedPageBuilder = EmbedPageBuilder;
 module.exports.ImagePageBuilder = ImagePageBuilder;
+module.exports.TextPageBuilder = TextPageBuilder;
 module.exports.PageButtonBuilder = PageButtonBuilder;
 module.exports.ButtonAction = ButtonAction;
 module.exports.TimeoutEnding = TimeoutEnding;
