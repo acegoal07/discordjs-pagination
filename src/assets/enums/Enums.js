@@ -3,9 +3,9 @@
  * @enum {number}
  */
 const ContextType = Object.freeze({
-   unknown: 0,
-   message: 1,
-   interaction: 2
+   Unknown: 0,
+   Message: 1,
+   Interaction: 2
 });
 
 /**
@@ -13,9 +13,9 @@ const ContextType = Object.freeze({
  * @enum {number}
  */
 const PageType = Object.freeze({
-   embed: 0,
-   image: 1,
-   text: 2
+   Embed: 0,
+   Image: 1,
+   Text: 2
 });
 
 /**
@@ -23,11 +23,11 @@ const PageType = Object.freeze({
  * @enum {number}
  */
 const ButtonAction = Object.freeze({
-   next: 0,
-   back: 1,
-   start: 2,
-   end: 3,
-   delete: 4
+   Next: 0,
+   Back: 1,
+   Start: 2,
+   End: 3,
+   Delete: 4
 });
 
 /**
@@ -35,9 +35,9 @@ const ButtonAction = Object.freeze({
  * @enum {number}
  */
 const TimeoutEnding = Object.freeze({
-   disableButtons: 0,
-   deletePagination: 1,
-   deleteButtons: 2
+   DisableButtons: 0,
+   DeletePagination: 1,
+   DeleteButtons: 2
 });
 
 module.exports = { ContextType, PageType, ButtonAction, TimeoutEnding };

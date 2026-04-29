@@ -10,7 +10,7 @@ module.exports = class ImagePageBuilder {
        * Defines the type of page it is
        * @type {PageType}
        */
-      this.pageType = PageType.image;
+      this.pageType = PageType.Image;
 
       /**
        * The image to be displayed

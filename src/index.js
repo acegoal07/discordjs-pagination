@@ -22,9 +22,9 @@ class Pagination {
     * @param {import('./assets/typedef/PaginationSettings')}
     * @returns {Pagination}
     */
-   config({ timeout = 20000, timeoutEnding = TimeoutEnding.disableButtons, interactionEphemeral = false, authorSpecific = false }) {
+   config({ timeout = 20000, timeoutEnding = TimeoutEnding.DisableButtons, interactionEphemeral = false, authorSpecific = false, loop = false }) {
       if (Number.isNaN(timeout)) {
-         throw new TypeError("[TYPE ERROR]: Timeout setting is not a number");
+         throw new TypeError("[TIMEOUT ERROR]: Timeout setting is not a number");
       } else {
          this.paginationData.settings.timeout = timeout;
       }
@@ -32,19 +32,25 @@ class Pagination {
       if (typeof timeoutEnding === 'number') {
          this.paginationData.settings.timeoutEnding = timeoutEnding;
       } else {
-         throw new TypeError("[TYPE ERROR]: Timeout ending setting is not a number");
+         throw new TypeError("[TIMEOUT ENDING ERROR]: Timeout ending setting is not a number");
       }
 
       if (typeof interactionEphemeral === 'boolean') {
          this.paginationData.settings.interactionEphemeral = interactionEphemeral;
       } else {
-         throw new TypeError("[TYPE ERROR]: Ephemeral setting is not a boolean");
+         throw new TypeError("[EPHEMERAL ERROR]: Ephemeral setting is not a boolean");
       }
 
       if (typeof authorSpecific === 'boolean') {
          this.paginationData.settings.authorSpecific = authorSpecific;
       } else {
-         throw new TypeError("[TYPE ERROR]: Author specific setting is not a boolean");
+         throw new TypeError("[AUTHOR SPECIFIC ERROR]: Author specific setting is not a boolean");
+      }
+
+      if (typeof loop === 'boolean') {
+         this.paginationData.settings.loop = loop;
+      } else {
+         throw new TypeError("[LOOP ERROR]: Loop setting is not a boolean");
       }
 
       return this;
@@ -57,11 +63,11 @@ class Pagination {
     */
    setContext(context) {
       if (context instanceof Message) {
-         this.paginationData.contextType = ContextType.message;
+         this.paginationData.contextType = ContextType.Message;
       } else if (context.commandType == null) {
-         throw new TypeError("[TYPE ERROR]: The context that has been provided is neither a interaction or message");
+         throw new TypeError("[CONTEXT ERROR]: The context that has been provided is neither a interaction or message");
       } else {
-         this.paginationData.contextType = ContextType.interaction;
+         this.paginationData.contextType = ContextType.Interaction;
       }
 
       this.paginationData.context = context;
@@ -75,9 +81,9 @@ class Pagination {
     * @returns {Pagination}
     */
    setPages(pages = []) {
-      if (!Array.isArray(pages)) { throw new TypeError("[TYPE ERROR]: The pages you have provided is not an Array"); }
-      if (pages.length === 0) { throw new Error("[DATA ERROR]: No Pages have been provided") }
-      if ((pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder).length == 0)) { throw new TypeError("[TYPE ERROR]: There are no compatible pages provided"); }
+      if (!Array.isArray(pages)) { throw new TypeError("[PAGE ERROR]: The pages you have provided is not an Array"); }
+      if (pages.length === 0) { throw new Error("[PAGE ERROR]: No Pages have been provided") }
+      if ((pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder).length == 0)) { throw new TypeError("[TYPE ERROR]: There are no compatible pages provided"); }
 
       this.paginationData.pages = pages;
 
@@ -90,13 +96,13 @@ class Pagination {
     * @returns {Pagination}
     */
    setButtons(buttons) {
-      if (!Array.isArray(buttons)) { throw new TypeError("[TYPE ERROR]: The buttons you have provided is not an Array"); }
+      if (!Array.isArray(buttons)) { throw new TypeError("[BUTTON ERROR]: The buttons you have provided is not an Array"); }
 
       const filteredButtons = buttons.filter(button => button instanceof PageButtonBuilder);
 
-      if (filteredButtons.length < 2) { throw new Error("[DATA ERROR]: You need at least two buttons passed in for the pagination, a next and back button"); }
-      if (!filteredButtons.some(button => button.action === ButtonAction.next)) { throw new Error("[DATA ERROR]: No next button is present in the provided buttons"); }
-      if (!filteredButtons.some(button => button.action === ButtonAction.back)) { throw new Error("[DATA ERROR]: No back button is present in the provided buttons"); }
+      if (filteredButtons.length < 2) { throw new Error("[BUTTON ERROR]: You need at least two buttons passed in for the pagination, a next and back button"); }
+      if (!filteredButtons.some(button => button.action === ButtonAction.Next)) { throw new Error("[BUTTON ERROR]: No next button is present in the provided buttons"); }
+      if (!filteredButtons.some(button => button.action === ButtonAction.Back)) { throw new Error("[BUTTON ERROR]: No back button is present in the provided buttons"); }
 
       this.paginationData.buttons = filteredButtons;
 

@@ -9,19 +9,21 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
    let payload;
    const pageData = paginationData.pages[pagePosition];
    switch (paginationData.pages[pagePosition].pageType) {
-      case PageType.embed:
+      case PageType.Embed:
          payload = {
+            content: "",
             embeds: pageData == null ? [] : [pageData.setFooter({ text: `${pagePosition + 1}/${paginationData.pages.length}` })],
             files: pageData.attachment == null ? [] : [pageData.attachment]
          }
          break;
-      case PageType.image:
+      case PageType.Image:
          payload = {
+            content: "",
             embeds: [],
             files: pageData.image == null ? [] : [pageData.image]
          }
          break;
-      case PageType.text:
+      case PageType.Text:
          payload = {
             content: pageData.text,
             embeds: [],
@@ -32,7 +34,7 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
          throw new TypeError("[TYPE ERROR]: The page type is not a valid type");
    }
 
-   if (paginationData.context.type === ContextType.interaction && paginationData.settings.interactionEphemeral && paginationData.context.flags == MessageFlags.Ephemeral) {
+   if (paginationData.context.type === ContextType.Interaction && paginationData.settings.interactionEphemeral && paginationData.context.flags == MessageFlags.Ephemeral) {
       payload.flags = MessageFlags.Ephemeral;
    }
 

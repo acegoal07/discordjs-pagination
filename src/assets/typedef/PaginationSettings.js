@@ -14,7 +14,7 @@ module.exports = class PaginationSettings {
     * What the pagination should do with itself once the timeout has ended
     * @type {TimeoutEnding}
     */
-   timeoutEnding = TimeoutEnding.disableButtons;
+   timeoutEnding = TimeoutEnding.DisableButtons;
 
    /**
     * Whether or not to make the pagination ephemeral
@@ -27,4 +27,16 @@ module.exports = class PaginationSettings {
     * @type {Boolean}
     */
    authorSpecific = false;
+
+   /**
+    * Whether or not to let the pagination loop around on itself
+    * @type {Boolean}
+    */
+   loop = false;
+
+   /**
+    * Whether or not to include a delete button when automatically generating buttons
+    * @type {Boolean}
+    */
+   autoDeleteButton = false;
 }

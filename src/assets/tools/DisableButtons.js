@@ -1,6 +1,3 @@
-const { ActionRowBuilder } = require('discord.js'),
-   PageButtonBuilder = require('../builders/PageButtonBuilder');
-
 /**
  * @param {import('../typedef/PaginationData')} paginationData
  * @returns {void}

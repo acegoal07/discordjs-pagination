@@ -12,7 +12,7 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
        * Defines the type of page it is
        * @type {PageType}
        */
-      this.pageType = PageType.embed;
+      this.pageType = PageType.Embed;
 
       /**
        * A attachment that can be used in the embed

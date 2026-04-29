@@ -9,7 +9,7 @@ module.exports = class TextPageBuilder {
        * Defines the type of page it is
        * @type {PageType}
        */
-      this.pageType = PageType.text;
+      this.pageType = PageType.Text;
 
       /**
        * The text for the page

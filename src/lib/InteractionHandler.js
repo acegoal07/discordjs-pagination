@@ -20,31 +20,47 @@ module.exports = async function interactionHandler(paginationData) {
    collector.on("collect", async (i) => {
       collector.resetTimer();
       switch (paginationData.buttons.find(button => button.data.custom_id == i.customId).action) {
-         case ButtonAction.next:
-            if ((pagePosition + 1) !== paginationData.pages.length) {
+         case ButtonAction.Next:
+            if ((pagePosition + 1) === paginationData.pages.length) {
+               if (paginationData.settings.loop) {
+                  pagePosition = 0;
+               } else {
+                  break;
+               }
+            } else {
                pagePosition++;
-               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
             }
+
+            await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
+
             break;
-         case ButtonAction.back:
-            if (pagePosition !== 0) {
+         case ButtonAction.Back:
+            if (pagePosition === 0) {
+               if (paginationData.settings.loop) {
+                  pagePosition = paginationData.pages.length - 1;
+               } else {
+                  break;
+               }
+            } else {
                pagePosition--;
-               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
             }
+
+            await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
+
             break;
-         case ButtonAction.start:
+         case ButtonAction.Start:
             if (pagePosition !== 0) {
                pagePosition = 0;
-               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+               await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
             }
             break;
-         case ButtonAction.end:
+         case ButtonAction.End:
             if (pagePosition !== paginationData.pages.length) {
                pagePosition = (paginationData.pages.length - 1);
-               await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+               await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
             }
             break;
-         case ButtonAction.delete:
+         case ButtonAction.Delete:
             pagination.delete();
             collector.stop();
             break;
@@ -59,18 +75,18 @@ module.exports = async function interactionHandler(paginationData) {
       await paginationData.context.channel.messages.fetch({ message: pagination.id })
          .then(async () => {
             switch (paginationData.settings.timeoutEnding) {
-               case TimeoutEnding.deleteButtons:
+               case TimeoutEnding.DeleteButtons:
                   await paginationData.context.editReply({ components: [] });
                   break;
-               case TimeoutEnding.deletePagination:
+               case TimeoutEnding.DeletePagination:
                   pagination.delete();
                   break;
-               case TimeoutEnding.disableButtons:
+               case TimeoutEnding.DisableButtons:
                   disableButtons(paginationData);
                   await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
                   break;
                default:
-                  return;
+                  throw new Error('[TIMEOUT ENDING ERROR]: Invalid timeout ending type');
             }
          })
          .catch(() => { return; });
