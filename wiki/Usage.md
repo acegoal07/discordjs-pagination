@@ -137,7 +137,7 @@ Starts pagination.
 
 - Accepts: no arguments
 - Required: yes
-- Returns: Promise
+- Returns: `Promise`
 
 ## Builders
 
