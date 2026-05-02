@@ -104,15 +104,16 @@ Available options:
 
 Sets page data.
 
-- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, and/or `TextPageBuilder`
+- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, and/or `ContainerPageBuilder`
 - Required: yes
 - Returns: `Pagination`
 
-Validation behavior:
+Validation behaviors:
 
 - Throws if input is not an array
 - Throws if array is empty
 - Throws if array contains no compatible page builder instances
+- Throws if `ContainerPageBuilder` is used with another page type it isn't compatible with
 
 ### `.setButtons(buttons)`
 
@@ -122,7 +123,7 @@ Sets custom button layout.
 - Required: no
 - Returns: `Pagination`
 
-Validation behaviour:
+Validation behaviors:
 
 - Throws if input is not an array
 - Throws if fewer than 2 valid buttons are provided

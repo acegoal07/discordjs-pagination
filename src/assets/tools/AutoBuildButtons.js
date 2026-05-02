@@ -6,34 +6,38 @@ const { ButtonStyle } = require('discord.js'),
  * @param {import('../typedef/PaginationData')} paginationData
  */
 module.exports = function autoBuildButtons(paginationData) {
-   paginationData.buttons = [
-      new PageButtonBuilder()
-         .setAction(ButtonAction.Back)
-         .setLabel('<')
-         .setStyle(ButtonStyle.Secondary)
-         .setCustomId('back'),
-      new PageButtonBuilder()
-         .setAction(ButtonAction.Next)
-         .setLabel('>')
-         .setStyle(ButtonStyle.Secondary)
-         .setCustomId('next')
-   ];
-
-   if (paginationData.pages.length > 3) {
-      paginationData.buttons.unshift(
+   try {
+      paginationData.buttons = [
          new PageButtonBuilder()
-            .setAction(ButtonAction.Start)
-            .setLabel('<<')
+            .setAction(ButtonAction.Back)
+            .setLabel('<')
             .setStyle(ButtonStyle.Secondary)
-            .setCustomId('start')
-      );
-
-      paginationData.buttons.push(
+            .setCustomId('back'),
          new PageButtonBuilder()
-            .setAction(ButtonAction.End)
-            .setLabel('>>')
+            .setAction(ButtonAction.Next)
+            .setLabel('>')
             .setStyle(ButtonStyle.Secondary)
-            .setCustomId('end')
-      )
+            .setCustomId('next')
+      ];
+
+      if (paginationData.pages.length > 3) {
+         paginationData.buttons.unshift(
+            new PageButtonBuilder()
+               .setAction(ButtonAction.Start)
+               .setLabel('<<')
+               .setStyle(ButtonStyle.Secondary)
+               .setCustomId('start')
+         );
+
+         paginationData.buttons.push(
+            new PageButtonBuilder()
+               .setAction(ButtonAction.End)
+               .setLabel('>>')
+               .setStyle(ButtonStyle.Secondary)
+               .setCustomId('end')
+         )
+      }
+   } catch (error) {
+      throw new Error("[AUTO BUILD BUTTONS ERROR]:", error);
    }
 }

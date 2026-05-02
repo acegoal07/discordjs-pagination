@@ -72,7 +72,7 @@ await new Pagination()
 - `.setContext(context)`
   - Required. Accepts a discord.js `Message` or interaction.
 - `.setPages(pages)`
-  - Required. Accepts an array of `EmbedPageBuilder`, `ImagePageBuilder`, and/or `TextPageBuilder`.
+  - Required. Accepts an array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, and/or `ContainerPageBuilder`.
 - `.setButtons(buttons)`
   - Optional. Accepts an array of `PageButtonBuilder`.
   - If you skip this, default buttons are generated automatically.
@@ -86,6 +86,7 @@ await new Pagination()
 - You need at least one page to send a response.
 - For multi-page navigation, provide two or more pages.
 - If custom buttons are provided, include both `ButtonAction.Back` and `ButtonAction.Next`.
+- All none component v2 pages are compatible with each other, so you can mix and match freely. The only exception is `ContainerPageBuilder`, which can only be used with other `ContainerPageBuilder` pages due to their specific implementation.
 
 ## Next
 

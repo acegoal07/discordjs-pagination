@@ -3,7 +3,11 @@
  * @returns {void}
  */
 module.exports = function disableButtons(paginationData) {
-   paginationData.buttons.forEach(button => {
-      button.setDisabled(true);
-   });
+   try {
+      paginationData.buttons.forEach(button => {
+         button.setDisabled(true);
+      });
+   } catch (error) {
+      throw new Error("[DISABLE BUTTONS ERROR]:", error);
+   }
 }

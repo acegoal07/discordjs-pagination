@@ -4,6 +4,7 @@ const { Message } = require('discord.js'),
    EmbedPageBuilder = require('./assets/builders/EmbedPageBuilder'),
    ImagePageBuilder = require('./assets/builders/ImagePageBuilder'),
    TextPageBuilder = require('./assets/builders/TextPageBuilder'),
+   ContainerPageBuilder = require('./assets/builders/ContainerPageBuilder'),
    PageButtonBuilder = require('./assets/builders/PageButtonBuilder'),
    baseHandler = require('./lib/BaseHandler');
 
@@ -83,7 +84,8 @@ class Pagination {
    setPages(pages = []) {
       if (!Array.isArray(pages)) { throw new TypeError("[PAGE ERROR]: The pages you have provided is not an Array"); }
       if (pages.length === 0) { throw new Error("[PAGE ERROR]: No Pages have been provided") }
-      if ((pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder).length == 0)) { throw new TypeError("[TYPE ERROR]: There are no compatible pages provided"); }
+      if ((pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder || page instanceof ContainerPageBuilder).length == 0)) { throw new TypeError("[PAGE ERROR]: There are no compatible pages provided"); }
+      if (pages.some(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder) && pages.some(page => page instanceof ContainerPageBuilder)) { throw new Error("[PAGE ERROR]: You are not able to combine components v2 pages and normal pages"); }
 
       this.paginationData.pages = pages;
 
@@ -124,5 +126,6 @@ module.exports.EmbedPageBuilder = EmbedPageBuilder;
 module.exports.ImagePageBuilder = ImagePageBuilder;
 module.exports.TextPageBuilder = TextPageBuilder;
 module.exports.PageButtonBuilder = PageButtonBuilder;
+module.exports.ContainerPageBuilder = ContainerPageBuilder;
 module.exports.ButtonAction = ButtonAction;
 module.exports.TimeoutEnding = TimeoutEnding;

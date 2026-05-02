@@ -19,6 +19,7 @@ module.exports = async function interactionHandler(paginationData) {
 
    collector.on("collect", async (i) => {
       collector.resetTimer();
+      if (!i.deferred && !i.replied) { await i.deferUpdate(); }
       switch (paginationData.buttons.find(button => button.data.custom_id == i.customId).action) {
          case ButtonAction.Next:
             if ((pagePosition + 1) === paginationData.pages.length) {
@@ -68,7 +69,6 @@ module.exports = async function interactionHandler(paginationData) {
             console.warn("[COLLECTOR ERROR]: No recognised button was pressed");
             break;
       }
-      if (!i.deferred) { await i.deferUpdate(); }
    });
 
    collector.on("end", async () => {
