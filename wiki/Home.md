@@ -23,48 +23,59 @@ yarn add @acegoal07/discordjs-pagination
 ```js
 const { ButtonStyle } = require('discord.js');
 const {
-   Pagination,
-   EmbedPageBuilder,
-   ImagePageBuilder,
-   TextPageBuilder,
-   PageButtonBuilder,
-   ButtonAction,
-   TimeoutEnding
+	Pagination,
+	EmbedPageBuilder,
+	ImagePageBuilder,
+	TextPageBuilder,
+	ContainerPageBuilder,
+	PageButtonBuilder,
+	ButtonAction,
+	TimeoutEnding
 } = require('@acegoal07/discordjs-pagination');
 
 await new Pagination()
-   .setContext(interaction) // Can be a Message or an Interaction
-   .config({
-      timeout: 30000,
-      timeoutEnding: TimeoutEnding.DisableButtons,
-      interactionEphemeral: false,
-      authorSpecific: true
-   })
-   .setButtons([
-      new PageButtonBuilder()
-         .setAction(ButtonAction.Back)
-         .setCustomId('pagination_back')
-         .setLabel('Back')
-         .setStyle(ButtonStyle.Secondary),
-      new PageButtonBuilder()
-         .setAction(ButtonAction.Next)
-         .setCustomId('pagination_next')
-         .setLabel('Next')
-         .setStyle(ButtonStyle.Primary)
-   ])
-   .setPages([
-      new EmbedPageBuilder()
-         .setTitle('Welcome')
-         .setDescription('This is an embed page.'),
-      new EmbedPageBuilder()
+	.setContext(interaction) // Can be a Message or an Interaction
+	.config({
+		timeout: 30000,
+		timeoutEnding: TimeoutEnding.DisableButtons,
+		interactionEphemeral: false,
+		authorSpecific: true
+	})
+	.setButtons([
+		new PageButtonBuilder()
+			.setAction(ButtonAction.Back)
+			.setCustomId('pagination_back')
+			.setLabel('Back')
+			.setStyle(ButtonStyle.Secondary),
+		new PageButtonBuilder()
+			.setAction(ButtonAction.Next)
+			.setCustomId('pagination_next')
+			.setLabel('Next')
+			.setStyle(ButtonStyle.Primary)
+	])
+	// None components v2 pages example
+	.setPages([
+		new EmbedPageBuilder()
+			.setTitle('Welcome')
+			.setDescription('This is an embed page.'),
+		new EmbedPageBuilder()
 			.setTitle('Embed with attachment')
 			.setDescription('This embed uses an attached image file.')
 			.setAttachment('./assets/example-image.png', { name: 'example-image.png' })
 			.setImage('attachment://example-image.png'),
-      new ImagePageBuilder().setImage('./assets/example-image.png', { name: 'example-image.png' }),
-      new TextPageBuilder().setText('This is a text page.')
-   ])
-   .paginate();
+		new ImagePageBuilder().setImage('./assets/example-image.png', { name: 'example-image.png' }),
+		new TextPageBuilder().setText('This is a text page.')
+	])
+	// Components v2 pages example
+	.setPages([
+		new ContainerPageBuilder()
+			.addTextDisplayComponents((textDisplay) =>
+				textDisplay.setContent(
+					'this is a container page'
+				)
+			)
+	])
+	.paginate();
 ```
 
 ## Core Methods

@@ -10,6 +10,7 @@ const {
 	EmbedPageBuilder,
 	ImagePageBuilder,
 	TextPageBuilder,
+	ContainerPageBuilder,
 	PageButtonBuilder,
 	ButtonAction,
 	TimeoutEnding
@@ -34,13 +35,14 @@ const {
 	EmbedPageBuilder,
 	ImagePageBuilder,
 	TextPageBuilder,
+	ContainerPageBuilder,
 	PageButtonBuilder,
 	ButtonAction,
 	TimeoutEnding
 } = require('@acegoal07/discordjs-pagination');
 
 await new Pagination()
-	.setContext(interaction)
+	.setContext(interaction) // Can be a Message or an Interaction
 	.config({
 		timeout: 30000,
 		timeoutEnding: TimeoutEnding.DisableButtons,
@@ -59,6 +61,7 @@ await new Pagination()
 			.setLabel('Next')
 			.setStyle(ButtonStyle.Primary)
 	])
+	// None components v2 pages example
 	.setPages([
 		new EmbedPageBuilder()
 			.setTitle('Welcome')
@@ -70,6 +73,15 @@ await new Pagination()
 			.setImage('attachment://example-image.png'),
 		new ImagePageBuilder().setImage('./assets/example-image.png', { name: 'example-image.png' }),
 		new TextPageBuilder().setText('This is a text page.')
+	])
+	// Components v2 pages example
+	.setPages([
+		new ContainerPageBuilder()
+			.addTextDisplayComponents((textDisplay) =>
+				textDisplay.setContent(
+					'this is a container page'
+				)
+			)
 	])
 	.paginate();
 ```
@@ -153,6 +165,10 @@ Provides `.setImage(attachment, attachmentData)` for image-only pages.
 ### `TextPageBuilder`
 
 Provides `.setText(text)` for text-only pages.
+
+### `ContainerPageBuilder`
+
+Extends `ContainerBuilder` and allows users to build components v2 pages. Not compatible with other page types.
 
 ### `PageButtonBuilder`
 

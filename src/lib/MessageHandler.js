@@ -19,6 +19,7 @@ module.exports = async function messageHandler(paginationData) {
 
    collector.on("collect", async (i) => {
       collector.resetTimer();
+      if (!i.deferred && !i.replied) { await i.deferUpdate(); }
       switch (paginationData.buttons.find(button => button.data.custom_id == i.customId).action) {
          case ButtonAction.Next:
             if ((pagePosition + 1) === paginationData.pages.length) {
@@ -31,7 +32,7 @@ module.exports = async function messageHandler(paginationData) {
                pagePosition++;
             }
 
-            await i.edit(pagePayloadBuilder(paginationData, pagePosition));
+            await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
 
             break;
          case ButtonAction.Back:
@@ -45,19 +46,19 @@ module.exports = async function messageHandler(paginationData) {
                pagePosition--;
             }
 
-            await i.edit(pagePayloadBuilder(paginationData, pagePosition));
+            await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
 
             break;
          case ButtonAction.Start:
             if (pagePosition !== 0) {
                pagePosition = 0;
-               await i.edit(pagePayloadBuilder(paginationData, pagePosition));
+               await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
             }
             break;
          case ButtonAction.End:
             if (pagePosition !== paginationData.pages.length) {
                pagePosition = (paginationData.pages.length - 1);
-               await i.edit(pagePayloadBuilder(paginationData, pagePosition));
+               await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
             }
             break;
          case ButtonAction.Delete:
@@ -68,12 +69,11 @@ module.exports = async function messageHandler(paginationData) {
             console.warn("[COLLECTOR ERROR]: No recognised button was pressed");
             break;
       }
-      if (!i.deferred) { await i.deferUpdate(); }
    });
 
-   collector.on("end", async (i) => {
-      await i.channel.messages.fetch({ message: pagination.id })
-         .then(async () => {
+   collector.on("end", async () => {
+      await paginationData.context.channel.messages.fetch({ message: pagination.id })
+         .then(async (i) => {
             switch (paginationData.settings.timeoutEnding) {
                case TimeoutEnding.DeleteButtons:
                   await i.edit({ components: [] });

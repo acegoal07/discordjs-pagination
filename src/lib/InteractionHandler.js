@@ -73,17 +73,17 @@ module.exports = async function interactionHandler(paginationData) {
 
    collector.on("end", async () => {
       await paginationData.context.channel.messages.fetch({ message: pagination.id })
-         .then(async () => {
+         .then(async (i) => {
             switch (paginationData.settings.timeoutEnding) {
                case TimeoutEnding.DeleteButtons:
-                  await paginationData.context.editReply({ components: [] });
+                  await i.edit({ components: [] });
                   break;
                case TimeoutEnding.DeletePagination:
                   pagination.delete();
                   break;
                case TimeoutEnding.DisableButtons:
                   disableButtons(paginationData);
-                  await paginationData.context.editReply(pagePayloadBuilder(paginationData, pagePosition));
+                  await i.edit(pagePayloadBuilder(paginationData, pagePosition));
                   break;
                default:
                   throw new Error('[TIMEOUT ENDING ERROR]: Invalid timeout ending type');

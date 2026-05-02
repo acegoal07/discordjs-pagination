@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
   "dependencies": {
-    "discord.js": "^14.7.1"
+    "discord.js": "^14.19.3"
   },
   "scripts": {
     "build": "npm run buildTypes && npm run tscBuild && npm run copyFiles",

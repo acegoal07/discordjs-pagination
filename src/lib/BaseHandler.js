@@ -17,6 +17,10 @@ module.exports = async function baseHandler(paginationData) {
       AutoBuildButtons(paginationData);
    }
 
+   if (paginationData.contextType == ContextType.Message && paginationData.settings.interactionEphemeral) {
+      console.warn("[EPHEMERAL ERROR]: Ephemeral cannot be applied to none interaction messages");
+   }
+
    if (paginationData.contextType === ContextType.Message) {
       if (!paginationData.context.channel) { throw new Error("[CHANNEL ERROR]: Channel is not accessible"); }
 

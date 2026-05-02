@@ -51,7 +51,7 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
       }
 
       if ((paginationData.context.type === ContextType.Interaction && paginationData.settings.interactionEphemeral) || paginationData.context.flags == MessageFlags.Ephemeral) {
-         payload.flags.push(MessageFlags.Ephemeral);
+         payload.flags = payload.flags | MessageFlags.Ephemeral;
       }
 
       return payload;

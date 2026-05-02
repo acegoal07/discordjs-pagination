@@ -13,8 +13,8 @@ module.exports = class ContainerPageBuilder extends ContainerBuilder {
 
       /**
        * These are flags that are added
-       * @type {MessageFlags[]}
+       * @type {MessageFlags}
        */
-      this.pageFlags = [MessageFlags.IsComponentsV2];
+      this.pageFlags = MessageFlags.IsComponentsV2;
    }
 }

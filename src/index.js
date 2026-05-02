@@ -1,5 +1,4 @@
-const { Message } = require('discord.js'),
-   { ContextType, ButtonAction, TimeoutEnding } = require('./assets/enums/Enums'),
+const { ContextType, ButtonAction, TimeoutEnding } = require('./assets/enums/Enums'),
    PaginationData = require('./assets/typedef/PaginationData'),
    EmbedPageBuilder = require('./assets/builders/EmbedPageBuilder'),
    ImagePageBuilder = require('./assets/builders/ImagePageBuilder'),
@@ -59,16 +58,16 @@ class Pagination {
 
    /**
     * Set's the context to be used for the pagination
-    * @param {import('discord.js').Interaction | import('discord.js').Message} context
+    * @param {import('discord.js').Message | import('discord.js').Interaction} context
     * @returns {Pagination}
     */
    setContext(context) {
-      if (context instanceof Message) {
+      if (context?.content) {
          this.paginationData.contextType = ContextType.Message;
-      } else if (context.commandType == null) {
-         throw new TypeError("[CONTEXT ERROR]: The context that has been provided is neither a interaction or message");
-      } else {
+      } else if (context?.isCommand?.()) {
          this.paginationData.contextType = ContextType.Interaction;
+      } else {
+         throw new TypeError("[CONTEXT ERROR]: The context that has been provided is neither a interaction or message");
       }
 
       this.paginationData.context = context;
@@ -84,10 +83,13 @@ class Pagination {
    setPages(pages = []) {
       if (!Array.isArray(pages)) { throw new TypeError("[PAGE ERROR]: The pages you have provided is not an Array"); }
       if (pages.length === 0) { throw new Error("[PAGE ERROR]: No Pages have been provided") }
-      if ((pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder || page instanceof ContainerPageBuilder).length == 0)) { throw new TypeError("[PAGE ERROR]: There are no compatible pages provided"); }
-      if (pages.some(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder) && pages.some(page => page instanceof ContainerPageBuilder)) { throw new Error("[PAGE ERROR]: You are not able to combine components v2 pages and normal pages"); }
 
-      this.paginationData.pages = pages;
+      const filteredPages = pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder || page instanceof ContainerPageBuilder);
+
+      if (filteredPages.length == 0) { throw new TypeError("[PAGE ERROR]: There are no compatible pages provided"); }
+      if (filteredPages.some(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder) && filteredPages.some(page => page instanceof ContainerPageBuilder)) { throw new Error("[PAGE ERROR]: You are not able to combine components v2 pages and normal pages"); }
+
+      this.paginationData.pages = filteredPages;
 
       return this;
    }
