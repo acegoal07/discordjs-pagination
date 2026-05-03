@@ -72,23 +72,25 @@ module.exports = async function messageHandler(paginationData) {
    });
 
    collector.on("end", async () => {
-      await paginationData.context.channel.messages.fetch({ message: pagination.id })
-         .then(async (i) => {
-            switch (paginationData.settings.timeoutEnding) {
-               case TimeoutEnding.DeleteButtons:
-                  await i.edit({ components: [] });
-                  break;
-               case TimeoutEnding.DeletePagination:
-                  pagination.delete();
-                  break;
-               case TimeoutEnding.DisableButtons:
-                  disableButtons(paginationData);
-                  await i.edit(pagePayloadBuilder(paginationData, pagePosition));
-                  break;
-               default:
-                  throw new Error('[TIMEOUT ENDING ERROR]: Invalid timeout ending type');
+      switch (paginationData.settings.timeoutEnding) {
+         case TimeoutEnding.DeleteButtons:
+            if (pagination.editable) {
+               await pagination.edit({ components: [] }).catch(() => { return; });
             }
-         })
-         .catch(() => { return; });
+            break;
+         case TimeoutEnding.DeletePagination:
+            if (pagination.deletable) {
+               await pagination.delete().catch(() => { return; });
+            }
+            break;
+         case TimeoutEnding.DisableButtons:
+            if (pagination.editable) {
+               disableButtons(paginationData);
+               await pagination.edit(pagePayloadBuilder(paginationData, pagePosition)).catch(() => { return; });
+            }
+            break;
+         default:
+            throw new Error('[TIMEOUT ENDING ERROR]: Invalid timeout ending type');
+      }
    });
 }

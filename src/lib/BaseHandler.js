@@ -31,7 +31,7 @@ module.exports = async function baseHandler(paginationData) {
       await messageHandler(paginationData);
    } else if (paginationData.contextType === ContextType.Interaction) {
       if (!paginationData.context.deferred) {
-         await paginationData.context.deferReply(paginationData.settings.interactionEphemeral ? { flags: MessageFlags.Ephemeral } : null);
+         await paginationData.context.deferReply(paginationData.settings.interactionEphemeral ? { flags: MessageFlags.Ephemeral } : {});
       }
 
       if (paginationData.pages.length < 2) {
