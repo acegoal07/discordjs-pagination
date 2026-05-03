@@ -20,7 +20,6 @@ module.exports = class PageButtonBuilder extends ButtonBuilder {
     */
    setAction(action = null) {
       this.action = action;
-
       return this;
    }
 }

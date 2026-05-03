@@ -24,7 +24,6 @@ module.exports = class TextPageBuilder {
     */
    setText(text) {
       this.text = text.trim();
-
       return this;
    }
 }

@@ -29,7 +29,6 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
     */
    setAttachment(attachment, attachmentData) {
       this.attachment = new AttachmentBuilder(attachment, attachmentData);
-
       return this;
    }
 }

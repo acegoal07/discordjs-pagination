@@ -62,7 +62,9 @@ module.exports = async function interactionHandler(paginationData) {
             }
             break;
          case ButtonAction.Delete:
-            pagination.delete();
+            if (pagination.deletable) {
+               pagination.delete().catch(() => { });
+            }
             collector.stop();
             break;
          default:

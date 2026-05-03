@@ -32,7 +32,7 @@ yarn add @acegoal07/discordjs-pagination
 ### Improvements over V1
 - Added support for multiple page types such as embed pages, text pages and image pages at the same time instead of just one type at a time
 - Adds support for custom button layouts allowing you to decide the order in which the buttons go in
-- Cleaner and more optimised codebase allowing for better maintainability and easier to add new features in the future#
+- Cleaner and more optimised codebase allowing for better maintainability and easier to add new features in the future
 - Improves the wrapper cutting down on unnecessary functions
 
 You can find information on how to use this package on the github wiki which can be found <a href="https://github.com/acegoal07/discordjs-pagination/wiki">here</a>

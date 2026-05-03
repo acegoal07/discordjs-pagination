@@ -1,6 +1,6 @@
 {
   "name": "@acegoal07/discordjs-pagination",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple pagination for Discord.js",
   "main": "index.js",
   "types": "index.d.ts",
@@ -30,7 +30,7 @@
   "scripts": {
     "build": "npm run buildTypes && npm run tscBuild && npm run copyFiles",
     "build+publish": "npm run build && cd dist && npm publish",
-    "buildTypes": "npx -p typescript tsc src/index.js --declaration --allowJs --emitDeclarationOnly --outDir types --ignoreConfig",
+    "buildTypes": "npx -p typescript tsc --declaration --allowJs --emitDeclarationOnly --outDir types",
     "tscBuild": "npx tsc",
     "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
   },
