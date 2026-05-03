@@ -198,7 +198,3 @@ If you do not call `.setButtons(...)`, buttons are generated automatically:
 
 - Always: `Back`, `Next`
 - If pages are greater than 3: `Start`, `End` are also added
-
-## See Also
-
-- Home page: [Home](./Home.md)

@@ -101,6 +101,5 @@ await new Pagination()
 
 ## Next
 
-- Full usage docs: [Usage](./Usage.md)
 - npm: <https://www.npmjs.com/package/@acegoal07/discordjs-pagination>
 - Repository: <https://github.com/acegoal07/discordjs-pagination>
