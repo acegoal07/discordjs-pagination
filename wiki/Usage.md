@@ -154,6 +154,8 @@ Starts pagination.
 
 ## Builders
 
+> Why builders? The builders extend the native discord.js builders and add additional functionality and information needed for the pagination to function.
+
 ### `EmbedPageBuilder`
 
 Extends discord.js `EmbedBuilder` and adds `.setAttachment(attachment, attachmentData)` for embed attachments.
