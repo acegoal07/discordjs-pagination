@@ -8,6 +8,7 @@
       "allowJs": true,
       "declaration": true,
       "emitDeclarationOnly": true,
+      "rootDir": "src",
       "outDir": "dist",
       "declarationMap": true,
       "noImplicitAny": false,

@@ -17,7 +17,7 @@
 ---
 
 <h1 id="about">About</h1>
-This pagination supports both Message and Interaction this is all handled by the package which works out which method to use depending on which interface is provided, It also adjusts multiple settings and attributes about the function as it goes on depending on information provided making it easy to use and very customisable
+This is a pagination package for discord.js that supports both message and interaction, this package is designed to be simple to use and also highly customisable, offering the ability to create multiple types of pages such as embed pages, image pages and text pages, it also support custom button layouts allowing you to decide the order in which the buttons go in allowing for as much flexibility and customisability as possible with plans to add more features to improve and expand the package.
 
 ### To download the package use
 npm
@@ -29,9 +29,10 @@ yarn
 yarn add @acegoal07/discordjs-pagination
 ```
 
-### Addition info
-The interaction pagination supports deferred interactions but you do not need to defer the interaction yourself as the pagination does it automatically if it is not deferred
+### Improvements over V1
+- Added support for multiple page types such as embed pages, text pages and image pages at the same time instead of just one type at a time
+- Adds support for custom button layouts allowing you to decide the order in which the buttons go in
+- Cleaner and more optimised codebase allowing for better maintainability and easier to add new features in the future#
+- Improves the wrapper cutting down on unnecessary functions
 
 You can find information on how to use this package on the github wiki which can be found <a href="https://github.com/acegoal07/discordjs-pagination/wiki">here</a>
-
-If your interested in supporting my projects you can find donation options <a href="https://acegoal07.dev/donate">here</a>

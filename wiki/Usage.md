@@ -1,336 +1,200 @@
-# Required functions breakdown
-> These are breakdowns of what the functions do and how to use them
-* <a href="#setPortal">`setPortal`</a> - This is used to set the way the pagination is going to interact with discord.js
-* <a href="#setButtonList">`setButtonList`</a> - This is used to set the buttons to be used by the pagination
-* <a href="#setPageList">`setPageList`</a> - This is used to set the pages used in the pagination
-* <a href="#setImageList">`setImageList`</a> - This is used to set the images used for the pagination 
-* <a href="#setAttachmentList"> `setAttachmentList`</a> - This is used to set the attachment list for the embeds
-* <a href="#paginate">`paginate`</a> - This is used run the pagination
+# Usage
 
-***
-## `setPortal`
-> This is used to set the way the pagination is going to interact with discord.js
+This page explains how to use `@acegoal07/discordjs-pagination`.
 
-**Parameters**
-* `portal` - This is the interface type either interaction or message
-* `settings` - This is an object containing additional settings for the pagination
+## Import
 
-**Example**
 ```js
-// Message example
-.setPortal(message)
-// Interaction example
-.setPortal(interaction)
-// Settings example
-.setPortal(interaction, {interaction_ephemeral})
+const {
+	Pagination,
+	EmbedPageBuilder,
+	ImagePageBuilder,
+	TextPageBuilder,
+	ContainerPageBuilder,
+	PageButtonBuilder,
+	ButtonAction,
+	TimeoutEnding
+} = require('@acegoal07/discordjs-pagination');
 ```
 
-***
-## `setButtonList`
-> This is used to set the buttons to be used by the pagination
+## Basic Flow
 
-**Parameters**
-* `buttonList` - This is the interface type either interaction or message
+1. Create a new `Pagination()` instance.
+2. Set context with `.setContext(interaction)`.
+3. Optionally configure settings using `.config(...)`.
+4. Set pages using `.setPages([...])`.
+5. Optionally set custom buttons with `.setButtons([...])`.
+6. Run `.paginate()`.
 
-**Example**
+## Full Interaction Example
+
 ```js
-// Using const
-const ButtonList = [
-   new ButtonBuilder()
-      .setCustomId("previousbtn")
-      .setLabel("Previous")
-      .setStyle("Danger"),
-   new ButtonBuilder()
-      .setCustomId("nextbtn")
-      .setLabel("Next")
-      .setStyle("Success")
-]
-.setButtonList(buttonList)
-// Inline
-.setButtonList([
-   new ButtonBuilder()
-      .setCustomId("previousbtn")
-      .setLabel("Previous")
-      .setStyle("Danger"),
-   new ButtonBuilder()
-      .setCustomId("nextbtn")
-      .setLabel("Next")
-      .setStyle("Success")
-])
+const { ButtonStyle } = require('discord.js');
+const {
+	Pagination,
+	EmbedPageBuilder,
+	ImagePageBuilder,
+	TextPageBuilder,
+	ContainerPageBuilder,
+	PageButtonBuilder,
+	ButtonAction,
+	TimeoutEnding
+} = require('@acegoal07/discordjs-pagination');
+
+await new Pagination()
+	.setContext(interaction) // Can be a Message or an Interaction
+	.config({
+		timeout: 30000,
+		timeoutEnding: TimeoutEnding.DisableButtons,
+		interactionEphemeral: false,
+		authorSpecific: true
+	})
+	.setButtons([
+		new PageButtonBuilder()
+			.setAction(ButtonAction.Back)
+			.setCustomId('pagination_back')
+			.setLabel('Back')
+			.setStyle(ButtonStyle.Secondary),
+		new PageButtonBuilder()
+			.setAction(ButtonAction.Next)
+			.setCustomId('pagination_next')
+			.setLabel('Next')
+			.setStyle(ButtonStyle.Primary)
+	])
+	// None components v2 pages example
+	.setPages([
+		new EmbedPageBuilder()
+			.setTitle('Welcome')
+			.setDescription('This is an embed page.'),
+		new EmbedPageBuilder()
+			.setTitle('Embed with attachment')
+			.setDescription('This embed uses an attached image file.')
+			.setAttachment('./assets/example-image.png', { name: 'example-image.png' })
+			.setImage('attachment://example-image.png'),
+		new ImagePageBuilder().setImage('./assets/example-image.png', { name: 'example-image.png' }),
+		new TextPageBuilder().setText('This is a text page.')
+	])
+	// Components v2 pages example
+	.setPages([
+		new ContainerPageBuilder()
+			.addTextDisplayComponents((textDisplay) =>
+				textDisplay.setContent(
+					'this is a container page'
+				)
+			)
+	])
+	.paginate();
 ```
 
-***
-## `setPageList`
-> This is used to set the pages used in the pagination
+## API Reference
 
-**Parameters**
-* `pageList` - This is an array of EmbedBuilders
+### `.setContext(context)`
 
-**Example**
-```js
-// Using const
-const pageList = [
-   new EmbedBuilder()
-      .setTitle("Page 1")
-      .setDescription("This is page 1"),
-   new EmbedBuilder()
-      .setTitle("Page 2")
-      .setDescription("This is page 2")
-]
-.setPageList(pageList)
-// Inline
-.setPageList([
-   new EmbedBuilder()
-      .setTitle("Page 1")
-      .setDescription("This is page 1"),
-   new EmbedBuilder()
-      .setTitle("Page 2")
-      .setDescription("This is page 2")
-])
-```
+Sets the pagination context.
 
-***
-## `setImageList`
-> This is used to set the images for the pagination, This replace setPageList
+- Accepts: discord.js `Interaction` or `Message`
+- Required: yes
+- Returns: `Pagination`
 
-**Parameters**
-* `imageList` - This is an array of AttachmentBuilders
+### `.config(settings)`
 
-**Example**
-```js
-// Using const
-const imageList = [
-   new AttachmentBuilder("url"),
-   new AttachmentBuilder("path")
-]
-.setImageList(imageList)
-// Inline
-.setImageList([
-   new AttachmentBuilder("url"),
-   new AttachmentBuilder("path")
-])
-```
+Configures runtime behaviour.
 
-***
-## `setAttachmentList`
-> This is used to set the attachment list for the embed that can then be used for images
+- Accepts: object
+- Required: no
+- Returns: `Pagination`
 
-**Parameters**
-* `attachmentList`
+Available options:
 
-**Example**
-```js
-// Using const
-const attachmentList = [
-   new AttachmentBuilder(`img1.jpg`),
-   new AttachmentBuilder(`img2.jpg`)
-]
-.setAttachmentList(attachmentList)
-// Inline
-.setAttachmentList([
-   new AttachmentBuilder(`img1.jpg`),
-   new AttachmentBuilder(`img2.jpg`)
-])
-```
+- `timeout` (number, default: `20000`)
+- `timeoutEnding` (`TimeoutEnding`, default: `TimeoutEnding.DisableButtons`)
+- `interactionEphemeral` (boolean, default: `false`)
+- `authorSpecific` (boolean, default: `false`)
+- `loop` (boolean, default: `false`)
 
-***
-## `paginate`
-> This is used run the pagination for all the settings to work the paginate function need to be at the end of the functions
+### `.setPages(pages)`
 
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-   .setButtonList(buttonList)
-   .paginate();
-```
+Sets page data.
 
-***
+- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, and/or `ContainerPageBuilder`
+- Required: yes
+- Returns: `Pagination`
 
-# Option functions breakdown
-> This is a breakdown of functions that are used to enable or edit options
-* <a href="#setTimeout">`setTimeout`</a> - This options is used to edit the default time before the buttons are disabled on the pagination
-* <a href="#setProgressBar">`setProgressBar`</a> - This option is used to enable the progressbar on the pagination and also edit the settings
-* <a href="#enableReplyMessage">`enableReplyMessage`</a> - This function enables replyMessage for the pagination
-* <a href="#enableAutoDelete">`enableAutoDelete`</a> - This function enables auto delete for paginations meaning when the timeout ends the pagination is deleted automatically
-* <a href="#enablePrivateReply">`enablePrivateReply`</a> - This function private reply which makes it so all paginations are sent as private messages to the user
-* <a href="#enableAuthorIndependent">`enableAuthorIndependent`</a> - This function enables author independent which makes it so only the user of the pagination can use the buttons
-* <a href="#enableAutoButton">`enableAutoButton`</a> - This function enables autoButton which automattic creates and layouts out buttons depending on how many pages you provided
-* <a href="#enableSelectMenu">`enableSelectMenu`</a> - This function enables selectMenu which replaces the buttons as the way traversing the pages
-* <a href="#disableDisabledButtons">`disableDisabledButtons`</a> - Disables the buttons being disabled and re applied to the pagination after the timeout ends
+Validation behaviors:
 
-***
-## `setTimeout`
-> This options is used to edit the default time before the buttons are disabled on the pagination
+- Throws if input is not an array
+- Throws if array is empty
+- Throws if array contains no compatible page builder instances
+- Throws if `ContainerPageBuilder` is used with another page type it isn't compatible with
 
-**Parameters**
-* `timeout` - This is the amount of time in milliseconds
+### `.setButtons(buttons)`
 
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-   .setButtonList(buttonList)
+Sets custom button layout.
 
-   .setTimeout(15000)
+- Accepts: array of `PageButtonBuilder`
+- Required: no
+- Returns: `Pagination`
 
-   .paginate();
-```
+Validation behaviors:
 
-***
-## `setProgressBar`
-> This option is used to enable the progressbar on the pagination and also edit the settings
+- Throws if input is not an array
+- Throws if fewer than 2 valid buttons are provided
+- Throws if no `ButtonAction.Next` button exists
+- Throws if no `ButtonAction.Back` button exists
 
-**Parameters**
-* `slider` - This is an optional setting to change the slider icons used
-* `bar` - This is an optional setting to change the bar icons used
+If omitted, default buttons are auto-generated.
 
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-   .setButtonList(buttonList)
+### `.paginate()`
 
-   // Enabled without custom icons
-   .setProgressBar()
+Starts pagination.
 
-   // Enabled with custom icons
-   .setProgressBar({slider: "▣", bar: "▢"})
+- Accepts: no arguments
+- Required: yes
+- Returns: `Promise`
 
-   .paginate();
-```
+## Builders
 
-***
-## `enableReplyMessage`
-> This function enables replyMessage for the pagination
+> Why builders? The builders extend the native discord.js builders and add additional functionality and information needed for the pagination to function.
 
-**Info**
-> This setting can't be used with interaction paginations as they are already reply as default 
+### `EmbedPageBuilder`
 
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-   .setButtonList(buttonList)
+Extends discord.js `EmbedBuilder` and adds `.setAttachment(attachment, attachmentData)` for embed attachments.
 
-   // Enables replyMessage
-   .enableReplyMessage()
+### `ImagePageBuilder`
 
-   .paginate();
-```
-## `enableAutoDelete`
-> This function enables auto delete for paginations meaning when the timeout ends the pagination is deleted automatically
+Provides `.setImage(attachment, attachmentData)` for image-only pages.
 
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-   .setButtonList(buttonList)
+### `TextPageBuilder`
 
-   // Enables autoDelete
-   .enableAutoDelete()
+Provides `.setText(text)` for text-only pages.
 
-   .paginate();
-```
-## `enablePrivateReply`
-> This function enables private reply which makes it so all paginations are sent as private messages to the user
+### `ContainerPageBuilder`
 
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-   .setButtonList(buttonList)
+Extends `ContainerBuilder` and allows users to build components v2 pages. Not compatible with other page types.
 
-   // Enables privateReply
-   .enablePrivateReply()
+### `PageButtonBuilder`
 
-   .paginate();
-```
-## `enableAuthorIndependent`
-> This function enables author independent which makes it so only the user of the pagination can use the buttons
+Extends discord.js `ButtonBuilder` and adds `.setAction(...)`.
 
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-   .setButtonList(buttonList)
+Supported actions:
 
-   // Enables author independent
-   .enableAuthorIndependent()
+- `ButtonAction.Next`
+- `ButtonAction.Back`
+- `ButtonAction.Start`
+- `ButtonAction.End`
+- `ButtonAction.Delete`
 
-   .paginate();
-```
-## `enableAutoButton`
-> This function enables autoButton which automattic creates and layouts out buttons depending on how many pages you provided
+## Timeout Behaviour
 
-**Info**
-> This setting replaces the required function buttonList because when enables it creates a button list when running
+`timeoutEnding` controls what happens when the collector times out:
 
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
+- `TimeoutEnding.DisableButtons`: disable current buttons
+- `TimeoutEnding.DeleteButtons`: remove buttons from message
+- `TimeoutEnding.DeletePagination`: delete the pagination message
 
-   // Enable autoButton without delete button
-   .enableAutoButton()
+## Auto Buttons
 
-   // Enable autoButton with delete button
-   .enableAutoButton(true)
+If you do not call `.setButtons(...)`, buttons are generated automatically:
 
-   .paginate();
-```
-## `enableSelectMenu`
-> This function enables selectMenu which replaces the buttons as the way traversing the pages
-
-**Parameters**
-* `labels` - This option allows you to provide an array with custom names for the selectMenu
-* `useTitle` - This option allows you to make it so the pagination grabs the titles of the pages and use them as the names for selectMenu
-
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-
-   // Enable selectMenu without any options
-   .enableSelectMenu()
-
-   // Enable selectMenu with custom labels
-   .enableSelectMenu({
-      labels: [
-         "page 1",
-         "page 2",
-         "page 3",
-         "page 4"
-      ]
-   })
-   
-   // Enable selectMenu with useTitle enabled
-   .enableSelectMenu({useTitle: true})
-
-   .paginate();
-```
-
-***
-## `disableDisabledButtons`
-> Disables the buttons being disabled and re applied to the pagination after the timeout ends
-
-**Example**
-```js
-new Pagination()
-   .setPortal()
-   .setPageList(pageList)
-   .setButtonList(buttonList)
-
-   .disableDisabledButtons()
-
-   .paginate();
-```
+- Always: `Back`, `Next`
+- If pages are greater than 3: `Start`, `End` are also added
