@@ -41,4 +41,13 @@ const TimeoutEnding = Object.freeze({
    DeleteButtons: 2
 });
 
-module.exports = { ContextType, PageType, ButtonAction, TimeoutEnding };
+/**
+ * @readonly
+ * @enum {number}
+ */
+const MessageResponseType = Object.freeze({
+   Send: 0,
+   Reply: 1
+});
+
+module.exports = { ContextType, PageType, ButtonAction, TimeoutEnding, MessageResponseType };

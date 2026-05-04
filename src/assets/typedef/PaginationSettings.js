@@ -1,4 +1,4 @@
-const { TimeoutEnding } = require('../enums/Enums');
+const { TimeoutEnding, MessageResponseType } = require('../enums/Enums');
 
 /**
  * The Pagination settings
@@ -17,7 +17,7 @@ module.exports = class PaginationSettings {
    timeoutEnding = TimeoutEnding.DisableButtons;
 
    /**
-    * Whether or not to make the pagination ephemeral
+    * Whether or not to make the interaction pagination ephemeral
     * @type {Boolean}
     */
    interactionEphemeral = false;
@@ -39,4 +39,10 @@ module.exports = class PaginationSettings {
     * @type {Boolean}
     */
    autoDeleteButton = false;
+
+   /**
+    * How the message pagination should be sent
+    * @type {MessageResponseType}
+    */
+   messageResponseType = MessageResponseType.Send;
 }

@@ -1,5 +1,5 @@
 const { MessageFlags } = require('discord.js'),
-   { ContextType } = require('../assets/enums/Enums'),
+   { ContextType, MessageResponseType } = require('../assets/enums/Enums'),
    interactionHandler = require('./InteractionHandler'),
    messageHandler = require('./MessageHandler'),
    pagePayloadBuilder = require('../assets/builders/PagePayloadBuilder'),
@@ -25,7 +25,11 @@ module.exports = async function baseHandler(paginationData) {
       if (!paginationData.context.channel) { throw new Error("[CHANNEL ERROR]: Channel is not accessible"); }
 
       if (paginationData.pages.length < 2) {
-         return paginationData.context.channel.send(pagePayloadBuilder(paginationData));
+         if (paginationData.settings.messageResponseType == MessageResponseType.Reply) {
+            return paginationData.context.reply(pagePayloadBuilder(paginationData));
+         } else {
+            return paginationData.context.channel.send(pagePayloadBuilder(paginationData));
+         }
       }
 
       await messageHandler(paginationData);
