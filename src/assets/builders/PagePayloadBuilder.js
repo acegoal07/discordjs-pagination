@@ -43,7 +43,11 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
       }
 
       if (paginationData.pages.length >= 2) {
-         payload.addComponent(pageData.pageType == PageType.Container ? new ContainerBuilder().addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)) : new ActionRowBuilder().addComponents(paginationData.buttons));
+         if (PageType.Container) {
+            payload.addComponent(new ContainerBuilder().setAccentColor().addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)));
+         } else {
+            payload.addComponent(new ActionRowBuilder().addComponents(paginationData.buttons));
+         }
       }
 
       return payload;
