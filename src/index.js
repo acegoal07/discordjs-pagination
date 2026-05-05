@@ -1,4 +1,4 @@
-const { ContextType, ButtonAction, TimeoutEnding } = require('./assets/enums/Enums'),
+const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType } = require('./assets/enums/Enums'),
    PaginationData = require('./assets/typedef/PaginationData'),
    EmbedPageBuilder = require('./assets/builders/EmbedPageBuilder'),
    ImagePageBuilder = require('./assets/builders/ImagePageBuilder'),
@@ -22,7 +22,7 @@ class Pagination {
     * @param {import('./assets/typedef/PaginationSettings')}
     * @returns {Pagination}
     */
-   config({ timeout = 20000, timeoutEnding = TimeoutEnding.DisableButtons, interactionEphemeral = false, authorSpecific = false, loop = false }) {
+   config({ timeout = 20000, timeoutEnding = TimeoutEnding.DisableButtons, interactionEphemeral = false, authorSpecific = false, loop = false, messageResponseType = MessageResponseType.Send }) {
       if (Number.isNaN(timeout)) {
          throw new TypeError("[TIMEOUT ERROR]: Timeout setting is not a number");
       } else {
@@ -51,6 +51,12 @@ class Pagination {
          this.paginationData.settings.loop = loop;
       } else {
          throw new TypeError("[LOOP ERROR]: Loop setting is not a boolean");
+      }
+
+      if (typeof messageResponseType === 'number') {
+         this.paginationData.settings.messageResponseType = messageResponseType;
+      } else {
+         throw new TypeError("[MESSAGE RESPONSE TYPE ERROR]: Message response type setting is not a number");
       }
 
       return this;
@@ -131,3 +137,4 @@ module.exports.PageButtonBuilder = PageButtonBuilder;
 module.exports.ContainerPageBuilder = ContainerPageBuilder;
 module.exports.ButtonAction = ButtonAction;
 module.exports.TimeoutEnding = TimeoutEnding;
+module.exports.MessageResponseType = MessageResponseType;

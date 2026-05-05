@@ -1,6 +1,5 @@
 /**
  * @param {import('../typedef/PaginationData')} paginationData
- * @returns {void}
  */
 module.exports = function disableButtons(paginationData) {
    try {

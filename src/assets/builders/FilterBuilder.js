@@ -1,4 +1,4 @@
-const { ButtonAction, ContextType } = require('../enums/Enums')
+const { ContextType } = require('../enums/Enums')
 
 /**
  * @param {import('../typedef/PaginationData')} paginationData

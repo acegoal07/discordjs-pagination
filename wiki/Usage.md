@@ -111,6 +111,7 @@ Available options:
 - `interactionEphemeral` (boolean, default: `false`)
 - `authorSpecific` (boolean, default: `false`)
 - `loop` (boolean, default: `false`)
+- `messageResponseType` (`reply` or `send`, default: `send`)
 
 ### `.setPages(pages)`
 

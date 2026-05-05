@@ -1,5 +1,5 @@
 const { ComponentType } = require('discord.js'),
-   { ButtonAction, TimeoutEnding } = require('../assets/enums/Enums'),
+   { ButtonAction, TimeoutEnding, MessageResponseType } = require('../assets/enums/Enums'),
    filterBuilder = require('../assets/builders/FilterBuilder'),
    pagePayloadBuilder = require('../assets/builders/PagePayloadBuilder'),
    disableButtons = require('../assets/tools/DisableButtons');
@@ -9,7 +9,13 @@ const { ComponentType } = require('discord.js'),
  */
 module.exports = async function messageHandler(paginationData) {
    let pagePosition = 0;
-   const pagination = await paginationData.context.channel.send(pagePayloadBuilder(paginationData, pagePosition));
+   let pagination;
+
+   if (paginationData.settings.messageResponseType == MessageResponseType.Reply) {
+      pagination = await paginationData.context.reply(pagePayloadBuilder(paginationData, pagePosition));
+   } else {
+      pagination = await paginationData.context.channel.send(pagePayloadBuilder(paginationData, pagePosition));
+   }
 
    const collector = await pagination.createMessageComponentCollector({
       filter: filterBuilder,
