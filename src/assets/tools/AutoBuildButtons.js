@@ -3,6 +3,7 @@ const { ButtonStyle } = require('discord.js'),
    { ButtonAction } = require('../enums/Enums');
 
 /**
+ * Generates predefined buttons
  * @param {import('../typedef/PaginationData')} paginationData
  */
 module.exports = function autoBuildButtons(paginationData) {

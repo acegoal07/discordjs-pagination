@@ -1,4 +1,5 @@
 /**
+ * Disables all the buttons stored in the pagination data
  * @param {import('../typedef/PaginationData')} paginationData
  */
 module.exports = function disableButtons(paginationData) {

@@ -1,6 +1,9 @@
 const { ContainerBuilder, MessageFlags } = require("discord.js"),
    { PageType } = require("../enums/Enums");
 
+/**
+ * Used to be build a container page for the pagination
+ */
 module.exports = class ContainerPageBuilder extends ContainerBuilder {
    constructor() {
       super();

@@ -5,7 +5,7 @@ const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType } = requir
    TextPageBuilder = require('./assets/builders/TextPageBuilder'),
    ContainerPageBuilder = require('./assets/builders/ContainerPageBuilder'),
    PageButtonBuilder = require('./assets/builders/PageButtonBuilder'),
-   baseHandler = require('./lib/BaseHandler');
+   pagination = require('./lib/Pagination');
 
 /**
  * @version 2.0.0
@@ -127,10 +127,9 @@ class Pagination {
 
    /**
     * Activates the pagination
-    * @returns {void}
     */
    async paginate() {
-      await baseHandler(this.paginationData);
+      await pagination(this.paginationData);
    }
 }
 

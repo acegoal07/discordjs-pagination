@@ -1,6 +1,7 @@
 const { ContextType } = require('../enums/Enums')
 
 /**
+ * Create's the filter for the buttons
  * @param {import('../typedef/PaginationData')} paginationData
  */
 module.exports = function filterBuilder(paginationData) {

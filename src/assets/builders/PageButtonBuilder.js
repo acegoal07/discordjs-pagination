@@ -15,6 +15,7 @@ module.exports = class PageButtonBuilder extends ButtonBuilder {
    }
 
    /**
+    * Set's the action for the button
     * @param {ButtonAction} action
     * @returns {PageButtonBuilder}
     */

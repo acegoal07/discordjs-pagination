@@ -19,6 +19,7 @@ module.exports = class TextPageBuilder {
    }
 
    /**
+    * Set's the text that is sent in the text page
     * @param {String} text
     * @returns {TextPageBuilder}
     */
