@@ -5,7 +5,7 @@ const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType } = requir
    TextPageBuilder = require('./assets/builders/TextPageBuilder'),
    ContainerPageBuilder = require('./assets/builders/ContainerPageBuilder'),
    PageButtonBuilder = require('./assets/builders/PageButtonBuilder'),
-   baseHandler = require('./lib/BaseHandler');
+   pagination = require('./lib/Pagination');
 
 /**
  * @version 2.0.0
@@ -22,7 +22,7 @@ class Pagination {
     * @param {import('./assets/typedef/PaginationSettings')}
     * @returns {Pagination}
     */
-   config({ timeout = 20000, timeoutEnding = TimeoutEnding.DisableButtons, interactionEphemeral = false, authorSpecific = false, loop = false, messageResponseType = MessageResponseType.Send }) {
+   config({ timeout = 20000, timeoutEnding = TimeoutEnding.DisableButtons, interactionEphemeral = false, authorSpecific = false, loop = false, autoDeleteButton = false, messageResponseType = MessageResponseType.Send }) {
       if (Number.isNaN(timeout)) {
          throw new TypeError("[TIMEOUT ERROR]: Timeout setting is not a number");
       } else {
@@ -51,6 +51,12 @@ class Pagination {
          this.paginationData.settings.loop = loop;
       } else {
          throw new TypeError("[LOOP ERROR]: Loop setting is not a boolean");
+      }
+
+      if (typeof autoDeleteButton === 'boolean') {
+         this.paginationData.settings.autoDeleteButton = autoDeleteButton;
+      } else {
+         throw new TypeError("[AUTO DELETE BUTTON ERROR]: Auto delete button setting is not a boolean");
       }
 
       if (typeof messageResponseType === 'number') {
@@ -121,10 +127,9 @@ class Pagination {
 
    /**
     * Activates the pagination
-    * @returns {void}
     */
    async paginate() {
-      await baseHandler(this.paginationData);
+      await pagination(this.paginationData);
    }
 }
 

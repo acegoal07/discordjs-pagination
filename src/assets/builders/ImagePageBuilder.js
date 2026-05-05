@@ -20,6 +20,7 @@ module.exports = class ImagePageBuilder {
    }
 
    /**
+    * Set's the image for the page
     * @param {import('discord.js').BufferResolvable | import('node:stream').Stream} attachment
     * @param {import('discord.js').AttachmentData}
     * @returns {ImagePageBuilder}

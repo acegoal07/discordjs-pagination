@@ -3,6 +3,7 @@ const { ButtonStyle } = require('discord.js'),
    { ButtonAction } = require('../enums/Enums');
 
 /**
+ * Generates predefined buttons
  * @param {import('../typedef/PaginationData')} paginationData
  */
 module.exports = function autoBuildButtons(paginationData) {
@@ -35,6 +36,16 @@ module.exports = function autoBuildButtons(paginationData) {
                .setLabel('>>')
                .setStyle(ButtonStyle.Secondary)
                .setCustomId('end')
+         )
+      }
+
+      if (paginationData.settings.autoDeleteButton) {
+         paginationData.buttons.push(
+            new PageButtonBuilder()
+               .setAction(ButtonAction.Delete)
+               .setLabel('Del')
+               .setStyle(ButtonStyle.Danger)
+               .setCustomId('delete')
          )
       }
    } catch (error) {
