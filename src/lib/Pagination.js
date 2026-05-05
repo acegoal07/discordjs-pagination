@@ -25,6 +25,11 @@ module.exports = async function baseHandler(paginationData) {
          console.warn("[EPHEMERAL ERROR]: Ephemeral cannot be applied to none interaction messages");
       }
 
+      // Send a warming if a message response type has been changed while using interaction
+      if (paginationData.contextType == ContextType.Interaction && paginationData.settings.messageResponseType != MessageResponseType.Send) {
+         console.warn("[MESSAGE RESPONSE TYPE ERROR]: Setting a message response type does not affect interactions");
+      }
+
       // Store page position
       let pagePosition = 0;
 
