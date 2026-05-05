@@ -8,7 +8,7 @@ const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType } = requir
    pagination = require('./lib/Pagination');
 
 /**
- * @version 2.0.0
+ * @version 2.0.2
  * @license MIT
  * @author acegoal07
  */
