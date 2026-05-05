@@ -37,6 +37,16 @@ module.exports = function autoBuildButtons(paginationData) {
                .setCustomId('end')
          )
       }
+
+      if (paginationData.settings.autoDeleteButton) {
+         paginationData.buttons.push(
+            new PageButtonBuilder()
+               .setAction(ButtonAction.Delete)
+               .setLabel('Del')
+               .setStyle(ButtonStyle.Danger)
+               .setCustomId('delete')
+         )
+      }
    } catch (error) {
       throw new Error("[AUTO BUILD BUTTONS ERROR]:", error);
    }

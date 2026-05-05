@@ -14,7 +14,7 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
       switch (paginationData.pages[pagePosition].pageType) {
          case PageType.Embed:
             payload = new PagePayloadData({
-               embed: pageData,
+               embed: pageData.setFooter({ text: `page ${pagePosition + 1}/${paginationData.pages.length}` }),
                file: pageData.attachment
             });
             break;
@@ -43,8 +43,8 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
       }
 
       if (paginationData.pages.length >= 2) {
-         if (PageType.Container) {
-            payload.addComponent(new ContainerBuilder().setAccentColor().addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)));
+         if (pageData.pageType == PageType.Container) {
+            payload.addComponent(new ContainerBuilder().addTextDisplayComponents(text => text.setContent(`page ${pagePosition + 1}/${paginationData.pages.length}`)).addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)));
          } else {
             payload.addComponent(new ActionRowBuilder().addComponents(paginationData.buttons));
          }
