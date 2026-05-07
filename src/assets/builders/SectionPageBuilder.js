@@ -1,11 +1,8 @@
-const { AttachmentBuilder, EmbedBuilder } = require('discord.js'),
-   { PageType } = require('../enums/Enums'),
-   PagePayloadData = require("../typedef/PagePayloadData");
+const { SectionBuilder } = require("discord.js"),
+   { PageType } = require("../enums/Enums"),
+   PagePayloadData = require("../typedef/PagePayloadData")
 
-/**
- * Used to build embed pages for the pagination
- */
-module.exports = class EmbedPageBuilder extends EmbedBuilder {
+module.exports = class SectionPageBuilder extends SectionBuilder {
    constructor() {
       super();
 
@@ -13,7 +10,7 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
        * Defines the type of page it is
        * @type {PageType}
        */
-      this.pageType = PageType.Standard;
+      this.pageType = PageType.ComponentsV2;
 
       /**
        * A attachment that can be used in the embed
@@ -39,8 +36,9 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
     */
    toPayload() {
       return new PagePayloadData({
-         embed: this,
-         file: this.attachment
+         component: this,
+         file: this.attachment,
+         flag: this.pageFlags
       })
    }
 }

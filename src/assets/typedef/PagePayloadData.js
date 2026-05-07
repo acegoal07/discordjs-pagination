@@ -4,6 +4,14 @@ const { MessageFlags } = require("discord.js");
  * The payload data that is sent to discord for the pages
  */
 module.exports = class PagePayloadData {
+   /**
+    * @param {Object} constructor
+    * @param {string} [constructor.content]
+    * @param {import('discord.js').EmbedBuilder} [constructor.embed]
+    * @param {import('discord.js').ActionRowBuilder | import('discord.js').ContainerBuilder} [constructor.component]
+    * @param {import('discord.js').AttachmentBuilder} [constructor.file]
+    * @param {number} [constructor.flag]
+    */
    constructor({ content, embed, component, file, flag }) {
       /**
        * @type {String}

@@ -118,7 +118,7 @@ Available options:
 
 Sets page data.
 
-- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, and/or `ContainerPageBuilder`
+- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, `ContainerPageBuilder`,`TextDisplayPageBuilder`, and/or `SectionPageBuilder` instances
 - Required: yes
 - Returns: `Pagination`
 
@@ -127,7 +127,18 @@ Validation behaviors:
 - Throws if input is not an array
 - Throws if array is empty
 - Throws if array contains no compatible page builder instances
-- Throws if `ContainerPageBuilder` is used with another page type it isn't compatible with
+- Throws if standard pages are mixed with components v2 pages this is due to limitation in how discord handles components V2 pages stopping the switching between the two types of pages in the same pagination session.
+
+Page type breakdown:
+
+| Page Type             | Builder Class           |
+| --------------------- | ------------------------|
+| Standard           	| `EmbedPageBuilder`      |
+| Standard  				| `ImagePageBuilder`      |
+| Standard     			| `TextPageBuilder`       |
+| Components v2      	| `ContainerPageBuilder`  |
+| Components v2    		| `TextDisplayPageBuilder`|
+| Components v2         | `SectionPageBuilder`    |
 
 ### `.setButtons(buttons)`
 

@@ -8,6 +8,6 @@ module.exports = function disableButtons(paginationData) {
          button.setDisabled(true);
       });
    } catch (error) {
-      throw new Error("[DISABLE BUTTONS ERROR]:", error);
+      throw new Error("[DISABLE BUTTONS ERROR]:", { cause: error });
    }
 }

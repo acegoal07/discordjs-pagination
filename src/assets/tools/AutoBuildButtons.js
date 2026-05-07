@@ -49,6 +49,6 @@ module.exports = function autoBuildButtons(paginationData) {
          )
       }
    } catch (error) {
-      throw new Error("[AUTO BUILD BUTTONS ERROR]:", error);
+      throw new Error("[AUTO BUILD BUTTONS ERROR]:", { cause: error });
    }
 }

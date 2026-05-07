@@ -20,7 +20,7 @@ module.exports = class PaginationData {
    contextType = 0;
 
    /**
-    * @type {Array<import('../builders/EmbedPageBuilder') | import('../builders/ImagePageBuilder') | import('../builders/TextPageBuilder') | import('../builders/ContainerPageBuilder'))>}
+    * @type {Array<import('../builders/EmbedPageBuilder') | import('../builders/ImagePageBuilder') | import('../builders/TextPageBuilder') | import('../builders/ContainerPageBuilder') | import('../builders/TextDisplayPageBuilder') | import('../builders/SectionPageBuilder')>}
     */
    pages = [];
 

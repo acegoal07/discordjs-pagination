@@ -1,11 +1,8 @@
-const { ContainerBuilder, MessageFlags } = require("discord.js"),
+const { TextDisplayBuilder } = require("discord.js"),
    { PageType } = require("../enums/Enums"),
-   PagePayloadData = require("../typedef/PagePayloadData");
+   PagePayloadData = require("../typedef/PagePayloadData")
 
-/**
- * Used to be build a container page for the pagination
- */
-module.exports = class ContainerPageBuilder extends ContainerBuilder {
+module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
    constructor() {
       super();
 
@@ -14,12 +11,6 @@ module.exports = class ContainerPageBuilder extends ContainerBuilder {
        * @type {PageType}
        */
       this.pageType = PageType.ComponentsV2;
-
-      /**
-       * These are flags that are added
-       * @type {MessageFlags}
-       */
-      this.pageFlags = MessageFlags.IsComponentsV2;
    }
 
    /**
