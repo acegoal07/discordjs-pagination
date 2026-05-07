@@ -1,10 +1,10 @@
-const { ActionRowBuilder, MessageFlags, ContainerBuilder } = require('discord.js'),
-   { ContextType, PageType } = require('../enums/Enums'),
-   PagePayloadData = require('../typedef/PagePayloadData');
+const { ActionRowBuilder, MessageFlags, ContainerBuilder } = require("discord.js"),
+   { ContextType, PageType } = require("../../enums/Enums"),
+   PagePayloadData = require("../../typedef/PagePayloadData");
 
 /**
  * Build's the payload sent to discord for the pages
- * @param {import('../typedef/PaginationData')} paginationData
+ * @param {import("../typedef/PaginationData")} paginationData
  * @param {Number} pagePosition
  * @returns {PagePayloadData}
  */

@@ -7,29 +7,29 @@ module.exports = class PagePayloadData {
    /**
     * @param {Object} constructor
     * @param {string} [constructor.content]
-    * @param {import('discord.js').EmbedBuilder | import('discord.js').EmbedBuilder[]} [constructor.embed]
-    * @param {import('discord.js').ActionRowBuilder | import('discord.js').ContainerBuilder | import('discord.js').ActionRowBuilder[] | import('discord.js').ContainerBuilder[]} [constructor.component]
-    * @param {import('discord.js').AttachmentBuilder | import('discord.js').AttachmentBuilder[]} [constructor.file]
+    * @param {import("discord.js").EmbedBuilder | import("discord.js").EmbedBuilder[]} [constructor.embed]
+    * @param {import("discord.js").ActionRowBuilder | import("discord.js").ContainerBuilder | import("discord.js").ActionRowBuilder[] | import("discord.js").ContainerBuilder[]} [constructor.component]
+    * @param {import("discord.js").AttachmentBuilder | import("discord.js").AttachmentBuilder[]} [constructor.file]
     * @param {number} [constructor.flag]
     */
    constructor({ content, embed, component, file, flag }) {
       /**
        * @type {String}
        */
-      this.content = content || '';
+      this.content = content || "";
 
       /**
-       * @type {Array<import('discord.js').EmbedBuilder>}
+       * @type {Array<import("discord.js").EmbedBuilder>}
        */
       this.embeds = embed ? [].push(embed) : [];
 
       /**
-       * @type {Array<import('discord.js').ActionRowBuilder | import('discord.js').ContainerBuilder>}
+       * @type {Array<import("discord.js").ActionRowBuilder | import("discord.js").ContainerBuilder>}
        */
       this.components = component ? [].push(component) : [];
 
       /**
-       * @type {Array<import('discord.js').AttachmentBuilder>}
+       * @type {Array<import("discord.js").AttachmentBuilder>}
        */
       this.files = file ? [].push(file) : [];
 
@@ -41,7 +41,7 @@ module.exports = class PagePayloadData {
 
    /**
     * Adds a component to the page payload
-    * @param {import('discord.js').ActionRowBuilder | import('discord.js').ContainerBuilder} component
+    * @param {import("discord.js").ActionRowBuilder | import("discord.js").ContainerBuilder} component
     * @returns {PagePayloadData}
     */
    addComponent(component) {

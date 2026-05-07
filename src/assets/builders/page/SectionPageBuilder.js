@@ -1,6 +1,6 @@
 const { SectionBuilder, MessageFlags } = require("discord.js"),
-   { PageType } = require("../enums/Enums"),
-   PagePayloadData = require("../typedef/PagePayloadData")
+   { PageType } = require("../../enums/Enums"),
+   PagePayloadData = require("../../typedef/PagePayloadData")
 
 module.exports = class SectionPageBuilder extends SectionBuilder {
    constructor() {
@@ -14,7 +14,7 @@ module.exports = class SectionPageBuilder extends SectionBuilder {
 
       /**
        * A attachment that can be used in the embed
-       * @type {import('discord.js').AttachmentBuilder}
+       * @type {import("discord.js").AttachmentBuilder}
        */
       this.attachment = null;
 
@@ -28,8 +28,8 @@ module.exports = class SectionPageBuilder extends SectionBuilder {
 
    /**
     * Set's an attachment that can be used in the embed
-    * @param {import('discord.js').BufferResolvable | import('node:stream').Stream} attachment
-    * @param {import('discord.js').AttachmentData} attachmentData
+    * @param {import("discord.js").BufferResolvable | import("node:stream").Stream} attachment
+    * @param {import("discord.js").AttachmentData} attachmentData
     * @returns {EmbedBuilder}
     */
    setAttachment(attachment, attachmentData) {

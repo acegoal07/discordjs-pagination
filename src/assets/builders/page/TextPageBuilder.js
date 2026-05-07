@@ -1,5 +1,5 @@
-const { PageType } = require('../enums/Enums'),
-   PagePayloadData = require("../typedef/PagePayloadData");
+const { PageType } = require("../../enums/Enums"),
+   PagePayloadData = require("../../typedef/PagePayloadData");
 
 /**
  * Used to build image pages for the pagination

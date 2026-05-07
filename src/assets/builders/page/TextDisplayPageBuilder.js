@@ -1,6 +1,6 @@
 const { TextDisplayBuilder, MessageFlags } = require("discord.js"),
-   { PageType } = require("../enums/Enums"),
-   PagePayloadData = require("../typedef/PagePayloadData")
+   { PageType } = require("../../enums/Enums"),
+   PagePayloadData = require("../../typedef/PagePayloadData")
 
 module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
    constructor() {

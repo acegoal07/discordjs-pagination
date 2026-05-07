@@ -1,6 +1,6 @@
 const { MediaGalleryBuilder, MessageFlags } = require("discord.js"),
-   { PageType } = require("../enums/Enums"),
-   PagePayloadData = require("../typedef/PagePayloadData")
+   { PageType } = require("../../enums/Enums"),
+   PagePayloadData = require("../../typedef/PagePayloadData")
 
 module.exports = class MediaGalleryPageBuilder extends MediaGalleryBuilder {
    constructor() {
@@ -14,7 +14,7 @@ module.exports = class MediaGalleryPageBuilder extends MediaGalleryBuilder {
 
       /**
        * A attachment that can be used in the embed
-       * @type {import('discord.js').AttachmentBuilder[]}
+       * @type {import("discord.js").AttachmentBuilder[]}
        */
       this.attachments = [];
 
@@ -27,7 +27,7 @@ module.exports = class MediaGalleryPageBuilder extends MediaGalleryBuilder {
 
    /**
     * Set's an attachment that can be used in the embed
-    * @param {import('discord.js').AttachmentBuilder} attachments
+    * @param {import("discord.js").AttachmentBuilder} attachments
     * @returns {EmbedBuilder}
     */
    setAttachments(attachments) {

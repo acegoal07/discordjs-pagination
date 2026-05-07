@@ -1,6 +1,6 @@
-const { AttachmentBuilder, EmbedBuilder } = require('discord.js'),
-   { PageType } = require('../enums/Enums'),
-   PagePayloadData = require("../typedef/PagePayloadData");
+const { AttachmentBuilder, EmbedBuilder } = require("discord.js"),
+   { PageType } = require("../../enums/Enums"),
+   PagePayloadData = require("../../typedef/PagePayloadData");
 
 /**
  * Used to build embed pages for the pagination
@@ -24,8 +24,8 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
 
    /**
     * Set's an attachment that can be used in the embed
-    * @param {import('discord.js').BufferResolvable | import('node:stream').Stream} attachment
-    * @param {import('discord.js').AttachmentData} attachmentData
+    * @param {import("discord.js").BufferResolvable | import("node:stream").Stream} attachment
+    * @param {import("discord.js").AttachmentData} attachmentData
     * @returns {EmbedBuilder}
     */
    setAttachment(attachment, attachmentData) {

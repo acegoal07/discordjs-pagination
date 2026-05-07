@@ -1,41 +1,41 @@
-const { ButtonStyle } = require('discord.js'),
-   PageButtonBuilder = require('../../assets/builders/PageButtonBuilder'),
-   { ButtonAction } = require('../enums/Enums');
+const { ButtonStyle } = require("discord.js"),
+   PageButtonBuilder = require("../../assets/builders/button/PageButtonBuilder"),
+   { ButtonAction } = require("../enums/Enums");
 
 /**
  * Generates predefined buttons
- * @param {import('../typedef/PaginationData')} paginationData
+ * @param {import("../typedef/PaginationData")} paginationData
  */
 module.exports = function autoBuildButtons(paginationData) {
    try {
       paginationData.buttons = [
          new PageButtonBuilder()
             .setAction(ButtonAction.Back)
-            .setLabel('<')
+            .setLabel("<")
             .setStyle(ButtonStyle.Secondary)
-            .setCustomId('back'),
+            .setCustomId("back"),
          new PageButtonBuilder()
             .setAction(ButtonAction.Next)
-            .setLabel('>')
+            .setLabel(">")
             .setStyle(ButtonStyle.Secondary)
-            .setCustomId('next')
+            .setCustomId("next")
       ];
 
       if (paginationData.pages.length > 3) {
          paginationData.buttons.unshift(
             new PageButtonBuilder()
                .setAction(ButtonAction.Start)
-               .setLabel('<<')
+               .setLabel("<<")
                .setStyle(ButtonStyle.Secondary)
-               .setCustomId('start')
+               .setCustomId("start")
          );
 
          paginationData.buttons.push(
             new PageButtonBuilder()
                .setAction(ButtonAction.End)
-               .setLabel('>>')
+               .setLabel(">>")
                .setStyle(ButtonStyle.Secondary)
-               .setCustomId('end')
+               .setCustomId("end")
          )
       }
 
@@ -43,9 +43,9 @@ module.exports = function autoBuildButtons(paginationData) {
          paginationData.buttons.push(
             new PageButtonBuilder()
                .setAction(ButtonAction.Delete)
-               .setLabel('Del')
+               .setLabel("Del")
                .setStyle(ButtonStyle.Danger)
-               .setCustomId('delete')
+               .setCustomId("delete")
          )
       }
    } catch (error) {

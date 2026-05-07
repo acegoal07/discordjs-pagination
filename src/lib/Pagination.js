@@ -1,12 +1,12 @@
-const { MessageFlags, ComponentType } = require('discord.js'),
-   { ContextType, MessageResponseType, TimeoutEnding, ButtonAction } = require('../assets/enums/Enums'),
-   pagePayloadBuilder = require('../assets/builders/PagePayloadBuilder'),
-   AutoBuildButtons = require('../assets/tools/AutoBuildButtons'),
-   filterBuilder = require('../assets/builders/FilterBuilder'),
-   disableButtons = require('../assets/tools/DisableButtons');
+const { MessageFlags, ComponentType } = require("discord.js"),
+   { ContextType, MessageResponseType, TimeoutEnding, ButtonAction } = require("../assets/enums/Enums"),
+   pagePayloadBuilder = require("../assets/builders/payload/PagePayloadBuilder"),
+   AutoBuildButtons = require("../assets/tools/AutoBuildButtons"),
+   filterBuilder = require("../assets/builders/filter/FilterBuilder"),
+   disableButtons = require("../assets/tools/DisableButtons");
 
 /**
- * @param {import('../assets/typedef/PaginationData')} paginationData
+ * @param {import("../assets/typedef/PaginationData")} paginationData
  */
 module.exports = async function baseHandler(paginationData) {
    try {

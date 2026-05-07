@@ -1,17 +1,17 @@
-const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType, PageType } = require('./assets/enums/Enums'),
-   PaginationData = require('./assets/typedef/PaginationData'),
-   EmbedPageBuilder = require('./assets/builders/EmbedPageBuilder'),
-   ImagePageBuilder = require('./assets/builders/ImagePageBuilder'),
-   TextPageBuilder = require('./assets/builders/TextPageBuilder'),
-   ContainerPageBuilder = require('./assets/builders/ContainerPageBuilder'),
-   TextDisplayPageBuilder = require('./assets/builders/TextDisplayPageBuilder'),
-   SectionPageBuilder = require('./assets/builders/SectionPageBuilder'),
-   MediaGalleryPageBuilder = require('./assets/builders/MediaGalleryPageBuilder'),
-   PageButtonBuilder = require('./assets/builders/PageButtonBuilder'),
-   pagination = require('./lib/Pagination');
+const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType, PageType } = require("./assets/enums/Enums"),
+   PaginationData = require("./assets/typedef/PaginationData"),
+   EmbedPageBuilder = require("./assets/builders/page/EmbedPageBuilder"),
+   ImagePageBuilder = require("./assets/builders/page/ImagePageBuilder"),
+   TextPageBuilder = require("./assets/builders/page/TextPageBuilder"),
+   ContainerPageBuilder = require("./assets/builders/page/ContainerPageBuilder"),
+   TextDisplayPageBuilder = require("./assets/builders/page/TextDisplayPageBuilder"),
+   SectionPageBuilder = require("./assets/builders/page/SectionPageBuilder"),
+   MediaGalleryPageBuilder = require("./assets/builders/page/MediaGalleryPageBuilder"),
+   PageButtonBuilder = require("./assets/builders/button/PageButtonBuilder"),
+   pagination = require("./lib/Pagination");
 
 /**
- * @version 2.0.2
+ * @version 2.0.3
  * @license MIT
  * @author acegoal07
  */
@@ -22,7 +22,7 @@ class Pagination {
 
    /**
     * Allows for pagination settings to be configured for it's need
-    * @param {import('./assets/typedef/PaginationSettings')}
+    * @param {import("./assets/typedef/PaginationSettings")}
     * @returns {Pagination}
     */
    config({
@@ -81,7 +81,7 @@ class Pagination {
 
    /**
     * Set's the context to be used for the pagination
-    * @param {import('discord.js').Message | import('discord.js').Interaction} context
+    * @param {import("discord.js").Message | import("discord.js").Interaction} context
     * @returns {Pagination}
     */
    setContext(context = null) {

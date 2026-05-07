@@ -1,5 +1,5 @@
-const { ButtonBuilder } = require('discord.js'),
-   { ButtonAction } = require('../enums/Enums');
+const { ButtonBuilder } = require("discord.js"),
+   { ButtonAction } = require("../../enums/Enums");
 
 /**
  * Used to build the buttons for the pagination
