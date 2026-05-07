@@ -34,5 +34,6 @@ yarn add @acegoal07/discordjs-pagination
 - Adds support for custom button layouts allowing you to decide the order in which the buttons go in
 - Cleaner and more optimised codebase allowing for better maintainability and easier to add new features in the future
 - Improves the wrapper cutting down on unnecessary functions
+- Adds support for component V2 pages
 
 You can find information on how to use this package on the github wiki which can be found <a href="https://github.com/acegoal07/discordjs-pagination/wiki">here</a>
