@@ -1,4 +1,4 @@
-const { TextDisplayBuilder } = require("discord.js"),
+const { TextDisplayBuilder, MessageFlags } = require("discord.js"),
    { PageType } = require("../enums/Enums"),
    PagePayloadData = require("../typedef/PagePayloadData")
 
@@ -11,6 +11,12 @@ module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
        * @type {PageType}
        */
       this.pageType = PageType.ComponentsV2;
+
+      /**
+       * These are flags that are added
+       * @type {MessageFlags}
+       */
+      this.pageFlags = MessageFlags.IsComponentsV2;
    }
 
    /**

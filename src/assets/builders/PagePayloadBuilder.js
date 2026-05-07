@@ -24,7 +24,7 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
       // Adds pagination buttons if there are 2 or more pages
       if (paginationData.pages.length >= 2) {
          if (pageData.pageType == PageType.ComponentsV2) {
-            payload.addComponent(new ContainerBuilder().addTextDisplayComponents(text => text.setContent(`page ${pagePosition + 1}/${paginationData.pages.length}`)).addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)));
+            payload.addComponent(new ContainerBuilder().addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)));
          } else {
             payload.addComponent(new ActionRowBuilder().addComponents(paginationData.buttons));
          }

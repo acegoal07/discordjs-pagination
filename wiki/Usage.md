@@ -118,7 +118,7 @@ Available options:
 
 Sets page data.
 
-- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, `ContainerPageBuilder`,`TextDisplayPageBuilder`, and/or `SectionPageBuilder` instances
+- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, `ContainerPageBuilder`,`TextDisplayPageBuilder`, `SectionPageBuilder`, and/or `MediaGalleryPageBuilder` instances
 - Required: yes
 - Returns: `Pagination`
 
@@ -131,14 +131,15 @@ Validation behaviors:
 
 Page type breakdown:
 
-| Page Type             | Builder Class           |
-| --------------------- | ------------------------|
-| Standard           	| `EmbedPageBuilder`      |
-| Standard  				| `ImagePageBuilder`      |
-| Standard     			| `TextPageBuilder`       |
-| Components v2      	| `ContainerPageBuilder`  |
-| Components v2    		| `TextDisplayPageBuilder`|
-| Components v2         | `SectionPageBuilder`    |
+| Page Type     | Builder Class             |
+| ------------- | ------------------------- |
+| Standard      | `EmbedPageBuilder`        |
+| Standard      | `ImagePageBuilder`        |
+| Standard      | `TextPageBuilder`         |
+| Components v2 | `ContainerPageBuilder`    |
+| Components v2 | `TextDisplayPageBuilder`  |
+| Components v2 | `SectionPageBuilder`      |
+| Components v2 | `MediaGalleryPageBuilder` |
 
 ### `.setButtons(buttons)`
 

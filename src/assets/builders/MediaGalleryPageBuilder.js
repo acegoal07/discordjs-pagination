@@ -1,8 +1,8 @@
-const { SectionBuilder, MessageFlags } = require("discord.js"),
+const { MediaGalleryBuilder, MessageFlags } = require("discord.js"),
    { PageType } = require("../enums/Enums"),
    PagePayloadData = require("../typedef/PagePayloadData")
 
-module.exports = class SectionPageBuilder extends SectionBuilder {
+module.exports = class MediaGalleryPageBuilder extends MediaGalleryBuilder {
    constructor() {
       super();
 
@@ -14,10 +14,9 @@ module.exports = class SectionPageBuilder extends SectionBuilder {
 
       /**
        * A attachment that can be used in the embed
-       * @type {import('discord.js').AttachmentBuilder}
+       * @type {import('discord.js').AttachmentBuilder[]}
        */
-      this.attachment = null;
-
+      this.attachments = [];
 
       /**
        * These are flags that are added
@@ -28,12 +27,12 @@ module.exports = class SectionPageBuilder extends SectionBuilder {
 
    /**
     * Set's an attachment that can be used in the embed
-    * @param {import('discord.js').BufferResolvable | import('node:stream').Stream} attachment
-    * @param {import('discord.js').AttachmentData} attachmentData
+    * @param {import('discord.js').AttachmentBuilder} attachments
     * @returns {EmbedBuilder}
     */
-   setAttachment(attachment, attachmentData) {
-      this.attachment = new AttachmentBuilder(attachment, attachmentData);
+   setAttachments(attachments) {
+      if (!Array.isArray(attachments)) { throw new TypeError("[MEDIA GALLERY ERROR]: You tried passing in an none array"); }
+      this.attachments = attachments;
       return this;
    }
 
@@ -44,7 +43,7 @@ module.exports = class SectionPageBuilder extends SectionBuilder {
    toPayload() {
       return new PagePayloadData({
          component: this,
-         file: this.attachment,
+         file: this.attachments,
          flag: this.pageFlags
       })
    }

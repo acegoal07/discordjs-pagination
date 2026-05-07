@@ -7,9 +7,9 @@ module.exports = class PagePayloadData {
    /**
     * @param {Object} constructor
     * @param {string} [constructor.content]
-    * @param {import('discord.js').EmbedBuilder} [constructor.embed]
-    * @param {import('discord.js').ActionRowBuilder | import('discord.js').ContainerBuilder} [constructor.component]
-    * @param {import('discord.js').AttachmentBuilder} [constructor.file]
+    * @param {import('discord.js').EmbedBuilder | import('discord.js').EmbedBuilder[]} [constructor.embed]
+    * @param {import('discord.js').ActionRowBuilder | import('discord.js').ContainerBuilder | import('discord.js').ActionRowBuilder[] | import('discord.js').ContainerBuilder[]} [constructor.component]
+    * @param {import('discord.js').AttachmentBuilder | import('discord.js').AttachmentBuilder[]} [constructor.file]
     * @param {number} [constructor.flag]
     */
    constructor({ content, embed, component, file, flag }) {
@@ -21,17 +21,17 @@ module.exports = class PagePayloadData {
       /**
        * @type {Array<import('discord.js').EmbedBuilder>}
        */
-      this.embeds = embed ? [embed] : [];
+      this.embeds = embed ? [].push(embed) : [];
 
       /**
        * @type {Array<import('discord.js').ActionRowBuilder | import('discord.js').ContainerBuilder>}
        */
-      this.components = component ? [component] : [];
+      this.components = component ? [].push(component) : [];
 
       /**
        * @type {Array<import('discord.js').AttachmentBuilder>}
        */
-      this.files = file ? [file] : [];
+      this.files = file ? [].push(file) : [];
 
       /**
        * @type {Number}

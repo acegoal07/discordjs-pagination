@@ -6,6 +6,7 @@ const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType, PageType 
    ContainerPageBuilder = require('./assets/builders/ContainerPageBuilder'),
    TextDisplayPageBuilder = require('./assets/builders/TextDisplayPageBuilder'),
    SectionPageBuilder = require('./assets/builders/SectionPageBuilder'),
+   MediaGalleryPageBuilder = require('./assets/builders/MediaGalleryPageBuilder'),
    PageButtonBuilder = require('./assets/builders/PageButtonBuilder'),
    pagination = require('./lib/Pagination');
 
@@ -100,14 +101,14 @@ class Pagination {
 
    /**
     * Set's the pages for the pagination
-    * @param {Array<EmbedPageBuilder | ImagePageBuilder | TextPageBuilder | ContainerPageBuilder | TextDisplayPageBuilder | SectionPageBuilder>} pages
+    * @param {Array<EmbedPageBuilder | ImagePageBuilder | TextPageBuilder | ContainerPageBuilder | TextDisplayPageBuilder | SectionPageBuilder | MediaGalleryPageBuilder>} pages
     * @returns {Pagination}
     */
    setPages(pages = []) {
       if (pages.length === 0) { throw new Error("[PAGE ERROR]: No Pages have been passed in"); }
       if (!Array.isArray(pages)) { throw new TypeError("[PAGE ERROR]: The pages you have provided is not an Array"); }
       if (pages.length === 0) { throw new Error("[PAGE ERROR]: No Pages have been provided") }
-      const filteredPages = pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder || page instanceof ContainerPageBuilder || page instanceof TextDisplayPageBuilder || page instanceof SectionPageBuilder);
+      const filteredPages = pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder || page instanceof ContainerPageBuilder || page instanceof TextDisplayPageBuilder || page instanceof SectionPageBuilder || page instanceof MediaGalleryPageBuilder);
       if (filteredPages.length == 0) { throw new TypeError("[PAGE ERROR]: There are no compatible pages provided"); }
       if (filteredPages.some(page => page.pageType === PageType.Standard) && filteredPages.some(page => page.pageType === PageType.ComponentsV2)) { throw new Error("[PAGE ERROR]: You are not able to combine components v2 pages and standard pages"); }
 
@@ -151,6 +152,7 @@ module.exports.PageButtonBuilder = PageButtonBuilder;
 module.exports.ContainerPageBuilder = ContainerPageBuilder;
 module.exports.TextDisplayPageBuilder = TextDisplayPageBuilder;
 module.exports.SectionPageBuilder = SectionPageBuilder;
+module.exports.MediaGalleryPageBuilder = MediaGalleryPageBuilder;
 module.exports.ButtonAction = ButtonAction;
 module.exports.TimeoutEnding = TimeoutEnding;
 module.exports.MessageResponseType = MessageResponseType;
