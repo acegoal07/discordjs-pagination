@@ -13,10 +13,8 @@ const ContextType = Object.freeze({
  * @enum {number}
  */
 const PageType = Object.freeze({
-   Embed: 0,
-   Image: 1,
-   Text: 2,
-   Container: 3
+   Standard: 0,
+   ComponentsV2: 1
 });
 
 /**

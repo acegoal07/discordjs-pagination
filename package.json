@@ -1,6 +1,6 @@
 {
   "name": "@acegoal07/discordjs-pagination",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A simple pagination for Discord.js",
   "main": "index.js",
   "types": "index.d.ts",

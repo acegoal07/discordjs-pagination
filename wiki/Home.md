@@ -83,7 +83,7 @@ await new Pagination()
 - `.setContext(context)`
   - Required. Accepts a discord.js `Message` or interaction.
 - `.setPages(pages)`
-  - Required. Accepts an array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, and/or `ContainerPageBuilder`.
+  - Required. Accepts an array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, `ContainerPageBuilder`,`TextDisplayPageBuilder`, `SectionPageBuilder`, and/or `MediaGalleryPageBuilder` instances
 - `.setButtons(buttons)`
   - Optional. Accepts an array of `PageButtonBuilder`.
   - If you skip this, default buttons are generated automatically.

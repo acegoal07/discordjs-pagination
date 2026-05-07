@@ -1,6 +1,6 @@
 /**
  * Disables all the buttons stored in the pagination data
- * @param {import('../typedef/PaginationData')} paginationData
+ * @param {import("../typedef/PaginationData")} paginationData
  */
 module.exports = function disableButtons(paginationData) {
    try {
@@ -8,6 +8,6 @@ module.exports = function disableButtons(paginationData) {
          button.setDisabled(true);
       });
    } catch (error) {
-      throw new Error("[DISABLE BUTTONS ERROR]:", error);
+      throw new Error("[DISABLE BUTTONS ERROR]:", { cause: error });
    }
 }

@@ -1,31 +1,31 @@
-const PaginationSettings = require('./PaginationSettings');
+const PaginationSettings = require("./PaginationSettings");
 
 /**
  * Where all the pagination data is stored
  */
 module.exports = class PaginationData {
    /**
-    * @type {import('./PaginationSettings')}
+    * @type {PaginationSettings}
     */
    settings = new PaginationSettings();
 
    /**
-    * @type {import('discord.js').Interaction | import('discord.js').Message}
+    * @type {import("discord.js").Interaction | import("discord.js").Message}
     */
    context = null;
 
    /**
-    * @type {import('../enums/Enums').ContextType}
+    * @type {import("../enums/Enums").ContextType}
     */
    contextType = 0;
 
    /**
-    * @type {Array<import('../builders/EmbedPageBuilder') | import('../builders/ImagePageBuilder') | import('../builders/TextPageBuilder') | import('../builders/ContainerPageBuilder'))>}
+    * @type {Array<import("../builders/page/EmbedPageBuilder") | import("../builders/page/ImagePageBuilder") | import("../builders/page/TextPageBuilder") | import("../builders/page/ContainerPageBuilder") | import("../builders/page/TextDisplayPageBuilder") | import("../builders/page/SectionPageBuilder") | import("../builders/page/MediaGalleryPageBuilder")>}
     */
    pages = [];
 
    /**
-    * @type {import('../builders/PageButtonBuilder')[]}
+    * @type {import("../builders/button/PageButtonBuilder")[]}
     */
    buttons = [];
 }
