@@ -3,7 +3,8 @@ const { MessageFlags, ComponentType } = require("discord.js"),
    pagePayloadBuilder = require("../assets/builders/payload/PagePayloadBuilder"),
    AutoBuildButtons = require("../assets/tools/AutoBuildButtons"),
    filterBuilder = require("../assets/builders/filter/FilterBuilder"),
-   disableButtons = require("../assets/tools/DisableButtons");
+   disableButtons = require("../assets/tools/DisableButtons"),
+   PaginationSession = require("../assets/typedef/PaginationSession");
 
 /**
  * @param {import("../assets/typedef/PaginationData")} paginationData
@@ -35,6 +36,7 @@ module.exports = async function baseHandler(paginationData) {
 
       // Store sent pagination
       let pagination;
+      // const paginationSession = new PaginationSession(paginationData.settings.loop, paginationData.pages.length);
 
       // Handle Message context
       if (paginationData.contextType === ContextType.Message) {
@@ -56,8 +58,10 @@ module.exports = async function baseHandler(paginationData) {
          // Send pagination with buttons
          if (paginationData.settings.messageResponseType == MessageResponseType.Reply) {
             pagination = await paginationData.context.reply(pagePayloadBuilder(paginationData));
+            // paginationSession.setMessage(await paginationData.context.reply(pagePayloadBuilder(paginationData)));
          } else {
             pagination = await paginationData.context.channel.send(pagePayloadBuilder(paginationData));
+            // paginationSession.setMessage(await paginationData.context.channel.send(pagePayloadBuilder(paginationData)));
          }
       }
 
@@ -76,6 +80,7 @@ module.exports = async function baseHandler(paginationData) {
 
          // Send pagination with buttons
          pagination = await paginationData.context.editReply(pagePayloadBuilder(paginationData));
+         // paginationSession.setMessage(await paginationData.context.editReply(pagePayloadBuilder(paginationData)));
       }
 
       // Throw an error if there isn't a valid context
@@ -96,6 +101,9 @@ module.exports = async function baseHandler(paginationData) {
          if (!i.deferred && !i.replied) { await i.deferUpdate(); }
          switch (paginationData.buttons.find(button => button.data.custom_id == i.customId).action) {
             case ButtonAction.Next:
+               // if (paginationSession.nextPage()) {
+               //    await i.editReply(pagePayloadBuilder(paginationData, paginationSession.pagePosition));
+               // }
                if ((pagePosition + 1) === paginationData.pages.length) {
                   if (paginationData.settings.loop) {
                      pagePosition = 0;
@@ -108,6 +116,9 @@ module.exports = async function baseHandler(paginationData) {
                await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
                break;
             case ButtonAction.Back:
+               // if (paginationSession.backPage()) {
+               //    await i.editReply(pagePayloadBuilder(paginationData, paginationSession.pagePosition));
+               // }
                if (pagePosition === 0) {
                   if (paginationData.settings.loop) {
                      pagePosition = paginationData.pages.length - 1;
@@ -120,18 +131,27 @@ module.exports = async function baseHandler(paginationData) {
                await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
                break;
             case ButtonAction.Start:
+               // if (paginationSession.startPage()) {
+               //    await i.editReply(pagePayloadBuilder(paginationData, paginationSession.pagePosition));
+               // }
                if (pagePosition !== 0) {
                   pagePosition = 0;
                   await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
                }
                break;
             case ButtonAction.End:
+               // if (paginationSession.endPage()) {
+               //    await i.editReply(pagePayloadBuilder(paginationData, paginationSession.pagePosition));
+               // }
                if (pagePosition !== paginationData.pages.length) {
                   pagePosition = (paginationData.pages.length - 1);
                   await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
                }
                break;
             case ButtonAction.Delete:
+               // if (paginationSession.message.deletable) {
+               //    paginationSession.message.delete();
+               // }
                if (pagination.deletable) {
                   pagination.delete().catch(() => { });
                }
@@ -149,16 +169,26 @@ module.exports = async function baseHandler(paginationData) {
             try {
                switch (paginationData.settings.timeoutEnding) {
                   case TimeoutEnding.DeleteButtons:
+                     // if (paginationSession.message.editable) {
+                     //    await paginationSession.message.edit({ components: [] }).catch(() => { return; });
+                     // }
                      if (pagination.editable) {
                         await pagination.edit({ components: [] }).catch(() => { return; });
                      }
                      break;
                   case TimeoutEnding.DeletePagination:
+                     // if (paginationSession.message.deletable) {
+                     //    await paginationSession.message.delete().catch(() => { return; });
+                     // }
                      if (pagination.deletable) {
                         await pagination.delete().catch(() => { return; });
                      }
                      break;
                   case TimeoutEnding.DisableButtons:
+                     // if (paginationSession.message.editable) {
+                     //    disableButtons(paginationData);
+                     //    await paginationSession.message.edit(pagePayloadBuilder(paginationData, pagePosition)).catch(() => { return; });
+                     // }
                      if (pagination.editable) {
                         disableButtons(paginationData);
                         await pagination.edit(pagePayloadBuilder(paginationData, pagePosition)).catch(() => { return; });
