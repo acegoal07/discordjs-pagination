@@ -4,7 +4,7 @@ const { ActionRowBuilder, MessageFlags, ContainerBuilder } = require("discord.js
 
 /**
  * Build's the payload sent to discord for the pages
- * @param {import("../typedef/PaginationData")} paginationData
+ * @param {import("../../typedef/PaginationData")} paginationData
  * @param {Number} pagePosition
  * @returns {PagePayloadData}
  */
@@ -31,7 +31,7 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
       }
 
       // If ephemeral setting is enabled or if it is already added to the defer adds it to the page flags
-      if ((paginationData.context.type === ContextType.Interaction && paginationData.settings.interactionEphemeral) || paginationData.context.flags == MessageFlags.Ephemeral) {
+      if ((paginationData.contextType === ContextType.Interaction && paginationData.settings.interactionEphemeral) || paginationData.context.flags == MessageFlags.Ephemeral) {
          payload.addFlag(MessageFlags.Ephemeral);
       }
 

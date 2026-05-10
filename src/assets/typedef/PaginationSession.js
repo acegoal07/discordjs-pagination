@@ -1,21 +1,15 @@
+const pagePayloadBuilder = require("../builders/payload/PagePayloadBuilder");
+
 module.exports = class PaginationSession {
    /**
     * Handles all the page progress for the pagination
-    * @param {Boolean} loop
-    * @param {Number} totalPages
+    * @param {import("./PaginationData")} paginationData
     */
-   constructor(loop, totalPages) {
+   constructor(paginationData) {
       /**
-       * Whether loop is enabled or not
-       * @type {Boolean}
+       * @type {import("./PaginationData")}
        */
-      this.loop = loop;
-
-      /**
-       * How many pages there are
-       * @type {Number}
-       */
-      this.totalPages = totalPages;
+      this.paginationData = paginationData;
    }
 
    /**
@@ -30,10 +24,9 @@ module.exports = class PaginationSession {
     * @returns {PaginationSession}
     */
    setMessage(message) {
-      if (this.message) {
-         return;
+      if (!this.message) {
+         this.message = message;
       }
-      this.message = message;
       return this;
    }
 
@@ -45,72 +38,86 @@ module.exports = class PaginationSession {
 
    /**
     * Goes to the next page
-    * @returns {Boolean} Whether or not the page number was changed
+    * @param {import("discord.js").Interaction} interaction
     */
-   nextPage() {
-      if ((this.pagePosition + 1) === this.totalPages) {
-         if (this.settings.loop) {
+   async nextPage(interaction) {
+      if ((this.pagePosition + 1) === this.paginationData.pages.length) {
+         if (this.paginationData.settings.loop) {
             this.pagePosition = 0;
          } else {
-            return false;
+            return;
          }
       } else {
          this.pagePosition++;
       }
-      return true;
+      await this.updatePagination(interaction);
    }
 
    /**
     * Goes to the previous page
-    * @returns {Boolean} Whether or not the page number was changed
+    * @param {import("discord.js").Interaction} interaction
     */
-   backPage() {
+   async backPage(interaction) {
       if (this.pagePosition === 0) {
-         if (this.settings.loop) {
-            this.pagePosition = this.totalPages - 1;
+         if (this.paginationData.settings.loop) {
+            this.pagePosition = this.paginationData.pages.length - 1;
          } else {
-            return false
+            return;
          }
       } else {
          this.pagePosition--;
       }
-      return true;
+      await this.updatePagination(interaction);
    }
 
    /**
     * Goes to the first page
-    * @returns {Boolean} Whether or not the page number was changed
+    * @param {import("discord.js").Interaction} interaction
     */
-   startPage() {
+   async startPage(interaction) {
       if (this.pagePosition !== 0) {
          this.pagePosition = 0;
-         return true;
+         await this.updatePagination(interaction);
       }
-      return false;
    }
 
    /**
     * Goes to the last page
-    * @returns {Boolean} Whether or not the page number was changed
+    * @param {import("discord.js").Interaction} interaction
     */
-   endPage() {
-      if (this.pagePosition !== this.totalPages) {
-         this.pagePosition = (this.totalPages - 1);
-         return true;
+   async endPage(interaction) {
+      if (this.pagePosition !== this.paginationData.pages.length - 1) {
+         this.pagePosition = (this.paginationData.pages.length - 1);
+         await this.updatePagination(interaction);
       }
-      return false;
    }
 
    /**
     * Goes to the page number given
     * @param {Number} pageNumber
-    * @returns {Boolean} Whether or not the page number was changed
+    * @param {import("discord.js").Interaction} interaction
     */
-   goToPage(pageNumber) {
-      if (this.totalPages >= pageNumber) {
+   async goToPage(interaction, pageNumber) {
+      if (pageNumber > 0 && pageNumber <= this.paginationData.pages.length) {
          this.pagePosition = pageNumber - 1;
-         return true;
+         await this.updatePagination(interaction);
       }
-      return false;
+   }
+
+   /**
+    * Delete's the pagination
+    */
+   async deletePagination() {
+      if (this.message.deletable) {
+         await this.message.delete();
+      }
+   }
+
+   /**
+    * Updates the pagination with the new information
+    * @param {import("discord.js").Interaction} interaction
+    */
+   async updatePagination(interaction) {
+      await interaction.editReply(pagePayloadBuilder(this.paginationData, this.pagePosition)).catch(error => console.log(error));
    }
 }

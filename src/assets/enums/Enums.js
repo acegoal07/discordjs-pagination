@@ -22,11 +22,13 @@ const PageType = Object.freeze({
  * @enum {number}
  */
 const ButtonAction = Object.freeze({
-   Next: 0,
-   Back: 1,
-   Start: 2,
-   End: 3,
-   Delete: 4
+   Unset: 0,
+   Next: 1,
+   Back: 2,
+   Start: 3,
+   End: 4,
+   Delete: 5,
+   Callback: 6
 });
 
 /**

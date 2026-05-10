@@ -5,8 +5,6 @@ const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType, PageType 
    TextPageBuilder = require("./assets/builders/page/TextPageBuilder"),
    ContainerPageBuilder = require("./assets/builders/page/ContainerPageBuilder"),
    TextDisplayPageBuilder = require("./assets/builders/page/TextDisplayPageBuilder"),
-   SectionPageBuilder = require("./assets/builders/page/SectionPageBuilder"),
-   MediaGalleryPageBuilder = require("./assets/builders/page/MediaGalleryPageBuilder"),
    PageButtonBuilder = require("./assets/builders/button/PageButtonBuilder"),
    pagination = require("./lib/Pagination");
 
@@ -101,7 +99,7 @@ class Pagination {
 
    /**
     * Set's the pages for the pagination
-    * @param {Array<EmbedPageBuilder | ImagePageBuilder | TextPageBuilder | ContainerPageBuilder | TextDisplayPageBuilder | SectionPageBuilder | MediaGalleryPageBuilder>} pages
+    * @param {Array<EmbedPageBuilder | ImagePageBuilder | TextPageBuilder | ContainerPageBuilder | TextDisplayPageBuilder>} pages
     * @returns {Pagination}
     */
    setPages(pages = []) {
@@ -125,10 +123,11 @@ class Pagination {
    setButtons(buttons = []) {
       if (buttons.length === 0) { throw new Error("[BUTTON ERROR]: No buttons have been passed in"); }
       if (!Array.isArray(buttons)) { throw new TypeError("[BUTTON ERROR]: The buttons you have provided is not an Array"); }
-      const filteredButtons = buttons.filter(button => button instanceof PageButtonBuilder);
+      const filteredButtons = buttons.filter(button => button instanceof PageButtonBuilder && button.action != ButtonAction.Unset);
       if (filteredButtons.length < 2) { throw new Error("[BUTTON ERROR]: You need at least two buttons passed in for the pagination, a next and back button"); }
       if (!filteredButtons.some(button => button.action === ButtonAction.Next)) { throw new Error("[BUTTON ERROR]: No next button is present in the provided buttons"); }
       if (!filteredButtons.some(button => button.action === ButtonAction.Back)) { throw new Error("[BUTTON ERROR]: No back button is present in the provided buttons"); }
+      if (filteredButtons.some(button => button.action != ButtonAction.Callback && button.callback != null)) { console.warn("[BUTTON WARNING]: Callback functions linked to buttons without the callback action will not be used"); }
 
       this.paginationData.buttons = filteredButtons;
 
@@ -151,8 +150,6 @@ module.exports.TextPageBuilder = TextPageBuilder;
 module.exports.PageButtonBuilder = PageButtonBuilder;
 module.exports.ContainerPageBuilder = ContainerPageBuilder;
 module.exports.TextDisplayPageBuilder = TextDisplayPageBuilder;
-module.exports.SectionPageBuilder = SectionPageBuilder;
-module.exports.MediaGalleryPageBuilder = MediaGalleryPageBuilder;
 module.exports.ButtonAction = ButtonAction;
 module.exports.TimeoutEnding = TimeoutEnding;
 module.exports.MessageResponseType = MessageResponseType;

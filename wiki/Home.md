@@ -21,7 +21,7 @@ yarn add @acegoal07/discordjs-pagination
 ## Quick Start
 
 ```js
-const { ButtonStyle } = require('discord.js');
+const { ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, LabelBuilder } = require('discord.js');
 const {
 	Pagination,
 	EmbedPageBuilder,
@@ -29,6 +29,7 @@ const {
 	TextPageBuilder,
 	ContainerPageBuilder,
 	PageButtonBuilder,
+	TextDisplayPageBuilder
 	ButtonAction,
 	TimeoutEnding
 } = require('@acegoal07/discordjs-pagination');
@@ -51,7 +52,43 @@ await new Pagination()
 			.setAction(ButtonAction.Next)
 			.setCustomId('pagination_next')
 			.setLabel('Next')
+			.setStyle(ButtonStyle.Primary),
+		// An example of a custom button with a callback that opens a modal to ask the user for a page number to go to, then uses paginationSession.goToPage() to go to that page
+		new PageButtonBuilder()
+			.setAction(ButtonAction.Callback)
+			.setCustomId('pagination_custom')
+			.setLabel('custom')
 			.setStyle(ButtonStyle.Primary)
+			.setCallback(async (paginationData, paginationSession, interaction) => {
+				const modal = new ModalBuilder()
+					.setCustomId('goToPageModal')
+					.setTitle('Go to Page');
+
+				const pageInput = new TextInputBuilder()
+					.setCustomId('pageInput')
+					.setStyle(TextInputStyle.Short);
+
+				const pageLabel = new LabelBuilder()
+					.setLabel("What page would you like to go to?")
+					.setDescription('Page number')
+					.setTextInputComponent(pageInput);
+
+				modal.addLabelComponents(pageLabel);
+
+				interaction.showModal(modal);
+
+				const submitted = await interaction.awaitModalSubmit({
+					time: 60000,
+					filter: i =>
+						i.customId === 'goToPageModal' &&
+						i.user.id === interaction.user.id
+				});
+
+				// The paginationSession instance is passed to the callback to allow for control of the pagination offering nextPage, backPage, startPage, endPage, goToPage and deletePagination methods to be used in custom button callbacks like this one 
+				await paginationSession.goToPage(interaction, submitted.fields.getTextInputValue('pageInput'));
+
+				await submitted.deferUpdate();
+			})
 	])
 	// None components v2 pages example
 	.setPages([
@@ -73,7 +110,9 @@ await new Pagination()
 				textDisplay.setContent(
 					'this is a container page'
 				)
-			)
+			),
+		new Pagination.TextDisplayPageBuilder()
+			.setContent("This is a text display page")
 	])
 	.paginate();
 ```
@@ -83,7 +122,7 @@ await new Pagination()
 - `.setContext(context)`
   - Required. Accepts a discord.js `Message` or interaction.
 - `.setPages(pages)`
-  - Required. Accepts an array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, `ContainerPageBuilder`,`TextDisplayPageBuilder`, `SectionPageBuilder`, and/or `MediaGalleryPageBuilder` instances
+  - Required. Accepts an array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, `ContainerPageBuilder`, and/or `TextDisplayPageBuilder` instances
 - `.setButtons(buttons)`
   - Optional. Accepts an array of `PageButtonBuilder`.
   - If you skip this, default buttons are generated automatically.

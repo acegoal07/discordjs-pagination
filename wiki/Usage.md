@@ -29,7 +29,7 @@ const {
 ## Full Interaction Example
 
 ```js
-const { ButtonStyle } = require('discord.js');
+const { ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle, LabelBuilder } = require('discord.js');
 const {
 	Pagination,
 	EmbedPageBuilder,
@@ -37,6 +37,7 @@ const {
 	TextPageBuilder,
 	ContainerPageBuilder,
 	PageButtonBuilder,
+	TextDisplayPageBuilder
 	ButtonAction,
 	TimeoutEnding
 } = require('@acegoal07/discordjs-pagination');
@@ -59,7 +60,43 @@ await new Pagination()
 			.setAction(ButtonAction.Next)
 			.setCustomId('pagination_next')
 			.setLabel('Next')
+			.setStyle(ButtonStyle.Primary),
+		// An example of a custom button with a callback that opens a modal to ask the user for a page number to go to, then uses paginationSession.goToPage() to go to that page
+		new PageButtonBuilder()
+			.setAction(ButtonAction.Callback)
+			.setCustomId('pagination_custom')
+			.setLabel('custom')
 			.setStyle(ButtonStyle.Primary)
+			.setCallback(async (paginationData, paginationSession, interaction) => {
+				const modal = new ModalBuilder()
+					.setCustomId('goToPageModal')
+					.setTitle('Go to Page');
+
+				const pageInput = new TextInputBuilder()
+					.setCustomId('pageInput')
+					.setStyle(TextInputStyle.Short);
+
+				const pageLabel = new LabelBuilder()
+					.setLabel("What page would you like to go to?")
+					.setDescription('Page number')
+					.setTextInputComponent(pageInput);
+
+				modal.addLabelComponents(pageLabel);
+
+				interaction.showModal(modal);
+
+				const submitted = await interaction.awaitModalSubmit({
+					time: 60000,
+					filter: i =>
+						i.customId === 'goToPageModal' &&
+						i.user.id === interaction.user.id
+				});
+
+				// The paginationSession instance is passed to the callback to allow for control of the pagination offering nextPage, backPage, startPage, endPage, goToPage and deletePagination methods to be used in custom button callbacks like this one 
+				await paginationSession.goToPage(interaction, submitted.fields.getTextInputValue('pageInput'));
+
+				await submitted.deferUpdate();
+			})
 	])
 	// None components v2 pages example
 	.setPages([
@@ -81,7 +118,9 @@ await new Pagination()
 				textDisplay.setContent(
 					'this is a container page'
 				)
-			)
+			),
+		new Pagination.TextDisplayPageBuilder()
+			.setContent("This is a text display page")
 	])
 	.paginate();
 ```
@@ -118,7 +157,7 @@ Available options:
 
 Sets page data.
 
-- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, `ContainerPageBuilder`,`TextDisplayPageBuilder`, `SectionPageBuilder`, and/or `MediaGalleryPageBuilder` instances
+- Accepts: array of `EmbedPageBuilder`, `ImagePageBuilder`, `TextPageBuilder`, `ContainerPageBuilder`, and/or `TextDisplayPageBuilder` instances
 - Required: yes
 - Returns: `Pagination`
 
@@ -131,15 +170,13 @@ Validation behaviors:
 
 Page type breakdown:
 
-| Page Type     | Builder Class             |
-| ------------- | ------------------------- |
-| Standard      | `EmbedPageBuilder`        |
-| Standard      | `ImagePageBuilder`        |
-| Standard      | `TextPageBuilder`         |
-| Components v2 | `ContainerPageBuilder`    |
-| Components v2 | `TextDisplayPageBuilder`  |
-| Components v2 | `SectionPageBuilder`      |
-| Components v2 | `MediaGalleryPageBuilder` |
+| Page Type     | Builder Class            |
+| ------------- | ------------------------ |
+| Standard      | `EmbedPageBuilder`       |
+| Standard      | `ImagePageBuilder`       |
+| Standard      | `TextPageBuilder`        |
+| Components v2 | `ContainerPageBuilder`   |
+| Components v2 | `TextDisplayPageBuilder` |
 
 ### `.setButtons(buttons)`
 
@@ -184,7 +221,11 @@ Provides `.setText(text)` for text-only pages.
 
 ### `ContainerPageBuilder`
 
-Extends `ContainerBuilder` and allows users to build components v2 pages. Not compatible with other page types.
+Extends `ContainerBuilder` and allows users to build components v2 pages. Not compatible with none component v2 pages.
+
+### `TextDisplayPageBuilder`
+
+Extends `TextDisplayBuilder` and allows users to build text display pages for components v2 paginations. Not compatible with none component v2 pages.
 
 ### `PageButtonBuilder`
 
@@ -192,11 +233,15 @@ Extends discord.js `ButtonBuilder` and adds `.setAction(...)`.
 
 Supported actions:
 
+- `ButtonAction.Unset` - default value, button has no function and the button will be removed from the pagination
 - `ButtonAction.Next`
 - `ButtonAction.Back`
 - `ButtonAction.Start`
 - `ButtonAction.End`
 - `ButtonAction.Delete`
+- `ButtonAction.Callback` - allows you to set a custom callback function that is executed when the button is pressed
+
+> The callback function for `ButtonAction.Callback` buttons receives three arguments: `paginationData`, `paginationSession`, and `interaction`. `paginationData` contains information about the current pagination state, `paginationSession` provides methods to control the pagination (like nextPage, backPage, goToPage, etc.), and `interaction` is the interaction that triggered the button press.
 
 ## Timeout Behaviour
 

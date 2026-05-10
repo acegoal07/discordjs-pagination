@@ -28,7 +28,7 @@
     "discord.js": "^14.19.3"
   },
   "scripts": {
-    "build": "npm run buildTypes && npm run tscBuild && npm run copyFiles",
+    "build": "rmdir /S /Q dist && rmdir /S /Q types && npm run buildTypes && npm run tscBuild && npm run copyFiles",
     "build+publish": "npm run build && cd dist && npm publish",
     "buildTypes": "npx -p typescript tsc --declaration --allowJs --emitDeclarationOnly --outDir types",
     "tscBuild": "npx tsc",
