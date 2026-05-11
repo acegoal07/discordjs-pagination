@@ -30,7 +30,8 @@ class Pagination {
       authorSpecific = false,
       loop = false,
       autoDeleteButton = false,
-      messageResponseType = MessageResponseType.Send
+      messageResponseType = MessageResponseType.Send,
+      disableUnusableButtons = false
    }) {
       if (Number.isNaN(timeout)) {
          throw new TypeError("[TIMEOUT ERROR]: Timeout setting is not a number");
@@ -72,6 +73,12 @@ class Pagination {
          this.paginationData.settings.messageResponseType = messageResponseType;
       } else {
          throw new TypeError("[MESSAGE RESPONSE TYPE ERROR]: Message response type setting is not a number");
+      }
+
+      if (typeof disableUnusableButtons === 'boolean') {
+         this.paginationData.settings.disableUnusableButtons = disableUnusableButtons;
+      } else {
+         throw new TypeError("[DISABLE UNUSABLE BUTTON ERROR]: Disable unusable button setting is not a boolean");
       }
 
       return this;

@@ -1,14 +1,15 @@
 const { ActionRowBuilder, MessageFlags, ContainerBuilder } = require("discord.js"),
-   { ContextType, PageType } = require("../../enums/Enums"),
+   { ContextType, PageType, ButtonAction } = require("../../enums/Enums"),
    PagePayloadData = require("../../typedef/PagePayloadData");
 
 /**
  * Build's the payload sent to discord for the pages
  * @param {import("../../typedef/PaginationData")} paginationData
  * @param {Number} pagePosition
+ * @param {Boolean} ignoreDisableUnusable
  * @returns {PagePayloadData}
  */
-module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
+module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, ignoreDisableUnusable = false) {
    try {
       // The page data
       const pageData = paginationData.pages[pagePosition];
@@ -19,6 +20,31 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0) {
       // Check whether data has been sent from the builder
       if (!payload) {
          throw new Error("[PAGE PAYLOAD BUILDER ERROR]: No payload data sent from builder");
+      }
+
+      // Handles disable unusable button logic
+      if (paginationData.settings.disableUnusableButtons && !paginationData.settings.loop && !ignoreDisableUnusable) {
+         if (pagePosition === 0) {
+            paginationData.buttons.forEach(button => {
+               if (button.action === ButtonAction.Back || button.action === ButtonAction.Start) {
+                  button.setDisabled(true);
+               } else {
+                  button.setDisabled(false);
+               }
+            });
+         } else if (paginationData.pages.length === (pagePosition + 1)) {
+            paginationData.buttons.forEach(button => {
+               if (button.action === ButtonAction.Next || button.action === ButtonAction.End) {
+                  button.setDisabled(true);
+               } else {
+                  button.setDisabled(false);
+               }
+            });
+         } else {
+            paginationData.buttons.forEach(button => {
+               button.setDisabled(false);
+            });
+         }
       }
 
       // Adds pagination buttons if there are 2 or more pages
