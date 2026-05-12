@@ -135,6 +135,7 @@ class Pagination {
       if (!filteredButtons.some(button => button.action === ButtonAction.Next)) { throw new Error("[BUTTON ERROR]: No next button is present in the provided buttons"); }
       if (!filteredButtons.some(button => button.action === ButtonAction.Back)) { throw new Error("[BUTTON ERROR]: No back button is present in the provided buttons"); }
       if (filteredButtons.some(button => button.action != ButtonAction.Callback && button.callback != null)) { console.warn("[BUTTON WARNING]: Callback functions linked to buttons without the callback action will not be used"); }
+      if (filteredButtons.length > 5) { throw new Error("[BUTTON ERROR]: More than 5 buttons have been passed in which is more than the allowed amount for an action row") }
 
       this.paginationData.buttons = filteredButtons;
 
