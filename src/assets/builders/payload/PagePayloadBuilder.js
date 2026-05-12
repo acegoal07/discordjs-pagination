@@ -24,27 +24,12 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, i
 
       // Handles disable unusable button logic
       if (paginationData.settings.disableUnusableButtons && !paginationData.settings.loop && !ignoreDisableUnusable) {
-         if (pagePosition === 0) {
-            paginationData.buttons.forEach(button => {
-               if (button.action === ButtonAction.Back || button.action === ButtonAction.Start) {
-                  button.setDisabled(true);
-               } else {
-                  button.setDisabled(false);
-               }
-            });
-         } else if (paginationData.pages.length === (pagePosition + 1)) {
-            paginationData.buttons.forEach(button => {
-               if (button.action === ButtonAction.Next || button.action === ButtonAction.End) {
-                  button.setDisabled(true);
-               } else {
-                  button.setDisabled(false);
-               }
-            });
-         } else {
-            paginationData.buttons.forEach(button => {
-               button.setDisabled(false);
-            });
-         }
+         paginationData.buttons.forEach(button => {
+            button.setDisabled(
+               ((pagePosition === 0) && (button.action === ButtonAction.Back || button.action === ButtonAction.Start)) ||
+               ((paginationData.pages.length === pagePosition + 1) && (button.action === ButtonAction.Next || button.action === ButtonAction.End))
+            );
+         });
       }
 
       // Adds pagination buttons if there are 2 or more pages
