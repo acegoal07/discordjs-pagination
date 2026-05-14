@@ -242,7 +242,7 @@ Supported actions:
 - `ButtonAction.Delete`
 - `ButtonAction.Callback` - allows you to set a custom callback function that is executed when the button is pressed
 
-> The callback function for `ButtonAction.Callback` buttons receives three arguments: `paginationData`, `paginationSession`, and `interaction`. `paginationData` contains information about the current pagination state, `paginationSession` provides methods to control the pagination (like nextPage, backPage, goToPage, etc.), and `interaction` is the interaction that triggered the button press.
+> The callback function for `ButtonAction.Callback` buttons receives three arguments: `paginationSession` and `interaction`. `paginationSession` provides methods to control the pagination (like nextPage, backPage, goToPage, etc.), and `interaction` is the interaction that triggered the button press.
 
 ## Timeout Behaviour
 
