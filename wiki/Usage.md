@@ -152,7 +152,7 @@ Available options:
 - `loop` (boolean, default: `false`)
 - `autoDeleteButton` (boolean, default: `false`)
 - `messageResponseType` (`reply` or `send`, default: `send`)
-- `disableUnusedButtons` (boolean, default: `false`)
+- `disableUnusedButtons` (boolean, default: `true`)
 
 ### `.setPages(pages)`
 

@@ -31,11 +31,6 @@ module.exports = async function baseHandler(paginationData) {
          console.warn("[MESSAGE RESPONSE TYPE WARNING]: Setting a message response type does not affect interactions");
       }
 
-      // Send a warning if loop and disable unusable buttons are enabled together
-      if (paginationData.settings.disableUnusableButtons && paginationData.settings.loop) {
-         console.warn("[DISABLE UNUSABLE BUTTONS WARNING]: Having loop and disable unusable buttons enabled at the same time makes loop override disable unusable buttons making it do nothing")
-      }
-
       // Create pagination session
       const paginationSession = new PaginationSession(paginationData);
 
