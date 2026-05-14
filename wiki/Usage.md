@@ -37,7 +37,7 @@ const {
 	TextPageBuilder,
 	ContainerPageBuilder,
 	PageButtonBuilder,
-	TextDisplayPageBuilder
+	TextDisplayPageBuilder,
 	ButtonAction,
 	TimeoutEnding
 } = require('@acegoal07/discordjs-pagination');
