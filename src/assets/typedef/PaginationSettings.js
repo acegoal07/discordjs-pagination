@@ -45,4 +45,10 @@ module.exports = class PaginationSettings {
     * @type {MessageResponseType}
     */
    messageResponseType = MessageResponseType.Send;
+
+   /**
+    * Whether or not buttons should be disabled if they can't be used depending on page position
+    * @type {Boolean}
+    */
+   disableUnusableButtons = true;
 }

@@ -21,17 +21,17 @@ module.exports = class PagePayloadData {
       /**
        * @type {Array<import("discord.js").EmbedBuilder>}
        */
-      this.embeds = embed ? [].push(embed) : [];
+      this.embeds = embed ? (Array.isArray(embed) ? embed : [embed]) : [];
 
       /**
        * @type {Array<import("discord.js").ActionRowBuilder | import("discord.js").ContainerBuilder>}
        */
-      this.components = component ? [].push(component) : [];
+      this.components = component ? (Array.isArray(component) ? component : [component]) : [];
 
       /**
        * @type {Array<import("discord.js").AttachmentBuilder>}
        */
-      this.files = file ? [].push(file) : [];
+      this.files = file ? (Array.isArray(file) ? file : [file]) : [];
 
       /**
        * @type {Number}

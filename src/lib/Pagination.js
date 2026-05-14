@@ -3,7 +3,8 @@ const { MessageFlags, ComponentType } = require("discord.js"),
    pagePayloadBuilder = require("../assets/builders/payload/PagePayloadBuilder"),
    AutoBuildButtons = require("../assets/tools/AutoBuildButtons"),
    filterBuilder = require("../assets/builders/filter/FilterBuilder"),
-   disableButtons = require("../assets/tools/DisableButtons");
+   disableButtons = require("../assets/tools/DisableButtons"),
+   PaginationSession = require("../assets/typedef/PaginationSession");
 
 /**
  * @param {import("../assets/typedef/PaginationData")} paginationData
@@ -22,19 +23,16 @@ module.exports = async function baseHandler(paginationData) {
 
       // Send a warning if ephemeral setting is enabled with message
       if (paginationData.contextType == ContextType.Message && paginationData.settings.interactionEphemeral) {
-         console.warn("[EPHEMERAL ERROR]: Ephemeral cannot be applied to none interaction messages");
+         console.warn("[EPHEMERAL WARNING]: Ephemeral cannot be applied to none interaction messages");
       }
 
       // Send a warming if a message response type has been changed while using interaction
       if (paginationData.contextType == ContextType.Interaction && paginationData.settings.messageResponseType != MessageResponseType.Send) {
-         console.warn("[MESSAGE RESPONSE TYPE ERROR]: Setting a message response type does not affect interactions");
+         console.warn("[MESSAGE RESPONSE TYPE WARNING]: Setting a message response type does not affect interactions");
       }
 
-      // Store page position
-      let pagePosition = 0;
-
-      // Store sent pagination
-      let pagination;
+      // Create pagination session
+      const paginationSession = new PaginationSession(paginationData);
 
       // Handle Message context
       if (paginationData.contextType === ContextType.Message) {
@@ -55,9 +53,9 @@ module.exports = async function baseHandler(paginationData) {
 
          // Send pagination with buttons
          if (paginationData.settings.messageResponseType == MessageResponseType.Reply) {
-            pagination = await paginationData.context.reply(pagePayloadBuilder(paginationData));
+            paginationSession.setMessage(await paginationData.context.reply(pagePayloadBuilder(paginationData)));
          } else {
-            pagination = await paginationData.context.channel.send(pagePayloadBuilder(paginationData));
+            paginationSession.setMessage(await paginationData.context.channel.send(pagePayloadBuilder(paginationData)));
          }
       }
 
@@ -75,7 +73,7 @@ module.exports = async function baseHandler(paginationData) {
          }
 
          // Send pagination with buttons
-         pagination = await paginationData.context.editReply(pagePayloadBuilder(paginationData));
+         paginationSession.setMessage(await paginationData.context.editReply(pagePayloadBuilder(paginationData)));
       }
 
       // Throw an error if there isn't a valid context
@@ -84,7 +82,7 @@ module.exports = async function baseHandler(paginationData) {
       }
 
       // Create a collector for the buttons used for the pagination
-      const collector = await pagination.createMessageComponentCollector({
+      const collector = paginationSession.message.createMessageComponentCollector({
          filter: filterBuilder,
          time: paginationData.settings.timeout,
          ComponentType: ComponentType.Button
@@ -93,52 +91,30 @@ module.exports = async function baseHandler(paginationData) {
       // Collect any button press and handle then according to button action
       collector.on("collect", async (i) => {
          collector.resetTimer();
-         if (!i.deferred && !i.replied) { await i.deferUpdate(); }
-         switch (paginationData.buttons.find(button => button.data.custom_id == i.customId).action) {
+         const buttonData = paginationData.buttons.find(button => button.data.custom_id == i.customId);
+         if (!i.deferred && !i.replied && buttonData.action !== ButtonAction.Callback) { await i.deferUpdate(); }
+         switch (buttonData.action) {
             case ButtonAction.Next:
-               if ((pagePosition + 1) === paginationData.pages.length) {
-                  if (paginationData.settings.loop) {
-                     pagePosition = 0;
-                  } else {
-                     break;
-                  }
-               } else {
-                  pagePosition++;
-               }
-               await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
+               await paginationSession.nextPage(i);
                break;
             case ButtonAction.Back:
-               if (pagePosition === 0) {
-                  if (paginationData.settings.loop) {
-                     pagePosition = paginationData.pages.length - 1;
-                  } else {
-                     break;
-                  }
-               } else {
-                  pagePosition--;
-               }
-               await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
+               await paginationSession.backPage(i);
                break;
             case ButtonAction.Start:
-               if (pagePosition !== 0) {
-                  pagePosition = 0;
-                  await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
-               }
+               await paginationSession.startPage(i);
                break;
             case ButtonAction.End:
-               if (pagePosition !== paginationData.pages.length) {
-                  pagePosition = (paginationData.pages.length - 1);
-                  await i.editReply(pagePayloadBuilder(paginationData, pagePosition));
-               }
+               await paginationSession.endPage(i);
                break;
             case ButtonAction.Delete:
-               if (pagination.deletable) {
-                  pagination.delete().catch(() => { });
-               }
+               await paginationSession.deletePagination();
                collector.stop();
                break;
+            case ButtonAction.Callback:
+               await paginationData.buttons.find(button => button.data.custom_id == i.customId).callback(paginationSession, i);
+               break;
             default:
-               console.warn("[COLLECTOR ERROR]: No recognised button was pressed");
+               console.warn("[COLLECTOR WARNING]: No recognised button was pressed");
                break;
          }
       });
@@ -149,25 +125,25 @@ module.exports = async function baseHandler(paginationData) {
             try {
                switch (paginationData.settings.timeoutEnding) {
                   case TimeoutEnding.DeleteButtons:
-                     if (pagination.editable) {
-                        await pagination.edit({ components: [] }).catch(() => { return; });
+                     if (paginationSession.message.editable) {
+                        await paginationSession.message.edit({ components: [] }).catch(() => { return; });
                      }
                      break;
                   case TimeoutEnding.DeletePagination:
-                     if (pagination.deletable) {
-                        await pagination.delete().catch(() => { return; });
+                     if (paginationSession.message.deletable) {
+                        await paginationSession.message.delete().catch(() => { return; });
                      }
                      break;
                   case TimeoutEnding.DisableButtons:
-                     if (pagination.editable) {
+                     if (paginationSession.message.editable) {
                         disableButtons(paginationData);
-                        await pagination.edit(pagePayloadBuilder(paginationData, pagePosition)).catch(() => { return; });
+                        await paginationSession.message.edit(pagePayloadBuilder(paginationData, paginationSession.pagePosition, true)).catch(() => { return; });
                      }
                      break;
                   default:
                      throw new Error('[TIMEOUT ENDING ERROR]: Invalid timeout ending type');
                }
-               resolve(pagination);
+               resolve(paginationSession.message);
             } catch (error) {
                reject(error);
             }

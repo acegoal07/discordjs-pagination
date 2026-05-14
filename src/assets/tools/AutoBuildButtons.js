@@ -43,7 +43,7 @@ module.exports = function autoBuildButtons(paginationData) {
          paginationData.buttons.push(
             new PageButtonBuilder()
                .setAction(ButtonAction.Delete)
-               .setLabel("Del")
+               .setLabel("🗑")
                .setStyle(ButtonStyle.Danger)
                .setCustomId("delete")
          )
