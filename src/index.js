@@ -53,6 +53,14 @@ class Pagination {
          }
 
          this.paginationData.settings.timeoutEnding = timeoutEnding;
+      } else if (typeof timeoutEnding === 'string') {
+         const enumValue = TimeoutEnding[timeoutEnding];
+
+         if (enumValue === undefined) {
+            throw new Error("[TIMEOUT ENDING ERROR]: The enum passed in is invalid");
+         }
+
+         this.paginationData.settings.timeoutEnding = enumValue
       } else {
          throw new TypeError("[TIMEOUT ENDING ERROR]: Timeout ending setting is not a number");
       }
@@ -87,6 +95,14 @@ class Pagination {
          }
 
          this.paginationData.settings.messageResponseType = messageResponseType;
+      } else if (typeof messageResponseType === 'string') {
+         const enumValue = MessageResponseType[messageResponseType];
+
+         if (enumValue === undefined) {
+            throw new Error("[MESSAGE RESPONSE TYPE ERROR]: The enum passed in is invalid");
+         }
+
+         this.paginationData.settings.messageResponseType = enumValue
       } else {
          throw new TypeError("[MESSAGE RESPONSE TYPE ERROR]: Message response type setting is not a number");
       }
