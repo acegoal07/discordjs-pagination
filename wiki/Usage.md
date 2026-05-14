@@ -67,7 +67,7 @@ await new Pagination()
 			.setCustomId('pagination_custom')
 			.setLabel('custom')
 			.setStyle(ButtonStyle.Primary)
-			.setCallback(async (paginationData, paginationSession, interaction) => {
+			.setCallback(async (paginationSession, interaction) => {
 				const modal = new ModalBuilder()
 					.setCustomId('goToPageModal')
 					.setTitle('Go to Page');

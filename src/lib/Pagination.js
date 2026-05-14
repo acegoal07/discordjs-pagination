@@ -111,7 +111,7 @@ module.exports = async function baseHandler(paginationData) {
                collector.stop();
                break;
             case ButtonAction.Callback:
-               await paginationData.buttons.find(button => button.data.custom_id == i.customId).callback(paginationData, paginationSession, i);
+               await paginationData.buttons.find(button => button.data.custom_id == i.customId).callback(paginationSession, i);
                break;
             default:
                console.warn("[COLLECTOR WARNING]: No recognised button was pressed");
