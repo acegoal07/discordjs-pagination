@@ -23,11 +23,12 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, i
       }
 
       // Handles disable unusable button logic
-      if (paginationData.settings.disableUnusableButtons && !paginationData.settings.loop && !ignoreDisableUnusable) {
+      if (paginationData.settings.disableUnusableButtons && !paginationData.settings.loop && !ignoreDisableUnusable || pageData.blockCustomButtons) {
          paginationData.buttons.forEach(button => {
             button.setDisabled(
                ((pagePosition === 0) && (button.action === ButtonAction.Back || button.action === ButtonAction.Start)) ||
-               ((paginationData.pages.length === pagePosition + 1) && (button.action === ButtonAction.Next || button.action === ButtonAction.End))
+               ((paginationData.pages.length === pagePosition + 1) && (button.action === ButtonAction.Next || button.action === ButtonAction.End)) ||
+               (pageData.blockCustomButtons && button.action === ButtonAction.Callback)
             );
          });
       }
