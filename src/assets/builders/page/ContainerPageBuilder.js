@@ -20,6 +20,12 @@ module.exports = class ContainerPageBuilder extends ContainerBuilder {
        * @type {MessageFlags}
        */
       this.pageFlags = MessageFlags.IsComponentsV2;
+
+      /**
+       * Whether or not custom callback buttons should be usable with this page
+       * @type {Boolean}
+       */
+      this.blockCustomButtons = false;
    }
 
    /**
@@ -31,5 +37,12 @@ module.exports = class ContainerPageBuilder extends ContainerBuilder {
          component: this,
          flag: this.pageFlags
       })
+   }
+
+   /**
+    * Makes it so custom callback buttons are disabled while you are on this page
+    */
+   blockCustomButtons() {
+      this.blockCustomButtons = true;
    }
 }
