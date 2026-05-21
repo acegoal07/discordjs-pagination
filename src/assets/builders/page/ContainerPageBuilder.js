@@ -42,7 +42,7 @@ module.exports = class ContainerPageBuilder extends ContainerBuilder {
    /**
     * Makes it so custom callback buttons are disabled while you are on this page
     */
-   blockCustomButtons() {
+   disableCustomButtons() {
       this.blockCustomButtons = true;
    }
 }

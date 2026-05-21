@@ -20,6 +20,12 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
        * @type {AttachmentBuilder}
        */
       this.attachment = null;
+
+      /**
+       * Whether or not custom callback buttons should be usable with this page
+       * @type {Boolean}
+       */
+      this.blockCustomButtons = false;
    }
 
    /**
@@ -42,5 +48,12 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
          embed: this,
          file: this.attachment
       })
+   }
+
+   /**
+    * Makes it so custom callback buttons are disabled while you are on this page
+    */
+   disableCustomButtons() {
+      this.blockCustomButtons = true;
    }
 }

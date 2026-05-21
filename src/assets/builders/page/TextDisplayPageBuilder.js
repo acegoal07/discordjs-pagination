@@ -17,6 +17,12 @@ module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
        * @type {MessageFlags}
        */
       this.pageFlags = MessageFlags.IsComponentsV2;
+
+      /**
+       * Whether or not custom callback buttons should be usable with this page
+       * @type {Boolean}
+       */
+      this.blockCustomButtons = false;
    }
 
    /**
@@ -28,5 +34,12 @@ module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
          component: this,
          flag: this.pageFlags
       })
+   }
+
+   /**
+    * Makes it so custom callback buttons are disabled while you are on this page
+    */
+   disableCustomButtons() {
+      this.blockCustomButtons = true;
    }
 }
