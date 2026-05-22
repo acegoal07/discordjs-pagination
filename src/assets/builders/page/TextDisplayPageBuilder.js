@@ -39,7 +39,7 @@ module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
    /**
     * Makes it so custom callback buttons are disabled while you are on this page
     */
-   disableCustomButtons() {
+   enableBlockCustomButtons() {
       this.blockCustomButtons = true;
    }
 }

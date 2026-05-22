@@ -53,7 +53,7 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
    /**
     * Makes it so custom callback buttons are disabled while you are on this page
     */
-   disableCustomButtons() {
+   enableBlockCustomButtons() {
       this.blockCustomButtons = true;
    }
 }
