@@ -18,6 +18,12 @@ module.exports = class ImagePageBuilder {
        * @type {AttachmentBuilder}
        */
       this.image = null;
+
+      /**
+       * Whether or not custom callback buttons should be usable with this page
+       * @type {Boolean}
+       */
+      this.blockCustomButtons = false;
    }
 
    /**
@@ -39,5 +45,12 @@ module.exports = class ImagePageBuilder {
       return new PagePayloadData({
          file: this.image
       })
+   }
+
+   /**
+    * Makes it so custom callback buttons are disabled while you are on this page
+    */
+   enableBlockCustomButtons() {
+      this.blockCustomButtons = true;
    }
 }

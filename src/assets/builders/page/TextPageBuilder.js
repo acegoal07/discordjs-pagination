@@ -17,6 +17,12 @@ module.exports = class TextPageBuilder {
        * @type {String}
        */
       this.text = "";
+
+      /**
+       * Whether or not custom callback buttons should be usable with this page
+       * @type {Boolean}
+       */
+      this.blockCustomButtons = false;
    }
 
    /**
@@ -37,5 +43,12 @@ module.exports = class TextPageBuilder {
       return new PagePayloadData({
          content: this.text
       })
+   }
+
+   /**
+    * Makes it so custom callback buttons are disabled while you are on this page
+    */
+   enableBlockCustomButtons() {
+      this.blockCustomButtons = true;
    }
 }
