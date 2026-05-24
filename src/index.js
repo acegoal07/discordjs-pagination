@@ -54,10 +54,15 @@ class Pagination {
 
          this.paginationData.settings.timeoutEnding = timeoutEnding;
       } else if (typeof timeoutEnding === 'string') {
-         const enumValue = TimeoutEnding[timeoutEnding];
+         let enumValue = TimeoutEnding[timeoutEnding];
 
          if (enumValue === undefined) {
-            throw new Error("[TIMEOUT ENDING ERROR]: The enum passed in is invalid");
+            const found = Object.keys(TimeoutEnding).find(k => k.toLowerCase() === timeoutEnding.toLowerCase());
+            enumValue = (found && TimeoutEnding[found]);
+
+            if (enumValue === undefined) {
+               throw new Error("[TIMEOUT ENDING ERROR]: The enum passed in is invalid");
+            }
          }
 
          this.paginationData.settings.timeoutEnding = enumValue
@@ -96,10 +101,15 @@ class Pagination {
 
          this.paginationData.settings.messageResponseType = messageResponseType;
       } else if (typeof messageResponseType === 'string') {
-         const enumValue = MessageResponseType[messageResponseType];
+         let enumValue = MessageResponseType[messageResponseType];
 
          if (enumValue === undefined) {
-            throw new Error("[MESSAGE RESPONSE TYPE ERROR]: The enum passed in is invalid");
+            const found = Object.keys(TimeoutEnding).find(k => k.toLowerCase() === timeoutEnding.toLowerCase());
+            enumValue = (found && TimeoutEnding[found]);
+
+            if (enumValue === undefined) {
+               throw new Error("[TIMEOUT ENDING ERROR]: The enum passed in is invalid");
+            }
          }
 
          this.paginationData.settings.messageResponseType = enumValue
@@ -118,7 +128,7 @@ class Pagination {
 
    /**
     * Set's the context to be used for the pagination
-    * @param {import("discord.js").Message | import("discord.js").Interaction} context
+    * @param {import("discord.js").Message|import("discord.js").Interaction} context
     * @returns {Pagination}
     */
    setContext(context = null) {
@@ -141,7 +151,7 @@ class Pagination {
 
    /**
     * Set's the pages for the pagination
-    * @param {Array<EmbedPageBuilder | ImagePageBuilder | TextPageBuilder | ContainerPageBuilder | TextDisplayPageBuilder>} pages
+    * @param {Array<EmbedPageBuilder|ImagePageBuilder|TextPageBuilder|ContainerPageBuilder|TextDisplayPageBuilder>} pages
     * @returns {Pagination}
     */
    setPages(pages = []) {
