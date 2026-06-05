@@ -206,7 +206,7 @@ Starts pagination.
 
 ## Builders
 
-> Why builders? The builders extend the native discord.js builders and add additional functionality and information needed for the pagination to function.
+> Why builders? The builders extend the native discord.js builders and add additional functionality and information needed for the pagination to function this is done to provide a more developer-friendly experience.
 
 ### `EmbedPageBuilder`
 
@@ -242,6 +242,10 @@ Supported actions:
 - `ButtonAction.Delete`
 - `ButtonAction.Callback` - allows you to set a custom callback function that is executed when the button is pressed
 
+# Notes
+
+> You can use a string instead of an enum for example `setAction('next')` instead of `setAction(ButtonAction.Next)` but it is not recommended.
+
 > The callback function for `ButtonAction.Callback` buttons receives three arguments: `paginationSession` and `interaction`. `paginationSession` provides methods to control the pagination (like nextPage, backPage, goToPage, etc.), and `interaction` is the interaction that triggered the button press.
 
 ## Timeout Behaviour
@@ -251,6 +255,10 @@ Supported actions:
 - `TimeoutEnding.DisableButtons`: disable current buttons
 - `TimeoutEnding.DeleteButtons`: remove buttons from message
 - `TimeoutEnding.DeletePagination`: delete the pagination message
+
+# Notes
+
+> You can use a string instead of an enum for example `timeoutEnding: 'disableButtons'` instead of `timeoutEnding: TimeoutEnding.DisableButtons` but it is not recommended.
 
 ## Auto Buttons
 

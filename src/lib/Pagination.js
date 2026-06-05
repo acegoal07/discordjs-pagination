@@ -61,7 +61,6 @@ module.exports = async function baseHandler(paginationData) {
 
       // Handle interaction context
       else if (paginationData.contextType === ContextType.Interaction) {
-
          // Check if the pagination is deferred and if not defer the reply with the correct ephemeral setting
          if (!paginationData.context.deferred) {
             await paginationData.context.deferReply(paginationData.settings.interactionEphemeral ? { flags: MessageFlags.Ephemeral } : {});
