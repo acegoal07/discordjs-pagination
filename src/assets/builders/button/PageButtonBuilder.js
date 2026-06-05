@@ -21,10 +21,19 @@ module.exports = class PageButtonBuilder extends ButtonBuilder {
 
    /**
     * Set's the action for the button
-    * @param {ButtonAction} action
+    * @param {ButtonAction|'next'|'back'|'start'|'end'|'delete'|'callback'} action
     * @returns {PageButtonBuilder}
     */
    setAction(action = null) {
+      if (typeof action === "string") {
+         if (ButtonAction[action] === undefined) {
+            const found = Object.keys(ButtonAction).find(k => k.toLowerCase() === action.toLowerCase());
+            action = (found && ButtonAction[found]) || ButtonAction.Unset;
+         } else {
+            action = ButtonAction[action];
+         }
+      }
+
       if (this.action == ButtonAction.Unset && action != null) {
          this.action = action;
       }

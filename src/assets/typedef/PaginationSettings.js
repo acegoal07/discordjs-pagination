@@ -12,7 +12,7 @@ module.exports = class PaginationSettings {
 
    /**
     * What the pagination should do with itself once the timeout has ended
-    * @type {TimeoutEnding}
+    * @type {TimeoutEnding|'disablebuttons'|'deletepagination'|'deletebuttons'}
     */
    timeoutEnding = TimeoutEnding.DisableButtons;
 
@@ -42,7 +42,7 @@ module.exports = class PaginationSettings {
 
    /**
     * How the message pagination should be sent
-    * @type {MessageResponseType}
+    * @type {MessageResponseType|'send'|'reply'}
     */
    messageResponseType = MessageResponseType.Send;
 

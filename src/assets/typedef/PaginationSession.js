@@ -120,4 +120,16 @@ module.exports = class PaginationSession {
    async updatePagination(interaction) {
       await interaction.editReply(pagePayloadBuilder(this.paginationData, this.pagePosition)).catch(error => console.log(error));
    }
+
+   /**
+    * Get's a specific page unless no number is provided
+    * @param {Number} pageNumber
+    * @returns {import("../builders/page/EmbedPageBuilder") | import("../builders/page/ImagePageBuilder") | import("../builders/page/TextPageBuilder") | import("../builders/page/ContainerPageBuilder") | import("../builders/page/TextDisplayPageBuilder")}
+    */
+   getPage(pageNumber = null) {
+      if (pageNumber < 1 || pageNumber > this.paginationData.pages.length + 1) {
+         return
+      }
+      return this.paginationData.pages[(pageNumber - 1) || (this.pagePosition - 1)]
+   }
 }
