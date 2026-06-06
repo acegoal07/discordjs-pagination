@@ -1,3 +1,4 @@
+const PageStringSelectMenuBuilder = require("./assets/builders/button/PageStringSelectMenuBuilder");
 const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType, PageType } = require("./assets/enums/Enums"),
    PaginationData = require("./assets/typedef/PaginationData"),
    EmbedPageBuilder = require("./assets/builders/page/EmbedPageBuilder"),
@@ -188,12 +189,12 @@ class Pagination {
     * @returns {Pagination}
     */
    setButtons(buttons = []) {
-      if (buttons.length === 0) {
-         throw new Error("[BUTTON ERROR]: No buttons have been passed in");
-      }
-
       if (!Array.isArray(buttons)) {
          throw new TypeError("[BUTTON ERROR]: The buttons you have provided is not an Array");
+      }
+
+      if (buttons.length === 0) {
+         throw new Error("[BUTTON ERROR]: No buttons have been passed in");
       }
 
       const filteredButtons = buttons.filter(button => button instanceof PageButtonBuilder && button.action != ButtonAction.Unset);
@@ -220,6 +221,38 @@ class Pagination {
 
       this.paginationData.buttons = filteredButtons;
 
+      return this;
+   }
+
+   /**
+    * Set's the buttons to be used by the pagination
+    * @param {import('discord.js').ActionRowBuilder<import('./assets/builders/button/PageButtonBuilder') | import('./assets/builders/button/PageStringSelectMenuBuilder')>[]} rows
+    * @returns {Pagination}
+    */
+   setExtraRows(rows = []) {
+      if (!Array.isArray(rows)) {
+         throw new TypeError("[EXTRA ROWS ERROR]: The extra rows you have provided is not an Array");
+      }
+
+      if (rows.length === 0) {
+         console.warn("[EXTRA ROWS ERROR]: No extra rows have been passed in");
+         return this;
+      }
+
+      if (rows.length > 3) {
+         console.warn("[EXTRA ROWS ERROR]: More than three extra rows were passed in there is a limit of three due to prevent pagination errors");
+         rows = rows.slice(0, 4);
+      }
+
+      rows.forEach(r => {
+         const filteredComponents = r.components.filter(c => (c instanceof PageButtonBuilder || c instanceof PageStringSelectMenuBuilder) && c.action != ButtonAction.Unset);
+
+         if (filteredComponents.length != r.components.length) {
+            throw new Error("[EXTRA ROWS ERROR]: At least one of the components in your extra rows does not meet the requirements to be used");
+         }
+      });
+
+      this.paginationData.extraRows = rows;
       return this;
    }
 

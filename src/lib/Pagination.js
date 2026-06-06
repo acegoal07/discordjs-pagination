@@ -1,4 +1,4 @@
-const { MessageFlags, ComponentType } = require("discord.js"),
+const { MessageFlags } = require("discord.js"),
    { ContextType, MessageResponseType, TimeoutEnding, ButtonAction } = require("../assets/enums/Enums"),
    pagePayloadBuilder = require("../assets/builders/payload/PagePayloadBuilder"),
    AutoBuildButtons = require("../assets/tools/AutoBuildButtons"),
@@ -84,16 +84,16 @@ module.exports = async function baseHandler(paginationData) {
       // Create a collector for the buttons used for the pagination
       const collector = paginationSession.message.createMessageComponentCollector({
          filter: filterBuilder,
-         time: paginationData.settings.timeout,
-         ComponentType: ComponentType.Button
+         time: paginationData.settings.timeout
       });
 
       // Collect any button press and handle then according to button action
       collector.on("collect", async (i) => {
          collector.resetTimer();
-         const buttonData = paginationData.buttons.find(button => button.data.custom_id == i.customId);
-         if (!i.deferred && !i.replied && buttonData.action !== ButtonAction.Callback) { await i.deferUpdate(); }
-         switch (buttonData.action) {
+         const data = paginationData.buttons.find(b => b.data.custom_id == i.customId) ||
+            paginationData.extraRows.find(r => r.components.find(c => c.data.custom_id == i.customId));
+         if (!i.deferred && !i.replied && data.action !== ButtonAction.Callback) { await i.deferUpdate(); }
+         switch (data.action) {
             case ButtonAction.Next:
                await paginationSession.nextPage(i);
                break;
@@ -111,7 +111,7 @@ module.exports = async function baseHandler(paginationData) {
                collector.stop();
                break;
             case ButtonAction.Callback:
-               await paginationData.buttons.find(button => button.data.custom_id == i.customId).callback(paginationSession, i);
+               await data.callback(paginationSession, i);
                break;
             default:
                console.warn("[COLLECTOR WARNING]: No recognised button was pressed");

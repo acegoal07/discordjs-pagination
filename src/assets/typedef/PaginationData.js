@@ -28,4 +28,9 @@ module.exports = class PaginationData {
     * @type {import("../builders/button/PageButtonBuilder")[]}
     */
    buttons = [];
+
+   /**
+    * @type {import('discord.js').ActionRowBuilder<import('../builders/button/PageButtonBuilder') | import('../builders/button/PageStringSelectMenuBuilder')>[]}
+    */
+   extraRows = [];
 }
