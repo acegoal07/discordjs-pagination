@@ -36,22 +36,18 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, i
       // Adds pagination buttons if there are 2 or more pages
       if (paginationData.pages.length >= 2) {
          if (pageData.pageType == PageType.ComponentsV2) {
-            payload.addComponent(new ContainerBuilder().addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)));
+            payload.addComponents(new ContainerBuilder().addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)));
          } else {
-            payload.addComponent(new ActionRowBuilder().addComponents(paginationData.buttons));
+            payload.addComponents(new ActionRowBuilder().addComponents(paginationData.buttons));
          }
       }
 
       // Add extra rows if there are any
       if (paginationData.extraRows.length > 0) {
          if (pageData.pageType == PageType.ComponentsV2) {
-            paginationData.extraRows.forEach(r => {
-               payload.addComponent(new ContainerBuilder().addActionRowComponents(r));
-            });
+            payload.addComponents(...paginationData.extraRows.map(r => new ContainerBuilder().addActionRowComponents(r)));
          } else {
-            paginationData.extraRows.forEach(r => {
-               payload.addComponent(r);
-            });
+            payload.addComponents(...paginationData.extraRows);
          }
       }
 

@@ -40,12 +40,12 @@ module.exports = class PagePayloadData {
    }
 
    /**
-    * Adds a component to the page payload
-    * @param {import("discord.js").ActionRowBuilder | import("discord.js").ContainerBuilder} component
+    * Adds one or more components to the page payload.
+    * @param {...(import("discord.js").ActionRowBuilder|import("discord.js").ContainerBuilder)} components
     * @returns {PagePayloadData}
     */
-   addComponent(component) {
-      this.components.push(component);
+   addComponents(...components) {
+      this.components.push(...components);
       return this;
    }
 

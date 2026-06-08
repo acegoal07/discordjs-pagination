@@ -122,7 +122,7 @@ module.exports = class PaginationSession {
    }
 
    /**
-    * Get's a specific page unless no number is provided
+    * Get's a specific page unless no number is provided where it returns the current page
     * @param {Number} pageNumber
     * @returns {import("../builders/page/EmbedPageBuilder") | import("../builders/page/ImagePageBuilder") | import("../builders/page/TextPageBuilder") | import("../builders/page/ContainerPageBuilder") | import("../builders/page/TextDisplayPageBuilder")}
     */
