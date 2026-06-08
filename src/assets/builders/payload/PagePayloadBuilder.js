@@ -42,6 +42,19 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, i
          }
       }
 
+      // Add extra rows if there are any
+      if (paginationData.extraRows.length > 0) {
+         if (pageData.pageType == PageType.ComponentsV2) {
+            paginationData.extraRows.forEach(r => {
+               payload.addComponent(new ContainerBuilder().addActionRowComponents(r));
+            });
+         } else {
+            paginationData.extraRows.forEach(r => {
+               payload.addComponent(r);
+            });
+         }
+      }
+
       // If ephemeral setting is enabled or if it is already added to the defer adds it to the page flags
       if ((paginationData.contextType === ContextType.Interaction && paginationData.settings.interactionEphemeral) || paginationData.context.flags == MessageFlags.Ephemeral) {
          payload.addFlag(MessageFlags.Ephemeral);
