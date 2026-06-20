@@ -1,4 +1,4 @@
-const PaginationSettings = require("./PaginationSettings");
+const PaginationSettings = require('./PaginationSettings');
 
 /**
  * Where all the pagination data is stored
@@ -33,4 +33,4 @@ module.exports = class PaginationData {
     * @type {import('discord.js').ActionRowBuilder<import('../builders/button/PageButtonBuilder') | import('../builders/button/PageStringSelectMenuBuilder')>[]}
     */
    extraRows = [];
-}
+};

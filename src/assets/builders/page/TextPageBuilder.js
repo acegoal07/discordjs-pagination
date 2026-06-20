@@ -1,5 +1,5 @@
-const { PageType } = require("../../enums/Enums"),
-   PagePayloadData = require("../../typedef/PagePayloadData");
+const { PageType } = require('../../enums/Enums'),
+   PagePayloadData = require('../../typedef/PagePayloadData');
 
 /**
  * Used to build image pages for the pagination
@@ -16,7 +16,7 @@ module.exports = class TextPageBuilder {
        * The text for the page
        * @type {String}
        */
-      this.text = "";
+      this.text = '';
 
       /**
        * Whether or not custom callback buttons should be usable with this page
@@ -42,7 +42,7 @@ module.exports = class TextPageBuilder {
    toPayload() {
       return new PagePayloadData({
          content: this.text
-      })
+      });
    }
 
    /**
@@ -51,4 +51,4 @@ module.exports = class TextPageBuilder {
    enableBlockCustomButtons() {
       this.blockCustomButtons = true;
    }
-}
+};

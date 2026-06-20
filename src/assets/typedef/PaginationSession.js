@@ -1,4 +1,4 @@
-const pagePayloadBuilder = require("../builders/payload/PagePayloadBuilder");
+const pagePayloadBuilder = require('../builders/payload/PagePayloadBuilder');
 
 module.exports = class PaginationSession {
    /**
@@ -41,7 +41,7 @@ module.exports = class PaginationSession {
     * @param {import("discord.js").Interaction} interaction
     */
    async nextPage(interaction) {
-      if ((this.pagePosition + 1) === this.paginationData.pages.length) {
+      if (this.pagePosition + 1 === this.paginationData.pages.length) {
          if (this.paginationData.settings.loop) {
             this.pagePosition = 0;
          } else {
@@ -87,7 +87,7 @@ module.exports = class PaginationSession {
     */
    async endPage(interaction) {
       if (this.pagePosition !== this.paginationData.pages.length - 1) {
-         this.pagePosition = (this.paginationData.pages.length - 1);
+         this.pagePosition = this.paginationData.pages.length - 1;
          await this.updatePagination(interaction);
       }
    }
@@ -118,7 +118,9 @@ module.exports = class PaginationSession {
     * @param {import("discord.js").Interaction} interaction
     */
    async updatePagination(interaction) {
-      await interaction.editReply(pagePayloadBuilder(this.paginationData, this.pagePosition)).catch(error => console.log(error));
+      await interaction
+         .editReply(pagePayloadBuilder(this.paginationData, this.pagePosition))
+         .catch((error) => console.log(error));
    }
 
    /**
@@ -128,8 +130,8 @@ module.exports = class PaginationSession {
     */
    getPage(pageNumber = null) {
       if (pageNumber < 1 || pageNumber > this.paginationData.pages.length + 1) {
-         return
+         return;
       }
-      return this.paginationData.pages[(pageNumber - 1) || (this.pagePosition - 1)]
+      return this.paginationData.pages[pageNumber - 1 || this.pagePosition - 1];
    }
-}
+};

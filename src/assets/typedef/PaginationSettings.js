@@ -51,4 +51,4 @@ module.exports = class PaginationSettings {
     * @type {Boolean}
     */
    disableUnusableButtons = true;
-}
+};

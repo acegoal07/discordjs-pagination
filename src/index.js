@@ -1,13 +1,19 @@
-const PageStringSelectMenuBuilder = require("./assets/builders/button/PageStringSelectMenuBuilder");
-const { ContextType, ButtonAction, TimeoutEnding, MessageResponseType, PageType } = require("./assets/enums/Enums"),
-   PaginationData = require("./assets/typedef/PaginationData"),
-   EmbedPageBuilder = require("./assets/builders/page/EmbedPageBuilder"),
-   ImagePageBuilder = require("./assets/builders/page/ImagePageBuilder"),
-   TextPageBuilder = require("./assets/builders/page/TextPageBuilder"),
-   ContainerPageBuilder = require("./assets/builders/page/ContainerPageBuilder"),
-   TextDisplayPageBuilder = require("./assets/builders/page/TextDisplayPageBuilder"),
-   PageButtonBuilder = require("./assets/builders/button/PageButtonBuilder"),
-   pagination = require("./lib/Pagination");
+const PageStringSelectMenuBuilder = require('./assets/builders/button/PageStringSelectMenuBuilder');
+const {
+      ContextType,
+      ButtonAction,
+      TimeoutEnding,
+      MessageResponseType,
+      PageType
+   } = require('./assets/enums/Enums'),
+   PaginationData = require('./assets/typedef/PaginationData'),
+   EmbedPageBuilder = require('./assets/builders/page/EmbedPageBuilder'),
+   ImagePageBuilder = require('./assets/builders/page/ImagePageBuilder'),
+   TextPageBuilder = require('./assets/builders/page/TextPageBuilder'),
+   ContainerPageBuilder = require('./assets/builders/page/ContainerPageBuilder'),
+   TextDisplayPageBuilder = require('./assets/builders/page/TextDisplayPageBuilder'),
+   PageButtonBuilder = require('./assets/builders/button/PageButtonBuilder'),
+   pagination = require('./lib/Pagination');
 
 /**
  * @version 2.0.4
@@ -35,14 +41,16 @@ class Pagination {
       disableUnusableButtons = true
    }) {
       if (Number.isNaN(timeout)) {
-         throw new TypeError("[TIMEOUT ERROR]: Timeout setting is not a number");
+         throw new TypeError('[TIMEOUT ERROR]: Timeout setting is not a number');
       } else {
          if (timeout <= 0) {
-            throw new Error("[TIMEOUT ERROR]: The timeout amount needs to be more than 0");
+            throw new Error('[TIMEOUT ERROR]: The timeout amount needs to be more than 0');
          }
 
          if (timeout < 4000) {
-            console.warn("[TIMEOUT WARNING]: The timeout is set bellow 4000ms which isn't recommended");
+            console.warn(
+               "[TIMEOUT WARNING]: The timeout is set bellow 4000ms which isn't recommended"
+            );
          }
 
          this.paginationData.settings.timeout = timeout;
@@ -50,7 +58,7 @@ class Pagination {
 
       if (typeof timeoutEnding === 'number') {
          if (!Object.values(TimeoutEnding).includes(timeoutEnding)) {
-            throw new Error("[TIMEOUT ENDING ERROR]: The enum passed in is invalid");
+            throw new Error('[TIMEOUT ENDING ERROR]: The enum passed in is invalid');
          }
 
          this.paginationData.settings.timeoutEnding = timeoutEnding;
@@ -58,46 +66,50 @@ class Pagination {
          let enumValue = TimeoutEnding[timeoutEnding];
 
          if (enumValue === undefined) {
-            const found = Object.keys(TimeoutEnding).find(k => k.toLowerCase() === timeoutEnding.toLowerCase());
-            enumValue = (found && TimeoutEnding[found]);
+            const found = Object.keys(TimeoutEnding).find(
+               (k) => k.toLowerCase() === timeoutEnding.toLowerCase()
+            );
+            enumValue = found && TimeoutEnding[found];
 
             if (enumValue === undefined) {
-               throw new Error("[TIMEOUT ENDING ERROR]: The enum passed in is invalid");
+               throw new Error('[TIMEOUT ENDING ERROR]: The enum passed in is invalid');
             }
          }
 
-         this.paginationData.settings.timeoutEnding = enumValue
+         this.paginationData.settings.timeoutEnding = enumValue;
       } else {
-         throw new TypeError("[TIMEOUT ENDING ERROR]: Timeout ending setting is not a number");
+         throw new TypeError('[TIMEOUT ENDING ERROR]: Timeout ending setting is not a number');
       }
 
       if (typeof interactionEphemeral === 'boolean') {
          this.paginationData.settings.interactionEphemeral = interactionEphemeral;
       } else {
-         throw new TypeError("[EPHEMERAL ERROR]: Ephemeral setting is not a boolean");
+         throw new TypeError('[EPHEMERAL ERROR]: Ephemeral setting is not a boolean');
       }
 
       if (typeof authorSpecific === 'boolean') {
          this.paginationData.settings.authorSpecific = authorSpecific;
       } else {
-         throw new TypeError("[AUTHOR SPECIFIC ERROR]: Author specific setting is not a boolean");
+         throw new TypeError('[AUTHOR SPECIFIC ERROR]: Author specific setting is not a boolean');
       }
 
       if (typeof loop === 'boolean') {
          this.paginationData.settings.loop = loop;
       } else {
-         throw new TypeError("[LOOP ERROR]: Loop setting is not a boolean");
+         throw new TypeError('[LOOP ERROR]: Loop setting is not a boolean');
       }
 
       if (typeof autoDeleteButton === 'boolean') {
          this.paginationData.settings.autoDeleteButton = autoDeleteButton;
       } else {
-         throw new TypeError("[AUTO DELETE BUTTON ERROR]: Auto delete button setting is not a boolean");
+         throw new TypeError(
+            '[AUTO DELETE BUTTON ERROR]: Auto delete button setting is not a boolean'
+         );
       }
 
       if (typeof messageResponseType === 'number') {
          if (!Object.values(MessageResponseType).includes(messageResponseType)) {
-            throw new Error("[MESSAGE RESPONSE TYPE ERROR]: The enum passed in is invalid");
+            throw new Error('[MESSAGE RESPONSE TYPE ERROR]: The enum passed in is invalid');
          }
 
          this.paginationData.settings.messageResponseType = messageResponseType;
@@ -105,23 +117,29 @@ class Pagination {
          let enumValue = MessageResponseType[messageResponseType];
 
          if (enumValue === undefined) {
-            const found = Object.keys(TimeoutEnding).find(k => k.toLowerCase() === timeoutEnding.toLowerCase());
-            enumValue = (found && TimeoutEnding[found]);
+            const found = Object.keys(TimeoutEnding).find(
+               (k) => k.toLowerCase() === timeoutEnding.toLowerCase()
+            );
+            enumValue = found && TimeoutEnding[found];
 
             if (enumValue === undefined) {
-               throw new Error("[TIMEOUT ENDING ERROR]: The enum passed in is invalid");
+               throw new Error('[TIMEOUT ENDING ERROR]: The enum passed in is invalid');
             }
          }
 
-         this.paginationData.settings.messageResponseType = enumValue
+         this.paginationData.settings.messageResponseType = enumValue;
       } else {
-         throw new TypeError("[MESSAGE RESPONSE TYPE ERROR]: Message response type setting is not a number");
+         throw new TypeError(
+            '[MESSAGE RESPONSE TYPE ERROR]: Message response type setting is not a number'
+         );
       }
 
       if (typeof disableUnusableButtons === 'boolean') {
          this.paginationData.settings.disableUnusableButtons = disableUnusableButtons;
       } else {
-         throw new TypeError("[DISABLE UNUSABLE BUTTON ERROR]: Disable unusable button setting is not a boolean");
+         throw new TypeError(
+            '[DISABLE UNUSABLE BUTTON ERROR]: Disable unusable button setting is not a boolean'
+         );
       }
 
       return this;
@@ -134,7 +152,7 @@ class Pagination {
     */
    setContext(context = null) {
       if (!context) {
-         throw new Error("[CONTEXT ERROR]: No context has been passed in");
+         throw new Error('[CONTEXT ERROR]: No context has been passed in');
       }
 
       if (context?.content) {
@@ -142,7 +160,9 @@ class Pagination {
       } else if (context?.isCommand?.()) {
          this.paginationData.contextType = ContextType.Interaction;
       } else {
-         throw new TypeError("[CONTEXT ERROR]: The context that has been provided is neither a interaction or message");
+         throw new TypeError(
+            '[CONTEXT ERROR]: The context that has been provided is neither a interaction or message'
+         );
       }
 
       this.paginationData.context = context;
@@ -157,25 +177,37 @@ class Pagination {
     */
    setPages(pages = []) {
       if (pages.length === 0) {
-         throw new Error("[PAGE ERROR]: No Pages have been passed in");
+         throw new Error('[PAGE ERROR]: No Pages have been passed in');
       }
 
       if (!Array.isArray(pages)) {
-         throw new TypeError("[PAGE ERROR]: The pages you have provided is not an Array");
+         throw new TypeError('[PAGE ERROR]: The pages you have provided is not an Array');
       }
 
       if (pages.length === 0) {
-         throw new Error("[PAGE ERROR]: No Pages have been provided")
+         throw new Error('[PAGE ERROR]: No Pages have been provided');
       }
 
-      const filteredPages = pages.filter(page => page instanceof EmbedPageBuilder || page instanceof ImagePageBuilder || page instanceof TextPageBuilder || page instanceof ContainerPageBuilder || page instanceof TextDisplayPageBuilder || page instanceof SectionPageBuilder || page instanceof MediaGalleryPageBuilder);
+      const filteredPages = pages.filter(
+         (page) =>
+            page instanceof EmbedPageBuilder ||
+            page instanceof ImagePageBuilder ||
+            page instanceof TextPageBuilder ||
+            page instanceof ContainerPageBuilder ||
+            page instanceof TextDisplayPageBuilder
+      );
 
       if (filteredPages.length == 0) {
-         throw new TypeError("[PAGE ERROR]: There are no compatible pages provided");
+         throw new TypeError('[PAGE ERROR]: There are no compatible pages provided');
       }
 
-      if (filteredPages.some(page => page.pageType === PageType.Standard) && filteredPages.some(page => page.pageType === PageType.ComponentsV2)) {
-         throw new Error("[PAGE ERROR]: You are not able to combine components v2 pages and standard pages");
+      if (
+         filteredPages.some((page) => page.pageType === PageType.Standard) &&
+         filteredPages.some((page) => page.pageType === PageType.ComponentsV2)
+      ) {
+         throw new Error(
+            '[PAGE ERROR]: You are not able to combine components v2 pages and standard pages'
+         );
       }
 
       this.paginationData.pages = filteredPages;
@@ -190,33 +222,45 @@ class Pagination {
     */
    setButtons(buttons = []) {
       if (!Array.isArray(buttons)) {
-         throw new TypeError("[BUTTON ERROR]: The buttons you have provided is not an Array");
+         throw new TypeError('[BUTTON ERROR]: The buttons you have provided is not an Array');
       }
 
       if (buttons.length === 0) {
-         throw new Error("[BUTTON ERROR]: No buttons have been passed in");
+         throw new Error('[BUTTON ERROR]: No buttons have been passed in');
       }
 
-      const filteredButtons = buttons.filter(button => button instanceof PageButtonBuilder && button.action != ButtonAction.Unset);
+      const filteredButtons = buttons.filter(
+         (button) => button instanceof PageButtonBuilder && button.action != ButtonAction.Unset
+      );
 
       if (filteredButtons.length < 2) {
-         throw new Error("[BUTTON ERROR]: You need at least two buttons passed in for the pagination, a next and back button");
+         throw new Error(
+            '[BUTTON ERROR]: You need at least two buttons passed in for the pagination, a next and back button'
+         );
       }
 
-      if (!filteredButtons.some(button => button.action === ButtonAction.Next)) {
-         throw new Error("[BUTTON ERROR]: No next button is present in the provided buttons");
+      if (!filteredButtons.some((button) => button.action === ButtonAction.Next)) {
+         throw new Error('[BUTTON ERROR]: No next button is present in the provided buttons');
       }
 
-      if (!filteredButtons.some(button => button.action === ButtonAction.Back)) {
-         throw new Error("[BUTTON ERROR]: No back button is present in the provided buttons");
+      if (!filteredButtons.some((button) => button.action === ButtonAction.Back)) {
+         throw new Error('[BUTTON ERROR]: No back button is present in the provided buttons');
       }
 
-      if (filteredButtons.some(button => button.action != ButtonAction.Callback && button.callback != null)) {
-         console.warn("[BUTTON WARNING]: Callback functions linked to buttons without the callback action will not be used");
+      if (
+         filteredButtons.some(
+            (button) => button.action != ButtonAction.Callback && button.callback != null
+         )
+      ) {
+         console.warn(
+            '[BUTTON WARNING]: Callback functions linked to buttons without the callback action will not be used'
+         );
       }
 
       if (filteredButtons.length > 5) {
-         throw new Error("[BUTTON ERROR]: More than 5 buttons have been passed in which is more than the allowed amount for an action row")
+         throw new Error(
+            '[BUTTON ERROR]: More than 5 buttons have been passed in which is more than the allowed amount for an action row'
+         );
       }
 
       this.paginationData.buttons = filteredButtons;
@@ -231,24 +275,34 @@ class Pagination {
     */
    setExtraRows(rows = []) {
       if (!Array.isArray(rows)) {
-         throw new TypeError("[EXTRA ROWS ERROR]: The extra rows you have provided is not an Array");
+         throw new TypeError(
+            '[EXTRA ROWS ERROR]: The extra rows you have provided is not an Array'
+         );
       }
 
       if (rows.length === 0) {
-         console.warn("[EXTRA ROWS ERROR]: No extra rows have been passed in");
+         console.warn('[EXTRA ROWS ERROR]: No extra rows have been passed in');
          return this;
       }
 
       if (rows.length > 3) {
-         console.warn("[EXTRA ROWS ERROR]: More than three extra rows were passed in there is a limit of three due to prevent pagination errors");
+         console.warn(
+            '[EXTRA ROWS ERROR]: More than three extra rows were passed in there is a limit of three due to prevent pagination errors'
+         );
          rows = rows.slice(0, 4);
       }
 
-      rows.forEach(r => {
-         const filteredComponents = r.components.filter(c => (c instanceof PageButtonBuilder || c instanceof PageStringSelectMenuBuilder) && c.action != ButtonAction.Unset);
+      rows.forEach((r) => {
+         const filteredComponents = r.components.filter(
+            (c) =>
+               (c instanceof PageButtonBuilder || c instanceof PageStringSelectMenuBuilder) &&
+               c.action != ButtonAction.Unset
+         );
 
          if (filteredComponents.length != r.components.length) {
-            throw new Error("[EXTRA ROWS ERROR]: At least one of the components in your extra rows does not meet the requirements to be used");
+            throw new Error(
+               '[EXTRA ROWS ERROR]: At least one of the components in your extra rows does not meet the requirements to be used'
+            );
          }
       });
 

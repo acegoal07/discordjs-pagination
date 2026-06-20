@@ -1,5 +1,5 @@
-const { ButtonBuilder } = require("discord.js"),
-   { ButtonAction } = require("../../enums/Enums");
+const { ButtonBuilder } = require('discord.js'),
+   { ButtonAction } = require('../../enums/Enums');
 
 /**
  * Used to build the buttons for the pagination
@@ -25,9 +25,11 @@ module.exports = class PageButtonBuilder extends ButtonBuilder {
     * @returns {PageButtonBuilder}
     */
    setAction(action = null) {
-      if (typeof action === "string") {
+      if (typeof action === 'string') {
          if (ButtonAction[action] === undefined) {
-            const found = Object.keys(ButtonAction).find(k => k.toLowerCase() === action.toLowerCase());
+            const found = Object.keys(ButtonAction).find(
+               (k) => k.toLowerCase() === action.toLowerCase()
+            );
             action = (found && ButtonAction[found]) || ButtonAction.Unset;
          } else {
             action = ButtonAction[action];
@@ -51,4 +53,4 @@ module.exports = class PageButtonBuilder extends ButtonBuilder {
       }
       return this;
    }
-}
+};

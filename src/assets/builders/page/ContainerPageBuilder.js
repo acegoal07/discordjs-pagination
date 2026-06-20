@@ -1,6 +1,6 @@
-const { ContainerBuilder, MessageFlags } = require("discord.js"),
-   { PageType } = require("../../enums/Enums"),
-   PagePayloadData = require("../../typedef/PagePayloadData");
+const { ContainerBuilder, MessageFlags } = require('discord.js'),
+   { PageType } = require('../../enums/Enums'),
+   PagePayloadData = require('../../typedef/PagePayloadData');
 
 /**
  * Used to be build a container page for the pagination
@@ -36,7 +36,7 @@ module.exports = class ContainerPageBuilder extends ContainerBuilder {
       return new PagePayloadData({
          component: this,
          flag: this.pageFlags
-      })
+      });
    }
 
    /**
@@ -45,4 +45,4 @@ module.exports = class ContainerPageBuilder extends ContainerBuilder {
    enableBlockCustomButtons() {
       this.blockCustomButtons = true;
    }
-}
+};

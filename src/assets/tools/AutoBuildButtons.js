@@ -1,6 +1,6 @@
-const { ButtonStyle } = require("discord.js"),
-   PageButtonBuilder = require("../../assets/builders/button/PageButtonBuilder"),
-   { ButtonAction } = require("../enums/Enums");
+const { ButtonStyle } = require('discord.js'),
+   PageButtonBuilder = require('../../assets/builders/button/PageButtonBuilder'),
+   { ButtonAction } = require('../enums/Enums');
 
 /**
  * Generates predefined buttons
@@ -11,44 +11,44 @@ module.exports = function autoBuildButtons(paginationData) {
       paginationData.buttons = [
          new PageButtonBuilder()
             .setAction(ButtonAction.Back)
-            .setLabel("<")
+            .setLabel('<')
             .setStyle(ButtonStyle.Secondary)
-            .setCustomId("back"),
+            .setCustomId('back'),
          new PageButtonBuilder()
             .setAction(ButtonAction.Next)
-            .setLabel(">")
+            .setLabel('>')
             .setStyle(ButtonStyle.Secondary)
-            .setCustomId("next")
+            .setCustomId('next')
       ];
 
       if (paginationData.pages.length > 3) {
          paginationData.buttons.unshift(
             new PageButtonBuilder()
                .setAction(ButtonAction.Start)
-               .setLabel("<<")
+               .setLabel('<<')
                .setStyle(ButtonStyle.Secondary)
-               .setCustomId("start")
+               .setCustomId('start')
          );
 
          paginationData.buttons.push(
             new PageButtonBuilder()
                .setAction(ButtonAction.End)
-               .setLabel(">>")
+               .setLabel('>>')
                .setStyle(ButtonStyle.Secondary)
-               .setCustomId("end")
-         )
+               .setCustomId('end')
+         );
       }
 
       if (paginationData.settings.autoDeleteButton) {
          paginationData.buttons.push(
             new PageButtonBuilder()
                .setAction(ButtonAction.Delete)
-               .setLabel("🗑")
+               .setLabel('🗑')
                .setStyle(ButtonStyle.Danger)
-               .setCustomId("delete")
-         )
+               .setCustomId('delete')
+         );
       }
    } catch (error) {
-      throw new Error("[AUTO BUILD BUTTONS ERROR]:", { cause: error });
+      throw new Error('[AUTO BUILD BUTTONS ERROR]:', { cause: error });
    }
-}
+};

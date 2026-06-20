@@ -1,15 +1,18 @@
-const { ActionRowBuilder, MessageFlags, ContainerBuilder } = require("discord.js"),
-   { ContextType, PageType, ButtonAction } = require("../../enums/Enums"),
-   PagePayloadData = require("../../typedef/PagePayloadData");
+const { ActionRowBuilder, MessageFlags, ContainerBuilder } = require('discord.js'),
+   { ContextType, PageType, ButtonAction } = require('../../enums/Enums');
 
 /**
  * Build's the payload sent to discord for the pages
  * @param {import("../../typedef/PaginationData")} paginationData
  * @param {Number} pagePosition
  * @param {Boolean} ignoreDisableUnusable
- * @returns {PagePayloadData}
+ * @returns {import('../../typedef/PagePayloadData')}
  */
-module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, ignoreDisableUnusable = false) {
+module.exports = function pagePayloadBuilder(
+   paginationData,
+   pagePosition = 0,
+   ignoreDisableUnusable = false
+) {
    try {
       // The page data
       const pageData = paginationData.pages[pagePosition];
@@ -19,16 +22,23 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, i
 
       // Check whether data has been sent from the builder
       if (!payload) {
-         throw new Error("[PAGE PAYLOAD BUILDER ERROR]: No payload data sent from builder");
+         throw new Error('[PAGE PAYLOAD BUILDER ERROR]: No payload data sent from builder');
       }
 
       // Handles disable unusable button logic
-      if (paginationData.settings.disableUnusableButtons && !paginationData.settings.loop && !ignoreDisableUnusable || pageData.blockCustomButtons) {
-         paginationData.buttons.forEach(button => {
+      if (
+         (paginationData.settings.disableUnusableButtons &&
+            !paginationData.settings.loop &&
+            !ignoreDisableUnusable) ||
+         pageData.blockCustomButtons
+      ) {
+         paginationData.buttons.forEach((button) => {
             button.setDisabled(
-               ((pagePosition === 0) && (button.action === ButtonAction.Back || button.action === ButtonAction.Start)) ||
-               ((paginationData.pages.length === pagePosition + 1) && (button.action === ButtonAction.Next || button.action === ButtonAction.End)) ||
-               (pageData.blockCustomButtons && button.action === ButtonAction.Callback)
+               (pagePosition === 0 &&
+                  (button.action === ButtonAction.Back || button.action === ButtonAction.Start)) ||
+                  (paginationData.pages.length === pagePosition + 1 &&
+                     (button.action === ButtonAction.Next || button.action === ButtonAction.End)) ||
+                  (pageData.blockCustomButtons && button.action === ButtonAction.Callback)
             );
          });
       }
@@ -36,7 +46,11 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, i
       // Adds pagination buttons if there are 2 or more pages
       if (paginationData.pages.length >= 2) {
          if (pageData.pageType == PageType.ComponentsV2) {
-            payload.addComponents(new ContainerBuilder().addActionRowComponents(new ActionRowBuilder().addComponents(paginationData.buttons)));
+            payload.addComponents(
+               new ContainerBuilder().addActionRowComponents(
+                  new ActionRowBuilder().addComponents(paginationData.buttons)
+               )
+            );
          } else {
             payload.addComponents(new ActionRowBuilder().addComponents(paginationData.buttons));
          }
@@ -45,19 +59,27 @@ module.exports = function pagePayloadBuilder(paginationData, pagePosition = 0, i
       // Add extra rows if there are any
       if (paginationData.extraRows.length > 0) {
          if (pageData.pageType == PageType.ComponentsV2) {
-            payload.addComponents(...paginationData.extraRows.map(r => new ContainerBuilder().addActionRowComponents(r)));
+            payload.addComponents(
+               ...paginationData.extraRows.map((r) =>
+                  new ContainerBuilder().addActionRowComponents(r)
+               )
+            );
          } else {
             payload.addComponents(...paginationData.extraRows);
          }
       }
 
       // If ephemeral setting is enabled or if it is already added to the defer adds it to the page flags
-      if ((paginationData.contextType === ContextType.Interaction && paginationData.settings.interactionEphemeral) || paginationData.context.flags == MessageFlags.Ephemeral) {
+      if (
+         (paginationData.contextType === ContextType.Interaction &&
+            paginationData.settings.interactionEphemeral) ||
+         paginationData.context.flags == MessageFlags.Ephemeral
+      ) {
          payload.addFlag(MessageFlags.Ephemeral);
       }
 
       return payload;
    } catch (error) {
-      throw new Error("[PAGE PAYLOAD BUILDER ERROR]:", { cause: error });
+      throw new Error('[PAGE PAYLOAD BUILDER ERROR]:', { cause: error });
    }
-}
+};

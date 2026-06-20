@@ -1,44 +1,51 @@
 {
-  "name": "@acegoal07/discordjs-pagination",
-  "version": "2.0.4",
-  "description": "A simple pagination for Discord.js",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
-  },
-  "keywords": [
-    "acegoal07",
-    "Discord",
-    "Buttons",
-    "Pagination",
-    "discord-buttons",
-    "paginator",
-    "discordjs",
-    "discord.js"
-  ],
-  "author": "acegoal07",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/acegoal07/discordjs-pagination/issues"
-  },
-  "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
-  "dependencies": {
-    "discord.js": "^14.19.3"
-  },
-  "scripts": {
-    "build": "rmdir /S /Q dist && rmdir /S /Q types && npm run buildTypes && npm run tscBuild && npm run copyFiles",
-    "build+publish": "npm run build && cd dist && npm publish",
-    "buildTypes": "npx -p typescript tsc --declaration --allowJs --emitDeclarationOnly --outDir types",
-    "tscBuild": "npx tsc",
-    "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "devDependencies": {
-    "@types/node": "^25.6.0",
-    "typescript": "^6.0.3"
-  }
+   "name": "@acegoal07/discordjs-pagination",
+   "version": "2.0.4",
+   "description": "A simple pagination for Discord.js",
+   "main": "index.js",
+   "types": "index.d.ts",
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/acegoal07/discordjs-pagination.git"
+   },
+   "keywords": [
+      "acegoal07",
+      "Discord",
+      "Buttons",
+      "Pagination",
+      "discord-buttons",
+      "paginator",
+      "discordjs",
+      "discord.js"
+   ],
+   "author": "acegoal07",
+   "license": "MIT",
+   "bugs": {
+      "url": "https://github.com/acegoal07/discordjs-pagination/issues"
+   },
+   "homepage": "https://github.com/acegoal07/discordjs-pagination#readme",
+   "dependencies": {
+      "discord.js": "^14.19.3"
+   },
+   "scripts": {
+      "build": "rmdir /S /Q dist && rmdir /S /Q types && npm run buildTypes && npm run tscBuild && npm run copyFiles",
+      "build+publish": "npm run build && cd dist && npm publish",
+      "buildTypes": "npx -p typescript tsc --declaration --allowJs --emitDeclarationOnly --outDir types",
+      "tscBuild": "npx tsc",
+      "copyFiles": "xcopy /s/y src dist && xcopy /y package.json dist && xcopy /y readme.md dist && xcopy /y lICENSE dist",
+      "lint": "eslint .",
+      "format": "prettier . --write",
+      "format:check": "prettier . --check"
+   },
+   "publishConfig": {
+      "access": "public"
+   },
+   "devDependencies": {
+      "@eslint/js": "^10.0.1",
+      "@types/node": "^25.6.0",
+      "eslint-config-prettier": "^10.1.8",
+      "globals": "^17.6.0",
+      "prettier": "^3.8.4",
+      "typescript": "^6.0.3"
+   }
 }

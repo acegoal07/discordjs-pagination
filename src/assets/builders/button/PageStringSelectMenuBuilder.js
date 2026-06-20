@@ -1,5 +1,5 @@
-const { StringSelectMenuBuilder } = require("discord.js"),
-   { ButtonAction } = require("../../enums/Enums");
+const { StringSelectMenuBuilder } = require('discord.js'),
+   { ButtonAction } = require('../../enums/Enums');
 
 /**
  * Used to build string select menus for the pagination
