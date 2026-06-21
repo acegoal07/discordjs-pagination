@@ -94,8 +94,8 @@ module.exports = class PaginationSession {
 
    /**
     * Goes to the page number given
-    * @param {Number} pageNumber
     * @param {import("discord.js").Interaction} interaction
+    * @param {Number} pageNumber
     */
    async goToPage(interaction, pageNumber) {
       if (pageNumber > 0 && pageNumber <= this.paginationData.pages.length) {
@@ -110,6 +110,33 @@ module.exports = class PaginationSession {
    async deletePagination() {
       if (this.message.deletable) {
          await this.message.delete();
+      }
+   }
+
+   /**
+    * Removes the current page from the pagination
+    * @param {import("discord.js").Interaction} interaction
+    */
+   async removeCurrentPage(interaction) {
+      const index = this.pagePosition - 1;
+      if (this.paginationData.pages.length > 1) {
+         this.paginationData.pages.splice(index, 1);
+         await this.updatePagination(interaction);
+      }
+   }
+
+   /**
+    * Removes a specified page from the pagination
+    * @param {import("discord.js").Interaction} interaction
+    * @param {Number} pageNumber
+    */
+   async removePage(interaction, pageNumber) {
+      if (pageNumber <= this.paginationData.pages.length && this.paginationData.length > 1) {
+         const index = this.pageNumber - 1;
+         if (index >= 0) {
+            this.paginationData.pages.splice(index, 1);
+            await this.updatePagination(interaction);
+         }
       }
    }
 
