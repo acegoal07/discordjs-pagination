@@ -125,6 +125,8 @@ await new Pagination()
 - `.setButtons(buttons)`
    - Optional. Accepts an array of `PageButtonBuilder`.
    - If you skip this, default buttons are generated automatically.
+- `.setExtraRows(extraRows)`
+   - Optional. Accepts an array of `ActionRowBuilder` instances to add extra rows of components to the paginator.
 - `.config(settings)`
    - Optional configuration for timeout, interaction behaviour and more.
 - `.paginate()`
