@@ -1,4 +1,3 @@
-const PageStringSelectMenuBuilder = require('./assets/builders/button/PageStringSelectMenuBuilder');
 const {
       ContextType,
       ButtonAction,
@@ -13,6 +12,7 @@ const {
    ContainerPageBuilder = require('./assets/builders/page/ContainerPageBuilder'),
    TextDisplayPageBuilder = require('./assets/builders/page/TextDisplayPageBuilder'),
    PageButtonBuilder = require('./assets/builders/button/PageButtonBuilder'),
+   PageStringSelectMenuBuilder = require('./assets/builders/button/PageStringSelectMenuBuilder'),
    pagination = require('./lib/Pagination');
 
 /**
@@ -323,9 +323,10 @@ module.exports.Pagination = Pagination;
 module.exports.EmbedPageBuilder = EmbedPageBuilder;
 module.exports.ImagePageBuilder = ImagePageBuilder;
 module.exports.TextPageBuilder = TextPageBuilder;
-module.exports.PageButtonBuilder = PageButtonBuilder;
 module.exports.ContainerPageBuilder = ContainerPageBuilder;
 module.exports.TextDisplayPageBuilder = TextDisplayPageBuilder;
+module.exports.PageButtonBuilder = PageButtonBuilder;
+module.exports.PageStringSelectMenuBuilder = PageStringSelectMenuBuilder;
 module.exports.ButtonAction = ButtonAction;
 module.exports.TimeoutEnding = TimeoutEnding;
 module.exports.MessageResponseType = MessageResponseType;
