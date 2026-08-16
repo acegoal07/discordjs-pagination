@@ -6,7 +6,7 @@ const { MessageFlags } = require('discord.js'),
       ButtonAction
    } = require('../assets/enums/Enums'),
    pagePayloadBuilder = require('../assets/builders/payload/PagePayloadBuilder'),
-   AutoBuildButtons = require('../assets/tools/AutoBuildButtons'),
+   autoBuildButtons = require('../assets/tools/AutoBuildButtons'),
    filterBuilder = require('../assets/builders/filter/FilterBuilder'),
    disableButtons = require('../assets/tools/DisableButtons'),
    PaginationSession = require('../assets/typedef/PaginationSession');
@@ -17,18 +17,18 @@ const { MessageFlags } = require('discord.js'),
 module.exports = async function baseHandler(paginationData) {
    try {
       // Check to make sure pages are present
-      if (paginationData.pages.length == 0) {
+      if (paginationData.pages.length === 0) {
          throw new Error('[PAGE ERROR]: No pages have bee passed into the pagination');
       }
 
       // Check if there are any buttons and if there are none create buttons
-      if (paginationData.buttons.length == 0) {
-         AutoBuildButtons(paginationData);
+      if (paginationData.buttons.length === 0) {
+         autoBuildButtons(paginationData);
       }
 
       // Send a warning if ephemeral setting is enabled with message
       if (
-         paginationData.contextType == ContextType.Message &&
+         paginationData.contextType === ContextType.Message &&
          paginationData.settings.interactionEphemeral
       ) {
          console.warn(
@@ -38,8 +38,8 @@ module.exports = async function baseHandler(paginationData) {
 
       // Send a warming if a message response type has been changed while using interaction
       if (
-         paginationData.contextType == ContextType.Interaction &&
-         paginationData.settings.messageResponseType != MessageResponseType.Send
+         paginationData.contextType === ContextType.Interaction &&
+         paginationData.settings.messageResponseType !== MessageResponseType.Send
       ) {
          console.warn(
             '[MESSAGE RESPONSE TYPE WARNING]: Setting a message response type does not affect interactions'
@@ -59,15 +59,14 @@ module.exports = async function baseHandler(paginationData) {
          // Check if there are less than 2 pages and send the page without pagination function if there is not
          if (paginationData.pages.length < 2) {
             // Handle how the page should be sent
-            if (paginationData.settings.messageResponseType == MessageResponseType.Reply) {
+            if (paginationData.settings.messageResponseType === MessageResponseType.Reply) {
                return paginationData.context.reply(pagePayloadBuilder(paginationData));
-            } else {
-               return paginationData.context.channel.send(pagePayloadBuilder(paginationData));
             }
+            return paginationData.context.channel.send(pagePayloadBuilder(paginationData));
          }
 
          // Send pagination with buttons
-         if (paginationData.settings.messageResponseType == MessageResponseType.Reply) {
+         if (paginationData.settings.messageResponseType === MessageResponseType.Reply) {
             paginationSession.setMessage(
                await paginationData.context.reply(pagePayloadBuilder(paginationData))
             );
@@ -113,9 +112,9 @@ module.exports = async function baseHandler(paginationData) {
       collector.on('collect', async (i) => {
          collector.resetTimer();
          const data =
-            paginationData.buttons.find((b) => b.data.custom_id == i.customId) ||
+            paginationData.buttons.find((b) => b.data.custom_id === i.customId) ||
             paginationData.extraRows.find((r) =>
-               r.components.find((c) => c.data.custom_id == i.customId)
+               r.components.find((c) => c.data.custom_id === i.customId)
             );
          if (!i.deferred && !i.replied && data.action !== ButtonAction.Callback) {
             await i.deferUpdate();
@@ -157,16 +156,14 @@ module.exports = async function baseHandler(paginationData) {
                switch (paginationData.settings.timeoutEnding) {
                   case TimeoutEnding.DeleteButtons:
                      if (paginationSession.message.editable) {
-                        await paginationSession.message.edit({ components: [] }).catch(() => {
-                           return;
-                        });
+                        await paginationSession.message
+                           .edit({ components: [] })
+                           .catch(() => undefined);
                      }
                      break;
                   case TimeoutEnding.DeletePagination:
                      if (paginationSession.message.deletable) {
-                        await paginationSession.message.delete().catch(() => {
-                           return;
-                        });
+                        await paginationSession.message.delete().catch(() => undefined);
                      }
                      break;
                   case TimeoutEnding.DisableButtons:
@@ -180,9 +177,7 @@ module.exports = async function baseHandler(paginationData) {
                                  true
                               )
                            )
-                           .catch(() => {
-                              return;
-                           });
+                           .catch(() => undefined);
                      }
                      break;
                   default:

@@ -197,13 +197,13 @@ class Pagination {
             page instanceof TextDisplayPageBuilder
       );
 
-      if (filteredPages.length == 0) {
+      if (filteredPages.length === 0) {
          throw new TypeError('[PAGE ERROR]: There are no compatible pages provided');
       }
 
       if (
-         filteredPages.some((page) => page.pageType === PageType.Standard) &&
-         filteredPages.some((page) => page.pageType === PageType.ComponentsV2)
+         filteredPages.some((page) => page.pageType == PageType.Standard) &&
+         filteredPages.some((page) => page.pageType == PageType.ComponentsV2)
       ) {
          throw new Error(
             '[PAGE ERROR]: You are not able to combine components v2 pages and standard pages'
@@ -239,11 +239,11 @@ class Pagination {
          );
       }
 
-      if (!filteredButtons.some((button) => button.action === ButtonAction.Next)) {
+      if (!filteredButtons.some((button) => button.action == ButtonAction.Next)) {
          throw new Error('[BUTTON ERROR]: No next button is present in the provided buttons');
       }
 
-      if (!filteredButtons.some((button) => button.action === ButtonAction.Back)) {
+      if (!filteredButtons.some((button) => button.action == ButtonAction.Back)) {
          throw new Error('[BUTTON ERROR]: No back button is present in the provided buttons');
       }
 
@@ -299,7 +299,7 @@ class Pagination {
                c.action != ButtonAction.Unset
          );
 
-         if (filteredComponents.length != r.components.length) {
+         if (filteredComponents.length !== r.components.length) {
             throw new Error(
                '[EXTRA ROWS ERROR]: At least one of the components in your extra rows does not meet the requirements to be used'
             );

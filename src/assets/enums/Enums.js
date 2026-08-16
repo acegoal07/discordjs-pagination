@@ -1,53 +1,53 @@
-/**
- * @readonly
- * @enum {number}
- */
-const ContextType = Object.freeze({
-   Unknown: 0,
-   Message: 1,
-   Interaction: 2
-});
+module.exports = {
+   /**
+    * @readonly
+    * @enum {number}
+    */
+   ContextType: Object.freeze({
+      Interaction: 2,
+      Message: 1,
+      Unknown: 0
+   }),
 
-/**
- * @readonly
- * @enum {number}
- */
-const PageType = Object.freeze({
-   Standard: 0,
-   ComponentsV2: 1
-});
+   /**
+    * @readonly
+    * @enum {number}
+    */
+   PageType: Object.freeze({
+      ComponentsV2: 1,
+      Standard: 0
+   }),
 
-/**
- * @readonly
- * @enum {number}
- */
-const ButtonAction = Object.freeze({
-   Unset: 0,
-   Next: 1,
-   Back: 2,
-   Start: 3,
-   End: 4,
-   Delete: 5,
-   Callback: 6
-});
+   /**
+    * @readonly
+    * @enum {number}
+    */
+   ButtonAction: Object.freeze({
+      Callback: 6,
+      Delete: 5,
+      End: 4,
+      Start: 3,
+      Back: 2,
+      Next: 1,
+      Unset: 0
+   }),
 
-/**
- * @readonly
- * @enum {number}
- */
-const TimeoutEnding = Object.freeze({
-   DisableButtons: 0,
-   DeletePagination: 1,
-   DeleteButtons: 2
-});
+   /**
+    * @readonly
+    * @enum {number}
+    */
+   TimeoutEnding: Object.freeze({
+      DeleteButtons: 2,
+      DeletePagination: 1,
+      DisableButtons: 0
+   }),
 
-/**
- * @readonly
- * @enum {number}
- */
-const MessageResponseType = Object.freeze({
-   Send: 0,
-   Reply: 1
-});
-
-module.exports = { ContextType, PageType, ButtonAction, TimeoutEnding, MessageResponseType };
+   /**
+    * @readonly
+    * @enum {number}
+    */
+   MessageResponseType: Object.freeze({
+      Reply: 1,
+      Send: 0
+   })
+};

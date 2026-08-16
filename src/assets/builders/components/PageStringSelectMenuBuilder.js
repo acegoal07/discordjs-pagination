@@ -25,7 +25,7 @@ class PageStringSelectMenuBuilder extends StringSelectMenuBuilder {
     * @returns {PageButtonBuilder}
     */
    setCallback(callback = null) {
-      if (!this.callback && callback != null) {
+      if (!this.callback && callback !== null) {
          this.callback = callback;
       }
       return this;

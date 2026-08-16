@@ -53,7 +53,7 @@ module.exports = class PagePayloadData {
     * @returns {PagePayloadData}
     */
    addFlag(flag) {
-      this.flags = this.flags | flag;
+      this.flags |= flag;
       return this;
    }
 };

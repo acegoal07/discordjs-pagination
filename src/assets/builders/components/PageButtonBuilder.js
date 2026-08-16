@@ -36,7 +36,7 @@ module.exports = class PageButtonBuilder extends ButtonBuilder {
          }
       }
 
-      if (this.action == ButtonAction.Unset && action != null) {
+      if (this.action === ButtonAction.Unset && action !== null) {
          this.action = action;
       }
       return this;
@@ -48,7 +48,7 @@ module.exports = class PageButtonBuilder extends ButtonBuilder {
     * @returns {PageButtonBuilder}
     */
    setCallback(callback = null) {
-      if (!this.callback && callback != null) {
+      if (!this.callback && callback !== null) {
          this.callback = callback;
       }
       return this;

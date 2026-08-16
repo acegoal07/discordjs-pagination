@@ -15,10 +15,9 @@ module.exports = function pagePayloadBuilder(
 ) {
    try {
       // The page data
-      const pageData = paginationData.pages[pagePosition];
-
-      // Get payload from builder
-      const payload = pageData.toPayload() ?? null;
+      const pageData = paginationData.pages[pagePosition],
+         // Get payload from builder
+         payload = pageData.toPayload() ?? null;
 
       // Check whether data has been sent from the builder
       if (!payload) {
@@ -35,10 +34,10 @@ module.exports = function pagePayloadBuilder(
          paginationData.buttons.forEach((button) => {
             button.setDisabled(
                (pagePosition === 0 &&
-                  (button.action === ButtonAction.Back || button.action === ButtonAction.Start)) ||
+                  (button.action == ButtonAction.Back || button.action == ButtonAction.Start)) ||
                   (paginationData.pages.length === pagePosition + 1 &&
-                     (button.action === ButtonAction.Next || button.action === ButtonAction.End)) ||
-                  (pageData.blockCustomButtons && button.action === ButtonAction.Callback)
+                     (button.action == ButtonAction.Next || button.action == ButtonAction.End)) ||
+                  (pageData.blockCustomButtons && button.action == ButtonAction.Callback)
             );
          });
       }
@@ -73,7 +72,7 @@ module.exports = function pagePayloadBuilder(
       if (
          (paginationData.contextType === ContextType.Interaction &&
             paginationData.settings.interactionEphemeral) ||
-         paginationData.context.flags == MessageFlags.Ephemeral
+         paginationData.context.flags === MessageFlags.Ephemeral
       ) {
          payload.addFlag(MessageFlags.Ephemeral);
       }

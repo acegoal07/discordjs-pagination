@@ -5,7 +5,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 
 export default defineConfig([
    {
-      files: ['**/*.{js,mjs,cjs}'],
+      files: ['src/**/*.{js,mjs,cjs}'],
       languageOptions: {
          globals: globals.browser
       }
@@ -16,7 +16,7 @@ export default defineConfig([
    eslintConfigPrettier,
 
    {
-      files: ['**/*.js'],
+      files: ['src/**/*.js'],
       languageOptions: {
          sourceType: 'commonjs'
       }

@@ -8,7 +8,7 @@ module.exports = function disableButtons(paginationData) {
          b.setDisabled(true);
       });
 
-      if (paginationData.extraRows.length != 0) {
+      if (paginationData.extraRows.length !== 0) {
          paginationData.extraRows.forEach((r) => {
             r.components.forEach((c) => {
                c.setDisabled(true);
