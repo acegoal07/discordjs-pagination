@@ -1,5 +1,5 @@
 const { ButtonStyle } = require('discord.js'),
-   PageButtonBuilder = require('../../assets/builders/button/PageButtonBuilder'),
+   PageButtonBuilder = require('../../assets/builders/components/PageButtonBuilder'),
    { ButtonAction } = require('../enums/Enums');
 
 /**

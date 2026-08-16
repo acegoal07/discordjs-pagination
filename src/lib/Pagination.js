@@ -138,6 +138,10 @@ module.exports = async function baseHandler(paginationData) {
                collector.stop();
                break;
             case ButtonAction.Callback:
+               if (!data.callback) {
+                  console.warn('[CALLBACK WARNING]: Callback function missing');
+                  break;
+               }
                await data.callback(paginationSession, i);
                break;
             default:

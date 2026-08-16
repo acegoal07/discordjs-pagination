@@ -25,12 +25,12 @@ module.exports = class PaginationData {
    pages = [];
 
    /**
-    * @type {import("../builders/button/PageButtonBuilder")[]}
+    * @type {import("../builders/components/PageButtonBuilder")[]}
     */
    buttons = [];
 
    /**
-    * @type {import('discord.js').ActionRowBuilder<import('../builders/button/PageButtonBuilder') | import('../builders/button/PageStringSelectMenuBuilder')>[]}
+    * @type {import('discord.js').ActionRowBuilder<import('../builders/components/PageButtonBuilder') | import('../builders/components/PageStringSelectMenuBuilder')>[]}
     */
    extraRows = [];
 };

@@ -11,8 +11,8 @@ const {
    TextPageBuilder = require('./assets/builders/page/TextPageBuilder'),
    ContainerPageBuilder = require('./assets/builders/page/ContainerPageBuilder'),
    TextDisplayPageBuilder = require('./assets/builders/page/TextDisplayPageBuilder'),
-   PageButtonBuilder = require('./assets/builders/button/PageButtonBuilder'),
-   PageStringSelectMenuBuilder = require('./assets/builders/button/PageStringSelectMenuBuilder'),
+   PageButtonBuilder = require('./assets/builders/components/PageButtonBuilder'),
+   PageStringSelectMenuBuilder = require('./assets/builders/components/PageStringSelectMenuBuilder'),
    pagination = require('./lib/Pagination');
 
 /**
@@ -270,7 +270,7 @@ class Pagination {
 
    /**
     * Set's the buttons to be used by the pagination
-    * @param {import('discord.js').ActionRowBuilder<import('./assets/builders/button/PageButtonBuilder') | import('./assets/builders/button/PageStringSelectMenuBuilder')>[]} rows
+    * @param {import('discord.js').ActionRowBuilder<import('./assets/builders/components/PageButtonBuilder') | import('./assets/builders/components/PageStringSelectMenuBuilder')>[]} rows
     * @returns {Pagination}
     */
    setExtraRows(rows = []) {
