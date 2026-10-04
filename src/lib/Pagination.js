@@ -39,7 +39,7 @@ module.exports = async function baseHandler(paginationData) {
       // Send a warming if a message response type has been changed while using interaction
       if (
          paginationData.contextType === ContextType.Interaction &&
-         paginationData.settings.messageResponseType !== MessageResponseType.Send
+         paginationData.settings.messageResponseType != MessageResponseType.Send
       ) {
          console.warn(
             '[MESSAGE RESPONSE TYPE WARNING]: Setting a message response type does not affect interactions'
@@ -59,14 +59,14 @@ module.exports = async function baseHandler(paginationData) {
          // Check if there are less than 2 pages and send the page without pagination function if there is not
          if (paginationData.pages.length < 2) {
             // Handle how the page should be sent
-            if (paginationData.settings.messageResponseType === MessageResponseType.Reply) {
+            if (paginationData.settings.messageResponseType == MessageResponseType.Reply) {
                return paginationData.context.reply(pagePayloadBuilder(paginationData));
             }
             return paginationData.context.channel.send(pagePayloadBuilder(paginationData));
          }
 
          // Send pagination with buttons
-         if (paginationData.settings.messageResponseType === MessageResponseType.Reply) {
+         if (paginationData.settings.messageResponseType == MessageResponseType.Reply) {
             paginationSession.setMessage(
                await paginationData.context.reply(pagePayloadBuilder(paginationData))
             );

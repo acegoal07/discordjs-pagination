@@ -4,7 +4,7 @@ const { StringSelectMenuBuilder } = require('discord.js'),
 /**
  * Used to build string select menus for the pagination
  */
-class PageStringSelectMenuBuilder extends StringSelectMenuBuilder {
+module.exports = class PageStringSelectMenuBuilder extends StringSelectMenuBuilder {
    constructor() {
       super();
 
@@ -25,11 +25,9 @@ class PageStringSelectMenuBuilder extends StringSelectMenuBuilder {
     * @returns {PageButtonBuilder}
     */
    setCallback(callback = null) {
-      if (!this.callback && callback !== null) {
+      if (!this.callback && callback != null) {
          this.callback = callback;
       }
       return this;
    }
-}
-
-module.exports = PageStringSelectMenuBuilder;
+};
