@@ -1,6 +1,6 @@
-const { AttachmentBuilder } = require("discord.js"),
-   { PageType } = require("../../enums/Enums"),
-   PagePayloadData = require("../../typedef/PagePayloadData");
+const { AttachmentBuilder } = require('discord.js'),
+   { PageType } = require('../../enums/Enums'),
+   PagePayloadData = require('../../typedef/PagePayloadData');
 
 /**
  * Used to build image pages for the pagination
@@ -33,7 +33,7 @@ module.exports = class ImagePageBuilder {
     * @returns {ImagePageBuilder}
     */
    setImage(attachment, attachmentData) {
-      this.image = new AttachmentBuilder(attachment, attachmentData)
+      this.image = new AttachmentBuilder(attachment, attachmentData);
       return this;
    }
 
@@ -44,7 +44,7 @@ module.exports = class ImagePageBuilder {
    toPayload() {
       return new PagePayloadData({
          file: this.image
-      })
+      });
    }
 
    /**
@@ -53,4 +53,4 @@ module.exports = class ImagePageBuilder {
    enableBlockCustomButtons() {
       this.blockCustomButtons = true;
    }
-}
+};

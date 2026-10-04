@@ -1,6 +1,6 @@
-const { TextDisplayBuilder, MessageFlags } = require("discord.js"),
-   { PageType } = require("../../enums/Enums"),
-   PagePayloadData = require("../../typedef/PagePayloadData")
+const { TextDisplayBuilder, MessageFlags } = require('discord.js'),
+   { PageType } = require('../../enums/Enums'),
+   PagePayloadData = require('../../typedef/PagePayloadData');
 
 module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
    constructor() {
@@ -33,7 +33,7 @@ module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
       return new PagePayloadData({
          component: this,
          flag: this.pageFlags
-      })
+      });
    }
 
    /**
@@ -42,4 +42,4 @@ module.exports = class TextDisplayPageBuilder extends TextDisplayBuilder {
    enableBlockCustomButtons() {
       this.blockCustomButtons = true;
    }
-}
+};

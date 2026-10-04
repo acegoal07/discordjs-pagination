@@ -1,5 +1,3 @@
-const { MessageFlags } = require("discord.js");
-
 /**
  * The payload data that is sent to discord for the pages
  */
@@ -16,7 +14,7 @@ module.exports = class PagePayloadData {
       /**
        * @type {String}
        */
-      this.content = content || "";
+      this.content = content || '';
 
       /**
        * @type {Array<import("discord.js").EmbedBuilder>}
@@ -40,22 +38,22 @@ module.exports = class PagePayloadData {
    }
 
    /**
-    * Adds a component to the page payload
-    * @param {import("discord.js").ActionRowBuilder | import("discord.js").ContainerBuilder} component
+    * Adds one or more components to the page payload.
+    * @param {...(import("discord.js").ActionRowBuilder|import("discord.js").ContainerBuilder)} components
     * @returns {PagePayloadData}
     */
-   addComponent(component) {
-      this.components.push(component);
+   addComponents(...components) {
+      this.components.push(...components);
       return this;
    }
 
    /**
     * Adds a flag to the payload
-    * @param {MessageFlags} flag
+    * @param {import('discord.js').MessageFlags} flag
     * @returns {PagePayloadData}
     */
    addFlag(flag) {
-      this.flags = this.flags | flag;
+      this.flags |= flag;
       return this;
    }
-}
+};

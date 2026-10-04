@@ -1,4 +1,4 @@
-const pagePayloadBuilder = require("../builders/payload/PagePayloadBuilder");
+const pagePayloadBuilder = require('../builders/payload/PagePayloadBuilder');
 
 module.exports = class PaginationSession {
    /**
@@ -41,7 +41,7 @@ module.exports = class PaginationSession {
     * @param {import("discord.js").Interaction} interaction
     */
    async nextPage(interaction) {
-      if ((this.pagePosition + 1) === this.paginationData.pages.length) {
+      if (this.pagePosition + 1 === this.paginationData.pages.length) {
          if (this.paginationData.settings.loop) {
             this.pagePosition = 0;
          } else {
@@ -87,15 +87,15 @@ module.exports = class PaginationSession {
     */
    async endPage(interaction) {
       if (this.pagePosition !== this.paginationData.pages.length - 1) {
-         this.pagePosition = (this.paginationData.pages.length - 1);
+         this.pagePosition = this.paginationData.pages.length - 1;
          await this.updatePagination(interaction);
       }
    }
 
    /**
     * Goes to the page number given
-    * @param {Number} pageNumber
     * @param {import("discord.js").Interaction} interaction
+    * @param {Number} pageNumber
     */
    async goToPage(interaction, pageNumber) {
       if (pageNumber > 0 && pageNumber <= this.paginationData.pages.length) {
@@ -114,22 +114,51 @@ module.exports = class PaginationSession {
    }
 
    /**
+    * Removes the current page from the pagination
+    * @param {import("discord.js").Interaction} interaction
+    */
+   async removeCurrentPage(interaction) {
+      const index = this.pagePosition - 1;
+      if (this.paginationData.pages.length > 1) {
+         this.paginationData.pages.splice(index, 1);
+         await this.updatePagination(interaction);
+      }
+   }
+
+   /**
+    * Removes a specified page from the pagination
+    * @param {import("discord.js").Interaction} interaction
+    * @param {Number} pageNumber
+    */
+   async removePage(interaction, pageNumber) {
+      if (pageNumber <= this.paginationData.pages.length && this.paginationData.length > 1) {
+         const index = this.pageNumber - 1;
+         if (index >= 0) {
+            this.paginationData.pages.splice(index, 1);
+            await this.updatePagination(interaction);
+         }
+      }
+   }
+
+   /**
     * Updates the pagination with the new information
     * @param {import("discord.js").Interaction} interaction
     */
    async updatePagination(interaction) {
-      await interaction.editReply(pagePayloadBuilder(this.paginationData, this.pagePosition)).catch(error => console.log(error));
+      await interaction
+         .editReply(pagePayloadBuilder(this.paginationData, this.pagePosition))
+         .catch((error) => console.log(error));
    }
 
    /**
-    * Get's a specific page unless no number is provided
+    * Get's a specific page unless no number is provided where it returns the current page
     * @param {Number} pageNumber
     * @returns {import("../builders/page/EmbedPageBuilder") | import("../builders/page/ImagePageBuilder") | import("../builders/page/TextPageBuilder") | import("../builders/page/ContainerPageBuilder") | import("../builders/page/TextDisplayPageBuilder")}
     */
    getPage(pageNumber = null) {
       if (pageNumber < 1 || pageNumber > this.paginationData.pages.length + 1) {
-         return
+         return;
       }
-      return this.paginationData.pages[(pageNumber - 1) || (this.pagePosition - 1)]
+      return this.paginationData.pages[pageNumber - 1 || this.pagePosition - 1];
    }
-}
+};

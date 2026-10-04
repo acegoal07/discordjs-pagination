@@ -20,16 +20,21 @@
 This is a pagination package for discord.js that supports both message and interaction, this package is designed to be simple to use and also highly customisable, offering the ability to create multiple types of pages such as embed pages, image pages and text pages, it also support custom button layouts allowing you to decide the order in which the buttons go in allowing for as much flexibility and customisability as possible with plans to add more features to improve and expand the package.
 
 ### To download the package use
+
 npm
+
 ```sh
 npm i @acegoal07/discordjs-pagination
 ```
+
 yarn
+
 ```sh
 yarn add @acegoal07/discordjs-pagination
 ```
 
 ### Improvements over V1
+
 - Added support for multiple page types such as embed pages, text pages and image pages at the same time instead of just one type at a time
 - Adds support for custom button layouts allowing you to decide the order in which the buttons go in
 - Cleaner and more optimised codebase allowing for better maintainability and easier to add new features in the future

@@ -1,6 +1,6 @@
-const { AttachmentBuilder, EmbedBuilder } = require("discord.js"),
-   { PageType } = require("../../enums/Enums"),
-   PagePayloadData = require("../../typedef/PagePayloadData");
+const { AttachmentBuilder, EmbedBuilder } = require('discord.js'),
+   { PageType } = require('../../enums/Enums'),
+   PagePayloadData = require('../../typedef/PagePayloadData');
 
 /**
  * Used to build embed pages for the pagination
@@ -47,7 +47,7 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
       return new PagePayloadData({
          embed: this,
          file: this.attachment
-      })
+      });
    }
 
    /**
@@ -56,4 +56,4 @@ module.exports = class EmbedPageBuilder extends EmbedBuilder {
    enableBlockCustomButtons() {
       this.blockCustomButtons = true;
    }
-}
+};
